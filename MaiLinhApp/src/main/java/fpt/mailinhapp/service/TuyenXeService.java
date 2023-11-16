@@ -30,7 +30,7 @@ public class TuyenXeService {
         entity.setTgDen(tgDen);
         var saveEntity = dao.save(entity);
 
-        dto.setMaChuyenXe(saveEntity.getMaChuyenXe());
+        dto.setMaTuyenXe(saveEntity.getMaTuyenXe());
 
         return dto;
     }

@@ -1,6 +1,7 @@
 package fpt.mailinhapp.service;
 
 import fpt.mailinhapp.domain.AnhDaLuu;
+import fpt.mailinhapp.domain.TaiKhoan;
 import fpt.mailinhapp.domain.ThanhVien;
 import fpt.mailinhapp.dto.ThanhVienDto;
 import fpt.mailinhapp.exception.CustomerException;
@@ -37,9 +38,12 @@ public class CustomerService {
             BeanUtils.copyProperties(saveImg, dto.getAnhDaLuu());
             entity.setAnhDaLuu(saveImg);
         }
+        TaiKhoan taiKhoan = new TaiKhoan();
+        BeanUtils.copyProperties(dto.getTaiKhoan(), taiKhoan);
+        entity.setTaiKhoan(taiKhoan);
 
         var saveCus = dao.save(entity);
-        dto.setSoDT(saveCus.getId());
+        dto.setSoDT(saveCus.getSoDT());
 
         return dto;
     }
@@ -71,7 +75,7 @@ public class CustomerService {
 
         var saveEntity = dao.save(found);
 
-        dto.setSoDT(found.getId());
+        dto.setSoDT(found.getSoDT());
         return dto;
     }
 

@@ -16,8 +16,8 @@ import java.util.Objects;
 public class TuyenXe {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "ma_chuyen_xe", nullable = false)
-    private Integer maChuyenXe;
+    @Column(name = "ma_Tuyen_xe", nullable = false)
+    private Integer maTuyenXe;
 
     @Column(name = "diem_di")
     private String diemDi;
