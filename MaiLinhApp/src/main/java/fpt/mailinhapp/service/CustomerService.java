@@ -1,6 +1,7 @@
 package fpt.mailinhapp.service;
 
 import fpt.mailinhapp.domain.AnhDaLuu;
+import fpt.mailinhapp.domain.TaiKhoan;
 import fpt.mailinhapp.domain.ThanhVien;
 import fpt.mailinhapp.dto.ThanhVienDto;
 import fpt.mailinhapp.exception.CustomerException;
@@ -12,6 +13,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class CustomerService {
@@ -36,15 +38,18 @@ public class CustomerService {
             BeanUtils.copyProperties(saveImg, dto.getAnhDaLuu());
             entity.setAnhDaLuu(saveImg);
         }
+        TaiKhoan taiKhoan = new TaiKhoan();
+        BeanUtils.copyProperties(dto.getTaiKhoan(), taiKhoan);
+        entity.setTaiKhoan(taiKhoan);
 
         var saveCus = dao.save(entity);
-        dto.setId(saveCus.getId());
+        dto.setSoDT(saveCus.getSoDT());
 
         return dto;
     }
 
     @Transactional(rollbackFor = Exception.class)
-    public ThanhVienDto updateCustomers(Long id, ThanhVienDto dto){
+    public ThanhVienDto updateCustomers(String id, ThanhVienDto dto){
         var found = dao.findById(id).orElseThrow(()-> new CustomerException("Thành viên không tồn tại"));
         String[] ignoreFields = new String[]{"ngayTao","anhDaLuu"};
 
@@ -70,12 +75,12 @@ public class CustomerService {
 
         var saveEntity = dao.save(found);
 
-        dto.setId(found.getId());
+        dto.setSoDT(found.getSoDT());
         return dto;
     }
 
     @Transactional(rollbackFor = Exception.class)
-    public void deleteCus(Long id){
+    public void deleteCus(String id){
         var found = dao.findById(id).orElseThrow(()->new CustomerException("Thành viên không tồn tại"));
 
         if(found.getAnhDaLuu() != null){
@@ -88,5 +93,13 @@ public class CustomerService {
 
     public List findAll() {
         return (List) dao.findAll();
+    }
+
+    public ThanhVienDto findById(String id) {
+        var found = dao.findById(id).orElseThrow(()->new CustomerException("Thành viên không tồn tại"));
+        ThanhVienDto dto = new ThanhVienDto();
+        BeanUtils.copyProperties(found, dto);
+
+        return dto;
     }
 }

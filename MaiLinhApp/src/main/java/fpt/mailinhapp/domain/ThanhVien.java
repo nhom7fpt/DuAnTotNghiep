@@ -16,9 +16,8 @@ import java.util.Date;
 @Table(name = "thanh_vien")
 public class ThanhVien {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id", nullable = false)
-    private Long id;
+    @Column(name = "soDT", nullable = false, length = 13)
+    private String soDT;
 
     @Column(name = "ho_ten", nullable = true, length = 50)
     private String hoTen;
@@ -29,8 +28,6 @@ public class ThanhVien {
     @Column(name = "email", nullable = true, length = 50)
     private String email;
 
-    @Column(name = "so_dt", nullable = false, length = 11)
-    private String soDT;
 
     @Temporal(TemporalType.DATE)
     @Column(name = "ngay_tao")
@@ -39,13 +36,15 @@ public class ThanhVien {
     @Column(name = "ngay_chinh_su")
     private Date ngayChinhSu;
 
-    @OneToOne(orphanRemoval = true)
-    @JoinColumn(name = "tai_khoan_ten_tai_khoan")
-    private TaiKhoan taiKhoan;
+
 
     @OneToOne(orphanRemoval = true)
     @JoinColumn(name = "anh_da_luu_id")
     private AnhDaLuu anhDaLuu;
+
+    @OneToOne(orphanRemoval = true)
+    @JoinColumn(name = "tai_khoan")
+    private TaiKhoan taiKhoan;
 
     @PrePersist
     public void prePersist() {

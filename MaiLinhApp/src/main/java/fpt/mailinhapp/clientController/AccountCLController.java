@@ -1,8 +1,11 @@
 package fpt.mailinhapp.clientController;
 
+import fpt.mailinhapp.domain.ThanhVien;
 import fpt.mailinhapp.domain.VaiTro;
+
 import fpt.mailinhapp.dto.TaiKhoanDto;
 import fpt.mailinhapp.dto.ThanhVienDto;
+import fpt.mailinhapp.respondata.AccountReg;
 import fpt.mailinhapp.service.CustomerService;
 import fpt.mailinhapp.service.MapValidationErrorService;
 import fpt.mailinhapp.service.TaiKhoanService;
@@ -25,19 +28,27 @@ public class AccountCLController {
     CustomerService customerService;
 
     @PostMapping("reg")
-    public ResponseEntity createAcc(@Validated @RequestBody TaiKhoanDto dto, BindingResult result){
+    public ResponseEntity createAcc(@Validated @RequestBody AccountReg dto, BindingResult result){
         ResponseEntity error = errorService.mapValidationField(result);
 
         if(error != null){
             return error;
         }
-        dto.setVaiTro(VaiTro.ThanhVien);
-        var newDto = service.insertAccount(dto);
+        TaiKhoanDto tkDto = new TaiKhoanDto(dto.getTenTaiKhoan(), dto.getMatKhau(), VaiTro.ThanhVien);
 
-        ThanhVienDto tvDto = new ThanhVienDto();
-        tvDto.setTaiKhoan(dto);
-        tvDto.setSoDT(dto.getTenTaiKhoan());
-        customerService.insertCustomers(tvDto);
+        var newDto = service.insertAccount(tkDto);
+
+        ThanhVienDto tv = new ThanhVienDto();
+        tv.setTaiKhoan(tkDto);
+        tv.setSoDT(dto.getTenTaiKhoan());
+        tv.setHoTen(dto.getHoTen());
+
+        System.out.println(tv.getTaiKhoan().getTenTaiKhoan());
+
+       var saveTV = customerService.insertCustomers(tv);
+
+        System.out.println(saveTV.getTaiKhoan().getTenTaiKhoan());
+
 
         return new ResponseEntity<>(newDto, HttpStatus.CREATED);
     }
@@ -52,4 +63,6 @@ public class AccountCLController {
 
         return new ResponseEntity<>(newDto,HttpStatus.ACCEPTED);
     }
+
+
 }

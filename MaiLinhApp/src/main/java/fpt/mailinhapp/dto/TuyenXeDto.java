@@ -16,7 +16,7 @@ import java.time.LocalTime;
 @AllArgsConstructor
 @NoArgsConstructor
 public class TuyenXeDto implements Serializable {
-    Integer maChuyenXe;
+    Integer maTuyenXe;
     String diemDi;
     String diemDen;
     String noiDon;
