@@ -17,7 +17,7 @@ import java.util.Date;
 public class ThanhVien {
     @Id
     @Column(name = "soDT", nullable = false, length = 13)
-    private String id;
+    private String soDT;
 
     @Column(name = "ho_ten", nullable = true, length = 50)
     private String hoTen;

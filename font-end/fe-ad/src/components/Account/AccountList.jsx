@@ -1,9 +1,9 @@
-import { Button, Image, Popconfirm, Space, Table, Tooltip } from "antd";
+import { Button, Image, Popconfirm, Space, Table, Tag, Tooltip } from "antd";
 import Column from "antd/es/table/Column";
 import React, { Component } from "react";
 import { BiEdit, BiSolidTrash } from "react-icons/bi";
 import { MdPreview } from "react-icons/md";
-import AccountDetail from "../Account/AccountDetail";
+
 import ProductService from "../../services/ProductService";
 import AccountEdit from "./AccountEdit";
 
@@ -14,6 +14,7 @@ export class AccountList extends Component {
       previewVisible: false,
       selectedAcc: null,
       previewVisibleEdit: false,
+      
     };
   }
 
@@ -22,16 +23,22 @@ export class AccountList extends Component {
     this.props.onOkUpdateAcc(data);
   };
 
-  showAccDetail = (acc) => {
-    this.setState({ previewVisible: true, selectedAcc: acc });
-  };
+  colorTag = (data) => {
+    switch (data.vaiTro) {
+      case 'ThanhVien':
+        return 'green';
+      case 'QuanLy':
+        return 'red';
+      default:
+        return 'blue';
+    }
+  }
 
-  closeAccDetail = () => {
-    this.setState({ previewVisible: false, selectedAcc: null });
-  };
+ 
 
   showAccEdit = (acc) => {
     this.setState({ previewVisibleEdit: true, selectedAcc: acc });
+
   };
 
   closeAccEdit = () => {
@@ -40,6 +47,7 @@ export class AccountList extends Component {
 
   render() {
     const { acc } = this.props;
+    console.log(acc);
     return (
       <>
         <Table dataSource={acc} rowKey="username">
@@ -68,53 +76,65 @@ export class AccountList extends Component {
           ></Column>
 
           <Column
-            title="UserName"
-            key="username"
-            dataIndex="username"
+            title="Tên Tài Khoản"
+            key="soDT"
+            dataIndex="soDT"
             align="center"
           ></Column>
 
           <Column
-            title="Password"
-            key="password"
-            dataIndex="password"
+            title="Họ Tên"
+            key="hoTen"
+            dataIndex="hoTen"
             align="center"
           ></Column>
-
           <Column
-            title="Account Roles"
-            key="accountRoles"
-            dataIndex="accountRoles"
+            title="Địa Chỉ"
+            key="diaChi"
+            dataIndex="diaChi"
             align="center"
           ></Column>
+          <Column
+            title="Email"
+            key="email"
+            dataIndex="email"
+            align="center"
+          ></Column>
+          <Column
+            title="Chức Vụ"
+            key="taiKhoan"
+            dataIndex="taiKhoan"
+            align="center"
+            render={(_,data)=>(
+              <span>
+                <Tag color={this.colorTag (data)} key={data.taiKhoan}>
+                  {data.taiKhoan.vaiTro}
+
+                </Tag>
+              </span>
+            )}
+          ></Column>
+
+          
+
+          
+
 
           <Column
-            title="Action"
-            key="action"
+            title="Hành Động"
+            key="hanhDong"
             align="center"
             width={200}
             render={(_, record) => (
               <Space size="middle">
-                <Tooltip
-                  placement="top"
-                  title="View Account Detail"
-                  color="green"
-                >
-                  <Button
-                    key={record.key}
-                    type="link"
-                    size="small"
-                    onClick={() => this.showAccDetail(record)} // Hiển thị chi tiết sản phẩm
-                  >
-                    <MdPreview color="green" size={24}></MdPreview>
-                  </Button>
-                </Tooltip>
+                
                 <Tooltip placement="top" title="Edit Account" color="blue">
                   <Button
                     key={record.key}
                     type="link"
                     size="small"
-                    onClick={() => this.showAccEdit(record)}
+                    onClick={() => this.showAccEdit(record.taiKhoan)}
+
                   >
                     <BiEdit color="blue" size={24} />
                   </Button>
@@ -138,11 +158,7 @@ export class AccountList extends Component {
           ></Column>
         </Table>
 
-        <AccountDetail
-          visible={this.state.previewVisible}
-          cus={this.state.selectedAcc}
-          onClose={this.closeAccDetail}
-        />
+        
         <AccountEdit
           onOkUpdate={this.onOkUpdate}
           visible={this.state.previewVisibleEdit}

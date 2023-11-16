@@ -9,16 +9,28 @@ import {
   updateAccount,
 } from "../../redux/actions/actionAccount";
 
+
 export class ListAccount extends Component {
+  state={
+    check : {}
+  }
   onConfirm = (data) => {
     this.props.deleteAccount(data.username);
   };
   onOkUpdateAcc = (data) => {
-    this.props.updateAccount(data.username, data, this.props.router.navigate);
+    
+    this.props.updateAccount(data.tenTaiKhoan, data, this.props.router.navigate);
+    this.setState({ check : data})
   };
   componentDidMount = () => {
     this.props.getListAccount();
   };
+  componentDidUpdate =(prevProps) =>{
+    if (prevProps.check !== this.props.check){
+    this.props.getListAccount();
+   }
+  }
+
   render() {
     const { navigate } = this.props.router;
     const { accounts } = this.props;
@@ -30,6 +42,7 @@ export class ListAccount extends Component {
           onOkUpdateAcc={this.onOkUpdateAcc}
           acc={accounts}
           onConfirm={this.onConfirm}
+         
         />
       </>
     );

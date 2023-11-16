@@ -1,13 +1,16 @@
 package fpt.mailinhapp.service;
 
 import fpt.mailinhapp.domain.AnhDaLuu;
+import fpt.mailinhapp.domain.TaiKhoan;
 import fpt.mailinhapp.domain.ThanhVien;
+import fpt.mailinhapp.dto.TaiKhoanDto;
 import fpt.mailinhapp.dto.ThanhVienDto;
 import fpt.mailinhapp.exception.CustomerException;
 import fpt.mailinhapp.repository.AnhDaLuuRepository;
 import fpt.mailinhapp.repository.ThanhVienRepository;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -37,9 +40,12 @@ public class CustomerService {
             BeanUtils.copyProperties(saveImg, dto.getAnhDaLuu());
             entity.setAnhDaLuu(saveImg);
         }
+        TaiKhoan tk=new TaiKhoan();
+        BeanUtils.copyProperties(dto.getTaiKhoan(),tk);
+        entity.setTaiKhoan(tk);
 
         var saveCus = dao.save(entity);
-        dto.setSoDT(saveCus.getId());
+        dto.setSoDT(saveCus.getSoDT());
 
         return dto;
     }
@@ -71,7 +77,7 @@ public class CustomerService {
 
         var saveEntity = dao.save(found);
 
-        dto.setSoDT(found.getId());
+        dto.setSoDT(found.getSoDT());
         return dto;
     }
 
