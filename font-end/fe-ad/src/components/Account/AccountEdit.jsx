@@ -16,6 +16,7 @@ const AccountEdit = ({ visible, acc, onClose, onOkUpdate }) => {
     }));
     
   };
+  
   return (
     <Modal
       open={visible}

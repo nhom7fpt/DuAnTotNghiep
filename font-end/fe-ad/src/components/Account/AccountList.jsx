@@ -21,7 +21,9 @@ export class AccountList extends Component {
   onOkUpdate = (data) => {
     this.closeAccEdit();
     this.props.onOkUpdateAcc(data);
+    
   };
+  
 
   colorTag = (data) => {
     switch (data.vaiTro) {
