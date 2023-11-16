@@ -1,0 +1,295 @@
+.container-loc {
+  width: 350px;
+  background: #F8F9F9;
+  border: 1px solid #EBEDEE;
+  font-size: 15px;
+  font-weight: medium;
+  border-radius: 10px;
+  height: 600px;
+ 
+}
+
+.title {
+  display: flex;
+  font-size: 20px; 
+  text-transform: uppercase;
+  text-align: left;
+  margin-left: 1cm;
+  margin-bottom: -15px; 
+  align-items: center;
+  justify-content: center;
+  width: 200px;
+  height: 50px;
+  color: #111111;
+}
+
+.filter-label {
+  display: block;
+  margin-top: 12px;
+  font-size: 15px;
+  line-height: 22.5px;
+  text-align: left;
+  margin-left: 1cm;
+}
+
+.checkbox-group {
+  display: flex;
+  flex-direction: column;
+  padding: 10px;
+ 
+}
+
+.checkbox-label {
+  display: flex;
+  color: #212529;
+  margin-bottom: 10px; /* Giảm khoảng cách giữa các lựa chọn */
+}
+
+.checkbox-input {
+  display: none;
+}
+
+.checkbox-custom {
+  width: 20px;
+  height: 20px;
+  border: 1px solid #000;
+  border-radius: 3px;
+  margin-right: 10px;
+  padding: 10px;
+  margin-left: 20px;
+}
+
+.checkbox-text {
+  font-weight: normal;
+  display: flex;
+  align-items: center;
+  font-size: 14px;
+}
+
+.checkbox-checkmark {
+  width: 16px;
+  height: 16px;
+  border-radius: 3px;
+  margin-right: 10px;
+  display: none;
+}
+
+.checkbox-input:checked + .checkbox-label .checkbox-checkmark {
+  display: block;
+}
+
+.checkbox-input:checked + .checkbox-custom {
+  background: #ef5222 url('/src/image/check-icon.png') center/contain no-repeat;
+}
+
+.divide {
+  border-bottom: 1px solid #EBEDEE;
+  margin: 12px 0;
+}
+
+.custom-container-loc {
+  background: #fff;
+  border-radius: 10px;
+  padding: 20px;
+  margin-left: 15cm;
+  margin-top: -16.5cm;
+  width: 800px;
+}
+
+.hidden-text {
+  color: #111111;
+  font-size: 20px;
+  font-weight: 500;
+  line-height: 28px;
+  margin-bottom: 15px;
+  margin-right: 16cm;
+  width: 300px;
+}
+
+.icon-container {
+  display: flex;
+  align-items: center;
+  margin-top: 12px;
+  margin-bottom: 15px;
+}
+
+.custom-icon {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+  white-space: nowrap;
+  border: 1px solid #FCDACE;
+  padding: 8px;
+  font-size: 14px;
+  background: #f9f9fa;
+  color: #111111;
+  border-radius: 4px;
+  margin-right: 10px;
+}
+
+.custom-icon.active {
+  background-color: #fef6f3;
+  color: #ef5222;
+}
+
+
+.button:hover {
+  background-color: #FF3333;
+}
+
+.chuyenxe-loc {
+  background: rgb(255, 255, 255) !important;
+  border-radius: 20px;
+  padding: 20px;
+  box-shadow: 1px 2px 4px rgba(0, 0, 0, 0.1);
+  margin-bottom: 1cm;
+  width:750px;
+  height: 200px;
+  border: #111111;
+}
+
+.departure-time,
+.arrival-time {
+  font-size: 24px
+}
+
+.info-container-loc {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.location-details {
+  display: flex;
+  align-items: center;
+}
+
+.location-details img,
+.location-details .separator,
+.location-details .travel-duration {
+  margin: 0 5px;
+  /* Điều chỉnh khoảng cách */
+}
+
+
+.separator {
+  margin: 0 10px;
+
+  height: 20px;
+
+}
+.location-info {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 20px;
+}
+
+.location-name {
+  color:#111111;
+  display:inline;
+  font-size:15px;
+  font-weight:500;
+  line-height:24px;
+}
+
+.text-gray {
+  color: #777;
+}
+
+/* .special-note {
+  font-size: 12px;
+  margin-bottom: 20px;
+  text-align: left;
+} */
+
+.underline {
+  text-decoration: underline;
+}
+
+.read-more {
+  color: #FF6600;
+}
+
+.divider {
+  border: none;
+  border-top: 1px solid #EBEDEE;
+  margin: 15px 0;
+}
+
+.availability-details {
+  display: flex;
+  align-items: center;
+  margin-bottom: 20px;
+}
+.availability-info{
+  height: 30px;
+  width: 400px;
+}
+.ticket-price {
+  font-size: 1.5rem;
+  color: #FF6600;
+  margin-right: 10px;
+}
+
+.availability-dot {
+  width: 6px;
+  height: 6px;
+  background: #333;
+  border-radius: 50%;
+  margin: 0 10px;
+}
+
+.seat-type,
+.available-seats {
+  font-size: 1rem;
+  color: #555;
+}
+
+.choose-seat {
+  text-decoration: underline;
+  color: #0070C0;
+}
+
+.custom-button {
+  background-color: #E12424;
+  color: white;
+  padding: 10px 15px;
+  border: none;
+  border-radius: 10px;  
+  position: absolute;
+  margin-left: 16cm;
+  height: 40px !important;
+}
+
+.custom-button:hover {
+  background-color: #FF3333;
+}
+
+.checkbox-group-loaixe button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 15px;
+  height: 34px;
+  padding: 10px;
+  margin-bottom: 10px;
+  border-radius: 5px;
+  font-size: 14px;
+  border: 1px solid #FCDACE;
+  background: #f9f9fa;
+  margin-right: 10px;
+  outline: 0 !important;
+}
+
+.checkbox-group-loaixe button.active {
+  background-color: #fef6f3;
+  color: #ef5222;
+  outline: 0 !important;
+}
+.checkbox-group-loaixe {
+  display: flex;
+  flex-direction: row; 
+}
+

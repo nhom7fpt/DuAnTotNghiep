@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Đặt vé thành công</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        header {
+            background-color: #333;
+            color: white;
+            padding: 10px;
+            text-align: center;
+            width: 100%;
+        }
+
+        section {
+            display: flex;
+            justify-content: space-around;
+            padding: 20px;
+            width: 100%;
+        }
+
+        #car-info {
+            width: 40%;
+        }
+
+        #booking-info {
+            width: 40%;
+        }
+
+        #customer-info-form {
+            width: 40%;
+            margin-top: 20px;
+        }
+
+        footer {
+            background-color: #333;
+            color: white;
+            text-align: center;
+            padding: 10px;
+            width: 100%;
+            margin-top: auto;
+        }
+    </style>
+</head>
+
+<body>
+
+    <header>
+        <h1>Đặt vé thành công</h1>
+    </header>
+        <div class="thongtinve">
+            spa
+
+        </div>
+    <section>
+        <div id="car-info">
+            <h2>Thông tin vé</h2>
+            <p>Tài xế: Nguyễn Văn A</p>
+            <p>Biển số xe: 30A-12345</p>
+            <p>Số điện thoại: 0901234567</p>
+            <p>Hotline: 18001234</p>
+            <p>Lưu ý: Hướng dẫn lên xe - Hướng dẫn thanh toán</p>
+            <p>Điểm đón: ...</p>
+            <p>Điểm trả: ...</p>
+        </div>
+
+        <div id="booking-info">
+            <h2>Thông tin đặt vé</h2>
+            <p>Mã đơn hàng: ABC123</p>
+            <p>Họ tên: Nguyễn Thị B</p>
+            <p>Số điện thoại: 0987654321</p>
+            <p>Số CMND: 123456789</p>
+            <p>Email: nguyenthib@example.com</p>
+            <p>Tuyến đường: Tuyến 1</p>
+            <p>Loại xe: Sedan</p>
+            <p>Mã ghế: A01</p>
+            <p>Phương thức thanh toán: Credit Card</p>
+            <p>Trạng thái: Đã xác nhận</p>
+            <p>Giá vé: 50,000 VND</p>
+            <p>Tổng tiền: 50,000 VND</p>
+        </div>
+
+        <div id="customer-info-form">
+            <h2>Thông tin khách hàng</h2>
+            <form>
+                <label for="customerName">Họ tên:</label>
+                <input type="text" id="customerName" name="customerName" required>
+
+                <label for="customerPhone">Số điện thoại:</label>
+                <input type="tel" id="customerPhone" name="customerPhone" required>
+
+                <label for="customerIdCard">Số CMND:</label>
+                <input type="text" id="customerIdCard" name="customerIdCard" required>
+
+                <label for="customerEmail">Email:</label>
+                <input type="email" id="customerEmail" name="customerEmail" required>
+
+                <button type="submit">Xác nhận thông tin</button>
+            </form>
+        </div>
+    </section>
+
+    <footer>
+        <p>© 2023 Đặt vé thành công. Tất cả quyền được bảo lưu.</p>
+    </footer>
+
+</body>
+
+</html>
