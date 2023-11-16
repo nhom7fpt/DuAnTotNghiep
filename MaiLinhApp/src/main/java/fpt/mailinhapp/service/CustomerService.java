@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class CustomerService {
@@ -38,13 +39,13 @@ public class CustomerService {
         }
 
         var saveCus = dao.save(entity);
-        dto.setId(saveCus.getId());
+        dto.setSoDT(saveCus.getId());
 
         return dto;
     }
 
     @Transactional(rollbackFor = Exception.class)
-    public ThanhVienDto updateCustomers(Long id, ThanhVienDto dto){
+    public ThanhVienDto updateCustomers(String id, ThanhVienDto dto){
         var found = dao.findById(id).orElseThrow(()-> new CustomerException("Thành viên không tồn tại"));
         String[] ignoreFields = new String[]{"ngayTao","anhDaLuu"};
 
@@ -70,12 +71,12 @@ public class CustomerService {
 
         var saveEntity = dao.save(found);
 
-        dto.setId(found.getId());
+        dto.setSoDT(found.getId());
         return dto;
     }
 
     @Transactional(rollbackFor = Exception.class)
-    public void deleteCus(Long id){
+    public void deleteCus(String id){
         var found = dao.findById(id).orElseThrow(()->new CustomerException("Thành viên không tồn tại"));
 
         if(found.getAnhDaLuu() != null){
@@ -88,5 +89,13 @@ public class CustomerService {
 
     public List findAll() {
         return (List) dao.findAll();
+    }
+
+    public ThanhVienDto findById(String id) {
+        var found = dao.findById(id).orElseThrow(()->new CustomerException("Thành viên không tồn tại"));
+        ThanhVienDto dto = new ThanhVienDto();
+        BeanUtils.copyProperties(found, dto);
+
+        return dto;
     }
 }

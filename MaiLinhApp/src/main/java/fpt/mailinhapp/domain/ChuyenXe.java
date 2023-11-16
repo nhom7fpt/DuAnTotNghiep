@@ -15,7 +15,7 @@ public class ChuyenXe {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "ma_chuyen", nullable = false)
-    private Integer maChuyen;
+    private Long maChuyen;
 
     @Column(name = "so_khach")
     private String soKhach;

@@ -12,6 +12,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class TuyenXeService {
@@ -54,5 +55,15 @@ public class TuyenXeService {
 
     public List<TuyenXe> findAll() {
         return dao.findAll();
+    }
+
+    public List<String> loadLocation(){
+        var list = dao.findAll();
+
+        var listData = list.stream().map((item ->{
+            return item.getDiemDi();
+        })).distinct().collect(Collectors.toList());
+
+        return listData;
     }
 }
