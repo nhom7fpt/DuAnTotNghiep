@@ -1,0 +1,305 @@
+
+
+.container-dat-lai-mat-khau {
+    display: flex;
+
+}
+
+.sidebar-dat-lai-mat-khau {
+    border-radius: 16px;
+    border-style: solid;
+    border-width: 1px;
+    line-height: 24px;
+    padding: 8px;
+    width: 258px;
+    height: 536px;
+    margin-left: 115px;
+    margin-top: 41px;
+    position:absolute;
+    left:50px;
+    right:300px;
+    top:200px;
+}
+
+.sidebar-dat-lai-mat-khau ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.sidebar-dat-lai-mat-khau li {
+    align-items: center;
+    color: #111111;
+    display: flex;
+    line-height: 24px;
+    padding: 8px;
+    width: 240px;
+    height: 64px;
+}
+
+.sidebar-dat-lai-mat-khau li:hover {
+    background-color: #fff7f5; /* Màu nền khi trỏ vào */
+}
+
+.sidebar-dat-lai-mat-khau a {
+    font-size: 18px;
+    color: #111111;
+    line-height: 24px;
+    margin: 0px 0px 0px 12px;
+    text-decoration: none;
+    font-weight: 300;
+}
+
+.sidebar-dat-lai-mat-khau a img {
+    line-height: 24px;
+    margin-right: 12px;
+    vertical-align: middle;
+}
+
+/* New CSS for the password reset form */
+.dat-lai-mat-khau{
+    margin-top: 41px;
+    width: 838px;
+    height: 636px;
+    margin-left: 32px;
+   
+}
+
+.password-reset-form {
+    width: 459px;
+    height: 536px;
+    margin-left: 189px;
+}
+
+.top-text {
+    color: #333;
+    font-size: 26px;
+    font-weight: 600;
+    text-align: left;
+}
+
+.bottom-text{
+    color: #777;
+    font-size: 15px;
+    text-align: left;
+    margin-top: 10px;
+    width: 500px;
+}
+
+.form-dat-lai-mat-khau{
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    padding: 20px;
+    max-width: 400px;
+    margin-top: 40px;
+}
+
+.form-dat-lai-mat-khau .text-center{
+    font-size: 26px;
+    font-weight: 500;
+    text-align: center;
+}
+
+.form-dat-lai-mat-khau form{
+    font-size: 14px;
+    
+}
+
+.form-check{
+    margin-top: 20px;
+    
+}
+
+.form-check label{
+    display: block;
+    font-size: 16px;
+    color: #333;
+    margin-bottom: 6px;
+}
+
+.form-check input[type="password"]{
+    width: 95%;
+    height: 36px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    padding: 10px;
+    font-size: 16px;
+    margin-top: 4px;
+}
+
+/*  */
+
+.old-password {
+    margin-top: 20px;
+    position: relative;
+}
+
+.old-password label {
+    display: block;
+    font-size: 16px;
+    color: #333;
+    margin-bottom: 6px;
+}
+
+.old-password input[type="text"] {
+    width: 95%;
+    height: 36px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    padding: 10px;
+    font-size: 16px;
+    margin-top: 4px;
+    transition: none;
+}
+
+.old-password i {
+    position: absolute;
+    top: 50%;
+    right: 10px;
+    transform: translateY(-50%);
+    cursor: pointer;
+    color: #807d7d;
+    font-size: 18px;
+    margin-top: 3%;
+}
+
+.old-password i:hover{
+    color: #111111;
+}
+
+/*  */
+
+.password-input {
+    margin-top: 20px;
+    position: relative;
+    
+}
+
+.password-input label {
+    display: block;
+    font-size: 16px;
+    color: #333;
+    margin-bottom: 6px;
+}
+
+.password-input input[type="text"] {
+    width: 95%;
+    height: 36px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    padding: 10px;
+    font-size: 16px;
+    margin-top: 4px;
+    transition: none;
+}
+
+.password-input i {
+    position: absolute;
+    top: 50%;
+    right: 10px;
+    transform: translateY(-50%);
+    cursor: pointer;
+    color: #807d7d;
+    font-size: 18px;
+    margin-top: 3%;
+}
+
+.password-input i:hover{
+    color: #111111;
+}
+
+/*  */
+
+.confirm-password {
+    margin-top: 20px;
+}
+
+.confirm-password {
+    margin-top: 20px;
+    position: relative;
+}
+
+.confirm-password label {
+    display: block;
+    font-size: 16px;
+    color: #333;
+    margin-bottom: 6px;
+}
+
+.confirm-password input[type="text"] {
+    width: 95%;
+    height: 36px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    padding: 10px;
+    font-size: 16px;
+    margin-top: 4px;
+    transition: none;
+}
+
+.confirm-password i {
+    position: absolute;
+    top: 50%;
+    right: 10px;
+    transform: translateY(-50%);
+    cursor: pointer;
+    color: #807d7d;
+    font-size: 18px;
+    margin-top: 3%;
+}
+
+.confirm-password i:hover{
+    color: #111111;
+}
+/*  */
+
+.form-check .button-container{
+    margin-top: 49px;
+    text-align: center;
+    
+}
+
+.form-check .btn-cancel{
+    padding: 12px 24px;
+    color: #111111;
+    border: none;
+    border-radius: 20px;
+    cursor: pointer;
+    font-size: 16px;
+    margin-right: 10px;
+    width: 120px;
+    display: inline-block;
+    background-color: #ccc;
+}
+
+.form-check .btn-confirm{
+    padding: 12px 24px;
+    background-color: #ef5222;
+    color: #fff;
+    border: none;
+    border-radius: 20px;
+    cursor: pointer;
+    font-size: 16px;
+    margin-right: 10px;
+    display: inline-block;
+}
+
+/* Add hover effect to buttons */
+.form-check .btn-cancel:hover{
+    border: 1px solid #ef5222;
+    color: #ef5222;
+    /* height: 40px; */
+    display: inline-block;
+}
+
+.form-check .btn-confirm:hover {
+    background-color: #e7653e;
+    display: inline-block;
+}
+
+.lable{
+    color:
+#333333;
+font-family:
+InterTight;
+}

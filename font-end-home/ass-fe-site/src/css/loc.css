@@ -1,0 +1,347 @@
+.seat-selection {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: #fff;
+  border: 1px solid #ccc;
+  padding: 20px;
+  z-index: 1000;
+  border-radius: 10px;
+  max-width: 80%;
+  width: 400px;
+  text-align: center;
+}
+
+.modal-close {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  cursor: pointer;
+  font-size: 20px;
+}
+
+.seat-map {
+  margin-top: 20px;
+}
+
+
+.seats {
+  display: flex;
+  flex-direction: row; /* Sắp xếp các ghế ngang */
+  flex-wrap: wrap; /* Ghế tự động xuống dòng khi không đủ không gian */
+}
+
+
+.seat {
+  width: 50px;
+  height: 50px;
+  border: 1px solid #ccc;
+  cursor: pointer;
+  font-weight: bold;
+  text-align: center;
+  line-height: 50px;
+  font-size: 1.25rem;
+}
+
+.selected-loc {
+  background-color: #0070C0; /* Màu khi ghế được chọn */
+  color: #fff;
+}
+
+.btn-select-seats {
+  margin-top: 20px;
+  background-color: #0070C0;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  padding: 10px 20px;
+  cursor: pointer;
+  font-size: 1.25rem;
+}
+
+.btn-select-seats:hover {
+  background-color: #0055A5; /* Màu khi di chuột qua */
+}
+
+.container-loc {
+  width: 290px;
+  background: #F8F9F9;
+  border: 1px solid #EBEDEE;
+  font-size: 15px;
+  font-weight: medium;
+  border-radius: 10px;
+  padding: 20px;
+  height: 693px;
+
+}
+
+.title {
+  font-size: 1.25rem;
+  text-transform: uppercase;
+  text-align:left;
+  margin-left: 1cm;
+}
+
+.filter-label {
+  display: block;
+  margin-top: 12px;
+  font-size:
+    15px;
+  line-height:
+    22.5px;
+  text-align:
+    left;
+  margin-left: 1cm;
+}
+
+.checkbox-group {
+  display: flex;
+  flex-direction: column;
+  padding: 20px;
+}
+
+.checkbox-label {
+  display: flex;
+  color:
+    #212529;
+
+}
+
+.checkbox-input {
+  display: none;
+}
+
+.checkbox-custom {
+  width: 20px;
+  height: 20px;
+  border: 1px solid #000;
+  border-radius: 3px;
+  margin-right: 10px;
+  padding: 10px;
+}
+
+.checkbox-text {
+  font-weight: normal;
+  display: flex;
+  align-items: center;
+  font-size: 16px;
+}
+
+.checkbox-checkmark {
+  width: 16px;
+  height: 16px;
+
+  border-radius: 3px;
+  margin-right: 10px;
+  display: none;
+}
+
+.checkbox-input:checked+.checkbox-label .checkbox-checkmark {
+  display: block;
+}
+
+.checkbox-input:checked+.checkbox-custom {
+
+  background: red url('/src/image/check.svg') center/contain no-repeat;
+}
+
+.divide {
+  border-bottom: 1px solid #EBEDEE;
+  margin: 12px 0;
+}
+
+.button {
+  display: inline-block;
+  background-color: #E12424;
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  margin-top: 20px;
+}
+
+.button:hover {
+  background-color: #FF3333;
+}
+
+/* .results-container {
+    float: right;
+    width: calc(100% - 380px);
+    height: 245px;
+    padding: 20px;
+    border: 1px solid #EBEDEE;
+    border-radius: 10px;
+    margin-top: -17cm;
+    background: #fff;
+  } */
+.custom-container-loc {
+  background: #fff;
+  /* Màu nền cho phần kết quả */
+  border-radius: 10px;
+  padding: 20px;
+  margin-left: 13cm;
+  margin-top: -19cm;
+  width: 900px;
+}
+
+.chuyenxe-loc {
+  background: #fffcfc;
+  /* Màu nền cho phần kết quả */
+  border-radius: 20px;
+  padding: 20px;
+  box-shadow: 0px 2px 4px rgba(239, 3, 3, 0.1);
+  margin-bottom: 1cm;
+  width: 900px;
+}
+
+.departure-time,
+.arrival-time {
+  font-size: 24px
+}
+
+.info-container-loc {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.location-details {
+  display: flex;
+  align-items: center;
+}
+
+.location-details img,
+.location-details .separator,
+.location-details .travel-duration {
+  margin: 0 5px;
+  /* Điều chỉnh khoảng cách */
+}
+
+
+.separator {
+  margin: 0 10px;
+
+  height: 20px;
+
+}
+
+
+.location-info {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 20px;
+}
+
+.location-name {
+  font-size: 10px;
+  font-weight: bold;
+}
+
+.text-gray {
+  color: #777;
+}
+
+.special-note {
+  font-size: 1rem;
+  margin-bottom: 20px;
+}
+
+.underline {
+  text-decoration: underline;
+}
+
+.read-more {
+  color: #FF6600;
+}
+
+.divider {
+  border: none;
+  border-top: 1px solid #EBEDEE;
+  margin: 15px 0;
+}
+
+.availability-details {
+  display: flex;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.ticket-price {
+  font-size: 1.5rem;
+  color: #FF6600;
+  margin-right: 10px;
+}
+
+.availability-dot {
+  width: 6px;
+  height: 6px;
+  background: #333;
+  border-radius: 50%;
+  margin: 0 10px;
+}
+
+.seat-type,
+.available-seats {
+  font-size: 1rem;
+  color: #555;
+}
+
+.choose-seat {
+  text-decoration: underline;
+  color: #0070C0;
+}
+
+.custom-button {
+  display: inline-block;
+  background-color: #E12424;
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 1rem;
+}
+
+.custom-button:hover {
+  background-color: #FF3333;
+}
+
+.hidden-text {
+  color: #111111;
+  font-size: 20px;
+  font-weight: 500;
+  line-height: 28px;
+  margin-bottom: 15px;
+  margin-right: 16cm;
+}
+
+.icon-container {
+  display: flex;
+  align-items: center;
+  margin-top: 12px;
+  margin-bottom: 15px;
+}
+
+
+.custom-icon {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+  white-space: nowrap;
+  border: 1px solid #FCDACE;
+  padding: 8px;
+  font-size: 14px;
+  background: #f9f9fa;
+  color: #111111;
+  border-radius: 4px;
+  margin-right: 10px;
+}
+
+.custom-icon.active {
+  background-color: #fef6f3;
+  color: #ef5222;
+}

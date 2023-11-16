@@ -1,0 +1,113 @@
+
+/* New CSS for the password reset form */
+.thong-tin-tai-khoan{
+    width: 890px;
+    height: 700px;
+    margin-left: 100px;
+    
+}
+
+.top-text {
+    color: #333;
+    font-size: 26px;
+    font-weight: 600;
+    text-align: left;
+}
+
+.bottom-text{
+    color: #777;
+    font-size: 15px;
+    text-align: left;
+    margin-top: 10px;
+    margin-bottom: 24px;
+}
+
+.form-thong-tin-tai-khoan{
+    display: flex;
+    width: 838px;
+    height: 570px ;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    padding: 25px;
+}
+
+.left-side {
+    flex: 1;
+    width: 247px;
+    height: 394px;
+    padding: 8px;
+}
+
+.left-side img {
+    width: 200px;
+    height: 200px;
+    padding: 30px;
+    border-radius: 9999px;
+}
+
+.left-side p{
+    color: #637280;
+    font-size: 15px;
+    margin: 16px 0px 0px;
+    text-align: center;
+}
+
+.left-side input[type="file"] {
+    margin-top: 10px;
+}
+
+.right-side-tttk {
+    flex: 1;
+    width: 517px;
+    height: 394px;
+    padding: 8px;
+}
+
+.right-side form {
+    display: grid;
+    gap: 10px;
+}
+
+
+.cap-nhat button {
+    width: 180px;
+    height: 46px;
+    background-color: #f15a24;
+    border-radius: 24px;
+    color: white;
+    border: none;
+    text-align: center;
+    align-items: center;
+    padding: 4px 15px;
+    
+}
+.form-group {
+    display: flex;
+    align-items: center;
+    margin-bottom: 16px;
+}
+
+.form-group label {
+    flex-basis: 30%; 
+    color: #000; 
+    font-size: 13px; 
+    text-align: left;
+}
+
+.form-group input,
+.form-group select,
+.form-group textarea {
+    flex: 1; 
+    padding: 8px; 
+    border: 1px solid #ccc; 
+}
+.form-group input[type="text"],
+.form-group input[type="tel"],
+.form-group input[type="email"],
+.form-group input[type="date"]
+ {
+    flex: 1;
+    border: none; /* Remove the border for these input types */
+    outline: none; /* Remove the outline on focus */
+    padding: 4px; /* Add padding inside the input */
+}
