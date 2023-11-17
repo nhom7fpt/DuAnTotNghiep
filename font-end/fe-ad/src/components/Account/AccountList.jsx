@@ -4,8 +4,8 @@ import React, { Component } from "react";
 import { BiEdit, BiSolidTrash } from "react-icons/bi";
 import { MdPreview } from "react-icons/md";
 
-import ProductService from "../../services/ProductService";
 import AccountEdit from "./AccountEdit";
+import ImagesService from "../../services/ImagesService";
 
 export class AccountList extends Component {
   constructor(props) {
@@ -14,33 +14,27 @@ export class AccountList extends Component {
       previewVisible: false,
       selectedAcc: null,
       previewVisibleEdit: false,
-      
     };
   }
 
   onOkUpdate = (data) => {
     this.closeAccEdit();
     this.props.onOkUpdateAcc(data);
-    
   };
-  
 
   colorTag = (data) => {
     switch (data.vaiTro) {
-      case 'ThanhVien':
-        return 'green';
-      case 'QuanLy':
-        return 'red';
+      case "ThanhVien":
+        return "green";
+      case "QuanLy":
+        return "red";
       default:
-        return 'blue';
+        return "blue";
     }
-  }
-
- 
+  };
 
   showAccEdit = (acc) => {
     this.setState({ previewVisibleEdit: true, selectedAcc: acc });
-
   };
 
   closeAccEdit = () => {
@@ -63,7 +57,7 @@ export class AccountList extends Component {
                 {record.photoImage ? (
                   <Image
                     width="100%"
-                    src={ProductService.getProductImageUrl(
+                    src={ImagesService.getProductImageUrl(
                       record.photoImage.fileName
                     )}
                   />
@@ -107,20 +101,14 @@ export class AccountList extends Component {
             key="taiKhoan"
             dataIndex="taiKhoan"
             align="center"
-            render={(_,data)=>(
+            render={(_, data) => (
               <span>
-                <Tag color={this.colorTag (data)} key={data.taiKhoan}>
+                <Tag color={this.colorTag(data)} key={data.taiKhoan}>
                   {data.taiKhoan.vaiTro}
-
                 </Tag>
               </span>
             )}
           ></Column>
-
-          
-
-          
-
 
           <Column
             title="Hành Động"
@@ -129,14 +117,12 @@ export class AccountList extends Component {
             width={200}
             render={(_, record) => (
               <Space size="middle">
-                
                 <Tooltip placement="top" title="Edit Account" color="blue">
                   <Button
                     key={record.key}
                     type="link"
                     size="small"
                     onClick={() => this.showAccEdit(record.taiKhoan)}
-
                   >
                     <BiEdit color="blue" size={24} />
                   </Button>
@@ -160,7 +146,6 @@ export class AccountList extends Component {
           ></Column>
         </Table>
 
-        
         <AccountEdit
           onOkUpdate={this.onOkUpdate}
           visible={this.state.previewVisibleEdit}

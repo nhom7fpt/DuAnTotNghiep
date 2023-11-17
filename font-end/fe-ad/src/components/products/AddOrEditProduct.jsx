@@ -8,11 +8,8 @@ import { SaveOutlined } from "@ant-design/icons";
 import CategoryService from "../../services/CategoryService";
 import { toast } from "react-toastify";
 import { connect } from "react-redux";
-import {
-  insterProduct,
-  updateProduct,
-} from "../../redux/actions/actionProduct";
-import ProductService from "../../services/ProductService";
+import { insterCar, updateCar } from "../../redux/actions/actionCar";
+import ImagesService from "../../services/ImagesService";
 
 class AddOrEditProduct extends Component {
   constructor(props) {
@@ -20,60 +17,60 @@ class AddOrEditProduct extends Component {
 
     this.state = {
       step: 0,
-      product: {},
-      productImages: [],
-      updateProductImages: [],
+      Car: {},
+      Images: [],
+      updateImages: [],
       categories: [],
     };
   }
   goNext = (values) => {
-    this.setState({ ...this.state, product: values, step: 1 });
+    this.setState({ ...this.state, Car: values, step: 1 });
   };
   goPrevi = () => {
     this.setState({ ...this.state, step: 0 });
   };
 
   componentDidMount = () => {
-    this.loadData();
+    // this.loadData();
   };
   onUploadFile = (fileList) => {
-    this.setState({ ...this.state, updateProductImages: fileList });
+    this.setState({ ...this.state, updateImages: fileList });
   };
   static getDerivedStateFromProps(nextProps, prevState) {
     if (
-      nextProps.product &&
-      nextProps.product.images &&
-      nextProps.product.images.length > 0
+      nextProps.Car &&
+      nextProps.Car.images &&
+      nextProps.Car.images.length > 0
     ) {
-      let productImages = [];
+      let Images = [];
 
-      if (nextProps.product.images) {
-        productImages = nextProps.product.images.map((item) => ({
+      if (nextProps.Car.images) {
+        Images = nextProps.Car.images.map((item) => ({
           ...item,
           uid: item.id,
-          url: ProductService.getProductImageUrl(item.fileName),
+          url: ImagesService.getImageUrl(item.fileName),
           status: "done",
         }));
       }
-      return { ...prevState, productImages: productImages };
+      return { ...prevState, Images: Images };
     }
     return null;
   }
 
-  saveProduct = () => {
-    const { product, productImages, updateProductImages } = this.state;
-    const newProduct = {
-      ...product,
+  saveCar = () => {
+    const { Car, Images, updateImages } = this.state;
+    const newCar = {
+      ...Car,
       images:
-        updateProductImages && updateProductImages.length > 0
-          ? updateProductImages.map((item) => {
+        updateImages && updateImages.length > 0
+          ? updateImages.map((item) => {
               if (item.id) {
                 return { ...item };
               }
 
               return item.response;
             })
-          : productImages.map((item) => {
+          : Images.map((item) => {
               if (item.id) {
                 return { ...item };
               }
@@ -82,10 +79,8 @@ class AddOrEditProduct extends Component {
             }),
     };
 
-    if (newProduct.images && newProduct.images.length > 0) {
-      const uploading = newProduct.images.filter(
-        (item) => item.status !== "done"
-      );
+    if (newCar.images && newCar.images.length > 0) {
+      const uploading = newCar.images.filter((item) => item.status !== "done");
 
       if (uploading && uploading.length > 0) {
         notification.error({
@@ -95,7 +90,7 @@ class AddOrEditProduct extends Component {
         });
         return;
       }
-    } else if (newProduct.images.length === 0) {
+    } else if (newCar.images.length === 0) {
       notification.error({
         message: "Error",
         description:
@@ -107,25 +102,25 @@ class AddOrEditProduct extends Component {
 
     const { navigate } = this.props.router;
 
-    this.props.insterProduct(newProduct, navigate);
+    this.props.insterProduct(newCar, navigate);
 
-    this.setState({ ...this.state, product: {}, productImages: [] });
+    this.setState({ ...this.state, Car: {}, Images: [] });
   };
 
-  updateProduct = () => {
-    const { product, productImages, updateProductImages } = this.state;
-    const newProduct = {
-      ...product,
+  updateCar = () => {
+    const { Car, Images, updateImages } = this.state;
+    const newCar = {
+      ...Car,
       images:
-        updateProductImages && updateProductImages.length > 0
-          ? updateProductImages.map((item) => {
+        updateImages && updateImages.length > 0
+          ? updateImages.map((item) => {
               if (item.id) {
                 return { ...item };
               }
 
               return item.response;
             })
-          : productImages.map((item) => {
+          : Images.map((item) => {
               if (item.id) {
                 return { ...item };
               }
@@ -134,10 +129,8 @@ class AddOrEditProduct extends Component {
             }),
     };
 
-    if (newProduct.images && newProduct.images.length > 0) {
-      const uploading = newProduct.images.filter(
-        (item) => item.status !== "done"
-      );
+    if (newCar.images && newCar.images.length > 0) {
+      const uploading = newCar.images.filter((item) => item.status !== "done");
 
       if (uploading && uploading.length > 0) {
         notification.error({
@@ -147,11 +140,11 @@ class AddOrEditProduct extends Component {
         });
         return;
       }
-    } else if (newProduct.images.length === 0) {
+    } else if (newCar.images.length === 0) {
       notification.error({
         message: "Error",
         description:
-          "Product images are not choose. Please choose image before saving",
+          "Car images are not choose. Please choose image before saving",
         duration: 10,
       });
       return;
@@ -159,33 +152,33 @@ class AddOrEditProduct extends Component {
 
     const { navigate } = this.props.router;
 
-    this.props.updateProduct(newProduct.id, newProduct, navigate);
+    this.props.updateProduct(newCar.id, newCar, navigate);
 
-    this.setState({ ...this.state, product: {}, productImages: [] });
+    this.setState({ ...this.state, Car: {}, Images: [] });
   };
 
-  loadData = async () => {
-    try {
-      const categoryService = new CategoryService();
-      const categoryRes = await categoryService.getCategory();
+  // loadData = async () => {
+  //   try {
+  //     const categoryService = new CategoryService();
+  //     const categoryRes = await categoryService.getCategory();
 
-      this.setState({
-        ...this.state,
-        categories: categoryRes.data,
-      });
-    } catch (error) {
-      console.log(error);
-      toast.error("Error: " + error);
-    }
-  };
+  //     this.setState({
+  //       ...this.state,
+  //       categories: categoryRes.data,
+  //     });
+  //   } catch (error) {
+  //     console.log(error);
+  //     toast.error("Error: " + error);
+  //   }
+  // };
   render() {
     const { navigate } = this.props.router;
-    const { step, categories, productImages } = this.state;
-    const { product } = this.props;
+    const { step, categories, Images } = this.state;
+    const { Car } = this.props;
     return (
       <>
         <HeaderContent
-          title={product && product.id ? "Update Product" : "Add New Product"}
+          title={Car && Car.bienSoXe ? "Update Product" : "Add New Product"}
           navigate={navigate}
         />
 
@@ -209,11 +202,11 @@ class AddOrEditProduct extends Component {
             {step === 0 && (
               <>
                 <Divider></Divider>
-                <FormProduct
-                  product={product}
+                {/* <FormProduct
+                  product={Car}
                   goNext={this.goNext}
                   categories={categories}
-                ></FormProduct>
+                ></FormProduct> */}
               </>
             )}
             {step === 1 && (
@@ -223,7 +216,7 @@ class AddOrEditProduct extends Component {
                   <Col md={24}>
                     <UploadImage
                       onUploadFile={this.onUploadFile}
-                      fileList={productImages}
+                      fileList={Images}
                     ></UploadImage>
                     <Divider></Divider>
                     <div style={{ float: "right" }}>
@@ -231,12 +224,12 @@ class AddOrEditProduct extends Component {
                         <Button type="primary" onClick={this.goPrevi}>
                           Previous
                         </Button>
-                        {product && product.id ? (
-                          <Button type="primary" onClick={this.updateProduct}>
+                        {Car && Car.bienSoXe ? (
+                          <Button type="primary" onClick={this.updateCar}>
                             <SaveOutlined /> Update
                           </Button>
                         ) : (
-                          <Button type="primary" onClick={this.saveProduct}>
+                          <Button type="primary" onClick={this.saveCar}>
                             <SaveOutlined /> Save
                           </Button>
                         )}
@@ -254,12 +247,12 @@ class AddOrEditProduct extends Component {
 }
 
 const mapStateToProps = (state) => ({
-  product: state.ProductReducer.product,
+  Car: state.CarReducer.Car,
 });
 
 const mapDispatchToProps = {
-  insterProduct,
-  updateProduct,
+  insterCar,
+  updateCar,
 };
 
 export default connect(

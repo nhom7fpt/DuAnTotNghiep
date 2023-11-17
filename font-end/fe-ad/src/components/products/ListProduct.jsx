@@ -5,23 +5,23 @@ import ProductList from "./ProductList";
 import withRouter from "../../helpers/withRouter";
 import { connect } from "react-redux";
 import {
-  productEditData,
-  getListProduct,
-  deleteProduct,
-} from "../../redux/actions/actionProduct";
+  CarEditData,
+  getListCars,
+  deleteCar,
+} from "../../redux/actions/actionCar";
 
 class ListProduct extends Component {
   onEdit = (data) => {
-    this.props.productEditData(data, this.props.router.navigate);
+    this.props.CarEditData(data, this.props.router.navigate);
   };
   onConfirm = (data) => {
-    this.props.deleteProduct(data.id);
+    this.props.deleteCar(data.id);
   };
   componentDidMount = () => {
-    this.props.getListProduct();
+    this.props.getListCars();
   };
   render() {
-    const { products } = this.props;
+    const { Cars } = this.props;
 
     const { navigate } = this.props.router;
     return (
@@ -38,7 +38,7 @@ class ListProduct extends Component {
         </Button>
 
         <ProductList
-          Products={products}
+          Products={Cars}
           onEdit={this.onEdit}
           onConfirm={this.onConfirm}
         />
@@ -48,14 +48,14 @@ class ListProduct extends Component {
 }
 
 const mapStateToProps = (state) => ({
-  product: state.ProductReducer.product,
-  products: state.ProductReducer.products,
+  Car: state.CarReducer.Car,
+  Cars: state.CarReducer.Cars,
 });
 
 const mapDispatchToProps = {
-  productEditData,
-  getListProduct,
-  deleteProduct,
+  CarEditData,
+  getListCars,
+  deleteCar,
 };
 
 export default connect(

@@ -1,6 +1,6 @@
 import Column from "antd/es/table/Column";
 import React, { Component } from "react";
-import ProductService from "../../services/ProductService";
+// import ProductService from "../../services/ProductService";
 import { Card, Col, Divider, Image, Row, Space, Statistic, Table } from "antd";
 
 export class ListOrderDetail extends Component {
@@ -38,7 +38,7 @@ export class ListOrderDetail extends Component {
         <Divider></Divider>
         {odd !== null ? (
           <Table dataSource={odd} rowKey="id">
-            <Column
+            {/* <Column
               title="Image"
               key="fileName"
               align="center"
@@ -53,7 +53,7 @@ export class ListOrderDetail extends Component {
                   />
                 </Space>
               )}
-            ></Column>
+            ></Column> */}
 
             <Column
               title="Name"

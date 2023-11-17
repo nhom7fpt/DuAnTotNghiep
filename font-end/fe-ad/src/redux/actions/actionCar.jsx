@@ -1,31 +1,32 @@
 import { toast } from "react-toastify";
-import ProductService from "../../services/ProductService";
+
 import {
   COMMON_LOADING_SET,
-  PRODUCTS_DEL,
-  PRODUCTS_SET,
-  PRODUCT_ADDEND,
-  PRODUCT_SET,
+  CARS_DEL,
+  CARS_SET,
+  CAR_ADDEND,
+  CAR_SET,
 } from "./actiontypes";
+import CarService from "../../services/CarService";
 
-const service = new ProductService();
+const service = new CarService();
 
-export const insterProduct = (product, navigate) => async (dispatch) => {
+export const insterCar = (Car, navigate) => async (dispatch) => {
   try {
     dispatch({
       type: COMMON_LOADING_SET,
       payload: true,
     });
-    const res = await service.insertProduct(product);
+    const res = await service.insertProduct(Car);
 
     if (res && res.status === 201) {
       dispatch({
-        type: PRODUCT_SET,
+        type: CAR_SET,
         payload: res.data,
       });
 
       dispatch({
-        type: PRODUCT_ADDEND,
+        type: CAR_ADDEND,
         payload: res.data,
       });
 
@@ -49,22 +50,22 @@ export const insterProduct = (product, navigate) => async (dispatch) => {
     type: COMMON_LOADING_SET,
     payload: true,
   });
-  clearProduct();
+  clearCars();
   navigate("/product/list");
 };
 
-export const updateProduct = (id, product, navigate) => async (dispatch) => {
+export const updateCar = (id, Car, navigate) => async (dispatch) => {
   try {
     dispatch({
       type: COMMON_LOADING_SET,
       payload: true,
     });
 
-    const res = await service.updateProduct(id, product);
+    const res = await service.updateCar(id, Car);
 
     if (res && res.status === 201) {
       dispatch({
-        type: PRODUCT_SET,
+        type: CAR_SET,
         payload: res.data,
       });
 
@@ -88,20 +89,20 @@ export const updateProduct = (id, product, navigate) => async (dispatch) => {
     type: COMMON_LOADING_SET,
     payload: true,
   });
-  clearProduct();
+  clearCars();
   navigate("/product/list");
 };
 
-export const getListProduct = () => async (dispatch) => {
+export const getListCars = () => async (dispatch) => {
   try {
     dispatch({
       type: COMMON_LOADING_SET,
       payload: true,
     });
-    const res = await service.getProduct();
+    const res = await service.getCar();
     if (res && res.status === 200) {
       dispatch({
-        type: PRODUCTS_SET,
+        type: CARS_SET,
         payload: res.data,
       });
       dispatch({
@@ -125,21 +126,21 @@ export const getListProduct = () => async (dispatch) => {
   });
 };
 
-export const productEditData = (product, navigate) => (dispatch) => {
+export const CarEditData = (Car, navigate) => (dispatch) => {
   dispatch({
-    type: PRODUCT_SET,
-    payload: product,
+    type: CAR_SET,
+    payload: Car,
   });
-  navigate("/product/edit/" + product.id);
+  navigate("/product/edit/" + Car.bienSoXe);
 };
 
-export const deleteProduct = (id) => async (dispatch) => {
+export const deleteCar = (id) => async (dispatch) => {
   try {
     dispatch({
       type: COMMON_LOADING_SET,
       payload: true,
     });
-    const res = await service.deleteProduct(id);
+    const res = await service.deleteCar(id);
 
     console.log(res);
 
@@ -147,7 +148,7 @@ export const deleteProduct = (id) => async (dispatch) => {
       console.log("status:", res.status);
       console.log("Run Ac");
       dispatch({
-        type: PRODUCTS_DEL,
+        type: CARS_DEL,
         payload: id,
       });
 
@@ -168,9 +169,9 @@ export const deleteProduct = (id) => async (dispatch) => {
   }
 };
 
-export const clearProduct = () => (dispatch) => {
+export const clearCars = () => (dispatch) => {
   dispatch({
-    type: PRODUCT_SET,
+    type: CAR_SET,
     payload: {},
   });
 };

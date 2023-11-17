@@ -2,7 +2,7 @@ import { Button, Image, Popconfirm, Space, Table, Tooltip } from "antd";
 import Column from "antd/es/table/Column";
 import React, { Component } from "react";
 import { BiEdit, BiSolidTrash } from "react-icons/bi";
-import ProductService from "../../services/ProductService";
+import ImagesService from "../../services/ImagesService";
 import { MdPreview } from "react-icons/md";
 import withRouter from "../../helpers/withRouter";
 import ProductDetail from "./ProductDetail";
@@ -11,24 +11,24 @@ class ProductList extends Component {
     super(props);
     this.state = {
       previewVisible: false,
-      selectedProduct: null,
+      selectedCar: null,
     };
   }
 
-  showProductDetail = (product) => {
-    this.setState({ previewVisible: true, selectedProduct: product });
+  showProductDetail = (Car) => {
+    this.setState({ previewVisible: true, selectedCar: Car });
   };
 
   closeProductDetail = () => {
-    this.setState({ previewVisible: false, selectedProduct: null });
+    this.setState({ previewVisible: false, selectedCar: null });
   };
 
   render() {
-    const { Products } = this.props;
+    const { Cars } = this.props;
 
     return (
       <>
-        <Table dataSource={Products} rowKey="id">
+        <Table dataSource={Cars} rowKey="id">
           <Column
             title="Image"
             key="fileName"
@@ -38,7 +38,7 @@ class ProductList extends Component {
               <Space size="middle">
                 <Image
                   width="100%"
-                  src={ProductService.getProductImageUrl(record.image.fileName)}
+                  src={ImagesService.getImageUrl(record.image.fileName)}
                 />
               </Space>
             )}
@@ -141,7 +141,7 @@ class ProductList extends Component {
 
         <ProductDetail
           visible={this.state.previewVisible}
-          product={this.state.selectedProduct}
+          Car={this.state.selectedCar}
           onClose={this.closeProductDetail}
         />
       </>
