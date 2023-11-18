@@ -10,6 +10,7 @@ import {
   getListManufacturer,
   clearList,
   deleteManufacturer,
+  updateManufacturer,
 } from "../../redux/actions/manufacturerAction";
 import { ExclamationCircleOutlined } from "@ant-design/icons";
 
@@ -20,35 +21,43 @@ class Manufacturer extends Component {
     this.state = {
       open: false,
       manufacturer: {
-        maChuyenXe: "",
-        diemDi: "",
-        diemDen: "",
-        noiDon: "",
-        noiTra: "",
-        tgDi: "",
-        tgDen: "",
-        gia: "",
+        id: "",
+        tenThuongHieu: "",
       },
     };
   }
-  // componentDidMount = () => {
-  //   this.props.getListManufacturer();
-  // };
+  componentDidMount = () => {
+    this.props.getListManufacturer();
+  };
 
   onCreate = (value) => {
-    console.log(value);
     this.props.insterManufacturer(value);
   };
+  onEdit = (value) => {
+    this.props.updateManufacturer(value.id, value);
+  };
   editManu = (data) => {
-    console.log("data truyền vào: ", data);
-
     this.setState({ open: true, manufacturer: data });
+  };
+  onCancel = () => {
+    this.setState({
+      open: false,
+      manufacturer: {
+        id: "",
+        tenThuongHieu: "",
+      },
+    });
+  };
+  handleDeleteManu = (data) => {
+    this.props.deleteManufacturer(data.id);
+    this.setState({
+      ...this.state,
+      manufacturer: { id: "", tenThuongHieu: "" },
+    });
   };
 
   openDeleteModal = (data) => {
     this.setState({ ...this.state, manufacturer: data });
-
-    console.log(data);
 
     const message = "Do you want to delete the Manufacturer " + data.name;
 
@@ -59,13 +68,6 @@ class Manufacturer extends Component {
       onOk: () => this.handleDeleteManu(data),
       okText: "Delete",
       cancelText: "Cancel",
-    });
-  };
-  handleDeleteManu = (data) => {
-    this.props.deleteManufacturer(data.id);
-    this.setState({
-      ...this.state,
-      manufacturer: { id: "", name: "", logo: "", logoFile: [] },
     });
   };
 
@@ -90,9 +92,8 @@ class Manufacturer extends Component {
           manufacturer={this.state.manufacturer}
           open={open}
           onCreate={this.onCreate}
-          onCancel={() => {
-            this.setState({ ...this.state, open: false });
-          }}
+          onEdit={this.onEdit}
+          onCancel={this.onCancel}
         />
         <ListManufacturer
           dataSource={manufactureres}
@@ -112,6 +113,7 @@ const mapDispatchToProps = {
   insterManufacturer,
   getListManufacturer,
   clearList,
+  updateManufacturer,
   deleteManufacturer,
 };
 

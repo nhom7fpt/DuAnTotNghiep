@@ -21,7 +21,7 @@ class ListManufacturer extends Component {
     return (
       <div>
         <Table dataSource={dataSource} rowKey="id">
-          <Column
+          {/* <Column
             title="Logo"
             key="logo"
             dataIndex="logo"
@@ -35,7 +35,7 @@ class ListManufacturer extends Component {
                 />
               </Space>
             )}
-          ></Column>
+          ></Column> */}
 
           <Column
             title="ID"
@@ -46,9 +46,9 @@ class ListManufacturer extends Component {
           ></Column>
 
           <Column
-            title="Name"
-            key="name"
-            dataIndex="name"
+            title="Tên thương hiệu"
+            key="tenThuongHieu"
+            dataIndex="tenThuongHieu"
             align="center"
           ></Column>
 

@@ -1,9 +1,9 @@
 import axios from "axios";
-import { API_MANUFACTURER, API_TEST, API_TEST1 } from "./constant";
+import { API_MANUFACTURER } from "./constant";
 
 export default class ManufacturerService {
   insertManufacturer = async (Manufacturer) => {
-    return await axios.post(API_TEST1, Manufacturer);
+    return await axios.post(API_MANUFACTURER, Manufacturer);
   };
 
   getManufacturer = async () => {
@@ -19,13 +19,7 @@ export default class ManufacturerService {
   };
 
   updateManufacturer = async (id, Manufacturer) => {
-    let formData = new FormData();
-    formData.append("name", Manufacturer.name);
-    if (Manufacturer.logoFile[0].originFileObj) {
-      formData.append("logoFile", Manufacturer.logoFile[0].originFileObj);
-    }
-
-    return await axios.patch(API_MANUFACTURER + "/ud/" + id, formData);
+    return await axios.patch(API_MANUFACTURER + "/" + id, Manufacturer);
   };
 
   static getManufacturerLogo = (fileName) => {

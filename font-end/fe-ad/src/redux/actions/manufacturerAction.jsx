@@ -7,6 +7,7 @@ import {
   MANUFACTURERES_STATE_CLEAR,
   MANUFACTURERES_DELETE,
   MANUFACTURER_APPEND,
+  MANUFACTURER_UPDATE,
 } from "./actiontypes";
 
 const service = new ManufacturerService();
@@ -56,10 +57,14 @@ export const updateManufacturer =
         payload: true,
       });
       const res = await service.updateManufacturer(id, manufacturer);
-
-      if (res.status === 201) {
+      console.log(res);
+      if (res.status === 200) {
         dispatch({
-          type: MANUFACTURER_SET,
+          type: MANUFACTURER_UPDATE,
+          payload: id,
+        });
+        dispatch({
+          type: MANUFACTURER_APPEND,
           payload: res.data,
         });
         dispatch({

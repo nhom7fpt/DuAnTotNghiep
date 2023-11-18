@@ -18,10 +18,6 @@ public class ThuongHieuService {
 
     @Transactional(rollbackFor = Exception.class)
     public ThuongHieuDto createThuongHieu(ThuongHieuDto dto){
-        var found = thuongHieuRepository.findById(dto.getId());
-        if (found.isPresent()){
-            throw new EmployeeException("Thương hiệu đã tồn tại");
-        }
 
         ThuongHieu entity = new ThuongHieu();
         BeanUtils.copyProperties(dto, entity);
