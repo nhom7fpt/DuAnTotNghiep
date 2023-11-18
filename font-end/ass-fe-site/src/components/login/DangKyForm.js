@@ -49,7 +49,7 @@ const DangKyForm = (props) => {
       </Form.Item>
 
       <Form.Item
-        name="matkhau"
+        name="matKhau"
         rules={[
           {
             required: true,
@@ -65,7 +65,7 @@ const DangKyForm = (props) => {
       </Form.Item>
 
       <Form.Item
-        name="hoten"
+        name="hoTen"
         rules={[
           {
             required: true,

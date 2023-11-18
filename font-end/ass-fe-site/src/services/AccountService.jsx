@@ -8,10 +8,5 @@ export default class AccountService {
   Login = async (account) => {
     return axios.post(API_ACC, account);
   };
-  updateAccount = async (id, account) => {
-    return await axios.patch( API_UPDATE + "/" + id, account);
-};
-fillAccount = async (id, account) => {
-  return await axios.get( API_UPDATE + "/" + id, account);
-};
+
 }

@@ -1,5 +1,6 @@
 package fpt.mailinhapp.clientController;
 
+import fpt.mailinhapp.domain.TaiKhoan;
 import fpt.mailinhapp.domain.ThanhVien;
 import fpt.mailinhapp.domain.VaiTro;
 
@@ -9,6 +10,7 @@ import fpt.mailinhapp.respondata.AccountReg;
 import fpt.mailinhapp.service.CustomerService;
 import fpt.mailinhapp.service.MapValidationErrorService;
 import fpt.mailinhapp.service.TaiKhoanService;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -38,8 +40,9 @@ public class AccountCLController {
 
 
         ThanhVienDto tv = new ThanhVienDto();
-        tv.setSoDT(dto.getTenTaiKhoan());
+        tv.setId(dto.getTenTaiKhoan());
         tv.setHoTen(dto.getHoTen());
+
         customerService.insertCustomers(tv);
         var newDto = service.insertAccount(tkDto);
 

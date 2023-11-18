@@ -67,4 +67,12 @@ public class TaiKhoanService {
         BeanUtils.copyProperties(found,dto);
         return dto;
     }
+
+    public TaiKhoanDto findById(String id) {
+        var found = dao.findById(id).orElseThrow(()-> new AccountException("Tài khoản không tồn tại"));
+        TaiKhoanDto dto = new TaiKhoanDto();
+        BeanUtils.copyProperties(found,dto);
+
+        return dto;
+    }
 }

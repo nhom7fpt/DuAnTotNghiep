@@ -1,5 +1,6 @@
 package fpt.mailinhapp.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -36,6 +37,7 @@ public class ThanhVien {
     @Column(name = "ngay_chinh_su")
     private Date ngayChinhSu;
 
+    @JsonIgnore
     @OneToOne(orphanRemoval = true)
     @JoinColumn(name = "tai_khoan_ten_tai_khoan")
     private TaiKhoan taiKhoan;

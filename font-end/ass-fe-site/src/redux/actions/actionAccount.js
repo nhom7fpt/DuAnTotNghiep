@@ -15,7 +15,6 @@ export const createAccount = (account, navigate) => async (dispatch) => {
           type: ACCOUNT_SET,
           payload: res.data,
         });
-        
         toast.success('Đăng kí thành công', {
           position:"top-right",
          reverseOrder: false,
@@ -27,12 +26,9 @@ export const createAccount = (account, navigate) => async (dispatch) => {
           progress: undefined,
           theme: "colored",
           });
-          
-
           navigate("/");
       }   
     }
-    
   } catch (error) {
     if (error.response && error.response.status === 400) {
       const errorMessage =
@@ -89,6 +85,7 @@ export const login = (account, navigate) => async (dispatch) => {
       });
 
       localStorage.setItem("username", res.data.tenTaiKhoan);
+   
 
       navigate("/thongttk");
     } 

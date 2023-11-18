@@ -26,7 +26,7 @@ function Navbar(props) {
   const loggedInUser = useSelector((state) => state.AccountReducer.loggedInUser);
   const account = useSelector((state) => state.AccountReducer.account);
   const user = localStorage.getItem("username");
-
+  const hoTen = localStorage.getItem("hoTen");
   const toggleDropdown = () => {
     setIsDropdownOpen(!isDropdownOpen);
   };
@@ -89,7 +89,7 @@ function Navbar(props) {
           </NavLink>
         ) : (
           <NavLink to="#" activeClassName="active" onClick={toggleDropdown}>
-            Xin chào {user}  <img src={dropdown} alt="" style={{width:'36px', height:'36px', marginTop:'-10px'}}/> 
+            Xin chào {hoTen}  <img src={dropdown} alt="" style={{width:'36px', height:'36px', marginTop:'-10px'}}/> 
           </NavLink>
         )}
         {isDropdownOpen && (

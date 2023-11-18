@@ -1,0 +1,60 @@
+import { toast } from "react-toastify";
+import CustomService from "../../services/CustomService";
+import { CUSTOM_SET } from "./actionType";
+const service = new CustomService();
+export const updateCustom = (id ,account, navigate) => async (dispatch) => {
+  try {
+    const res = await service.updateAccount(id,account);
+    console.log(res.data);
+    if (res.status === 200) {
+      if (res.data) {
+        dispatch({
+          type: CUSTOM_SET,
+          payload: res.data,
+        });
+        toast.success('Đăng kí thành công', {
+          position:"top-right",
+         reverseOrder: false,
+          autoClose: 1000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "colored",
+          });
+          navigate("/");
+      }   
+    }
+  } catch (error) {
+    if (error.response && error.response.status === 400) {
+      const errorMessage =
+        error.response.data || '';
+      toast.error(errorMessage, {
+        position: "top-right",
+        autoClose: 2000,
+        hideProgressBar: true,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "colored",
+        backgroundColor: "#ff0000",
+      });
+    } else {
+      toast.error('Không có dữ liệu trả về từ máy chủ!', {
+        position: "top-right",
+        autoClose: 2000,
+        hideProgressBar: true,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "colored",
+        backgroundColor: "#ff0000", 
+        });
+  
+    }
+
+  }
+};

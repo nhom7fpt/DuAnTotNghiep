@@ -39,7 +39,7 @@ public class CustomerService {
         }
 
         var saveCus = dao.save(entity);
-        dto.setSoDT(saveCus.getId());
+        dto.setId(saveCus.getId());
 
         return dto;
     }
@@ -69,9 +69,10 @@ public class CustomerService {
             }
         }
 
+
         var saveEntity = dao.save(found);
 
-        dto.setSoDT(found.getId());
+        dto.setId(found.getId());
         return dto;
     }
 
