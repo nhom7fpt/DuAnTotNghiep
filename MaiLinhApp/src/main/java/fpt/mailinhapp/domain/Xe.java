@@ -20,8 +20,6 @@ public class Xe {
     @Column(name = "bien_so_xe", nullable = false)
     private String bienSoXe;
 
-    @Column(name = "so_ghe")
-    private Integer soGhe;
 
     @Temporal(TemporalType.DATE)
     @Column(name = "ngay_mua", nullable = true)

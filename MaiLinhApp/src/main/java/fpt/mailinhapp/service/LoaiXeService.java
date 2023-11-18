@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class LoaiXeService {
@@ -45,5 +46,14 @@ public class LoaiXeService {
 
     public List<LoaiXe> findAll() {
         return dao.findAll();
+    }
+
+    public LoaiXeDto findById(Integer id) {
+        var found = dao.findById(id).orElseThrow(()->new RuntimeException("loại xe không tồn tại"));
+
+        LoaiXeDto dto = new LoaiXeDto();
+        BeanUtils.copyProperties(found,dto);
+
+        return dto;
     }
 }

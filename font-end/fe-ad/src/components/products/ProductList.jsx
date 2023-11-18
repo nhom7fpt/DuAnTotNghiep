@@ -30,31 +30,40 @@ class ProductList extends Component {
       <>
         <Table dataSource={Cars} rowKey="id">
           <Column
-            title="Image"
-            key="fileName"
+            title="Ảnh Đã Lưu"
+            key="anhDaLuu"
             align="center"
             width={90}
             render={(_, record) => (
               <Space size="middle">
                 <Image
                   width="100%"
-                  src={ImagesService.getImageUrl(record.image.fileName)}
+                  src={ImagesService.getImageUrl(record)}
                 />
               </Space>
             )}
           ></Column>
 
           <Column
-            title="Name"
-            key="name"
-            dataIndex="name"
+            title="Biển Số Xe"
+            key="bienSoXe"
+            dataIndex="bienSoXe"
             align="center"
+          ></Column>
+          <Column
+            title="Số Ghế"
+            key="loaiXe"
+            dataIndex="loaiXe"
+            align="center"
+            render={(text, record) => (
+              <label>{record.loaiXe.soGhe}</label>
+            )}
           ></Column>
 
           <Column
-            title="Is Featured"
-            key="isFeatured"
-            dataIndex="isFeatured"
+            title="Ngày Mua"
+            key="ngayMua"
+            dataIndex="ngayMua"
             align="center"
             render={(isFeatured) => (
               <label>{isFeatured ? "Featured" : "Not Featured"}</label>
@@ -62,32 +71,46 @@ class ProductList extends Component {
           />
 
           <Column
-            title="Status"
-            key="status"
-            dataIndex="status"
+            title="Ngày Đăng Kiểm"
+            key="ngayDangKiem"
+            dataIndex="ngayDangKiem"
             align="center"
             render={(status) => <label>{status}</label>}
           />
 
           <Column
-            title="Quantity"
-            key="quantity"
-            dataIndex="quantity"
+            title="Giá Mua"
+            key="giaMua"
+            dataIndex="giaMua"
             align="center"
           ></Column>
 
           <Column
-            title="Price"
-            key="price"
-            dataIndex="price"
+            title="Nơi Mua"
+            key="noiMua"
+            dataIndex="noiMua"
             align="center"
           ></Column>
           <Column
-            title="Discount"
-            key="discount"
-            dataIndex="discount"
+            title="Thương Hiệu"
+            key="thuongHieu"
+            dataIndex="thuongHieu"
             align="center"
+            render={(text, record) => (
+              <label>{record.thuongHieu.tenThuongHieu}</label>
+            )}
           ></Column>
+
+          <Column
+            title="Loại Xe"
+            key="loaiXe"
+            dataIndex="loaiXe"
+            align="center"
+            render={(text, record) => (
+              <label>{record.loaiXe.tenLoai}</label>
+            )}
+          ></Column>
+
 
           <Column
             title="Action"

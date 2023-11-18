@@ -100,6 +100,7 @@ export const getListCars = () => async (dispatch) => {
       payload: true,
     });
     const res = await service.getCar();
+    console.log(res);
     if (res && res.status === 200) {
       dispatch({
         type: CARS_SET,

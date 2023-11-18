@@ -24,6 +24,10 @@ public class LoaiXeController {
         return new ResponseEntity<>(service.findAll(), HttpStatus.OK);
     }
 
+    @GetMapping("/{id}")
+    public ResponseEntity findById(@PathVariable Integer id){
+        return new ResponseEntity<>(service.findById(id),HttpStatus.OK);
+    }
     @PostMapping
     public ResponseEntity insertLoaiXe(@Validated @RequestBody LoaiXeDto dto, BindingResult result){
         ResponseEntity error = errorService.mapValidationField(result);
@@ -36,7 +40,7 @@ public class LoaiXeController {
         return new ResponseEntity<>(saveDto, HttpStatus.CREATED);
     }
 
-    @PatchMapping("{/id}")
+    @PatchMapping("{id}")
     public ResponseEntity updateLoaiXe(@PathVariable Integer id,@Validated @RequestBody LoaiXeDto dto, BindingResult result){
         ResponseEntity error = errorService.mapValidationField(result);
 

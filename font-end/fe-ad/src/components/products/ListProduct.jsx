@@ -38,7 +38,7 @@ class ListProduct extends Component {
         </Button>
 
         <ProductList
-          Products={Cars}
+          Cars={Cars}
           onEdit={this.onEdit}
           onConfirm={this.onConfirm}
         />

@@ -5,7 +5,7 @@ import { Button, Col, Divider, Row, Space, Steps, notification } from "antd";
 import FormProduct from "./FormProduct";
 import UploadImage from "./UploadImage";
 import { SaveOutlined } from "@ant-design/icons";
-import CategoryService from "../../services/CategoryService";
+
 import { toast } from "react-toastify";
 import { connect } from "react-redux";
 import { insterCar, updateCar } from "../../redux/actions/actionCar";
@@ -64,19 +64,19 @@ class AddOrEditProduct extends Component {
       images:
         updateImages && updateImages.length > 0
           ? updateImages.map((item) => {
-              if (item.id) {
-                return { ...item };
-              }
+            if (item.id) {
+              return { ...item };
+            }
 
-              return item.response;
-            })
+            return item.response;
+          })
           : Images.map((item) => {
-              if (item.id) {
-                return { ...item };
-              }
+            if (item.id) {
+              return { ...item };
+            }
 
-              return item.response;
-            }),
+            return item.response;
+          }),
     };
 
     if (newCar.images && newCar.images.length > 0) {
@@ -114,19 +114,19 @@ class AddOrEditProduct extends Component {
       images:
         updateImages && updateImages.length > 0
           ? updateImages.map((item) => {
-              if (item.id) {
-                return { ...item };
-              }
+            if (item.id) {
+              return { ...item };
+            }
 
-              return item.response;
-            })
+            return item.response;
+          })
           : Images.map((item) => {
-              if (item.id) {
-                return { ...item };
-              }
+            if (item.id) {
+              return { ...item };
+            }
 
-              return item.response;
-            }),
+            return item.response;
+          }),
     };
 
     if (newCar.images && newCar.images.length > 0) {

@@ -1,26 +1,27 @@
 import { toast } from "react-toastify";
-import CategoryService from "../../services/CategoryService";
+import loaiXeService from "../../services/LoaiXeService";
 import {
-  CATEGORIES_DELETE,
-  CATEGORIES_SET,
-  CATEGORIES_STATE_CLEAR,
-  CATEGORY_SET,
+  LOAIXES_DELETE,
+  LOAIXES_SET,
+  LOAIXES_STATE_CLEAR,
+  LOAIXE_SET,
   COMMON_LOADING_SET,
 } from "./actiontypes";
 
-const service = new CategoryService();
+const service = new loaiXeService();
 
-export const insterCategory = (category, navigate) => async (dispatch) => {
+export const insterloaiXe = (loaiXe, navigate) => async (dispatch) => {
   try {
     dispatch({
       type: COMMON_LOADING_SET,
       payload: true,
     });
-    const res = await service.insertCategory(category);
 
-    if (res.status === 201) {
+    const res = await service.insertLoaiXe(loaiXe);
+    console.log(res);
+    if (res.data && res.status === 201) {
       dispatch({
-        type: CATEGORY_SET,
+        type: LOAIXE_SET,
         payload: res.data,
       });
       dispatch({
@@ -28,30 +29,32 @@ export const insterCategory = (category, navigate) => async (dispatch) => {
         payload: false,
       });
       toast.success("Save Done");
-      navigate("/category/list");
+      navigate("/loaiXe/list");
     }
   } catch (error) {
     dispatch({
       type: COMMON_LOADING_SET,
       payload: false,
     });
-    toast.error(
-      error.response.data ? error.response.data.message : error.message
-    );
+    // toast.error(
+    //   error.response.data ? error.response.data.message : error.message
+    // );
+    console.log(error);
+
   }
 };
 
-export const updateCategory = (id, category, navigate) => async (dispatch) => {
+export const updateloaiXe = (id, loaiXe, navigate) => async (dispatch) => {
   try {
     dispatch({
       type: COMMON_LOADING_SET,
       payload: true,
     });
-    const res = await service.updateCategory(id, category);
+    const res = await service.updateloaiXe(id, loaiXe);
 
     if (res.status === 201) {
       dispatch({
-        type: CATEGORY_SET,
+        type: LOAIXE_SET,
         payload: res.data,
       });
       dispatch({
@@ -59,7 +62,7 @@ export const updateCategory = (id, category, navigate) => async (dispatch) => {
         payload: false,
       });
       toast.success("Update Done");
-      navigate("/category/list");
+      navigate("/loaiXe/list");
     }
   } catch (error) {
     dispatch({
@@ -72,17 +75,18 @@ export const updateCategory = (id, category, navigate) => async (dispatch) => {
   }
 };
 
-export const getListCategory = () => async (dispatch) => {
+export const getListLoaiXe = () => async (dispatch) => {
   try {
     dispatch({
       type: COMMON_LOADING_SET,
       payload: true,
     });
-    const res = await service.getCategory();
+    const res = await service.getLoaiXe();
+    console.log(res);
 
     if (res.status === 200) {
       dispatch({
-        type: CATEGORIES_SET,
+        type: LOAIXES_SET,
         payload: res.data,
       });
 
@@ -103,22 +107,22 @@ export const getListCategory = () => async (dispatch) => {
 };
 
 export const clearList = () => async (dispatch) => {
-  dispatch({ type: CATEGORIES_STATE_CLEAR });
+  dispatch({ type: LOAIXES_STATE_CLEAR });
 };
 
-export const deleteCategory = (id) => async (dispatch) => {
+export const deleteLoaiXe = (id) => async (dispatch) => {
   try {
     dispatch({
       type: COMMON_LOADING_SET,
       payload: true,
     });
-    const res = await service.deleteCategory(id);
+    const res = await service.deleteloaiXe(id);
 
     console.log(res);
 
     if (res.status === 200) {
       dispatch({
-        type: CATEGORIES_DELETE,
+        type: LOAIXES_DELETE,
         payload: id,
       });
 
@@ -139,7 +143,7 @@ export const deleteCategory = (id) => async (dispatch) => {
   }
 };
 
-export const getCategory = (id) => async (dispatch) => {
+export const getloaiXe = (id) => async (dispatch) => {
   try {
     dispatch({
       type: COMMON_LOADING_SET,
@@ -147,11 +151,11 @@ export const getCategory = (id) => async (dispatch) => {
     });
     const res = await service.getItem(id);
 
-    console.log(res);
+
 
     if (res.status === 200) {
       dispatch({
-        type: CATEGORY_SET,
+        type: LOAIXE_SET,
         payload: res.data,
       });
 
@@ -172,9 +176,9 @@ export const getCategory = (id) => async (dispatch) => {
   }
 };
 
-export const clearCategory = () => async (dispatch) => {
+export const clearloaiXe = () => async (dispatch) => {
   dispatch({
-    type: CATEGORY_SET,
+    type: LOAIXE_SET,
     payload: { id: "", name: "", status: "Visible" },
   });
 };

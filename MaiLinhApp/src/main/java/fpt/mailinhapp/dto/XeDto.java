@@ -18,7 +18,7 @@ import java.util.Set;
 @AllArgsConstructor
 public class XeDto implements Serializable {
     String bienSoXe;
-    Integer soGhe;
+
     Date ngayMua;
     Date ngayDangKiem;
     Long giaMua;

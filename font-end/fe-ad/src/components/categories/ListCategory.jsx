@@ -7,73 +7,69 @@ import { ExclamationCircleOutlined } from "@ant-design/icons";
 import { BiEdit, BiSolidTrash } from "react-icons/bi";
 import { connect } from "react-redux";
 import {
-  getListCategory,
+  getListLoaiXe,
   clearList,
-  deleteCategory,
-} from "../../redux/actions/actionCategory";
+  deleteLoaiXe,
+} from "../../redux/actions/actionLoaixe";
 
 class ListCategory extends Component {
-  constructor() {
-    super();
-    this.state = {
-      categories: [],
-    };
-  }
+
 
   componentDidMount = () => {
-    this.props.getListCategory();
+    this.props.getListLoaiXe();
   };
 
   componentWillUnmount = () => {
     this.props.clearList();
   };
 
-  editCategory = (data) => {
-    console.log(data);
+  editLoaiXe = (data) => {
+
 
     const { navigate } = this.props.router;
     navigate("/category/update/" + data.id);
   };
 
   openDeleteModal = (data) => {
-    this.setState({ ...this.state, category: data });
+    this.setState({ ...this.state, LoaiXe: data });
 
     console.log(data);
 
-    const message = "Do you want to delete the category " + data.name;
+    const message = "Do you want to delete the LoaiXe " + data.name;
 
     Modal.confirm({
       title: "Confirm",
       icon: <ExclamationCircleOutlined />,
       content: message,
-      onOk: () => this.handleDeleteCategory(data),
+      onOk: () => this.handleDeleteLoaiXe(data),
       okText: "Delete",
       cancelText: "Cancel",
     });
   };
-  handleDeleteCategory = (data) => {
-    this.props.deleteCategory(data.id);
+  handleDeleteLoaiXe = (data) => {
+    this.props.deleteLoaiXe(data.id);
   };
 
   render() {
     const { navigate } = this.props.router;
-    const { categories, isLoading } = this.props;
+    const { LoaiXes, isLoading } = this.props;
+    console.log(LoaiXes);
 
     if (isLoading) {
       return (
         <>
-          <HeaderContent title="List Category" navigate={navigate} />
+          <HeaderContent title="List LoaiXe" navigate={navigate} />
           <Skeleton active />
         </>
       );
     }
     return (
       <div>
-        <HeaderContent title="List Category" navigate={navigate} />
+        <HeaderContent title="List LoaiXe" navigate={navigate} />
 
-        <Table dataSource={categories} rowKey="id">
+        <Table dataSource={LoaiXes} rowKey="id">
           <Column
-            title="Category ID"
+            title="LoaiXe ID"
             key="id"
             dataIndex="id"
             align="center"
@@ -81,21 +77,25 @@ class ListCategory extends Component {
           ></Column>
 
           <Column
-            title="Name"
-            key="name"
-            dataIndex="name"
+            title="Tên Loại Xe"
+            key="tenLoai"
+            dataIndex="tenLoai"
             align="center"
           ></Column>
 
           <Column
-            title="Status"
-            key="status"
-            dataIndex="status"
+            title="Số Ghế"
+            key="soGhe"
+            dataIndex="soGhe"
             align="center"
-            render={(_, { status }) => {
-              let color = status === "Visible" ? "green" : "volcano";
-              return <Tag color={color}>{status}</Tag>;
-            }}
+
+          ></Column>
+          <Column
+            title="Loại Ghế"
+            key="loaiGhe"
+            dataIndex="loaiGhe"
+            align="center"
+
           ></Column>
 
           <Column
@@ -109,7 +109,7 @@ class ListCategory extends Component {
                   key={record.key}
                   type="primary"
                   size="small"
-                  onClick={() => this.editCategory(record)}
+                  onClick={() => this.editLoaiXe(record)}
                 >
                   <BiEdit /> Edit
                 </Button>
@@ -132,14 +132,14 @@ class ListCategory extends Component {
 }
 
 const mapStateToProps = (state) => ({
-  categories: state.CategoryReducer.categories,
+  LoaiXes: state.LoaiXeReducer.LoaiXes,
   isLoading: state.commonReducer.isLoading,
 });
 
 const mapDispatchToProps = {
-  getListCategory,
+  getListLoaiXe,
   clearList,
-  deleteCategory,
+  deleteLoaiXe,
 };
 
 export default withRouter(
