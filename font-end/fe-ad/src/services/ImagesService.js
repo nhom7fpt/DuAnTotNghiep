@@ -7,7 +7,7 @@ export default class ImagesService {
   };
 
   static getImageUploadUrl = (fileName) => {
-    return API_IMG + "/images/one";
+    return API_IMG ;
   };
 
   static deleteImage = async (fileName) => {

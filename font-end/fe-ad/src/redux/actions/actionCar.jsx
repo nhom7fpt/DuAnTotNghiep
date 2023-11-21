@@ -1,4 +1,5 @@
 import { toast } from "react-toastify";
+import CarService from "../../services/CarService";
 
 import {
   COMMON_LOADING_SET,
@@ -7,18 +8,19 @@ import {
   CAR_ADDEND,
   CAR_SET,
 } from "./actiontypes";
-import CarService from "../../services/CarService";
+
 
 const service = new CarService();
 
 export const insterCar = (Car, navigate) => async (dispatch) => {
+  console.log(Car);
   try {
     dispatch({
       type: COMMON_LOADING_SET,
       payload: true,
     });
-    const res = await service.insertProduct(Car);
-
+    const res = await service.insterCar(Car)
+    console.log(res);
     if (res && res.status === 201) {
       dispatch({
         type: CAR_SET,
@@ -42,9 +44,9 @@ export const insterCar = (Car, navigate) => async (dispatch) => {
       payload: false,
     });
 
-    toast.error(
-      error.response.data ? error.response.data.message : error.message
-    );
+    // toast.error(
+    //   error.response.data ? error.response.data.message : error.message
+    // );
   }
   dispatch({
     type: COMMON_LOADING_SET,
@@ -54,14 +56,14 @@ export const insterCar = (Car, navigate) => async (dispatch) => {
   navigate("/product/list");
 };
 
-export const updateCar = (id, Car, navigate) => async (dispatch) => {
+export const updateCar = (bienSoXe, Car, navigate) => async (dispatch) => {
   try {
     dispatch({
       type: COMMON_LOADING_SET,
       payload: true,
     });
 
-    const res = await service.updateCar(id, Car);
+    const res = await service.updateCar(bienSoXe, Car);
 
     if (res && res.status === 201) {
       dispatch({
@@ -135,13 +137,13 @@ export const CarEditData = (Car, navigate) => (dispatch) => {
   navigate("/product/edit/" + Car.bienSoXe);
 };
 
-export const deleteCar = (id) => async (dispatch) => {
+export const deleteCar = (bienSoXe) => async (dispatch) => {
   try {
     dispatch({
       type: COMMON_LOADING_SET,
       payload: true,
     });
-    const res = await service.deleteCar(id);
+    const res = await service.deleteCar(bienSoXe);
 
     console.log(res);
 
@@ -150,7 +152,7 @@ export const deleteCar = (id) => async (dispatch) => {
       console.log("Run Ac");
       dispatch({
         type: CARS_DEL,
-        payload: id,
+        payload: bienSoXe,
       });
 
       dispatch({

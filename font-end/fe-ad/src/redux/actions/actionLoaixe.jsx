@@ -111,6 +111,7 @@ export const clearList = () => async (dispatch) => {
 };
 
 export const deleteLoaiXe = (id) => async (dispatch) => {
+
   try {
     dispatch({
       type: COMMON_LOADING_SET,
@@ -130,16 +131,16 @@ export const deleteLoaiXe = (id) => async (dispatch) => {
         type: COMMON_LOADING_SET,
         payload: false,
       });
-      toast.success(res.data);
+      toast.success(res.id);
     }
   } catch (error) {
     dispatch({
       type: COMMON_LOADING_SET,
       payload: false,
     });
-    toast.error(
-      error.response.data ? error.response.data.message : error.message
-    );
+    //   toast.error(
+    //     error.response.data ? error.response.data.message : error.message
+    //   );
   }
 };
 

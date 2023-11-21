@@ -16,6 +16,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 @RestController
 @RequestMapping("api/v1/images")
+@CrossOrigin
 public class ImageController {
     @Autowired
     FileStorageService service;

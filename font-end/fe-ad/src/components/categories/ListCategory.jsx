@@ -31,23 +31,23 @@ class ListCategory extends Component {
   };
 
   openDeleteModal = (data) => {
-    this.setState({ ...this.state, LoaiXe: data });
+    // Cập nhật trạng thái với dữ liệu LoaiXe đã chọn
+    this.setState({ LoaiXe: data });
 
-    console.log(data);
-
-    const message = "Do you want to delete the LoaiXe " + data.name;
+    const message = "Bạn có muốn xóa LoaiXe " + data.id;
 
     Modal.confirm({
-      title: "Confirm",
+      title: "Xác nhận",
       icon: <ExclamationCircleOutlined />,
       content: message,
-      onOk: () => this.handleDeleteLoaiXe(data),
-      okText: "Delete",
-      cancelText: "Cancel",
+      onOk: () => this.handleDeleteLoaiXe(data.id),
+      okText: "Xóa",
+      cancelText: "Hủy",
     });
   };
   handleDeleteLoaiXe = (data) => {
     this.props.deleteLoaiXe(data.id);
+    console.log("run");
   };
 
   render() {

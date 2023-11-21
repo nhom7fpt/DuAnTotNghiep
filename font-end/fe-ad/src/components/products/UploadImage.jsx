@@ -32,6 +32,8 @@ const UploadImage = (props) => {
     const { fileList } = info;
 
     props.onUploadFile(fileList.slice());
+
+
   };
 
   const handleRemove = (info) => {
@@ -55,18 +57,19 @@ const UploadImage = (props) => {
   );
   const { fileList } = props;
 
+
   return (
     <>
       <Upload
         action="http://localhost:8080/api/v1/images/"
         listType="picture-card"
         defaultFileList={fileList}
-        multiple={true}
+        multiple={false}
         onPreview={handlePreview}
         onChange={handleChange}
         onRemove={handleRemove}
       >
-        {fileList.length >= 8 ? null : uploadButton}
+        {fileList.length > 0 ? null : uploadButton}
       </Upload>
       <Modal
         open={previewOpen}

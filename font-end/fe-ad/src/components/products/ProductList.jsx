@@ -28,7 +28,7 @@ class ProductList extends Component {
 
     return (
       <>
-        <Table dataSource={Cars} rowKey="id">
+        <Table dataSource={Cars} rowKey="bienSoXe">
           <Column
             title="Ảnh Đã Lưu"
             key="anhDaLuu"

@@ -8,6 +8,7 @@ import {
 const initialState = {
   Car: {},
   Cars: [],
+
 };
 
 const CarReducer = (state = initialState, { type, payload }) => {
@@ -19,7 +20,7 @@ const CarReducer = (state = initialState, { type, payload }) => {
     case CARS_SET:
       return { ...state, Cars: payload };
     case CARS_DEL:
-      const newCar = state.Cars.filter((item) => item.id !== payload);
+      const newCar = state.Cars.filter((item) => item.bienSoXe !== payload);
       return {
         ...state,
         Cars: newCar,

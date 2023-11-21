@@ -11,6 +11,7 @@ import {
 } from "../../redux/actions/actionCar";
 
 class ListProduct extends Component {
+
   onEdit = (data) => {
     this.props.CarEditData(data, this.props.router.navigate);
   };

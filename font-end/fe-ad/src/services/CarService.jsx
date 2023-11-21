@@ -2,7 +2,7 @@ import axios from "axios";
 import { API_CAR } from "./constant";
 
 export default class CarService {
-  insertCar = async (Car) => {
+  insterCar = async (Car) => {
     return await axios.post(API_CAR, Car);
   };
 
@@ -10,15 +10,15 @@ export default class CarService {
     return await axios.get(API_CAR);
   };
 
-  deleteCar = async (id) => {
-    return await axios.delete(API_CAR + "/" + id);
+  deleteCar = async (bienSoXe) => {
+    return await axios.delete(API_CAR + "/" + bienSoXe);
   };
 
-  getItem = async (id) => {
-    return await axios.get(API_CAR + "/" + id);
+  getItem = async (bienSoXe) => {
+    return await axios.get(API_CAR + "/" + bienSoXe);
   };
 
-  updateCar = async (id, Car) => {
-    return await axios.patch(API_CAR + "/ud/" + id, Car);
+  updateCar = async (bienSoXe, Car) => {
+    return await axios.patch(API_CAR + "/" + bienSoXe, Car);
   };
 }
