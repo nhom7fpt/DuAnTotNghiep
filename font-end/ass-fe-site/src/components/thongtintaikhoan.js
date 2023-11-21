@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState,useEffect } from 'react';
 import '../css/thongtintaikhoan.css';
 import 'antd/dist/antd.css';
 import demo from '../image/anhdemo.jpg';
@@ -6,6 +6,7 @@ import Menudangnhap from '../components/menudangnhap';
 import { connect } from "react-redux";
 import withRouter from '../helpers/withRouter';
 import { updateCustom } from "../redux/actions/actionCusstom";
+import { fillAccount } from "../redux/actions/actionCusstom";
 import { Col, Input, Row, Select, Button, DatePicker } from 'antd';
 import { Form } from 'antd';
 
@@ -36,7 +37,10 @@ function Thongtintaikhoan(props) {
 
     const { custom } = props;
     const { navigate } = props.router;
-
+    useEffect(() => {
+        // Call fillAccount when the component mounts
+        props.fillAccount(user, {}, navigate);
+    }, []);
     return (
         <div className="container-dat-lai-mat-khau">
             <Menudangnhap />
@@ -47,7 +51,7 @@ function Thongtintaikhoan(props) {
                     <div className="form-thong-tin-tai-khoan">
                         <Row gutter={16}>
                             <Col span={8}>
-                                <div className="left-side">
+                                <div className="left-side" style={{marginTop:'2cm'}}>
                                     <img src={profileImage || demo} alt="Profile Image" id="profile-image" />
                                     <input type="file" id="image-upload" accept="image/*" onChange={handleImageUpload} />
                                     <p className="text">Dung lượng file tối đa 1 MB. Định dạng: .JPEG, .PNG</p>
@@ -57,35 +61,30 @@ function Thongtintaikhoan(props) {
                                 <Form 
                                     id="account-information"
                                     onFinish={handleFormSubmit}
+                                    style={{marginLeft:'8cm', marginTop:'-12cm'}}
                                 >
-                                    <Form.Item label="Họ và tên :" name="hoTen" initialValue={hoTen} >
+                                    <Form.Item label="Họ và tên :" name="hoTen"  initialValue={custom?.hoTen || hoTen} >
                                         <Input  style={{ width: '340px',  marginLeft:'20px', height: '45px'}} />
                                         
                                     </Form.Item>
                                     <Form.Item label="Số điện thoại:" name="id" initialValue={user} >
                                         <Input placeholder="0123456789" style={{ width: '340px',  height: '45px'}}/>
                                     </Form.Item>
-                                    <Form.Item label="Giới tính:" name="gender" className='gioitinh-ttik'>
-                                        <Select placeholder="Chọn giới tính">
-                                            <Option value="male">Nam</Option>
-                                            <Option value="female">Nữ</Option>
-                                            <Option value="other">Khác</Option>
-                                        </Select>
+                                    <Form.Item label="Email:" name="email" initialValue={custom?.email || ''}>
+                                        <Input placeholder="kiuoanh@gmail.com" style={{ width: '340px',  marginLeft:'45px', height: '45px'}}/>
                                     </Form.Item>
-                                    <Form.Item label="Email:" name="email">
-                                        <Input placeholder="kiuoanh@gmail.com" style={{ width: '340px',  marginRight:'20px', height: '45px'}}/>
-                                    </Form.Item>
-                                    <Form.Item label="Ngày sinh:" name="dob" >
-                                        <DatePicker style={{ width: '100%'}} />
+                                    <Form.Item label="Ngày sinh:" name="dob">
+                                        <DatePicker 
+                                        placeholder={["Ngày sinh"]}
+                                        format="DD/MM/YYYY"
+                                        className='ngaysinh' 
+                                        />
                                     </Form.Item>
                                     <Form.Item label="Địa chỉ:" name="diaChi" >
-                                        <Input.TextArea  placeholder="Đà Nẵng" style={{height:'80px'}} />
-                                    </Form.Item>
-                                    <Form.Item label="Nghề nghiệp:" name="occupation">
-                                        <Input style={{ width: '340px',  marginRight:'20px'}}/>
+                                        <Input.TextArea  placeholder="Đà Nẵng" style={{height:'80px',marginLeft:'50px', width: '340px'}} />
                                     </Form.Item>
                                     <Form.Item>
-                                        <Button type="primary" htmlType="submit">
+                                        <Button type="primary" htmlType="submit" className='btn-capnhat'>
                                             Cập nhật
                                         </Button>
                                     </Form.Item>
@@ -104,7 +103,9 @@ const mapStateToProps = (state) => ({
 });
 
 const mapDispatchToProps = {
-    updateCustom
+    updateCustom,
+    fillAccount
+
 };
 
 export default connect(

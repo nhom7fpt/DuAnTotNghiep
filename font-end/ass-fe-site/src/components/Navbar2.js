@@ -3,17 +3,13 @@ import '../css/navbar.css';
 import { useSelector, useDispatch } from 'react-redux';
 import { NavLink } from 'react-router-dom';
 import logo from '../image/Mailinhlogo.png';
-import { FaHistory, FaCog, FaWrench } from 'react-icons/fa';
 import history from '../image/dangnhap/History.svg';
 import address from '../image/dangnhap/Address.svg';
 import pass from '../image/dangnhap/Password.svg';
 import pro from '../image/dangnhap/Profile.svg';
 import futa from '../image/dangnhap/futaPay.svg';
 import log from '../image/dangnhap/Logout.svg';
-import { ACCOUNT_SET } from '../redux/actions/actionType';
-import { toast } from "react-toastify";
 import 'react-notifications/lib/notifications.css';
-import { useNavigate } from 'react-router-dom';
 import { logout } from "../redux/actions/actionAccount";
 import dropdown from '../image/dangnhap/dropdown-menu.svg';
 import withRouter from '../helpers/withRouter';
@@ -26,7 +22,6 @@ function Navbar(props) {
   const loggedInUser = useSelector((state) => state.AccountReducer.loggedInUser);
   const account = useSelector((state) => state.AccountReducer.account);
   const user = localStorage.getItem("username");
-  const hoTen = localStorage.getItem("hoTen");
   const toggleDropdown = () => {
     setIsDropdownOpen(!isDropdownOpen);
   };
@@ -89,7 +84,7 @@ function Navbar(props) {
           </NavLink>
         ) : (
           <NavLink to="#" activeClassName="active" onClick={toggleDropdown}>
-            Xin chào {hoTen}  <img src={dropdown} alt="" style={{width:'36px', height:'36px', marginTop:'-10px'}}/> 
+            Xin chào {user}  <img src={dropdown} alt="" style={{width:'36px', height:'36px', marginTop:'-10px'}}/> 
           </NavLink>
         )}
         {isDropdownOpen && (

@@ -15,6 +15,7 @@ import LoginPage from "./components/login/loginand";
 import Lichtrinh from './components/lichtrinh';
 import Trangchu from "./components/trangchu/trangchu";
 import Tracuu from './components/tracuu';
+import Dvtc from './components/datvethanhcong/datvetc';
 import Tintuc from './components/tintuc';
 import Lsmuave from './components/lichsumuave';
 import Doimk from './components/doimatkhau';
@@ -42,7 +43,8 @@ function App() {
              
               <Route path="/lienhe" element={<ContactPage />} />
               <Route path="/login" element={<LoginPage />} />
-              <Route path="/lichtrinh" element={<Lichtrinh />} />
+              <Route path="/lichtrinh" element={<Dvtc />} />
+              <Route path="/dvtc" element={<Dvtc />} />
               <Route path="/trangchu" element={<Trangchu />} />
               <Route path="/tracuu" element={<Tracuu />} />
               <Route path="/tintuc" element={<Tintuc />} />

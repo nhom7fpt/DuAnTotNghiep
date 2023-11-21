@@ -12,7 +12,7 @@ export const updateCustom = (id ,account, navigate) => async (dispatch) => {
           type: CUSTOM_SET,
           payload: res.data,
         });
-        toast.success('Đăng kí thành công', {
+        toast.success('Update thành công', {
           position:"top-right",
          reverseOrder: false,
           autoClose: 1000,
@@ -56,5 +56,20 @@ export const updateCustom = (id ,account, navigate) => async (dispatch) => {
   
     }
 
+  }
+};
+export const fillAccount = (id ,account, navigate) => async (dispatch) => {
+  try {
+    const res = await service.fillAccount(id,account);
+    console.log(res.data);
+
+    if (res.status === 200) {
+      dispatch({
+        type: CUSTOM_SET,
+        payload: res.data,
+      });
+    }
+  } catch (error) {
+    console.log(error);
   }
 };

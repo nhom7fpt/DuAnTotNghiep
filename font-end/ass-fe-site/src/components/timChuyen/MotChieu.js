@@ -55,8 +55,8 @@ const MotChieu = (props) => {
         <Space direction="vertical">
           <DatePicker
             value={startDate}
-            onChange={onChange} // Gọi sự kiện khi thay đổi thanh điều hướng
-            format="DD/MM/YYYY" // Định dạng ngày/tháng/năm đầy đủ
+            onChange={onChange} 
+            format="DD/MM/YYYY"
             showTimeSelect
             timeFormat="HH:mm:ss"
             id="datepicker"
