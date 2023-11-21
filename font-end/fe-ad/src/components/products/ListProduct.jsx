@@ -16,7 +16,7 @@ class ListProduct extends Component {
     this.props.CarEditData(data, this.props.router.navigate);
   };
   onConfirm = (data) => {
-    this.props.deleteCar(data.id);
+    this.props.deleteCar(data.bienSoXe);
   };
   componentDidMount = () => {
     this.props.getListCars();

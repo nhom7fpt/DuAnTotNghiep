@@ -3,7 +3,7 @@ import { API_IMG } from "./constant";
 
 export default class ImagesService {
   static getImageUrl = (fileName) => {
-    return API_IMG + "/images/" + fileName;
+    return API_IMG + "/" + fileName;
   };
 
   static getImageUploadUrl = (fileName) => {

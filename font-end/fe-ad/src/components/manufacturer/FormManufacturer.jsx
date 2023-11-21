@@ -1,24 +1,36 @@
 // FormManufacturer.js
 
 import React, { Component } from "react";
-import { DatePicker, Form, Input, InputNumber, Modal, TimePicker } from "antd";
+import { Form, Input, Modal } from "antd";
 import { createRef } from "react";
 
 import { toast } from "react-toastify";
-import ManufacturerService from "../../services/ManufacturerService";
 
 class FormManufacturer extends Component {
   form = createRef();
 
-  onDeleteData = (values) => {
-    this.props.onCreate(values);
+  onSendData = (values) => {
+    if (values.id === "") {
+      this.props.onCreate(values);
+    } else {
+      this.props.onEdit(values);
+    }
   };
+
+  componentDidUpdate(prevProps) {
+    // Kiểm tra xem prop manufacturer có thay đổi hay không
+    if (this.props.manufacturer !== prevProps.manufacturer) {
+      // Cập nhật form với các giá trị ban đầu mới
+      this.form.current.setFieldsValue({
+        id: this.props.manufacturer.id,
+        tenThuongHieu: this.props.manufacturer.tenThuongHieu,
+      });
+    }
+  }
 
   render() {
     const { open, onCancel } = this.props;
     const { manufacturer } = this.props;
-    const format = "HH:mm";
-
     return (
       <Modal
         open={open}
@@ -31,7 +43,7 @@ class FormManufacturer extends Component {
             .validateFields()
             .then((values) => {
               this.form.current.resetFields();
-              this.onDeleteData(values);
+              this.onSendData(values);
             })
             .catch((info) => {
               console.log("Validate Failed:", info);
@@ -48,33 +60,15 @@ class FormManufacturer extends Component {
           }}
           key={manufacturer.maChuyenXe}
         >
+          <Form.Item name="id" label="id" initialValue={manufacturer.id}>
+            <Input readOnly />
+          </Form.Item>
           <Form.Item
-            name="maChuyenXe"
-            label="Ma chuyen xe"
-            initialValue={manufacturer.maChuyenXe}
+            name="tenThuongHieu"
+            label="Tên thương hiệu"
+            initialValue={manufacturer.tenThuongHieu}
           >
-            <InputNumber />
-          </Form.Item>
-          <Form.Item name="diemDi" label="Diem Di">
             <Input />
-          </Form.Item>
-          <Form.Item name="diemDen" label="DiemDen">
-            <Input />
-          </Form.Item>
-          <Form.Item name="noiDon" label="Noi don">
-            <Input />
-          </Form.Item>
-          <Form.Item name="noiTra" label="Noi Tra">
-            <Input />
-          </Form.Item>
-          <Form.Item name="tgDi" label="Thoi gian di">
-            <TimePicker format={format} />
-          </Form.Item>
-          <Form.Item name="tgDen" label="Thoi gian den">
-            <TimePicker format={format} />
-          </Form.Item>
-          <Form.Item name="gia" label="Gia">
-            <InputNumber />
           </Form.Item>
         </Form>
       </Modal>

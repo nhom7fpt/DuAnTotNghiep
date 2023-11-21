@@ -1,5 +1,6 @@
 package fpt.mailinhapp.domain;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -30,10 +31,12 @@ public class ThanhVien {
 
 
     @Temporal(TemporalType.DATE)
+    @JsonFormat(pattern = "DD-MM-YYYY")
     @Column(name = "ngay_tao")
     private Date ngayTao;
 
     @Column(name = "ngay_chinh_su")
+    @JsonFormat(pattern = "DD-MM-YYYY")
     private Date ngayChinhSu;
 
     @OneToOne(orphanRemoval = true)

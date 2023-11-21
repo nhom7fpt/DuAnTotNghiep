@@ -24,7 +24,7 @@ public class XeDto implements Serializable {
     Long giaMua;
     String noiMua;
     AnhDaLuuDto anhDaLuu;
-    List<AnhDaLuuDto> anhXeChiTiet;
+
     private ThuongHieuDto thuongHieu;
     private LoaiXeDto loaiXe;
 }

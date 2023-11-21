@@ -20,12 +20,14 @@ export const insterCar = (Car, navigate) => async (dispatch) => {
       payload: true,
     });
     const res = await service.insterCar(Car)
-    console.log(res);
+
     if (res && res.status === 201) {
       dispatch({
         type: CAR_SET,
         payload: res.data,
       });
+
+
 
       dispatch({
         type: CAR_ADDEND,
@@ -44,14 +46,15 @@ export const insterCar = (Car, navigate) => async (dispatch) => {
       payload: false,
     });
 
-    // toast.error(
-    //   error.response.data ? error.response.data.message : error.message
-    // );
+    toast.error(
+      error.response.data ? error.response.data.message : error.message
+    );
   }
   dispatch({
     type: COMMON_LOADING_SET,
     payload: true,
   });
+
   clearCars();
   navigate("/product/list");
 };
@@ -64,8 +67,8 @@ export const updateCar = (bienSoXe, Car, navigate) => async (dispatch) => {
     });
 
     const res = await service.updateCar(bienSoXe, Car);
-
-    if (res && res.status === 201) {
+    console.log(res);
+    if (res && res.status === 200) {
       dispatch({
         type: CAR_SET,
         payload: res.data,
@@ -102,7 +105,7 @@ export const getListCars = () => async (dispatch) => {
       payload: true,
     });
     const res = await service.getCar();
-    console.log(res);
+
     if (res && res.status === 200) {
       dispatch({
         type: CARS_SET,
@@ -145,11 +148,10 @@ export const deleteCar = (bienSoXe) => async (dispatch) => {
     });
     const res = await service.deleteCar(bienSoXe);
 
-    console.log(res);
+
 
     if (res && res.status === 200) {
-      console.log("status:", res.status);
-      console.log("Run Ac");
+
       dispatch({
         type: CARS_DEL,
         payload: bienSoXe,

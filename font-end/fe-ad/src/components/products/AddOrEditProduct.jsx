@@ -6,13 +6,14 @@ import FormProduct from "./FormProduct";
 import UploadImage from "./UploadImage";
 import { SaveOutlined } from "@ant-design/icons";
 import LoaiXeServer from "../../services/LoaiXeService"
-
+import ManufuactureService from "../../services/ManufacturerService"
 
 import { toast } from "react-toastify";
 import { connect } from "react-redux";
 import {
   insterCar,
   updateCar,
+  clearCars
 } from "../../redux/actions/actionCar";
 
 
@@ -25,41 +26,85 @@ class AddOrEditProduct extends Component {
       Car: {},
       thuongHieu: [],
       loaiXe: [],
+
     };
   }
 
   componentDidMount = () => {
-    this.loadData()
+    this.loadData();
+
   }
 
-
-
-  goNext = (values) => {
+  clearform = () => {
     const { navigate } = this.props.router;
-    console.log(values);
-    // this.props.insterCar(values, navigate);
-    // this.setState({ ...this.state, Car: {} });
+    this.props.clearCars();
+    navigate("/product/add");
+  }
+
+  goNext = async (values) => {
+    const { navigate } = this.props.router;
+    const { insterCar, updateCar, Car } = this.props;
+    const { loaiXe, thuongHieu } = this.state
+
+    const lx = loaiXe.find((item) => item.id === values.loaiXe);
+    const th = thuongHieu.find((item) => item.id === values.thuongHieu);
+
+    let newCar = { ...values, loaiXe: lx, thuongHieu: th };
+
+
+    console.log(newCar);
+
+
+    if (Car && Car.bienSoXe) {
+      if (newCar.loaiXe === undefined) {
+        newCar = { ...newCar, loaiXe: Car.loaiXe }
+      }
+      if (newCar.thuongHieu === undefined) {
+        newCar = { ...newCar, thuongHieu: Car.thuongHieu }
+      }
+      if (newCar.anhDaLuu) {
+        newCar = { ...newCar, anhDaLuu: Car.anhDaLuu }
+      }
+
+      // await updateCar(newCar.bienSoXe, newCar, navigate);
+      console.log(Car.loaiXe);
+
+    }
+    else {
+      await insterCar(newCar, navigate);
+
+    }
 
   };
 
   loadData = async () => {
     try {
       const loaiXeServer = new LoaiXeServer();
-      // const thuongHieuService = new ThuongHieuService();
+      const thuongHieuService = new ManufuactureService();
       const loaiXeRes = await loaiXeServer.getLoaiXe();
+
+      const dataRes = await thuongHieuService.getManufacturer();
 
       this.setState({
         ...this.state,
+        thuongHieu: dataRes.data,
         loaiXe: loaiXeRes.data,
+
       });
+
+
     } catch (error) {
       console.log(error);
       toast.error("Error: " + error);
     }
+
   };
+
+
+
   render() {
     const { navigate } = this.props.router;
-    const { loaiXe } = this.state;
+    const { loaiXe, thuongHieu } = this.state;
     const { Car } = this.props;
     return (
       <>
@@ -68,7 +113,14 @@ class AddOrEditProduct extends Component {
           navigate={navigate}
         />
 
-
+        <Button
+          type="primary"
+          onClick={() => {
+            this.clearform()
+          }}
+        >
+          Mới
+        </Button>
 
         <Row>
           <Col md={24}>
@@ -79,7 +131,7 @@ class AddOrEditProduct extends Component {
               Car={Car}
               goNext={this.goNext}
               loaiXe={loaiXe}
-
+              thuongHieu={thuongHieu}
 
             ></FormProduct>
 
@@ -98,6 +150,7 @@ const mapStateToProps = (state) => ({
 const mapDispatchToProps = {
   insterCar,
   updateCar,
+  clearCars
 };
 
 export default connect(

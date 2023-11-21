@@ -1,5 +1,5 @@
 export const API_LoaiXe = "http://localhost:8080/api/v1/loaixe";
-export const API_MANUFACTURER = "http://localhost:8080/api/ad/manufacturer";
+export const API_MANUFACTURER = "http://localhost:8080/api/v1/thuonghieu";
 
 export const API_ORDER = "http://localhost:8080/api/ad/order";
 

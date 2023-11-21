@@ -39,6 +39,13 @@ public class ThuongHieuService {
         return  dto;
     }
 
+    public ThuongHieuDto findById(Long id){
+        var found = dao.findById(id).orElseThrow(()-> new TicketsException("thuong hieu khong ton tai"));
+        ThuongHieuDto dto = new ThuongHieuDto();
+        BeanUtils.copyProperties(found, dto);
+        return dto;
+    }
+
     public List getlist(){
         return dao.findAll();
     }

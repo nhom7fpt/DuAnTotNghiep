@@ -1,6 +1,8 @@
 package fpt.mailinhapp.service;
 
 import fpt.mailinhapp.domain.AnhDaLuu;
+import fpt.mailinhapp.domain.LoaiXe;
+import fpt.mailinhapp.domain.ThuongHieu;
 import fpt.mailinhapp.domain.Xe;
 import fpt.mailinhapp.dto.XeDto;
 import fpt.mailinhapp.exception.CarsException;
@@ -10,11 +12,8 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.bind.annotation.CrossOrigin;
 
 import java.util.List;
-import java.util.Set;
-import java.util.stream.Collectors;
 
 @Service
 
@@ -37,39 +36,49 @@ public class CarService {
 
 
         Xe entity = new Xe();
-        BeanUtils.copyProperties(dto, entity,new String[]{"anhDaLuu","anhXeChiTiet"});
+        LoaiXe loai = new LoaiXe();
+        ThuongHieu hieu = new ThuongHieu();
+
+        BeanUtils.copyProperties(dto, entity,new String[]{"anhDaluu", "thuonghieu", "loaiXe"});
+        BeanUtils.copyProperties(dto.getLoaiXe(),loai);
+        BeanUtils.copyProperties(dto.getThuongHieu(),hieu);
+
+        entity.setThuongHieu(hieu);
+        entity.setLoaiXe(loai);
 
         if(dto.getAnhDaLuu() != null){
             AnhDaLuu img = new AnhDaLuu();
             BeanUtils.copyProperties(dto.getAnhDaLuu(), img);
-            imgDao.save(img);
+            var imgSave = imgDao.save(img);
+            entity.setAnhDaLuu(imgSave);
 
-        }
-
-        if(dto.getAnhXeChiTiet().size() > 1){
-            var listImg = dto.getAnhXeChiTiet().stream().map((item)->{
-                AnhDaLuu img = new AnhDaLuu();
-                BeanUtils.copyProperties(item, img);
-                var saveImg = imgDao.save(img);
-
-                return saveImg;
-            }).collect(Collectors.toList());
-
-           entity.setAnhDaLuus(listImg);
         }
 
         dao.save(entity);
 
         return dto;
+
     }
 
     @Transactional(rollbackFor = Exception.class)
     public XeDto updateCar(String id, XeDto dto){
         var found =  dao.findById(id).orElseThrow(()-> new CarsException("Xe không tồn tại"));
 
-        BeanUtils.copyProperties(dto, found);
+        BeanUtils.copyProperties(dto, found, "anhDaLuu");
 
-        var saveCar = dao.save(found);
+        if(dto.getAnhDaLuu() != null){
+
+            if(dto.getAnhDaLuu().getId() != found.getAnhDaLuu().getId()) {
+                imgService.deleteImage(found.getAnhDaLuu().getTenTep());
+                imgDao.delete(found.getAnhDaLuu());
+            }
+            AnhDaLuu img =  new AnhDaLuu();
+            BeanUtils.copyProperties(dto.getAnhDaLuu(), img);
+            found.setAnhDaLuu(img);
+        }
+
+         dao.save(found);
+
 
         return dto;
     }

@@ -25,6 +25,7 @@ class ProductList extends Component {
 
   render() {
     const { Cars } = this.props;
+    console.log(Cars);
 
     return (
       <>
@@ -36,10 +37,15 @@ class ProductList extends Component {
             width={90}
             render={(_, record) => (
               <Space size="middle">
-                <Image
+                {record.anhDaLuu ? (
+                  <Image
+                    width="100%"
+                    src={ImagesService.getImageUrl(record.anhDaLuu.tenTep)}
+                  />
+                ) : (<Image
                   width="100%"
-                  src={ImagesService.getImageUrl(record)}
-                />
+                  src="https://t3.ftcdn.net/jpg/04/34/72/82/240_F_434728286_OWQQvAFoXZLdGHlObozsolNeuSxhpr84.jpg"
+                />)}
               </Space>
             )}
           ></Column>
@@ -56,7 +62,7 @@ class ProductList extends Component {
             dataIndex="loaiXe"
             align="center"
             render={(text, record) => (
-              <label>{record.loaiXe.soGhe}</label>
+              <label>{record ? record.loaiXe.soGhe : ""}</label>
             )}
           ></Column>
 
@@ -65,9 +71,7 @@ class ProductList extends Component {
             key="ngayMua"
             dataIndex="ngayMua"
             align="center"
-            render={(isFeatured) => (
-              <label>{isFeatured ? "Featured" : "Not Featured"}</label>
-            )}
+
           />
 
           <Column
@@ -75,7 +79,7 @@ class ProductList extends Component {
             key="ngayDangKiem"
             dataIndex="ngayDangKiem"
             align="center"
-            render={(status) => <label>{status}</label>}
+
           />
 
           <Column
@@ -119,20 +123,7 @@ class ProductList extends Component {
             width={200}
             render={(_, record) => (
               <Space size="middle">
-                <Tooltip
-                  placement="top"
-                  title="View Product Detail"
-                  color="green"
-                >
-                  <Button
-                    key={record.key}
-                    type="link"
-                    size="small"
-                    onClick={() => this.showProductDetail(record)} // Hiển thị chi tiết sản phẩm
-                  >
-                    <MdPreview color="green" size={24}></MdPreview>
-                  </Button>
-                </Tooltip>
+
                 <Tooltip placement="top" title="Edit Product" color="blue">
                   <Button
                     key={record.key}

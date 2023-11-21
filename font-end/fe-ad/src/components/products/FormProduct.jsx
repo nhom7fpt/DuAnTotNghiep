@@ -19,7 +19,7 @@ import { DatePicker, Space } from 'antd';
 
 import ImagesService from "../../services/ImagesService";
 dayjs.extend(customParseFormat);
-const dateFormat = 'YYYY-MM-DD';
+const dateFormat = 'dd-MM-YYYY';
 class FormProduct extends Component {
     form = React.createRef();
 
@@ -73,16 +73,23 @@ class FormProduct extends Component {
         return e && e.fileList;
     };
     render() {
-        const { Car, loaiXe } = this.props;
+        const { Car, loaiXe, thuongHieu } = this.props;
+
         const listLoai = loaiXe.map((item) => {
             const loai = { label: `${item.tenLoai} ${item.loaiGhe} ${item.soGhe}`, value: item.id };
             return loai;
 
         });
+        const listThuongHieu = thuongHieu.map((item) => {
+            const data = { label: item.tenThuongHieu, value: item.id }
+            return data
+        })
 
         const ngayMuaData = Car.ngayMua ? dayjs(Car.ngayMua, dateFormat) : "";
-
         const ngayDKData = Car.ngayDangKiem ? dayjs(Car.ngayDangKiem, dateFormat) : "";
+
+        const loaiXeId = Car.loaiXe ? Car.loaiXe.id : "";
+        const thuongHieuId = Car.thuongHieu ? Car.thuongHieu.id : "";
 
         return (
             <>
@@ -134,10 +141,19 @@ class FormProduct extends Component {
                             </Form.Item>
                             <Form.Item
                                 label="Loại Ghế"
-                                name="loaiGhe"
+                                name="loaiXe"
 
                             >
-                                <Select options={listLoai} defaultValue={Car.loaiXe.id}>
+                                <Select options={listLoai} defaultValue={loaiXeId}>
+
+                                </Select>
+                            </Form.Item>
+                            <Form.Item
+                                label="Thương Hiệu"
+                                name="thuongHieu"
+
+                            >
+                                <Select options={listThuongHieu} defaultValue={thuongHieuId}>
 
                                 </Select>
                             </Form.Item>
@@ -147,12 +163,12 @@ class FormProduct extends Component {
                                 label="Main Image"
                                 name="anhDaLuu"
                                 initialValue={
-                                    Car.image
+                                    Car.anhDaLuu
                                         ? [
                                             {
-                                                ...Car.image,
+                                                ...Car.anhDaLuu,
                                                 url: ImagesService.getImageUrl(
-                                                    Car.anhDaLuu.fileName
+                                                    Car.anhDaLuu.tenTep
                                                 ),
                                             },
                                         ]
