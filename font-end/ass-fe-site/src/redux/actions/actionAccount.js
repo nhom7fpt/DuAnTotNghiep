@@ -1,5 +1,5 @@
 import AccountService from "../../services/AccountService";
-import { ACCOUNT_SET, CUSTOM_SET , } from "./actionType";
+import { ACCOUNT_SET, CUSTOM_SET , ACCOUNT_STATE_CLEAR  } from "./actionType";
 import { toast } from "react-toastify";
 import { NotificationContainer, NotificationManager } from 'react-notifications';
 import 'react-notifications/lib/notifications.css';
@@ -126,12 +126,16 @@ export const login = (account, navigate) => async (dispatch) => {
 export const logout = (navigate) => async (dispatch) => {
   try {
     localStorage.removeItem("username");
-    localStorage.removeItem("hoTen");
+   
    
     dispatch({
       type: ACCOUNT_SET,
       payload: null,
     });
+    dispatch({
+      type: ACCOUNT_STATE_CLEAR,
+    });
+
 
     toast.success('Đăng xuất thành công', {
       position: "top-right",

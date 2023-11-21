@@ -1,6 +1,7 @@
 import { CUSTOM_SET, ACCOUNT_STATE_CLEAR } from "../actions/actionType";
 const initialState = {
   custom: {},
+
 };
 
 const CustomReducer = (state = initialState, { type, payload }) => {

@@ -13,33 +13,32 @@ import 'react-notifications/lib/notifications.css';
 import { logout } from "../redux/actions/actionAccount";
 import dropdown from '../image/dangnhap/dropdown-menu.svg';
 import withRouter from '../helpers/withRouter';
-
+import { connect } from "react-redux";
 
 function Navbar(props) {
- const {navigate} = props.router;
+ const { navigate } = props.router;
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const dispatch = useDispatch();
-  const loggedInUser = useSelector((state) => state.AccountReducer.loggedInUser);
-  const account = useSelector((state) => state.AccountReducer.account);
   const user = localStorage.getItem("username");
+  const { custom } = props;
+
   const toggleDropdown = () => {
     setIsDropdownOpen(!isDropdownOpen);
   };
 
-
   const handleLogout = () => {
     dispatch(logout(navigate));
   };
-  
+
   useEffect(() => {
-    setIsDropdownOpen((loggedInUser || account) && user !== null);
+    setIsDropdownOpen((custom.hoTen || user) !== null);
     return () => {
       const activeNavLink = document.querySelector('#navbar li a.active');
       if (activeNavLink) {
         activeNavLink.classList.remove('active');
       }
     };
-  }, [loggedInUser, account, user]);
+  }, [custom.hoTen, user]);
   return (
     <nav className="navbar-container">
       <ul id="navbar">
@@ -78,41 +77,45 @@ function Navbar(props) {
           </NavLink>
         </li>
         <li className="dropdown-container">
-        {user == null ? (
-          <NavLink to="/login" activeClassName="active" exact>
-            Đăng nhập
-          </NavLink>
-        ) : (
-          <NavLink to="#" activeClassName="active" onClick={toggleDropdown}>
-            Xin chào {user}  <img src={dropdown} alt="" style={{width:'36px', height:'36px', marginTop:'-10px'}}/> 
-          </NavLink>
-        )}
-        {isDropdownOpen && (
-          <div className="dropdown">
-            <NavLink exact to="/Mailinhpay">
-              <img src={futa} alt="MAILINHPay" /> MAILINHPay
+          {custom.hoTen ? (
+            <NavLink to="#" activeClassName="active" onClick={toggleDropdown}>
+              {custom.hoTen}  <img src={dropdown} alt="" style={{ width: '36px', height: '36px', marginTop: '-10px' }}/>
             </NavLink>
-            <NavLink exact to="/thongttk">
-              <img src={pro} alt="Thông tin tài khoản" /> Thông tin tài khoản
+          ) : (
+            <NavLink to="/login" activeClassName="active" exact>
+              Đăng nhập
             </NavLink>
-            <NavLink exact to="/Lsmuave">
-              <img src={history} alt="Lịch sử mua vé" /> Lịch sử mua vé
-            </NavLink>
-            <NavLink exact to="#">
-              <img src={address} alt="Địa chỉ mua vé" /> Địa chỉ mua vé
-            </NavLink>
-            <NavLink exact to="/doimk">
-              <img src={pass} alt="Đặt lại mật khẩu" /> Đặt lại mật khẩu
-            </NavLink>
-            <a onClick={handleLogout}>
-              <img src={log} alt="Đăng xuất" /> Đăng xuất
-            </a>
-          </div>
-        )}
-      </li>
+          )}
+          {isDropdownOpen && (
+            <div className="dropdown">
+              <NavLink exact to="/Mailinhpay">
+                <img src={futa} alt="MAILINHPay" /> MAILINHPay
+              </NavLink>
+              <NavLink exact to="/thongttk">
+                <img src={pro} alt="Thông tin tài khoản" /> Thông tin tài khoản
+              </NavLink>
+              <NavLink exact to="/Lsmuave">
+                <img src={history} alt="Lịch sử mua vé" /> Lịch sử mua vé
+              </NavLink>
+              <NavLink exact to="#">
+                <img src={address} alt="Địa chỉ mua vé" /> Địa chỉ mua vé
+              </NavLink>
+              <NavLink exact to="/doimk">
+                <img src={pass} alt="Đặt lại mật khẩu" /> Đặt lại mật khẩu
+              </NavLink>
+              <a onClick={handleLogout}>
+                <img src={log} alt="Đăng xuất" /> Đăng xuất
+              </a>
+            </div>
+          )}
+        </li>
       </ul>
     </nav>
   );
 }
 
-export default withRouter(Navbar);
+const mapStateToProps = (state) => ({
+  custom: state.CustomReducer.custom,
+});
+
+export default connect(mapStateToProps)(withRouter(Navbar));

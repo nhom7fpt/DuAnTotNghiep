@@ -2,6 +2,7 @@ import { toast } from "react-toastify";
 import CustomService from "../../services/CustomService";
 import { CUSTOM_SET } from "./actionType";
 const service = new CustomService();
+
 export const updateCustom = (id ,account, navigate) => async (dispatch) => {
   try {
     const res = await service.updateAccount(id,account);

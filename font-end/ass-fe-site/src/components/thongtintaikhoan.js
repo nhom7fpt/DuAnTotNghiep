@@ -15,7 +15,7 @@ const { Option } = Select;
 function Thongtintaikhoan(props) {
     const [profileImage, setProfileImage] = useState('');
     const user = localStorage.getItem("username");
-    const hoTen = localStorage.getItem("hoTen");
+   
   
     const handleImageUpload = (e) => {
         const file = e.target.files[0];
@@ -30,9 +30,8 @@ function Thongtintaikhoan(props) {
 
     const handleFormSubmit = (values) => {
         console.log(values);
-        // Gọi hành động cập nhật dữ liệu của bạn ở đây
        props.updateCustom(user, values, navigate);
-       localStorage.setItem('hoTen', values.hoTen);
+      
     };
 
     const { custom } = props;
@@ -63,7 +62,7 @@ function Thongtintaikhoan(props) {
                                     onFinish={handleFormSubmit}
                                     style={{marginLeft:'8cm', marginTop:'-12cm'}}
                                 >
-                                    <Form.Item label="Họ và tên :" name="hoTen"  initialValue={custom?.hoTen || hoTen} >
+                                    <Form.Item label="Họ và tên :" name="hoTen"  initialValue={custom?.hoTen || ''} >
                                         <Input  style={{ width: '340px',  marginLeft:'20px', height: '45px'}} />
                                         
                                     </Form.Item>
