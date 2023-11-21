@@ -137,7 +137,7 @@ class FormProduct extends Component {
                                 name="loaiGhe"
 
                             >
-                                <Select options={listLoai}>
+                                <Select options={listLoai} defaultValue={Car.loaiXe.id}>
 
                                 </Select>
                             </Form.Item>
