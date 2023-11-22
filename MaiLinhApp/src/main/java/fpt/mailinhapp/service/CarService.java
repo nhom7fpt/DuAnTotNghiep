@@ -13,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Date;
 import java.util.List;
 
 @Service
@@ -33,13 +34,15 @@ public class CarService {
             throw new CarsException("Biển số xe đã tồn tại");
         }
 
+        String[] listIgone = {"anhDaluu", "thuonghieu", "loaiXe"};
+
 
 
         Xe entity = new Xe();
         LoaiXe loai = new LoaiXe();
         ThuongHieu hieu = new ThuongHieu();
 
-        BeanUtils.copyProperties(dto, entity,new String[]{"anhDaluu", "thuonghieu", "loaiXe"});
+        BeanUtils.copyProperties(dto, entity,listIgone);
         BeanUtils.copyProperties(dto.getLoaiXe(),loai);
         BeanUtils.copyProperties(dto.getThuongHieu(),hieu);
 
@@ -54,6 +57,8 @@ public class CarService {
 
         }
 
+
+
         dao.save(entity);
 
         return dto;
@@ -63,6 +68,16 @@ public class CarService {
     @Transactional(rollbackFor = Exception.class)
     public XeDto updateCar(String id, XeDto dto){
         var found =  dao.findById(id).orElseThrow(()-> new CarsException("Xe không tồn tại"));
+
+
+        Date ngDangKiem = new Date();
+        Date ngMua = new Date();
+        if(dto.getNgayDangKiem() == null){
+             ngDangKiem = found.getNgayDangKiem();
+        }
+        if(dto.getNgayMua() == null){
+             ngMua = found.getNgayMua();
+        }
 
         BeanUtils.copyProperties(dto, found, "anhDaLuu");
 
@@ -76,9 +91,17 @@ public class CarService {
             BeanUtils.copyProperties(dto.getAnhDaLuu(), img);
             found.setAnhDaLuu(img);
         }
+        if(dto.getNgayDangKiem() == null){
+             found.setNgayDangKiem(ngDangKiem);
+        }
+        if(dto.getNgayMua() == null){
+            found.setNgayMua(ngMua);
+        }
 
-         dao.save(found);
 
+         var saveEntity =dao.save(found);
+
+        BeanUtils.copyProperties(saveEntity, dto);
 
         return dto;
     }

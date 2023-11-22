@@ -5,76 +5,51 @@ import { Button, Col, Divider, Row, Space, Steps, notification } from "antd";
 import FormProduct from "./FormProduct";
 import UploadImage from "./UploadImage";
 import { SaveOutlined } from "@ant-design/icons";
-import LoaiXeServer from "../../services/LoaiXeService"
-import ManufuactureService from "../../services/ManufacturerService"
+import LoaiXeServer from "../../services/LoaiXeService";
+import ManufuactureService from "../../services/ManufacturerService";
 
 import { toast } from "react-toastify";
 import { connect } from "react-redux";
-import {
-  insterCar,
-  updateCar,
-  clearCars
-} from "../../redux/actions/actionCar";
-
+import { insterCar, updateCar, clearCars } from "../../redux/actions/actionCar";
 
 class AddOrEditProduct extends Component {
   constructor(props) {
     super(props);
 
     this.state = {
-
       Car: {},
       thuongHieu: [],
       loaiXe: [],
-
     };
   }
 
   componentDidMount = () => {
     this.loadData();
-
-  }
+  };
 
   clearform = () => {
     const { navigate } = this.props.router;
     this.props.clearCars();
     navigate("/product/add");
-  }
+  };
 
   goNext = async (values) => {
     const { navigate } = this.props.router;
     const { insterCar, updateCar, Car } = this.props;
-    const { loaiXe, thuongHieu } = this.state
+    const { loaiXe, thuongHieu } = this.state;
 
     const lx = loaiXe.find((item) => item.id === values.loaiXe);
     const th = thuongHieu.find((item) => item.id === values.thuongHieu);
 
     let newCar = { ...values, loaiXe: lx, thuongHieu: th };
 
-
     console.log(newCar);
 
-
     if (Car && Car.bienSoXe) {
-      if (newCar.loaiXe === undefined) {
-        newCar = { ...newCar, loaiXe: Car.loaiXe }
-      }
-      if (newCar.thuongHieu === undefined) {
-        newCar = { ...newCar, thuongHieu: Car.thuongHieu }
-      }
-      if (newCar.anhDaLuu) {
-        newCar = { ...newCar, anhDaLuu: Car.anhDaLuu }
-      }
-
-      // await updateCar(newCar.bienSoXe, newCar, navigate);
-      console.log(Car.loaiXe);
-
-    }
-    else {
+      await updateCar(newCar.bienSoXe, newCar, navigate);
+    } else {
       await insterCar(newCar, navigate);
-
     }
-
   };
 
   loadData = async () => {
@@ -89,18 +64,12 @@ class AddOrEditProduct extends Component {
         ...this.state,
         thuongHieu: dataRes.data,
         loaiXe: loaiXeRes.data,
-
       });
-
-
     } catch (error) {
       console.log(error);
       toast.error("Error: " + error);
     }
-
   };
-
-
 
   render() {
     const { navigate } = this.props.router;
@@ -116,7 +85,7 @@ class AddOrEditProduct extends Component {
         <Button
           type="primary"
           onClick={() => {
-            this.clearform()
+            this.clearform();
           }}
         >
           Mới
@@ -124,18 +93,13 @@ class AddOrEditProduct extends Component {
 
         <Row>
           <Col md={24}>
-
-
             <Divider></Divider>
             <FormProduct
               Car={Car}
               goNext={this.goNext}
               loaiXe={loaiXe}
               thuongHieu={thuongHieu}
-
             ></FormProduct>
-
-
           </Col>
         </Row>
       </>
@@ -150,7 +114,7 @@ const mapStateToProps = (state) => ({
 const mapDispatchToProps = {
   insterCar,
   updateCar,
-  clearCars
+  clearCars,
 };
 
 export default connect(
