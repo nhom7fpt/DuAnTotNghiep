@@ -1,6 +1,6 @@
 import { toast } from "react-toastify";
 import CustomService from "../../services/CustomService";
-import { CUSTOM_SET } from "./actionType";
+import { CUSTOM_SET , FIELD_ACCOUNT } from "./actionType";
 const service = new CustomService();
 
 export const updateCustom = (id ,account, navigate) => async (dispatch) => {

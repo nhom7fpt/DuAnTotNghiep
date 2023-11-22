@@ -15,17 +15,21 @@ function TimChuyen(props) {
     navigate("/timchuyen");
   };
   const { fieldData } = props;
+  const listData = fieldData.map((item)=>{
+    const data = {label : item, value: item};
+    return data
+  })
 
   const items = [
     {
       key: "1",
       label: "Một chiều",
-      children: <MotChieu data={fieldData} />,
+      children: <MotChieu data={listData} />,
     },
     {
       key: "2",
       label: "Khứ hồi",
-      children: <KhuHoi data={fieldData} />,
+      children: <KhuHoi data={listData} />,
     },
   ];
 

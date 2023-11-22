@@ -7,16 +7,13 @@ import { connect } from "react-redux";
 import withRouter from '../helpers/withRouter';
 import { updateCustom } from "../redux/actions/actionCusstom";
 import { fillAccount } from "../redux/actions/actionCusstom";
-import { Col, Input, Row, Select, Button, DatePicker } from 'antd';
+import { Col, Input, Row, Button, DatePicker } from 'antd';
 import { Form } from 'antd';
-
-const { Option } = Select;
 
 function Thongtintaikhoan(props) {
     const [profileImage, setProfileImage] = useState('');
     const user = localStorage.getItem("username");
    
-  
     const handleImageUpload = (e) => {
         const file = e.target.files[0];
         if (file) {
@@ -62,7 +59,7 @@ function Thongtintaikhoan(props) {
                                     onFinish={handleFormSubmit}
                                     style={{marginLeft:'8cm', marginTop:'-12cm'}}
                                 >
-                                    <Form.Item label="Họ và tên :" name="hoTen"  initialValue={custom?.hoTen || ''} >
+                                    <Form.Item label="Họ và tên :" name="hoTen"  initialValue={custom?.hoTen || ""} >
                                         <Input  style={{ width: '340px',  marginLeft:'20px', height: '45px'}} />
                                         
                                     </Form.Item>

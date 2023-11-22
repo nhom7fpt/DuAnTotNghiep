@@ -19,18 +19,19 @@ const MotChieu = (props) => {
     (option?.label ?? "").toLowerCase().includes(input.toLowerCase());
 
   const data = props.data;
+ 
   return (
     <Row>
       <Col md={7}>
         <span>Điểm đi</span>
         <Select
-          showSearch
+        
           placeholder="Chọn điểm đi"
-          optionFilterProp="children"
+        
           onChange={onChange}
           filterOption={filterOption}
           options={data}
-      
+          dropdownClassName="custom-dropdown-timchuyen" 
         />
       </Col>
       <Col md={2} className="location-image">

@@ -1,5 +1,5 @@
 import React from 'react';
-import './dvtc.css'; // Import your CSS file
+import './dvtc.css'; 
 
 const Datvethanhcong = () => {
   return (

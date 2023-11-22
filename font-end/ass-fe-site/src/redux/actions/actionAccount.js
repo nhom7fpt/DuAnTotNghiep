@@ -87,9 +87,8 @@ export const login = (account, navigate) => async (dispatch) => {
       });
 
       localStorage.setItem("username", res.data.tenTaiKhoan);
-   
-
-      navigate("/thongttk");
+  
+      navigate("/");
     } 
   } catch (error) {
     if (error.response && error.response.status === 400) {
