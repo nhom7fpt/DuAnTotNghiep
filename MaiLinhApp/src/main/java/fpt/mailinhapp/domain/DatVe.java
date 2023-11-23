@@ -34,7 +34,7 @@ public class DatVe {
     private ChuyenXe chuyenXe;
 
     @JsonIgnore
-    @OneToMany(mappedBy = "maVe", orphanRemoval = true)
+    @OneToMany(mappedBy = "datVe", orphanRemoval = true)
     private List<VeXeChiTiet> veXeChiTiets = new ArrayList<>();
 
     @Temporal(TemporalType.DATE)

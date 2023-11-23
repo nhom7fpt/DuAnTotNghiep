@@ -1,6 +1,7 @@
 package fpt.mailinhapp.domain;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -43,7 +44,7 @@ public class Xe {
     private AnhDaLuu anhDaLuu;
 
 
-
+    @JsonIgnore
     @OneToMany(mappedBy = "xe", orphanRemoval = true)
     private Set<ChuyenXe> chuyenXes = new LinkedHashSet<>();
 

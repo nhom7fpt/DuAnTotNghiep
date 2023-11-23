@@ -24,5 +24,5 @@ public class VeXeChiTietDto implements Serializable {
     Date ngayDi;
     LocalTime thoiGianDi;
     String viTriNgoi;
-    DatVeDto maVe;
+    DatVeDto datVe;
 }

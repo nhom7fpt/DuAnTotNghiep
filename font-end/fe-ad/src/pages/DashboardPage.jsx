@@ -32,6 +32,8 @@ import ListOrder from "../components/Order/ListOrder";
 import Login from "../components/auth/Login";
 import OrderDetail from "../components/Order/OrderDetail";
 import Manufacturer from "../components/manufacturer/Manufacturer";
+import ListNhanVien from "../components/NhanVien/ListNhanVien";
+import AddOrEditNhanVien from "../components/nhanVien/AddOrEditNhanVien";
 
 const { Header, Sider, Content } = Layout;
 
@@ -87,7 +89,7 @@ const DashboardPage = () => {
             {
               key: "3",
               icon: <MdAllInbox />,
-              label: "Products",
+              label: "Quản lý xe",
               children: [
                 {
                   key: "31",
@@ -112,7 +114,21 @@ const DashboardPage = () => {
             {
               key: "5",
               icon: <MdRequestPage />,
-              label: "Invoices",
+              label: "Quản lý nhân viên",
+              children: [
+                {
+                  key: "51",
+                  icon: <MdAddCircleOutline />,
+                  label: "Thêm nhân viên",
+                  onClick: () => navigate("/nhanvien/them"),
+                },
+                {
+                  key: "52",
+                  icon: <MdFormatListBulleted />,
+                  label: "Danh sách nhân viên",
+                  onClick: () => navigate("/nhanvien/danhsach"),
+                },
+              ],
             },
             {
               key: "6",
@@ -206,6 +222,16 @@ const DashboardPage = () => {
               <Route path="/order/orderdetail/:id" element={<OrderDetail />} />
               <Route path="/login" element={<Login />} />
               <Route path="/manufacturer" element={<Manufacturer />} />
+
+              <Route path="/nhanvien/danhsach" element={<ListNhanVien />} />
+              <Route
+                path="/nhanvien/them"
+                element={<AddOrEditNhanVien key="nvt" />}
+              />
+              <Route
+                path="/nhanvien/sua/:id"
+                element={<AddOrEditNhanVien key="nvs" />}
+              />
             </Routes>
           </div>
 

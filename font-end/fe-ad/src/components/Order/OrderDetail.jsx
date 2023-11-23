@@ -7,6 +7,9 @@ import { getListOrderDetail } from "../../redux/actions/actionOrder";
 
 const OrderDetail = ({ orderDetail, getListOrderDetail, navigate }) => {
   const { id } = useParams();
+  const params = new URLSearchParams(window.location.search);
+  const total = params.get("total");
+  console.log(total);
 
   useEffect(() => {
     getListOrderDetail(id);
@@ -15,7 +18,7 @@ const OrderDetail = ({ orderDetail, getListOrderDetail, navigate }) => {
   return (
     <>
       <HeaderContent title="Order Detail" navigate={navigate} />
-      <ListOrderDetail odd={orderDetail} />
+      <ListOrderDetail odd={orderDetail} total={total} />
     </>
   );
 };

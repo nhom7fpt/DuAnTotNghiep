@@ -1,12 +1,10 @@
 package fpt.mailinhapp.service;
 
 import fpt.mailinhapp.domain.AnhDaLuu;
-import fpt.mailinhapp.domain.HopDong;
 import fpt.mailinhapp.domain.NhanVien;
 import fpt.mailinhapp.dto.NhanVienDto;
 import fpt.mailinhapp.exception.EmployeeException;
 import fpt.mailinhapp.repository.AnhDaLuuRepository;
-import fpt.mailinhapp.repository.HopDongRepository;
 import fpt.mailinhapp.repository.NhanVienRepository;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,8 +24,7 @@ public class NhanVienService {
     @Autowired
     AnhDaLuuRepository imgDao;
 
-    @Autowired
-    HopDongRepository hdDao;
+
     @Transactional(rollbackFor = Exception.class)
     public NhanVienDto createEmployee(NhanVienDto dto){
         var found = dao.findById(dto.getSoCCCD());
@@ -45,17 +42,6 @@ public class NhanVienService {
             BeanUtils.copyProperties(saveImg, dto.getAnhDaLuu());
             entity.setAnhDaLuu(saveImg);
         }
-
-        if(dto.getHopDong().getMaHopDong() == null){
-            HopDong hd = new HopDong();
-            BeanUtils.copyProperties(dto.getHopDong(), hd);
-            var saveHD = hdDao.save(hd);
-            BeanUtils.copyProperties(saveHD, dto.getHopDong());
-            entity.setHopDong(saveHD);
-        }
-
-
-
 
         dao.save(entity);
 

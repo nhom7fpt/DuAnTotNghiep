@@ -3,6 +3,7 @@ package fpt.mailinhapp.service;
 import fpt.mailinhapp.domain.DatVe;
 import fpt.mailinhapp.domain.VeXeChiTiet;
 import fpt.mailinhapp.dto.DatVeDto;
+import fpt.mailinhapp.dto.VeXeChiTietDto;
 import fpt.mailinhapp.exception.TicketsException;
 import fpt.mailinhapp.repository.DatVeRepository;
 import fpt.mailinhapp.repository.VeXeChiTietRepository;
@@ -39,7 +40,7 @@ public class VeXeService {
         var listTickets = dto.getVeXeChiTiets().stream().map((item)->{
             VeXeChiTiet vxct = new VeXeChiTiet();
             BeanUtils.copyProperties(item, vxct);
-            vxct.setMaVe(newEntity);
+            vxct.setDatVe(newEntity);
             var saveVX = veDao.save(vxct);
 
             return saveVX;
@@ -61,5 +62,20 @@ public class VeXeService {
 
     public List<DatVe> findAll() {
         return dao.findAll();
+    }
+
+    public List<VeXeChiTietDto> findById(Long id){
+
+        var found = dao.findById(id).orElseThrow(()-> new TicketsException("Mã đặt vé không tồn tại"));
+
+        List<VeXeChiTiet> listEntity = veDao.findByDatVe_MaVe(id);
+
+        List<VeXeChiTietDto> listDto = listEntity.stream().map(item ->{
+            VeXeChiTietDto dto =  new VeXeChiTietDto();
+            BeanUtils.copyProperties(item, dto);
+            return dto;
+        }).collect(Collectors.toList());
+
+        return listDto;
     }
 }
