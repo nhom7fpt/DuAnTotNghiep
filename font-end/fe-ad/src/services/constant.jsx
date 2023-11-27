@@ -11,3 +11,6 @@ export const API_IMG = "http://localhost:8080/api/v1/images";
 export const API_CAR = "http://localhost:8080/api/v1/cars";
 
 export const API_EMP = "http://localhost:8080/api/v1/employs";
+
+export const API_TUYEN = "http://localhost:8080/api/v1/tuyen";
+export const API_CHUYEN = "http://localhost:8080/api/v1/chuyen";

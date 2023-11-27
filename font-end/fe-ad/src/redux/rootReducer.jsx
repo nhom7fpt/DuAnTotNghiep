@@ -6,6 +6,8 @@ import CarReducer from "./reducers/CarReducer";
 import AccountReducer from "./reducers/AccountReducer";
 import OrderReducer from "./reducers/OrderReducer";
 import NhanVienReducer from "./reducers/NhanVienReduver";
+import TuyenXeReducer from "./reducers/TuyenXeReducer";
+import ChuyenReducer from "./reducers/ChuyenReducer";
 const rootReducer = combineReducers({
   LoaiXeReducer,
   commonReducer,
@@ -14,6 +16,8 @@ const rootReducer = combineReducers({
   AccountReducer,
   OrderReducer,
   NhanVienReducer,
+  TuyenXeReducer,
+  ChuyenReducer,
 });
 
 export default rootReducer;

@@ -6,6 +6,7 @@ import lombok.NoArgsConstructor;
 import lombok.Value;
 
 import java.io.Serializable;
+import java.sql.Date;
 import java.sql.Time;
 import java.time.LocalTime;
 
@@ -21,7 +22,7 @@ public class TuyenXeDto implements Serializable {
     String diemDen;
     String noiDon;
     String noiTra;
-    String tgDi;
+    String  tgDi;
     String tgDen;
-    Float gia;
+    Long gia;
 }

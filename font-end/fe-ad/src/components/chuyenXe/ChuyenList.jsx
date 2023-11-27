@@ -6,7 +6,7 @@ import ImagesService from "../../services/ImagesService";
 import { MdPreview } from "react-icons/md";
 import withRouter from "../../helpers/withRouter";
 
-class NhanVienList extends Component {
+class ChuyenList extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -24,60 +24,72 @@ class NhanVienList extends Component {
   };
 
   render() {
-    const { list } = this.props;
-    console.log(list);
+    const { Cars } = this.props;
+    console.log(Cars);
 
     return (
       <>
-        <Table dataSource={list} rowKey="soCCCD">
+        <Table dataSource={Cars} rowKey="bienSoXe">
           <Column
-            title="Ảnh"
-            key="anhDaLuu"
+            title="Biển Số Xe"
+            key="bienSoXe"
+            dataIndex="bienSoXe"
             align="center"
-            width={90}
-            render={(_, record) => (
-              <Space size="middle">
-                {record.anhDaLuu ? (
-                  <Image
-                    width="100%"
-                    src={ImagesService.getImageUrl(record.anhDaLuu.tenTep)}
-                  />
-                ) : (
-                  <Image
-                    width="100%"
-                    src="https://t3.ftcdn.net/jpg/04/34/72/82/240_F_434728286_OWQQvAFoXZLdGHlObozsolNeuSxhpr84.jpg"
-                  />
-                )}
-              </Space>
+          ></Column>
+          <Column
+            title="Số Ghế"
+            key="loaiXe"
+            dataIndex="loaiXe"
+            align="center"
+            render={(text, record) => (
+              <label>{record ? record.loaiXe.soGhe : ""}</label>
             )}
           ></Column>
 
           <Column
-            title="Họ tên"
-            key="hoTen"
-            dataIndex="hoTen"
-            align="center"
-          ></Column>
-          <Column
-            title="Số CCCD"
-            key="soCCCD"
-            dataIndex="soCCCD"
-            align="center"
-          ></Column>
-
-          <Column
-            title="Số điện thoại"
-            key="sdt"
-            dataIndex="sdt"
+            title="Ngày Mua"
+            key="ngayMua"
+            dataIndex="ngayMua"
             align="center"
           />
 
           <Column
-            title="Địa chỉ"
-            key="diaChi"
-            dataIndex="diaChi"
+            title="Ngày Đăng Kiểm"
+            key="ngayDangKiem"
+            dataIndex="ngayDangKiem"
             align="center"
           />
+
+          <Column
+            title="Giá Mua"
+            key="giaMua"
+            dataIndex="giaMua"
+            align="center"
+          ></Column>
+
+          <Column
+            title="Nơi Mua"
+            key="noiMua"
+            dataIndex="noiMua"
+            align="center"
+          ></Column>
+          <Column
+            title="Thương Hiệu"
+            key="thuongHieu"
+            dataIndex="thuongHieu"
+            align="center"
+            render={(text, record) => (
+              <label>{record.thuongHieu.tenThuongHieu}</label>
+            )}
+          ></Column>
+
+          <Column
+            title="Loại Xe"
+            key="loaiXe"
+            dataIndex="loaiXe"
+            align="center"
+            render={(text, record) => <label>{record.loaiXe.tenLoai}</label>}
+          ></Column>
 
           <Column
             title="Action"
@@ -119,4 +131,4 @@ class NhanVienList extends Component {
   }
 }
 
-export default withRouter(NhanVienList);
+export default withRouter(ChuyenList);

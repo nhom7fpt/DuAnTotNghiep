@@ -8,7 +8,7 @@ import {
 import NhanVienService from "../../services/NhanVienService";
 import { toast } from "react-toastify";
 
-const service = NhanVienService();
+const service = new NhanVienService();
 
 export const insterNhanVien = (nhanVien, navigate) => async (dispatch) => {
   try {
@@ -50,8 +50,8 @@ export const insterNhanVien = (nhanVien, navigate) => async (dispatch) => {
     payload: true,
   });
 
-  clearCars();
-  navigate("/product/list");
+  clearNhanVien();
+  navigate("/nhanvien/danhsach");
 };
 
 export const updateNhanVien = (id, nhanVien, navigate) => async (dispatch) => {
@@ -61,7 +61,7 @@ export const updateNhanVien = (id, nhanVien, navigate) => async (dispatch) => {
       payload: true,
     });
 
-    const res = await service.updateCar(id, nhanVien);
+    const res = await service.updateNhanVien(id, nhanVien);
     console.log(res);
     if (res && res.status === 200) {
       dispatch({
@@ -89,8 +89,8 @@ export const updateNhanVien = (id, nhanVien, navigate) => async (dispatch) => {
     type: COMMON_LOADING_SET,
     payload: true,
   });
-  clearCars();
-  navigate("/product/list");
+  clearNhanVien();
+  navigate("/nhanvien/danhsach");
 };
 
 export const getListNhanVien = () => async (dispatch) => {
@@ -132,7 +132,7 @@ export const nhanVienEditData = (nhanVien, navigate) => (dispatch) => {
     type: NHANVIEN_SET,
     payload: nhanVien,
   });
-  navigate("/product/edit/" + nhanVien.soCCCD);
+  navigate("/nhanvien/sua/" + nhanVien.soCCCD);
 };
 
 export const deleteNhanVien = (id) => async (dispatch) => {
@@ -166,7 +166,7 @@ export const deleteNhanVien = (id) => async (dispatch) => {
   }
 };
 
-export const clearCars = () => (dispatch) => {
+export const clearNhanVien = () => (dispatch) => {
   dispatch({
     type: NHANVIEN_SET,
     payload: {},

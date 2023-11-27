@@ -9,8 +9,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.text.SimpleDateFormat;
 import java.time.LocalTime;
+import java.time.OffsetDateTime;
+import java.time.ZoneOffset;
 import java.time.format.DateTimeFormatter;
+import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -19,27 +23,58 @@ public class TuyenXeService {
     @Autowired
     TuyenXeRepository dao;
     @Transactional(rollbackFor = Exception.class)
-    public TuyenXeDto createBuses(TuyenXeDto dto){
+    public TuyenXe createBuses(TuyenXeDto dto){
         TuyenXe entity = new TuyenXe();
-        BeanUtils.copyProperties(dto, entity, new String[]{"tGianDi", "tGianDen"});
+        BeanUtils.copyProperties(dto, entity, new String[]{"tgDi","tgDen"});
 
-        LocalTime tgDi = LocalTime.parse(dto.getTgDi(), DateTimeFormatter.ofPattern("hh:mm"));
-        LocalTime tgDen = LocalTime.parse(dto.getTgDen(),DateTimeFormatter.ofPattern("hh:mm"));
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSSX");
+
+        OffsetDateTime offsetDateTimeStart = OffsetDateTime.parse(dto.getTgDi(), formatter);
+        OffsetDateTime offsetDateTimeEnd = OffsetDateTime.parse(dto.getTgDen(), formatter);
+
+        OffsetDateTime timeZoneStart = offsetDateTimeStart.withOffsetSameInstant(ZoneOffset.ofHours(7));
+        OffsetDateTime timeZoneEnd = offsetDateTimeEnd.withOffsetSameInstant(ZoneOffset.ofHours(7));
+
+        LocalTime tgDi = timeZoneStart.toLocalTime();
+        LocalTime tgDen = timeZoneEnd.toLocalTime();
 
         entity.setTgDi(tgDi);
         entity.setTgDen(tgDen);
+
         var saveEntity = dao.save(entity);
 
-        dto.setMaTuyenXe(saveEntity.getMaTuyenXe());
 
-        return dto;
+
+        return saveEntity;
     }
 
     @Transactional(rollbackFor = Exception.class)
     public TuyenXeDto updateBuses(Integer id,TuyenXeDto dto){
         var found = dao.findById(id).orElseThrow(()-> new BusesException("Tuyến xe không tồn tại"));
 
-        BeanUtils.copyProperties(dto, found);
+        BeanUtils.copyProperties(dto, found, new String[]{"tgDi","tgDen"});
+
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSSX");
+
+        if(dto.getTgDi() != null){
+            OffsetDateTime offsetDateTimeStart = OffsetDateTime.parse(dto.getTgDi(), formatter);
+            OffsetDateTime timeZoneStart = offsetDateTimeStart.withOffsetSameInstant(ZoneOffset.ofHours(7));
+            LocalTime tgDi = timeZoneStart.toLocalTime();
+            found.setTgDi(tgDi);
+        }
+
+        if(dto.getTgDen() != null) {
+            OffsetDateTime offsetDateTimeEnd = OffsetDateTime.parse(dto.getTgDen(), formatter);
+
+
+            OffsetDateTime timeZoneEnd = offsetDateTimeEnd.withOffsetSameInstant(ZoneOffset.ofHours(7));
+
+
+            LocalTime tgDen = timeZoneEnd.toLocalTime();
+
+
+            found.setTgDen(tgDen);
+        }
 
         dao.save(found);
 

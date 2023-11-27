@@ -1,44 +1,45 @@
 import React, { Component } from "react";
 import HeaderContent from "../common/HeaderContent";
 import { Button } from "antd";
+import ProductList from "./ProductList";
 import withRouter from "../../helpers/withRouter";
 import { connect } from "react-redux";
 import {
-  nhanVienEditData,
-  getListNhanVien,
-  deleteNhanVien,
-} from "../../redux/actions/actionNhanVien";
-import NhanVienList from "./NhanVienList";
+  CarEditData,
+  getListCars,
+  deleteCar,
+} from "../../redux/actions/actionCar";
 
-class ListNhanVien extends Component {
+class ListProduct extends Component {
+
   onEdit = (data) => {
-    this.props.nhanVienEditData(data, this.props.router.navigate);
+    this.props.CarEditData(data, this.props.router.navigate);
   };
   onConfirm = (data) => {
-    this.props.deleteNhanVien(data.soCCCD);
+    this.props.deleteCar(data.bienSoXe);
   };
   componentDidMount = () => {
-    this.props.getListNhanVien();
+    this.props.getListCars();
   };
   render() {
-    const { nhanViens } = this.props;
+    const { Cars } = this.props;
 
     const { navigate } = this.props.router;
     return (
       <>
-        <HeaderContent title="Danh sách nhân viên" navigate={navigate} />
+        <HeaderContent title="List Product" navigate={navigate} />
 
         <Button
           type="primary"
           onClick={() => {
-            navigate("/nhanvien/them");
+            navigate("/product/add");
           }}
         >
-          Thêm mới
+          New Product
         </Button>
 
-        <NhanVienList
-          list={nhanViens}
+        <ProductList
+          Cars={Cars}
           onEdit={this.onEdit}
           onConfirm={this.onConfirm}
         />
@@ -48,17 +49,17 @@ class ListNhanVien extends Component {
 }
 
 const mapStateToProps = (state) => ({
-  nhanVien: state.NhanVienReducer.nhanVien,
-  nhanViens: state.NhanVienReducer.nhanViens,
+  Car: state.CarReducer.Car,
+  Cars: state.CarReducer.Cars,
 });
 
 const mapDispatchToProps = {
-  deleteNhanVien,
-  nhanVienEditData,
-  getListNhanVien,
+  CarEditData,
+  getListCars,
+  deleteCar,
 };
 
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(withRouter(ListNhanVien));
+)(withRouter(ListProduct));

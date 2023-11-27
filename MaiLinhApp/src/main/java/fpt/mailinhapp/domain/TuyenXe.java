@@ -1,5 +1,6 @@
 package fpt.mailinhapp.domain;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -7,6 +8,7 @@ import org.hibernate.proxy.HibernateProxy;
 
 import java.sql.Time;
 import java.time.LocalTime;
+import java.util.Date;
 import java.util.Objects;
 
 @Getter
@@ -31,14 +33,15 @@ public class TuyenXe {
     @Column(name = "noi_tra")
     private String noiTra;
 
+    @JsonFormat(pattern = "HH:mm")
     @Column(name = "tgian_di")
     private LocalTime tgDi;
-
+    @JsonFormat(pattern = "HH:mm")
     @Column(name = "tgian_den")
     private LocalTime tgDen;
 
     @Column(name = "gia")
-    private Float gia;
+    private Long gia;
 
 
 }

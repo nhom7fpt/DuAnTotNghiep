@@ -2,83 +2,44 @@ import React, { Component } from "react";
 import withRouter from "../../helpers/withRouter";
 import HeaderContent from "../common/HeaderContent";
 import { Button, Col, Divider, Row, Space, Steps, notification } from "antd";
-import FormProduct from "./FormProduct";
-import UploadImage from "./UploadImage";
+import FormNhanVien from "./FormNhanVien";
 import { SaveOutlined } from "@ant-design/icons";
-import LoaiXeServer from "../../services/LoaiXeService";
-import ManufuactureService from "../../services/ManufacturerService";
 
 import { toast } from "react-toastify";
 import { connect } from "react-redux";
-import { insterCar, updateCar, clearCars } from "../../redux/actions/actionCar";
+import {
+  insterNhanVien,
+  updateNhanVien,
+  clearNhanVien,
+} from "../../redux/actions/actionNhanVien";
 
 class AddOrEditNhanVien extends Component {
-  constructor(props) {
-    super(props);
-
-    this.state = {
-      Car: {},
-      thuongHieu: [],
-      loaiXe: [],
-    };
-  }
-
-  componentDidMount = () => {
-    this.loadData();
-  };
-
   clearform = () => {
     const { navigate } = this.props.router;
-    this.props.clearCars();
-    navigate("/product/add");
+    this.props.clearNhanVien();
+    navigate("/nhanvien/them");
   };
 
   goNext = async (values) => {
     const { navigate } = this.props.router;
-    const { insterCar, updateCar, Car } = this.props;
-    const { loaiXe, thuongHieu } = this.state;
+    const { insterNhanVien, updateNhanVien, nhanVien } = this.props;
 
-    const lx = loaiXe.find((item) => item.id === values.loaiXe);
-    const th = thuongHieu.find((item) => item.id === values.thuongHieu);
-
-    let newCar = { ...values, loaiXe: lx, thuongHieu: th };
-
-    console.log(newCar);
-
-    if (Car && Car.bienSoXe) {
-      await updateCar(newCar.bienSoXe, newCar, navigate);
+    if (nhanVien && nhanVien.soCCCD) {
+      await updateNhanVien(nhanVien.soCCCD, values, navigate);
     } else {
-      await insterCar(newCar, navigate);
-    }
-  };
-
-  loadData = async () => {
-    try {
-      const loaiXeServer = new LoaiXeServer();
-      const thuongHieuService = new ManufuactureService();
-      const loaiXeRes = await loaiXeServer.getLoaiXe();
-
-      const dataRes = await thuongHieuService.getManufacturer();
-
-      this.setState({
-        ...this.state,
-        thuongHieu: dataRes.data,
-        loaiXe: loaiXeRes.data,
-      });
-    } catch (error) {
-      console.log(error);
-      toast.error("Error: " + error);
+      await insterNhanVien(values, navigate);
     }
   };
 
   render() {
     const { navigate } = this.props.router;
-    const { loaiXe, thuongHieu } = this.state;
-    const { Car } = this.props;
+    const { nhanVien } = this.props;
     return (
       <>
         <HeaderContent
-          title={Car && Car.bienSoXe ? "Update Product" : "Add New Product"}
+          title={
+            nhanVien && nhanVien.soCCCD ? "Update Product" : "Add New Product"
+          }
           navigate={navigate}
         />
 
@@ -94,12 +55,10 @@ class AddOrEditNhanVien extends Component {
         <Row>
           <Col md={24}>
             <Divider></Divider>
-            <FormProduct
-              Car={Car}
+            <FormNhanVien
+              nhanVien={nhanVien}
               goNext={this.goNext}
-              loaiXe={loaiXe}
-              thuongHieu={thuongHieu}
-            ></FormProduct>
+            ></FormNhanVien>
           </Col>
         </Row>
       </>
@@ -108,13 +67,13 @@ class AddOrEditNhanVien extends Component {
 }
 
 const mapStateToProps = (state) => ({
-  Car: state.CarReducer.Car,
+  nhanVien: state.NhanVienReducer.nhanVien,
 });
 
 const mapDispatchToProps = {
-  insterCar,
-  updateCar,
-  clearCars,
+  insterNhanVien,
+  updateNhanVien,
+  clearNhanVien,
 };
 
 export default connect(
