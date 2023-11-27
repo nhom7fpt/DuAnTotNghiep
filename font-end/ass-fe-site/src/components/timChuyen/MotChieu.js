@@ -6,14 +6,23 @@ import '../../css/routes.scss';
 const MotChieu = (props) => {
   const [startDate, setStartDate] = useState(moment());
   const [returnDate, setReturnDate] = useState(null);
-
+  const [startLocation, setStartLocation] = useState(null);
+  const [endLocation, setEndLocation] = useState(null);
   const disabledDate = (current) => {
-    // So sánh current với ngày hiện tại, nếu current trước ngày hiện tại thì trả về true (vô hiệu hóa), ngược lại trả về false (có thể chọn)
     return current.isBefore(moment().startOf("day"));
   };
   const onChange = (value) => {
     console.log(value);
+    setStartDate(value);
   };
+  const onLocationChange = (value, type) => {
+    if (type === "start") {
+      setStartLocation(value);
+    } else {
+      setEndLocation(value);
+    }
+  };
+
 
   const filterOption = (input, option) =>
     (option?.label ?? "").toLowerCase().includes(input.toLowerCase());
@@ -28,7 +37,7 @@ const MotChieu = (props) => {
         
           placeholder="Chọn điểm đi"
         
-          onChange={onChange}
+          onChange={(value) => onLocationChange(value, "start")}
           filterOption={filterOption}
           options={data}
           dropdownClassName="custom-dropdown-timchuyen" 
@@ -44,7 +53,7 @@ const MotChieu = (props) => {
           showSearch
           placeholder="Chọn điểm đến"
           optionFilterProp="children"
-          onChange={onChange}
+          onChange={(value) => onLocationChange(value, "end")}
           filterOption={filterOption}
           options={data}
           style={{marginLeft:'-0.6cm'}}
@@ -56,14 +65,15 @@ const MotChieu = (props) => {
         <Space direction="vertical">
           <DatePicker
             value={startDate}
-            onChange={onChange} 
-            format="DD/MM/YYYY"
+            onChange={onChange}
+            format="DD/MM/YYYY" 
             showTimeSelect
             timeFormat="HH:mm:ss"
             id="datepicker"
             disabledDate={disabledDate}
             picker="date"
             placeholder="Chọn thời gian đi"
+          
             style={{marginLeft:'-0.5cm'}}
           />
         </Space>

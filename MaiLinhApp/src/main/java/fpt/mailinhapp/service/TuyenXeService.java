@@ -61,7 +61,7 @@ public class TuyenXeService {
         var list = dao.findAll();
 
         var listData = list.stream().map((item ->{
-            return item.getDiemDi();
+            return item.getDiemDen();
         })).distinct().collect(Collectors.toList());
 
         return listData;

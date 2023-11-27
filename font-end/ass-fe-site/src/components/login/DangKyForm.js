@@ -5,6 +5,7 @@ import { BsTelephoneFill } from "react-icons/bs";
 import { PiPasswordFill } from "react-icons/pi";
 import { toast } from "react-toastify";
 import { BiSolidUserPin } from "react-icons/bi";
+import { MdAttachEmail } from "react-icons/md";
 const DangKyForm = (props) => {
   const onFinish = (values) => {
     props.onFinish(values);
@@ -44,7 +45,9 @@ const DangKyForm = (props) => {
         <Input
           placeholder="Nhập số điện thoại"
           prefix={<BsTelephoneFill />}
-          className="input-form"
+         style={{height:'35px'}}
+         className="dangki-tenTaiKhoan"
+           
         />
       </Form.Item>
 
@@ -60,10 +63,30 @@ const DangKyForm = (props) => {
         <Input.Password
           placeholder="Nhập mật khẩu"
           prefix={<PiPasswordFill />}
-          className="input-form"
+       
+          style={{height:'35px'}}
+          className="dangki-tenTaiKhoan"
         />
       </Form.Item>
-
+      <Form.Item
+                name="email"
+                rules={[
+                  {
+                    type: "email",
+                    message: "Email không hợp lệ",
+                  },
+                  {
+                    required: true,
+                    message: "Nhập địa chỉ email",
+                  },
+                ]}
+              >
+                <Input placeholder="Nhập địa chỉ email" 
+                style={{width:'444px', height:'35px'}}
+                prefix={<MdAttachEmail />}
+           
+                />
+              </Form.Item>
       <Form.Item
         name="hoTen"
         rules={[
@@ -75,7 +98,8 @@ const DangKyForm = (props) => {
       >
         <Input placeholder="Nhập họ tên" 
         prefix={<BiSolidUserPin />}
-        className="input-form" 
+        style={{height:'35px'}}
+        className="dangki-tenTaiKhoan"
         />
       </Form.Item>
 

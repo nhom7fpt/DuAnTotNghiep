@@ -12,6 +12,7 @@ import "react-toastify/dist/ReactToastify.css";
 
 import ContactPage from './components/lienhe';
 import LoginPage from "./components/login/loginand";
+import Quenmk from "./components/login/quenmk";
 import Lichtrinh from './components/lichtrinh';
 import Trangchu from "./components/trangchu/trangchu";
 import Tracuu from './components/tracuu';
@@ -22,7 +23,6 @@ import Doimk from './components/doimatkhau';
 import Thongttk from './components/thongtintaikhoan';
 import Mailinhpay from './components/lichsugiaodịch'
 import Vechungtoi from './components/vechungtoi';
-import { NotificationContainer } from 'react-notifications';
 import ThongTin from "./components/trangchu/thongtin"
 import SeatSelection from "./components/trangchu/loc";
 import store from "./redux/store";
@@ -51,11 +51,10 @@ function App() {
               <Route path="/vechungtoi" element={<Vechungtoi />} />
               <Route path="/Lsmuave" element={<Lsmuave />} />
               <Route path="/doimk" element={<Doimk />} />
+              <Route path="/quenmk" element={<Quenmk />} />
               <Route path="/thongttk" element={<Thongttk />} />
               <Route path="/Mailinhpay" element={<Mailinhpay />} />
              
-              {/* Định nghĩa các Route khác ở đây nếu cần */}
-
             </Routes>
             <ToastContainer
               position="top-right"

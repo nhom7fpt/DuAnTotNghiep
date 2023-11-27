@@ -1,7 +1,5 @@
 import React, { useEffect, useState } from "react";
-
-import "react-responsive-carousel/lib/styles/carousel.min.css"; // Thêm CSS cho Carousel
-import { Button, Col, Tabs } from "antd";
+import { Button, Col, Radio, Tabs } from "antd";
 import "antd/dist/antd.css";
 import MotChieu from "./MotChieu";
 import KhuHoi from "./KhuHoi";
@@ -15,20 +13,34 @@ function TimChuyen(props) {
     navigate("/timchuyen");
   };
   const { fieldData } = props;
-  const listData = fieldData.map((item)=>{
-    const data = {label : item, value: item};
-    return data
-  })
+  const listData = fieldData.map((item) => ({
+    label: item,
+    value: item,
+  }));
+
+  const [selectedTab, setSelectedTab] = useState("1");
+
+  const handleChange = (e) => {
+    setSelectedTab(e.target.value);
+  };
 
   const items = [
     {
       key: "1",
-      label: "Một chiều",
+      label: (
+        <Radio value="1" onChange={handleChange} checked={selectedTab === "1"} style={{ fontSize:'15px'}}>
+          Một chiều
+        </Radio>
+      ),
       children: <MotChieu data={listData} />,
     },
     {
       key: "2",
-      label: "Khứ hồi",
+      label: (
+        <Radio value="2" onChange={handleChange} checked={selectedTab === "2"} style={{marginLeft:'-20px', fontSize:'15px'}}>
+          Khứ hồi
+        </Radio>
+      ),
       children: <KhuHoi data={listData} />,
     },
   ];
@@ -38,14 +50,14 @@ function TimChuyen(props) {
   }, []);
 
   return (
-    <>
-      <Col>
+ 
+      <Col className="timchuyen-ink-bar">
         <Tabs defaultActiveKey="1" items={items} />
         <Button className="tcx-button" onClick={onClick}>
           Tìm chuyến xe
         </Button>
       </Col>
-    </>
+
   );
 }
 
@@ -57,7 +69,4 @@ const mapDispatchToProps = {
   loadDataField,
 };
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(withRouter(TimChuyen));
+export default connect(mapStateToProps, mapDispatchToProps)(withRouter(TimChuyen));
