@@ -4,12 +4,15 @@ import fpt.mailinhapp.domain.ChuyenXe;
 import fpt.mailinhapp.dto.ChuyenXeDto;
 import fpt.mailinhapp.exception.BusesException;
 import fpt.mailinhapp.repository.ChuyenXeRepository;
+import fpt.mailinhapp.respondata.ChuyenTheoTuyen;
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -60,6 +63,18 @@ public class ChuyenXeService {
             ChuyenXeDto dto = new ChuyenXeDto();
             BeanUtils.copyProperties(item, dto);
             return dto;
+        }).collect(Collectors.toList());
+
+        return listDto;
+    }
+
+    public List<ChuyenXeDto> findByTuyen(ChuyenTheoTuyen dto){
+
+        List<ChuyenXe> listEntity = dao.findByTuyenXe_DiemDiLikeAndTuyenXe_DiemDenLikeAndTuyenXe_Gia(dto.getDiemDi(), dto.getDiemDen(), dto.getGia());
+
+        List<ChuyenXeDto> listDto = listEntity.stream().map((item)->{
+            ModelMapper mapper = new ModelMapper();
+            return mapper.map(item, ChuyenXeDto.class);
         }).collect(Collectors.toList());
 
         return listDto;

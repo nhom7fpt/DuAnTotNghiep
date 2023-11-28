@@ -1,6 +1,7 @@
 package fpt.mailinhapp.clientController;
 
 import fpt.mailinhapp.dto.ChuyenXeDto;
+import fpt.mailinhapp.respondata.ChuyenTheoTuyen;
 import fpt.mailinhapp.respondata.ReqTimMotChieu;
 import fpt.mailinhapp.respondata.Return2List;
 import fpt.mailinhapp.service.ChuyenXeService;
@@ -26,7 +27,7 @@ public class SearchController {
     @Autowired
     MapValidationErrorService errorService;
 
-    @RequestMapping("one-way")
+    @PostMapping("one-way")
     public ResponseEntity findOneWayTicket(@Validated @RequestBody ReqTimMotChieu data, BindingResult result){
         ResponseEntity error = errorService.mapValidationField(result);
 
@@ -39,7 +40,7 @@ public class SearchController {
         return new ResponseEntity<>(dto, HttpStatus.OK);
     }
 
-    @RequestMapping("return")
+    @PostMapping("return")
     public ResponseEntity findReturnTicket(@Validated @RequestBody ReqTimMotChieu data, BindingResult result){
         ResponseEntity error = errorService.mapValidationField(result);
 
@@ -59,5 +60,17 @@ public class SearchController {
     public ResponseEntity loadLocation(){
         var data = tuyenXeService.loadLocation();
         return new ResponseEntity<>(data,HttpStatus.OK);
+    }
+
+    @PostMapping("findbuses")
+    public ResponseEntity findByBuses(@Validated @RequestBody ChuyenTheoTuyen dto, BindingResult result){
+        ResponseEntity error = errorService.mapValidationField(result);
+
+        if(error != null){
+            return error;
+        }
+        var list = service.findByTuyen(dto);
+
+        return new ResponseEntity<>(list, HttpStatus.OK);
     }
 }
