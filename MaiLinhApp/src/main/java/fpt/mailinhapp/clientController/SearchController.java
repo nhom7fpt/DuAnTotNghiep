@@ -62,8 +62,7 @@ public class SearchController {
         return new ResponseEntity<>(data,HttpStatus.OK);
     }
 
-<<<<<<< HEAD
-=======
+
     @PostMapping("findbuses")
     public ResponseEntity findByBuses(@Validated @RequestBody ChuyenTheoTuyen dto, BindingResult result){
         ResponseEntity error = errorService.mapValidationField(result);
@@ -75,5 +74,5 @@ public class SearchController {
 
         return new ResponseEntity<>(list, HttpStatus.OK);
     }
->>>>>>> minh
+
 }

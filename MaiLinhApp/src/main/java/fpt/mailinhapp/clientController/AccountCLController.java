@@ -40,17 +40,13 @@ public class AccountCLController {
 
         var newDto = service.insertAccount(tkDto);
         ThanhVienDto tv = new ThanhVienDto();
-<<<<<<< HEAD
-        tv.setId(dto.getTenTaiKhoan());
-        tv.setHoTen(dto.getHoTen());
 
-=======
         tv.setSoDT(dto.getTenTaiKhoan());
         tv.setTaiKhoan(newDto);
         tv.setHoTen(dto.getHoTen());
 
 
->>>>>>> minh
+
         customerService.insertCustomers(tv);
 
 

@@ -14,9 +14,10 @@ import java.io.Serializable;
 @NoArgsConstructor
 @AllArgsConstructor
 public class ThanhVienDto implements Serializable {
-    String id;
+    String soDT;
     String hoTen;
     String diaChi;
     String email;
+    TaiKhoanDto taiKhoan;
     AnhDaLuuDto anhDaLuu;
 }

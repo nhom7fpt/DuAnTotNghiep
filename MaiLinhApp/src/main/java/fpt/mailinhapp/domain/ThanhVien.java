@@ -1,10 +1,9 @@
 package fpt.mailinhapp.domain;
 
-<<<<<<< HEAD
+
 import com.fasterxml.jackson.annotation.JsonIgnore;
-=======
 import com.fasterxml.jackson.annotation.JsonFormat;
->>>>>>> minh
+
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;

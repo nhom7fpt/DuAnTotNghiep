@@ -45,11 +45,9 @@ public class CustomerService {
         entity.setTaiKhoan(tk);
 
         var saveCus = dao.save(entity);
-<<<<<<< HEAD
-        dto.setId(saveCus.getId());
-=======
+
         dto.setSoDT(saveCus.getSoDT());
->>>>>>> minh
+
 
         return dto;
     }
@@ -82,11 +80,9 @@ public class CustomerService {
 
         var saveEntity = dao.save(found);
 
-<<<<<<< HEAD
-        dto.setId(found.getId());
-=======
+
         dto.setSoDT(found.getSoDT());
->>>>>>> minh
+
         return dto;
     }
 
