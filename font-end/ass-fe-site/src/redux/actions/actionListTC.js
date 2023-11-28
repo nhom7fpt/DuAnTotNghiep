@@ -19,19 +19,21 @@ export const loadDataFieldTC = () => async (dispatch) => {
   }
 };
 
-export const loadDataFieldTCReturn = (tc) => async (dispatch) => {
-  try {
-    const res = await service.loadDataFieldTCReturn(tc);
-    console.log(res);
+export const loadDataFieldTCReturn = (start, end, date) => async (dispatch) => {
+  const data = { diemDi: start, diemDen: end, tgDi: date };
 
-    if (res.status === 200) {
-      dispatch({
-        type: FIELD_LISTTC,
-        payload: res.data,
-      });
-    }
-  } catch (error) {
-    console.log(error);
-  }
+  console.log(data);
+  // try {
+  //   const res = await service.loadDataFieldTCReturn(tc);
+  //   console.log(res);
+
+  //   if (res.status === 200) {
+  //     dispatch({
+  //       type: FIELD_LISTTC,
+  //       payload: res.data,
+  //     });
+  //   }
+  // } catch (error) {
+  //   console.log(error);
+  // }
 };
-

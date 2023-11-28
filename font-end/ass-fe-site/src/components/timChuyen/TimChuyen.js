@@ -7,16 +7,17 @@ import { connect } from "react-redux";
 import withRouter from "../../helpers/withRouter";
 import { loadDataField } from "../../redux/actions/actionSearch";
 import moment from "moment";
-import { loadDataFieldTC,loadDataFieldTCReturn } from "../../redux/actions/actionListTC";
+import {
+  loadDataFieldTC,
+  loadDataFieldTCReturn,
+} from "../../redux/actions/actionListTC";
 function TimChuyen(props) {
-  const [dataSearch, setDataSearch] = useState([])
   const [startDate, setStartDate] = useState(moment());
   const [startLocation, setStartLocation] = useState(null);
   const [endLocation, setEndLocation] = useState(null);
   const { navigate } = props.router;
   const onClick = () => {
-    setDataSearch({diemDi: startLocation, diemDen: endLocation, tgDi: startDate});
-    console.log(dataSearch);
+    props.loadDataFieldTCReturn(startLocation, endLocation, startDate);
   };
 
   const { fieldData } = props;
@@ -36,16 +37,33 @@ function TimChuyen(props) {
     {
       key: "1",
       label: (
-        <Radio value="1" onChange={handleChange} checked={selectedTab === "1"} style={{ fontSize:'15px'}}>
+        <Radio
+          value="1"
+          onChange={handleChange}
+          checked={selectedTab === "1"}
+          style={{ fontSize: "15px" }}
+        >
           Một chiều
         </Radio>
       ),
-      children: <MotChieu setStart={(value) =>setStartLocation(value)} setEnd={setEndLocation} setDay={setStartDate} data={listData} />,
+      children: (
+        <MotChieu
+          setStart={setStartLocation}
+          setEnd={setEndLocation}
+          setDay={setStartDate}
+          data={listData}
+        />
+      ),
     },
     {
       key: "2",
       label: (
-        <Radio value="2" onChange={handleChange} checked={selectedTab === "2"} style={{marginLeft:'-20px', fontSize:'15px'}}>
+        <Radio
+          value="2"
+          onChange={handleChange}
+          checked={selectedTab === "2"}
+          style={{ marginLeft: "-20px", fontSize: "15px" }}
+        >
           Khứ hồi
         </Radio>
       ),
@@ -58,15 +76,12 @@ function TimChuyen(props) {
   }, []);
 
   return (
- 
-      <Col className="timchuyen-ink-bar">
-        <Tabs defaultActiveKey="1" items={items} />
-        <Button className="tcx-button" onClick={onClick}>
-          Tìm chuyến xe
-        </Button>
-        
-      </Col>
-
+    <Col className="timchuyen-ink-bar">
+      <Tabs defaultActiveKey="1" items={items} />
+      <Button className="tcx-button" onClick={onClick}>
+        Tìm chuyến xe
+      </Button>
+    </Col>
   );
 }
 
@@ -77,8 +92,11 @@ const mapStateToProps = (state) => ({
 
 const mapDispatchToProps = {
   loadDataField,
-   
+
   loadDataFieldTCReturn,
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(withRouter(TimChuyen));
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(withRouter(TimChuyen));
