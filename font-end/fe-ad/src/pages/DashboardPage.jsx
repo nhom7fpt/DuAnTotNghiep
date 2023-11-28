@@ -32,6 +32,9 @@ import ListOrder from "../components/Order/ListOrder";
 import Login from "../components/auth/Login";
 import OrderDetail from "../components/Order/OrderDetail";
 import Manufacturer from "../components/manufacturer/Manufacturer";
+import ListNhanVien from "../components/nhanVien/ListNhanVien";
+import AddOrEditNhanVien from "../components/nhanVien/AddOrEditNhanVien";
+import TuyenXe from "../components/tuyenXe/TuyenXe";
 
 const { Header, Sider, Content } = Layout;
 
@@ -87,7 +90,7 @@ const DashboardPage = () => {
             {
               key: "3",
               icon: <MdAllInbox />,
-              label: "Products",
+              label: "Quản lý xe",
               children: [
                 {
                   key: "31",
@@ -112,7 +115,21 @@ const DashboardPage = () => {
             {
               key: "5",
               icon: <MdRequestPage />,
-              label: "Invoices",
+              label: "Nhân viên",
+              children: [
+                {
+                  key: "51",
+                  icon: <MdAddCircleOutline />,
+                  label: "Thêm",
+                  onClick: () => navigate("/nhanvien/them"),
+                },
+                {
+                  key: "52",
+                  icon: <MdFormatListBulleted />,
+                  label: "Danh sách",
+                  onClick: () => navigate("/nhanvien/danhsach"),
+                },
+              ],
             },
             {
               key: "6",
@@ -133,6 +150,12 @@ const DashboardPage = () => {
             },
             {
               key: "9",
+              icon: <MdSupervisorAccount />,
+              label: "Tuyến xe",
+              onClick: () => navigate("/tuyen"),
+            },
+            {
+              key: "10",
               icon: <MdLogout />,
               label: "Logout",
             },
@@ -206,6 +229,17 @@ const DashboardPage = () => {
               <Route path="/order/orderdetail/:id" element={<OrderDetail />} />
               <Route path="/login" element={<Login />} />
               <Route path="/manufacturer" element={<Manufacturer />} />
+              <Route path="/tuyen" element={<TuyenXe />} />
+
+              <Route path="/nhanvien/danhsach" element={<ListNhanVien />} />
+              <Route
+                path="/nhanvien/them"
+                element={<AddOrEditNhanVien key="nvt" />}
+              />
+              <Route
+                path="/nhanvien/sua/:id"
+                element={<AddOrEditNhanVien key="nvs" />}
+              />
             </Routes>
           </div>
 

@@ -1,5 +1,6 @@
 package fpt.mailinhapp.domain;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Getter;
@@ -25,6 +26,7 @@ public class VeXeChiTiet {
     @Column(name = "sdt", nullable = false, length = 11)
     private String sdt;
 
+    @JsonFormat(pattern = "dd-MM-YYYY")
     @Column(name = "ngay_di", nullable = false)
     private Date ngayDi;
 
@@ -34,9 +36,8 @@ public class VeXeChiTiet {
     @Column(name = "vi_tri_ngoi", nullable = false, length = 10)
     private String viTriNgoi;
 
-    @JsonIgnore
     @ManyToOne
-    @JoinColumn(name = "ma_ve_ma_ve")
-    private DatVe maVe;
+    @JoinColumn(name = "dat_ve_ma_ve")
+    private DatVe datVe;
 
 }

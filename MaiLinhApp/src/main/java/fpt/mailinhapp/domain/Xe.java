@@ -1,5 +1,7 @@
 package fpt.mailinhapp.domain;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -20,14 +22,14 @@ public class Xe {
     @Column(name = "bien_so_xe", nullable = false)
     private String bienSoXe;
 
-    @Column(name = "so_ghe")
-    private Integer soGhe;
 
     @Temporal(TemporalType.DATE)
+    @JsonFormat(pattern = "dd-MM-yyyy")
     @Column(name = "ngay_mua", nullable = true)
     private Date ngayMua;
 
     @Temporal(TemporalType.DATE)
+    @JsonFormat(pattern = "dd-MM-YYYY")
     @Column(name = "ngay_dang_kiem")
     private Date ngayDangKiem;
 
@@ -42,21 +44,15 @@ public class Xe {
     private AnhDaLuu anhDaLuu;
 
 
-
+    @JsonIgnore
     @OneToMany(mappedBy = "xe", orphanRemoval = true)
     private Set<ChuyenXe> chuyenXes = new LinkedHashSet<>();
 
-    @ManyToMany
-    @JoinTable(name = "xe_anhDaLuus",
-            joinColumns = @JoinColumn(name = "xe_bien_so_xe"),
-            inverseJoinColumns = @JoinColumn(name = "anhDaLuus_id"))
-    private List<AnhDaLuu> anhDaLuus = new ArrayList<>();
-
-    @OneToOne(orphanRemoval = true)
+    @ManyToOne
     @JoinColumn(name = "thuong_hieu_id")
     private ThuongHieu thuongHieu;
 
-    @OneToOne(orphanRemoval = true)
+    @ManyToOne
     @JoinColumn(name = "loai_xe_id")
     private LoaiXe loaiXe;
 

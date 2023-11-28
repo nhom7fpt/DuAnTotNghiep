@@ -1,6 +1,7 @@
 package fpt.mailinhapp.clientController;
 
 import fpt.mailinhapp.dto.ChuyenXeDto;
+import fpt.mailinhapp.respondata.ChuyenTheoTuyen;
 import fpt.mailinhapp.respondata.ReqTimMotChieu;
 import fpt.mailinhapp.respondata.Return2List;
 import fpt.mailinhapp.service.ChuyenXeService;
@@ -61,4 +62,18 @@ public class SearchController {
         return new ResponseEntity<>(data,HttpStatus.OK);
     }
 
+<<<<<<< HEAD
+=======
+    @PostMapping("findbuses")
+    public ResponseEntity findByBuses(@Validated @RequestBody ChuyenTheoTuyen dto, BindingResult result){
+        ResponseEntity error = errorService.mapValidationField(result);
+
+        if(error != null){
+            return error;
+        }
+        var list = service.findByTuyen(dto);
+
+        return new ResponseEntity<>(list, HttpStatus.OK);
+    }
+>>>>>>> minh
 }

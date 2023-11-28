@@ -1,6 +1,8 @@
 package fpt.mailinhapp.service;
 
 import fpt.mailinhapp.domain.AnhDaLuu;
+import fpt.mailinhapp.domain.LoaiXe;
+import fpt.mailinhapp.domain.ThuongHieu;
 import fpt.mailinhapp.domain.Xe;
 import fpt.mailinhapp.dto.XeDto;
 import fpt.mailinhapp.exception.CarsException;
@@ -11,11 +13,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Date;
 import java.util.List;
-import java.util.Set;
-import java.util.stream.Collectors;
 
 @Service
+
+
 public class CarService {
     @Autowired
     XeRepository dao;
@@ -31,42 +34,74 @@ public class CarService {
             throw new CarsException("Biển số xe đã tồn tại");
         }
 
+        String[] listIgone = {"anhDaluu", "thuonghieu", "loaiXe"};
+
 
 
         Xe entity = new Xe();
-        BeanUtils.copyProperties(dto, entity,new String[]{"anhDaLuu","anhXeChiTiet"});
+        LoaiXe loai = new LoaiXe();
+        ThuongHieu hieu = new ThuongHieu();
+
+        BeanUtils.copyProperties(dto, entity,listIgone);
+        BeanUtils.copyProperties(dto.getLoaiXe(),loai);
+        BeanUtils.copyProperties(dto.getThuongHieu(),hieu);
+
+        entity.setThuongHieu(hieu);
+        entity.setLoaiXe(loai);
 
         if(dto.getAnhDaLuu() != null){
             AnhDaLuu img = new AnhDaLuu();
             BeanUtils.copyProperties(dto.getAnhDaLuu(), img);
-            imgDao.save(img);
+            var imgSave = imgDao.save(img);
+            entity.setAnhDaLuu(imgSave);
 
         }
 
-        if(dto.getAnhXeChiTiet().size() > 1){
-            var listImg = dto.getAnhXeChiTiet().stream().map((item)->{
-                AnhDaLuu img = new AnhDaLuu();
-                BeanUtils.copyProperties(item, img);
-                var saveImg = imgDao.save(img);
 
-                return saveImg;
-            }).collect(Collectors.toList());
-
-           entity.setAnhDaLuus(listImg);
-        }
 
         dao.save(entity);
 
         return dto;
+
     }
 
     @Transactional(rollbackFor = Exception.class)
     public XeDto updateCar(String id, XeDto dto){
         var found =  dao.findById(id).orElseThrow(()-> new CarsException("Xe không tồn tại"));
 
-        BeanUtils.copyProperties(dto, found);
 
-        var saveCar = dao.save(found);
+        Date ngDangKiem = new Date();
+        Date ngMua = new Date();
+        if(dto.getNgayDangKiem() == null){
+             ngDangKiem = found.getNgayDangKiem();
+        }
+        if(dto.getNgayMua() == null){
+             ngMua = found.getNgayMua();
+        }
+
+        BeanUtils.copyProperties(dto, found, "anhDaLuu");
+
+        if(dto.getAnhDaLuu() != null){
+
+            if(dto.getAnhDaLuu().getId() != found.getAnhDaLuu().getId()) {
+                imgService.deleteImage(found.getAnhDaLuu().getTenTep());
+                imgDao.delete(found.getAnhDaLuu());
+            }
+            AnhDaLuu img =  new AnhDaLuu();
+            BeanUtils.copyProperties(dto.getAnhDaLuu(), img);
+            found.setAnhDaLuu(img);
+        }
+        if(dto.getNgayDangKiem() == null){
+             found.setNgayDangKiem(ngDangKiem);
+        }
+        if(dto.getNgayMua() == null){
+            found.setNgayMua(ngMua);
+        }
+
+
+         var saveEntity =dao.save(found);
+
+        BeanUtils.copyProperties(saveEntity, dto);
 
         return dto;
     }

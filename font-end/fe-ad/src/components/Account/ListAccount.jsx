@@ -13,12 +13,19 @@ export class ListAccount extends Component {
   onConfirm = (data) => {
     this.props.deleteAccount(data.username);
   };
-  onOkUpdateAcc = (data) => {
-    this.props.updateAccount(data.username, data, this.props.router.navigate);
+  onOkUpdateAcc = async (data) => {
+    await this.props.updateAccount(
+      data.tenTaiKhoan,
+      data,
+      this.props.router.navigate
+    );
+
+    await this.props.getListAccount();
   };
   componentDidMount = () => {
     this.props.getListAccount();
   };
+
   render() {
     const { navigate } = this.props.router;
     const { accounts } = this.props;

@@ -5,247 +5,101 @@ import { Button, Col, Divider, Row, Space, Steps, notification } from "antd";
 import FormProduct from "./FormProduct";
 import UploadImage from "./UploadImage";
 import { SaveOutlined } from "@ant-design/icons";
-import CategoryService from "../../services/CategoryService";
+import LoaiXeServer from "../../services/LoaiXeService";
+import ManufuactureService from "../../services/ManufacturerService";
+
 import { toast } from "react-toastify";
 import { connect } from "react-redux";
-import {
-  insterProduct,
-  updateProduct,
-} from "../../redux/actions/actionProduct";
-import ProductService from "../../services/ProductService";
+import { insterCar, updateCar, clearCars } from "../../redux/actions/actionCar";
 
 class AddOrEditProduct extends Component {
   constructor(props) {
     super(props);
 
     this.state = {
-      step: 0,
-      product: {},
-      productImages: [],
-      updateProductImages: [],
-      categories: [],
+      Car: {},
+      thuongHieu: [],
+      loaiXe: [],
     };
   }
-  goNext = (values) => {
-    this.setState({ ...this.state, product: values, step: 1 });
-  };
-  goPrevi = () => {
-    this.setState({ ...this.state, step: 0 });
-  };
 
   componentDidMount = () => {
     this.loadData();
   };
-  onUploadFile = (fileList) => {
-    this.setState({ ...this.state, updateProductImages: fileList });
-  };
-  static getDerivedStateFromProps(nextProps, prevState) {
-    if (
-      nextProps.product &&
-      nextProps.product.images &&
-      nextProps.product.images.length > 0
-    ) {
-      let productImages = [];
 
-      if (nextProps.product.images) {
-        productImages = nextProps.product.images.map((item) => ({
-          ...item,
-          uid: item.id,
-          url: ProductService.getProductImageUrl(item.fileName),
-          status: "done",
-        }));
-      }
-      return { ...prevState, productImages: productImages };
-    }
-    return null;
-  }
-
-  saveProduct = () => {
-    const { product, productImages, updateProductImages } = this.state;
-    const newProduct = {
-      ...product,
-      images:
-        updateProductImages && updateProductImages.length > 0
-          ? updateProductImages.map((item) => {
-              if (item.id) {
-                return { ...item };
-              }
-
-              return item.response;
-            })
-          : productImages.map((item) => {
-              if (item.id) {
-                return { ...item };
-              }
-
-              return item.response;
-            }),
-    };
-
-    if (newProduct.images && newProduct.images.length > 0) {
-      const uploading = newProduct.images.filter(
-        (item) => item.status !== "done"
-      );
-
-      if (uploading && uploading.length > 0) {
-        notification.error({
-          message: "Error",
-          description: "Product images are uploading. Please wait...",
-          duration: 10,
-        });
-        return;
-      }
-    } else if (newProduct.images.length === 0) {
-      notification.error({
-        message: "Error",
-        description:
-          "Product images are not choose. Please choose image before saving",
-        duration: 10,
-      });
-      return;
-    }
-
+  clearform = () => {
     const { navigate } = this.props.router;
-
-    this.props.insterProduct(newProduct, navigate);
-
-    this.setState({ ...this.state, product: {}, productImages: [] });
+    this.props.clearCars();
+    navigate("/product/add");
   };
 
-  updateProduct = () => {
-    const { product, productImages, updateProductImages } = this.state;
-    const newProduct = {
-      ...product,
-      images:
-        updateProductImages && updateProductImages.length > 0
-          ? updateProductImages.map((item) => {
-              if (item.id) {
-                return { ...item };
-              }
-
-              return item.response;
-            })
-          : productImages.map((item) => {
-              if (item.id) {
-                return { ...item };
-              }
-
-              return item.response;
-            }),
-    };
-
-    if (newProduct.images && newProduct.images.length > 0) {
-      const uploading = newProduct.images.filter(
-        (item) => item.status !== "done"
-      );
-
-      if (uploading && uploading.length > 0) {
-        notification.error({
-          message: "Error",
-          description: "Product images are uploading. Please wait...",
-          duration: 10,
-        });
-        return;
-      }
-    } else if (newProduct.images.length === 0) {
-      notification.error({
-        message: "Error",
-        description:
-          "Product images are not choose. Please choose image before saving",
-        duration: 10,
-      });
-      return;
-    }
-
+  goNext = async (values) => {
     const { navigate } = this.props.router;
+    const { insterCar, updateCar, Car } = this.props;
+    const { loaiXe, thuongHieu } = this.state;
 
-    this.props.updateProduct(newProduct.id, newProduct, navigate);
+    const lx = loaiXe.find((item) => item.id === values.loaiXe);
+    const th = thuongHieu.find((item) => item.id === values.thuongHieu);
 
-    this.setState({ ...this.state, product: {}, productImages: [] });
+    let newCar = { ...values, loaiXe: lx, thuongHieu: th };
+
+    console.log(newCar);
+
+    if (Car && Car.bienSoXe) {
+      await updateCar(newCar.bienSoXe, newCar, navigate);
+    } else {
+      await insterCar(newCar, navigate);
+    }
   };
 
   loadData = async () => {
     try {
-      const categoryService = new CategoryService();
-      const categoryRes = await categoryService.getCategory();
+      const loaiXeServer = new LoaiXeServer();
+      const thuongHieuService = new ManufuactureService();
+      const loaiXeRes = await loaiXeServer.getLoaiXe();
+
+      const dataRes = await thuongHieuService.getManufacturer();
 
       this.setState({
         ...this.state,
-        categories: categoryRes.data,
+        thuongHieu: dataRes.data,
+        loaiXe: loaiXeRes.data,
       });
     } catch (error) {
       console.log(error);
       toast.error("Error: " + error);
     }
   };
+
   render() {
     const { navigate } = this.props.router;
-    const { step, categories, productImages } = this.state;
-    const { product } = this.props;
+    const { loaiXe, thuongHieu } = this.state;
+    const { Car } = this.props;
     return (
       <>
         <HeaderContent
-          title={product && product.id ? "Update Product" : "Add New Product"}
+          title={Car && Car.bienSoXe ? "Update Product" : "Add New Product"}
           navigate={navigate}
         />
 
-        <Row>
-          <Col md={24}>
-            <Steps
-              current={step}
-              items={[
-                {
-                  title: "Base Information",
-                  description: "Fill basic Information",
-                },
-                { title: "Images", description: "Choose the list images" },
-              ]}
-            ></Steps>
-          </Col>
-        </Row>
+        <Button
+          type="primary"
+          onClick={() => {
+            this.clearform();
+          }}
+        >
+          Mới
+        </Button>
 
         <Row>
           <Col md={24}>
-            {step === 0 && (
-              <>
-                <Divider></Divider>
-                <FormProduct
-                  product={product}
-                  goNext={this.goNext}
-                  categories={categories}
-                ></FormProduct>
-              </>
-            )}
-            {step === 1 && (
-              <>
-                <Divider></Divider>
-                <Row>
-                  <Col md={24}>
-                    <UploadImage
-                      onUploadFile={this.onUploadFile}
-                      fileList={productImages}
-                    ></UploadImage>
-                    <Divider></Divider>
-                    <div style={{ float: "right" }}>
-                      <Space>
-                        <Button type="primary" onClick={this.goPrevi}>
-                          Previous
-                        </Button>
-                        {product && product.id ? (
-                          <Button type="primary" onClick={this.updateProduct}>
-                            <SaveOutlined /> Update
-                          </Button>
-                        ) : (
-                          <Button type="primary" onClick={this.saveProduct}>
-                            <SaveOutlined /> Save
-                          </Button>
-                        )}
-                      </Space>
-                    </div>
-                  </Col>
-                </Row>
-              </>
-            )}
+            <Divider></Divider>
+            <FormProduct
+              Car={Car}
+              goNext={this.goNext}
+              loaiXe={loaiXe}
+              thuongHieu={thuongHieu}
+            ></FormProduct>
           </Col>
         </Row>
       </>
@@ -254,12 +108,13 @@ class AddOrEditProduct extends Component {
 }
 
 const mapStateToProps = (state) => ({
-  product: state.ProductReducer.product,
+  Car: state.CarReducer.Car,
 });
 
 const mapDispatchToProps = {
-  insterProduct,
-  updateProduct,
+  insterCar,
+  updateCar,
+  clearCars,
 };
 
 export default connect(

@@ -7,6 +7,7 @@ import {
   Divider,
   Form,
   Input,
+  InputNumber,
   Popconfirm,
   Row,
   Select,
@@ -14,11 +15,11 @@ import {
 import HeaderContent from "../common/HeaderContent";
 import { connect } from "react-redux";
 import {
-  insterCategory,
-  getCategory,
-  clearCategory,
-  updateCategory,
-} from "../../redux/actions/actionCategory";
+  insterloaiXe,
+  getloaiXe,
+  clearloaiXe,
+  updateloaiXe,
+} from "../../redux/actions/actionLoaixe";
 
 class AddOrEdit extends Component {
   formRef = React.createRef();
@@ -27,11 +28,11 @@ class AddOrEdit extends Component {
     super(props);
 
     this.state = {
-      category: {
+      loaiXe: {
         id: "",
-        name: "",
-        status: "Visible",
-        day: "",
+        tenLoaiXe: "",
+        soGhe: 0,
+        loaiGhe: "",
       },
     };
   }
@@ -39,39 +40,45 @@ class AddOrEdit extends Component {
     const { id } = this.props.router.params;
 
     if (id) {
-      this.props.getCategory(id);
-      console.log("getcategory");
+      this.props.getloaiXe(id);
+      console.log("getloaiXe");
     } else {
-      this.props.clearCategory();
-      console.log("clearcategory");
+      this.props.clearloaiXe();
+      console.log("clearloaiXe");
     }
   };
 
   static getDerivedStateFromProps(nextProps, prevState) {
-    if (nextProps.category && prevState.category.id !== nextProps.category.id) {
+    if (nextProps.loaiXe && prevState.loaiXe.id !== nextProps.loaiXe.id) {
       return {
         ...prevState,
-        category: nextProps.category,
+        loaiXe: nextProps.loaiXe,
       };
-    } else if (!nextProps.category) {
+    } else if (!nextProps.loaiXe) {
       return {
         ...prevState,
-        category: { id: "", name: "", status: "Visible" },
+        loaiXe: {
+          id: "",
+          tenLoaiXe: "",
+          soGhe: 0,
+          loaiGhe: "",
+        },
       };
     }
 
     return null;
-  }
+  };
+
 
   onSubmitForm = (values) => {
     const { navigate } = this.props.router;
-    const { id } = this.state.category;
+    if (values.id != null) {
+      this.props.insterloaiXe(values, navigate);
 
-    // if (!id) {
-    //   this.props.insterCategory(values, navigate);
-    // } else {
-    //   this.props.updateCategory(id, values, navigate);
-    // }
+    }
+    else {
+      this.props.updateloaiXe(values.id, values, navigate);
+    }
     console.log(values);
   };
 
@@ -82,56 +89,62 @@ class AddOrEdit extends Component {
   render() {
     const { navigate } = this.props.router;
     const { isLoading } = this.props;
-    const { category } = this.state;
+    const { loaiXe } = this.state;
     return (
       <div>
         <HeaderContent
-          title={category.id ? "Update Category" : "Add New Category"}
+          title={loaiXe.id ? "Update loaiXe" : "Add New loaiXe"}
           navigate={navigate}
         />
         <Form
           layout="vertical"
           className="Form"
           onFinish={this.onSubmitForm}
-          key={category.id}
+          key={loaiXe.id}
           ref={this.formRef}
           disabled={isLoading}
         >
           <Row>
             <Col md={12}>
               <Form.Item
-                label="Category ID"
-                name="categoryid"
-                initialValue={category.id}
-                hidden={category.id ? false : true}
+                label="ID Loại Xe"
+                name="id"
+                initialValue={loaiXe.id}
+                hidden={loaiXe.id ? false : true}
               >
                 <Input readOnly></Input>
               </Form.Item>
 
               <Form.Item
-                label="Name"
-                name="name"
-                initialValue={category.name}
+                label="Tên Loại"
+                name="tenLoai"
+                initialValue={loaiXe.tenLoai}
                 rules={[{ required: true, message: "Please input name" }]}
               >
                 <Input></Input>
               </Form.Item>
+              <Form.Item
+                label="Số Ghế"
+                name="soGhe"
+                initialValue={loaiXe.soGhe}
+                rules={[{ required: true, message: "Please input name" }]}
+              >
+                <InputNumber></InputNumber>
+              </Form.Item>
 
               <Form.Item
-                label="Status"
-                name="status"
-                initialValue={category.status === "Visible" ? "0" : "1"}
+                label="Loại Ghế"
+                name="loaiGhe"
+                initialValue={loaiXe.loaiGhe === "Nằm" ? "Nằm" : "Ngồi"}
               >
                 <Select>
-                  <Select.Option value="0">Visible</Select.Option>
-                  <Select.Option value="1">Invisible</Select.Option>
+                  <Select.Option value="Nằm">Nằm</Select.Option>
+                  <Select.Option value="Ngồi">Ngồi</Select.Option>
                 </Select>
               </Form.Item>
-              <Form.Item label="DatePicker" name="day">
-                <DatePicker />
-              </Form.Item>
+
               <Divider />
-              {!category.id ? (
+              {!loaiXe.id ? (
                 <Button
                   htmlType="submit"
                   type="primary"
@@ -166,16 +179,16 @@ class AddOrEdit extends Component {
   }
 }
 const mapStateToProps = (state) => ({
-  category: state.CategoryReducer.category,
+  LoaiXe: state.LoaiXeReducer.LoaiXe,
   isLoading: state.commonReducer.isLoading,
 });
 const mapDispatchToProps = {
-  insterCategory,
-  getCategory,
-  clearCategory,
-  updateCategory,
+  insterloaiXe,
+  getloaiXe,
+  clearloaiXe,
+  updateloaiXe,
 };
 
 export default withRouter(
-  connect(mapStateToProps, mapDispatchToProps)(AddOrEdit)
+  connect(mapStateToProps, mapDispatchToProps)(withRouter(AddOrEdit))
 );

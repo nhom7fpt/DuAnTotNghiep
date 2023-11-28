@@ -6,6 +6,6 @@ export default class OrderService {
     return await axios.get(API_ORDER);
   };
   getListOrderDetail = async (id) => {
-    return await axios.get(API_ORDER + "/odd/" + id);
+    return await axios.get(API_ORDER + "/" + id);
   };
 }

@@ -9,27 +9,60 @@ export class OrderList extends Component {
     const { od } = this.props;
     return (
       <>
-        <Table dataSource={od} rowKey="id">
-          <Column title="ID" key="id" dataIndex="id" align="center"></Column>
-
+        <Table dataSource={od} rowKey="maVe">
           <Column
-            title="CustomerId"
-            key="cusId"
-            dataIndex="cusId"
+            title="Mã vé"
+            key="maVe"
+            dataIndex="maVe"
             align="center"
           ></Column>
 
           <Column
-            title="Address"
-            key="address"
-            dataIndex="address"
+            title="Ngày đặt vé"
+            key="ngayDatVe"
+            dataIndex="ngayDatVe"
             align="center"
           ></Column>
 
           <Column
-            title="Buy Date"
-            key="createDate"
-            dataIndex="createDate"
+            title="Tài khoản"
+            key="taiKhoan"
+            dataIndex="taiKhoan"
+            align="center"
+            render={(_, record) => (
+              <label>
+                {record && record.taiKhoan != null
+                  ? record.taiKhoan.tenTaiKhoan
+                  : ""}
+              </label>
+            )}
+          ></Column>
+
+          <Column
+            title="Số lượng vé"
+            key="soLuong"
+            dataIndex="soLuong"
+            align="center"
+          ></Column>
+
+          <Column
+            title="Mã khuyến mãi"
+            key="khuyenMai"
+            dataIndex="khuyenMai"
+            align="center"
+            render={(_, record) => (
+              <label>
+                {record && record.khuyenMai != null
+                  ? record.khuyenMai.maKhuyenMai
+                  : ""}
+              </label>
+            )}
+          ></Column>
+
+          <Column
+            title="Tổng tiền"
+            key="tongTien"
+            dataIndex="tongTien"
             align="center"
           ></Column>
 

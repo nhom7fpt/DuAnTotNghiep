@@ -38,13 +38,21 @@ public class AccountCLController {
         }
         TaiKhoanDto tkDto = new TaiKhoanDto(dto.getTenTaiKhoan(), dto.getMatKhau(), VaiTro.ThanhVien);
 
-
+        var newDto = service.insertAccount(tkDto);
         ThanhVienDto tv = new ThanhVienDto();
+<<<<<<< HEAD
         tv.setId(dto.getTenTaiKhoan());
         tv.setHoTen(dto.getHoTen());
 
+=======
+        tv.setSoDT(dto.getTenTaiKhoan());
+        tv.setTaiKhoan(newDto);
+        tv.setHoTen(dto.getHoTen());
+
+
+>>>>>>> minh
         customerService.insertCustomers(tv);
-        var newDto = service.insertAccount(tkDto);
+
 
         return new ResponseEntity<>(newDto, HttpStatus.CREATED);
     }

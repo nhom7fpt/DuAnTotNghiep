@@ -1,7 +1,9 @@
 import React, { useState } from "react";
 import { PlusOutlined } from "@ant-design/icons";
 import { Modal, Upload } from "antd";
-import ProductService from "../../services/ProductService";
+
+import ImagesService from "../../services/ImagesService";
+
 const getBase64 = (file) =>
   new Promise((resolve, reject) => {
     const reader = new FileReader();
@@ -30,13 +32,15 @@ const UploadImage = (props) => {
     const { fileList } = info;
 
     props.onUploadFile(fileList.slice());
+
+
   };
 
   const handleRemove = (info) => {
     if (info.filename) {
-      ProductService.deleteProductImage(info.fileName);
+      ImagesService.deleteImage(info.fileName);
     } else if (info.response && info.response.fileName) {
-      ProductService.deleteProductImage(info.response.fileName);
+      ImagesService.deleteImage(info.response.fileName);
     }
   };
   const uploadButton = (
@@ -53,18 +57,19 @@ const UploadImage = (props) => {
   );
   const { fileList } = props;
 
+
   return (
     <>
       <Upload
-        action="http://localhost:8080/api/ad/product/images/one"
+        action="http://localhost:8080/api/v1/images/"
         listType="picture-card"
         defaultFileList={fileList}
-        multiple={true}
+        multiple={false}
         onPreview={handlePreview}
         onChange={handleChange}
         onRemove={handleRemove}
       >
-        {fileList.length >= 8 ? null : uploadButton}
+        {fileList.length > 0 ? null : uploadButton}
       </Upload>
       <Modal
         open={previewOpen}

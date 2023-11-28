@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("api/v1/acc")
+@CrossOrigin
 public class AccountController {
 
     @Autowired

@@ -1,17 +1,23 @@
 import { combineReducers } from "redux";
-import CategoryReducer from "../redux/reducers/CategoryReducer";
+import LoaiXeReducer from "./reducers/LoaiXeReducer";
 import commonReducer from "./reducers/commonReducer";
 import ManufacturerReducer from "./reducers/ManufacturerReducer";
-import ProductReducer from "./reducers/ProductReducer";
+import CarReducer from "./reducers/CarReducer";
 import AccountReducer from "./reducers/AccountReducer";
 import OrderReducer from "./reducers/OrderReducer";
+import NhanVienReducer from "./reducers/NhanVienReduver";
+import TuyenXeReducer from "./reducers/TuyenXeReducer";
+import ChuyenReducer from "./reducers/ChuyenReducer";
 const rootReducer = combineReducers({
-  CategoryReducer,
+  LoaiXeReducer,
   commonReducer,
   ManufacturerReducer,
-  ProductReducer,
+  CarReducer,
   AccountReducer,
   OrderReducer,
+  NhanVienReducer,
+  TuyenXeReducer,
+  ChuyenReducer,
 });
 
 export default rootReducer;

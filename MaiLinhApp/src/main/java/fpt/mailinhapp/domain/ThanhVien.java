@@ -1,6 +1,10 @@
 package fpt.mailinhapp.domain;
 
+<<<<<<< HEAD
 import com.fasterxml.jackson.annotation.JsonIgnore;
+=======
+import com.fasterxml.jackson.annotation.JsonFormat;
+>>>>>>> minh
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -18,7 +22,7 @@ import java.util.Date;
 public class ThanhVien {
     @Id
     @Column(name = "soDT", nullable = false, length = 13)
-    private String id;
+    private String soDT;
 
     @Column(name = "ho_ten", nullable = true, length = 50)
     private String hoTen;
@@ -31,10 +35,12 @@ public class ThanhVien {
 
 
     @Temporal(TemporalType.DATE)
+    @JsonFormat(pattern = "DD-MM-YYYY")
     @Column(name = "ngay_tao")
     private Date ngayTao;
 
     @Column(name = "ngay_chinh_su")
+    @JsonFormat(pattern = "DD-MM-YYYY")
     private Date ngayChinhSu;
 
     @JsonIgnore
