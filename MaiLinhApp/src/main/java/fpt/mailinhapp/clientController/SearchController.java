@@ -26,7 +26,7 @@ public class SearchController {
     @Autowired
     MapValidationErrorService errorService;
 
-    @RequestMapping("one-way")
+    @PostMapping("one-way")
     public ResponseEntity findOneWayTicket(@Validated @RequestBody ReqTimMotChieu data, BindingResult result){
         ResponseEntity error = errorService.mapValidationField(result);
 
@@ -39,7 +39,7 @@ public class SearchController {
         return new ResponseEntity<>(dto, HttpStatus.OK);
     }
 
-    @RequestMapping("return")
+    @PostMapping("return")
     public ResponseEntity findReturnTicket(@Validated @RequestBody ReqTimMotChieu data, BindingResult result){
         ResponseEntity error = errorService.mapValidationField(result);
 
@@ -60,4 +60,5 @@ public class SearchController {
         var data = tuyenXeService.loadLocation();
         return new ResponseEntity<>(data,HttpStatus.OK);
     }
+
 }

@@ -34,7 +34,6 @@ function Thongtintaikhoan(props) {
     const { custom } = props;
     const { navigate } = props.router;
     useEffect(() => {
-        // Call fillAccount when the component mounts
         props.fillAccount(user, {}, navigate);
     }, []);
     return (

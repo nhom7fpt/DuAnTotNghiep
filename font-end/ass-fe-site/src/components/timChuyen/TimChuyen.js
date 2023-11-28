@@ -6,12 +6,19 @@ import KhuHoi from "./KhuHoi";
 import { connect } from "react-redux";
 import withRouter from "../../helpers/withRouter";
 import { loadDataField } from "../../redux/actions/actionSearch";
-
+import moment from "moment";
+import { loadDataFieldTC,loadDataFieldTCReturn } from "../../redux/actions/actionListTC";
 function TimChuyen(props) {
+  const [dataSearch, setDataSearch] = useState([])
+  const [startDate, setStartDate] = useState(moment());
+  const [startLocation, setStartLocation] = useState(null);
+  const [endLocation, setEndLocation] = useState(null);
   const { navigate } = props.router;
   const onClick = () => {
-    navigate("/timchuyen");
+    setDataSearch({diemDi: startLocation, diemDen: endLocation, tgDi: startDate});
+    console.log(dataSearch);
   };
+
   const { fieldData } = props;
   const listData = fieldData.map((item) => ({
     label: item,
@@ -22,6 +29,7 @@ function TimChuyen(props) {
 
   const handleChange = (e) => {
     setSelectedTab(e.target.value);
+    console.log(e.target.value);
   };
 
   const items = [
@@ -32,7 +40,7 @@ function TimChuyen(props) {
           Một chiều
         </Radio>
       ),
-      children: <MotChieu data={listData} />,
+      children: <MotChieu setStart={(value) =>setStartLocation(value)} setEnd={setEndLocation} setDay={setStartDate} data={listData} />,
     },
     {
       key: "2",
@@ -56,6 +64,7 @@ function TimChuyen(props) {
         <Button className="tcx-button" onClick={onClick}>
           Tìm chuyến xe
         </Button>
+        
       </Col>
 
   );
@@ -63,10 +72,13 @@ function TimChuyen(props) {
 
 const mapStateToProps = (state) => ({
   fieldData: state.SearchReducer.fieldData,
+  fieldDataTC: state.ListTCReducer.fieldDataTC,
 });
 
 const mapDispatchToProps = {
   loadDataField,
+   
+  loadDataFieldTCReturn,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(withRouter(TimChuyen));

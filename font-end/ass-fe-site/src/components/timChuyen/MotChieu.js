@@ -4,24 +4,24 @@ import moment from "moment";
 import muiten from "../../image/switch_location.svg";
 import '../../css/routes.scss';
 const MotChieu = (props) => {
-  const [startDate, setStartDate] = useState(moment());
-  const [returnDate, setReturnDate] = useState(null);
-  const [startLocation, setStartLocation] = useState(null);
-  const [endLocation, setEndLocation] = useState(null);
+
   const disabledDate = (current) => {
     return current.isBefore(moment().startOf("day"));
   };
   const onChange = (value) => {
-    console.log(value);
-    setStartDate(value);
+
+   
+    props.setDay(value);
   };
   const onLocationChange = (value, type) => {
     if (type === "start") {
-      setStartLocation(value);
+      props.setStart(value);
     } else {
-      setEndLocation(value);
+      props.setEnd(value);
     }
   };
+ const [startDate, setstartDate] = useState(moment()); 
+
 
 
   const filterOption = (input, option) =>
@@ -47,6 +47,7 @@ const MotChieu = (props) => {
         <img src={muiten} alt="" className="image" style={{marginRight:'-0.4cm'}}/>
         
       </Col>
+     
       <Col md={7}>
         <span>Điểm đến</span>
         <Select
