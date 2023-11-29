@@ -1,6 +1,8 @@
 package fpt.mailinhapp.adminController;
 
+import fpt.mailinhapp.dto.ChuyenXeDto;
 import fpt.mailinhapp.dto.TuyenXeDto;
+import fpt.mailinhapp.service.ChuyenXeService;
 import fpt.mailinhapp.service.MapValidationErrorService;
 import fpt.mailinhapp.service.TuyenXeService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,10 +15,10 @@ import org.springframework.web.bind.annotation.*;
 import java.time.LocalTime;
 
 @RestController
-@RequestMapping("api/v1/buses")
+@RequestMapping("api/v1/chuyen")
 public class BusesController {
     @Autowired
-    TuyenXeService service;
+    ChuyenXeService service;
 
     @Autowired
     MapValidationErrorService errService;
@@ -27,22 +29,22 @@ public class BusesController {
     }
 
     @PostMapping
-    public ResponseEntity insertBuses(@Validated @RequestBody TuyenXeDto dto, BindingResult result){
+    public ResponseEntity insertBuses(@Validated @RequestBody ChuyenXeDto dto, BindingResult result){
         ResponseEntity error = errService.mapValidationField(result);
 
         if(error != null){
             return error;
         }
 
-        System.out.println(dto.getTgDi());
 
-        var saveBuses = service.createBuses(dto);
+
+        var saveBuses = service.instertChuyenXe(dto);
 
         return new ResponseEntity<>(saveBuses, HttpStatus.CREATED);
     }
 
     @PatchMapping("{id}")
-    public ResponseEntity updateBuses(@PathVariable Integer id, @Validated @RequestBody TuyenXeDto dto,
+    public ResponseEntity updateBuses(@PathVariable Long id, @Validated @RequestBody ChuyenXeDto dto,
                                       BindingResult result){
         ResponseEntity error = errService.mapValidationField(result);
 
@@ -50,14 +52,14 @@ public class BusesController {
             return error;
         }
 
-        var saveBuses = service.updateBuses(id,dto);
+        var saveBuses = service.updateChuyenXe(id, dto);
 
         return new ResponseEntity<>(saveBuses, HttpStatus.OK);
     }
 
     @DeleteMapping("{id}")
-    public ResponseEntity deleteBuses(@PathVariable Integer id){
-        service.deleteBuses(id);
+    public ResponseEntity deleteBuses(@PathVariable Long id){
+        service.deleteChuyen(id);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 }

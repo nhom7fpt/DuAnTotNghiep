@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("api/v1/tickets")
+@CrossOrigin
 public class TicketsController {
 
     @Autowired
@@ -42,5 +43,10 @@ public class TicketsController {
         service.removeTickets(id);
 
         return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity getTicketDetail(@PathVariable Long id){
+        return new ResponseEntity<>(service.findById(id),HttpStatus.OK);
     }
 }

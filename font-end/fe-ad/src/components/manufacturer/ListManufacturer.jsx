@@ -21,21 +21,7 @@ class ListManufacturer extends Component {
     return (
       <div>
         <Table dataSource={dataSource} rowKey="id">
-          <Column
-            title="Logo"
-            key="logo"
-            dataIndex="logo"
-            align="center"
-            width={100}
-            render={(_, record) => (
-              <Space size="middle">
-                <Image
-                  width="100%"
-                  src={ManufacturerService.getManufacturerLogo(record.logo)}
-                />
-              </Space>
-            )}
-          ></Column>
+
 
           <Column
             title="ID"
@@ -46,9 +32,9 @@ class ListManufacturer extends Component {
           ></Column>
 
           <Column
-            title="Name"
-            key="name"
-            dataIndex="name"
+            title="Tên thương hiệu"
+            key="tenThuongHieu"
+            dataIndex="tenThuongHieu"
             align="center"
           ></Column>
 

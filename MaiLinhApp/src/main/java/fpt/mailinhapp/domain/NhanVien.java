@@ -25,12 +25,14 @@ public class NhanVien {
     @Column(name = "dia_chi", nullable = false, length = 100)
     private String diaChi;
 
-    @OneToOne(orphanRemoval = true)
-    @JoinColumn(name = "ma_hop_dong")
-    private HopDong hopDong;
+
 
     @OneToOne(orphanRemoval = true)
     @JoinColumn(name = "anh_da_luu_id")
     private AnhDaLuu anhDaLuu;
+
+    @OneToOne(orphanRemoval = true)
+    @JoinColumn(name = "tai_khoan_ten_tai_khoan")
+    private TaiKhoan taiKhoan;
 
 }

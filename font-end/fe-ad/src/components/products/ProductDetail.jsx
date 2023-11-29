@@ -12,9 +12,9 @@ import {
 } from "antd";
 
 import TextArea from "antd/es/input/TextArea";
-import ProductService from "../../services/ProductService";
+import ImagesService from "../../services/ImagesService";
 
-const ProductDetail = ({ visible, product, onClose }) => {
+const ProductDetail = ({ visible, Car, onClose }) => {
   return (
     <Modal
       open={visible}
@@ -24,25 +24,23 @@ const ProductDetail = ({ visible, product, onClose }) => {
       width={700}
       centered
     >
-      {product !== null && (
+      {Car !== null && (
         <Form layout="vertical" className="form" size="middle">
           <Row>
             <Col md={12}>
               <Form.Item>
                 <Image
-                  src={ProductService.getProductImageUrl(
-                    product.image.fileName
-                  )}
+                  src={ImagesService.getImageUrl(Car.image.fileName)}
                 ></Image>
               </Form.Item>
               <Form.Item
                 label="Id"
                 name="id"
-                initialValue={product.id ? product.id : null}
+                initialValue={Car.bienSoXe ? Car.bienSoXe : null}
               >
                 <Input readOnly></Input>
               </Form.Item>
-              <Form.Item label="Name" name="name" initialValue={product.name}>
+              {/* <Form.Item label="Name" name="name" initialValue={Car.name}>
                 <Input readOnly></Input>
               </Form.Item>
             </Col>
@@ -104,7 +102,7 @@ const ProductDetail = ({ visible, product, onClose }) => {
                 valuePropName="checked"
               >
                 <Checkbox readOnly>True</Checkbox>
-              </Form.Item>
+              </Form.Item> */}
               {/* <Form.Item
                 label="Main Image"
                 name="image"
@@ -134,7 +132,7 @@ const ProductDetail = ({ visible, product, onClose }) => {
             </Col>
           </Row>
           <Row>
-            <Col md={24}>
+            {/* <Col md={24}>
               <Form.Item
                 label="Brief"
                 name="brief"
@@ -153,7 +151,7 @@ const ProductDetail = ({ visible, product, onClose }) => {
               >
                 <TextArea readOnly></TextArea>
               </Form.Item>
-            </Col>
+            </Col> */}
           </Row>
         </Form>
       )}

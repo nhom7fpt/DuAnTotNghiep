@@ -2,7 +2,7 @@ import { Button, Image, Popconfirm, Space, Table, Tooltip } from "antd";
 import Column from "antd/es/table/Column";
 import React, { Component } from "react";
 import { BiEdit, BiSolidTrash } from "react-icons/bi";
-import ProductService from "../../services/ProductService";
+import ImagesService from "../../services/ImagesService";
 import { MdPreview } from "react-icons/md";
 import withRouter from "../../helpers/withRouter";
 import ProductDetail from "./ProductDetail";
@@ -11,83 +11,110 @@ class ProductList extends Component {
     super(props);
     this.state = {
       previewVisible: false,
-      selectedProduct: null,
+      selectedCar: null,
     };
   }
 
-  showProductDetail = (product) => {
-    this.setState({ previewVisible: true, selectedProduct: product });
+  showProductDetail = (Car) => {
+    this.setState({ previewVisible: true, selectedCar: Car });
   };
 
   closeProductDetail = () => {
-    this.setState({ previewVisible: false, selectedProduct: null });
+    this.setState({ previewVisible: false, selectedCar: null });
   };
 
   render() {
-    const { Products } = this.props;
+    const { Cars } = this.props;
+    console.log(Cars);
 
     return (
       <>
-        <Table dataSource={Products} rowKey="id">
+        <Table dataSource={Cars} rowKey="bienSoXe">
           <Column
-            title="Image"
-            key="fileName"
+            title="Ảnh Đã Lưu"
+            key="anhDaLuu"
             align="center"
             width={90}
             render={(_, record) => (
               <Space size="middle">
-                <Image
+                {record.anhDaLuu ? (
+                  <Image
+                    width="100%"
+                    src={ImagesService.getImageUrl(record.anhDaLuu.tenTep)}
+                  />
+                ) : (<Image
                   width="100%"
-                  src={ProductService.getProductImageUrl(record.image.fileName)}
-                />
+                  src="https://t3.ftcdn.net/jpg/04/34/72/82/240_F_434728286_OWQQvAFoXZLdGHlObozsolNeuSxhpr84.jpg"
+                />)}
               </Space>
             )}
           ></Column>
 
           <Column
-            title="Name"
-            key="name"
-            dataIndex="name"
+            title="Biển Số Xe"
+            key="bienSoXe"
+            dataIndex="bienSoXe"
             align="center"
           ></Column>
-
           <Column
-            title="Is Featured"
-            key="isFeatured"
-            dataIndex="isFeatured"
+            title="Số Ghế"
+            key="loaiXe"
+            dataIndex="loaiXe"
             align="center"
-            render={(isFeatured) => (
-              <label>{isFeatured ? "Featured" : "Not Featured"}</label>
+            render={(text, record) => (
+              <label>{record ? record.loaiXe.soGhe : ""}</label>
             )}
+          ></Column>
+
+          <Column
+            title="Ngày Mua"
+            key="ngayMua"
+            dataIndex="ngayMua"
+            align="center"
+
           />
 
           <Column
-            title="Status"
-            key="status"
-            dataIndex="status"
+            title="Ngày Đăng Kiểm"
+            key="ngayDangKiem"
+            dataIndex="ngayDangKiem"
             align="center"
-            render={(status) => <label>{status}</label>}
+
           />
 
           <Column
-            title="Quantity"
-            key="quantity"
-            dataIndex="quantity"
+            title="Giá Mua"
+            key="giaMua"
+            dataIndex="giaMua"
             align="center"
           ></Column>
 
           <Column
-            title="Price"
-            key="price"
-            dataIndex="price"
+            title="Nơi Mua"
+            key="noiMua"
+            dataIndex="noiMua"
             align="center"
           ></Column>
           <Column
-            title="Discount"
-            key="discount"
-            dataIndex="discount"
+            title="Thương Hiệu"
+            key="thuongHieu"
+            dataIndex="thuongHieu"
             align="center"
+            render={(text, record) => (
+              <label>{record.thuongHieu.tenThuongHieu}</label>
+            )}
           ></Column>
+
+          <Column
+            title="Loại Xe"
+            key="loaiXe"
+            dataIndex="loaiXe"
+            align="center"
+            render={(text, record) => (
+              <label>{record.loaiXe.tenLoai}</label>
+            )}
+          ></Column>
+
 
           <Column
             title="Action"
@@ -96,20 +123,7 @@ class ProductList extends Component {
             width={200}
             render={(_, record) => (
               <Space size="middle">
-                <Tooltip
-                  placement="top"
-                  title="View Product Detail"
-                  color="green"
-                >
-                  <Button
-                    key={record.key}
-                    type="link"
-                    size="small"
-                    onClick={() => this.showProductDetail(record)} // Hiển thị chi tiết sản phẩm
-                  >
-                    <MdPreview color="green" size={24}></MdPreview>
-                  </Button>
-                </Tooltip>
+
                 <Tooltip placement="top" title="Edit Product" color="blue">
                   <Button
                     key={record.key}
@@ -141,7 +155,7 @@ class ProductList extends Component {
 
         <ProductDetail
           visible={this.state.previewVisible}
-          product={this.state.selectedProduct}
+          Car={this.state.selectedCar}
           onClose={this.closeProductDetail}
         />
       </>

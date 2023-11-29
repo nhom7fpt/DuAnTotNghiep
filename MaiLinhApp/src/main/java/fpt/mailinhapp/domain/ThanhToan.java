@@ -1,5 +1,6 @@
 package fpt.mailinhapp.domain;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -25,6 +26,7 @@ public class ThanhToan {
     private String orderInfo;
 
     @Temporal(TemporalType.DATE)
+    @JsonFormat(pattern = "DD-MM-YYYYY")
     @Column(name = "pay_date")
     private Date payDate;
 

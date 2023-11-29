@@ -26,7 +26,7 @@ const ManufacturerReducer = (state = initialState, { type, payload }) => {
       const newmanu = state.manufactureres.filter(
         (item) => item.id !== payload.id
       );
-      console.log("code run");
+
       return {
         ...state,
         manufactureres: [payload, ...newmanu],

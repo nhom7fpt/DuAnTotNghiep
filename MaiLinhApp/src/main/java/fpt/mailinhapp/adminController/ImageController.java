@@ -17,7 +17,11 @@ import org.springframework.web.multipart.MultipartFile;
 @RestController
 @CrossOrigin("*")
 @RequestMapping("api/v1/images")
+<<<<<<< HEAD
 
+=======
+@CrossOrigin
+>>>>>>> 827b14155c351c8c2941d910e3c65717a34b8d89
 public class ImageController {
     @Autowired
     FileStorageService service;

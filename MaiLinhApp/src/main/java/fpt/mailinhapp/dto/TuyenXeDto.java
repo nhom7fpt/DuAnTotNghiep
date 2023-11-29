@@ -6,6 +6,7 @@ import lombok.NoArgsConstructor;
 import lombok.Value;
 
 import java.io.Serializable;
+import java.sql.Date;
 import java.sql.Time;
 import java.time.LocalTime;
 
@@ -16,12 +17,12 @@ import java.time.LocalTime;
 @AllArgsConstructor
 @NoArgsConstructor
 public class TuyenXeDto implements Serializable {
-    Integer maChuyenXe;
+    Integer maTuyenXe;
     String diemDi;
     String diemDen;
     String noiDon;
     String noiTra;
-    String tgDi;
+    String  tgDi;
     String tgDen;
-    Float gia;
+    Long gia;
 }
