@@ -3,17 +3,14 @@ import "../../css/loc.css";
 import pickup from "../../image/pickup.svg";
 import station from "../../image/station.svg";
 import deleteicon from "../../image/trangchu/delete.svg";
-import { Drawer } from "antd";
+import { Col, Drawer, Row } from "antd";
 import DatVeForm from "../datVe/DatVeForm";
 import { connect } from "react-redux";
 import withRouter from "../../helpers/withRouter";
-import { loadDataFieldTC,loadDataFieldTCReturn } from "../../redux/actions/actionListTC";
+import { listSearchOneWay,listSearchReturn,loadDataField } from "../../redux/actions/actionSearch";
+
 function SeatSelection(props) {
-  const {
-    fieldDataTC,
-  
-    loadDataFieldTCReturn,
-  } = props;
+ 
 
   const [selectedCar, setSelectedCar] = useState([]);
   const [selectedChar, setSelectedChar] = useState([]);
@@ -52,10 +49,9 @@ function SeatSelection(props) {
     setCurrentTrip(trip);
     setIsSeatModalOpen(true);
   };
- 
+ const {listChuyen} = props;
 useEffect(() => {
  
-
 }, []);
 
 
@@ -184,65 +180,68 @@ useEffect(() => {
         </div>
         </div>
       </div>
-      <div className="custom-container-loc">
+     {listChuyen.map((item)=>(
+      <Row className="custom-container-loc" key={item.maChuyen}>
+      <Col span={24}>
         <div className="hidden-text">
-          <span>Đà Nẵng - TP. Hồ Chí Minh</span>
+          <span>{item.tuyenXe.diemDi} - {item.tuyenXe.diemDen}</span>
         </div>
-       
+      </Col>
+    
+      <Col span={24}>
         <div className="chuyenxe-loc">
-          <div className="info-container-loc">
-            <span className="departure-time">10:15</span>
+          <Col span={24} className="info-container-loc">
+            <span className="departure-time">{item.tuyenXe.tgDi}</span>
             <div className="location-details">
               <img src={pickup} alt="pickup" />
               <span className="separator">
                 {" "}
-                . . . . . . . . . . . . . . . . . . . . . . .{" "}
+                . . . . . . . . . . . . . . . . . . . . . . .
               </span>
               <span
                 className="travel-duration"
                 style={{ marginLeft: "-0.08cm" }}
               >
-                <span style={{ marginLeft: "-0.3cm" }}>20 giờ </span>
+                <span style={{ marginLeft: "-0.3cm" }}>{item.tuyenXe.tgDi}</span>
                 <br />
                 <span className="small-text">(Asian/Ho Chi Minh)</span>
               </span>
               <span className="separator">
-                . . . . . . . . . . . . . . . . . . . . . . . . .{" "}
+                . . . . . . . . . . . . . . . . . . . . . . . . .
               </span>
               <img src={station} alt="station" />
             </div>
-            <span className="arrival-time">06:15</span>
-          </div>
-
+            <span className="arrival-time">{item.tuyenXe.tgDen}</span>
+          </Col>
           <div className="location-info">
-            <div className="location">
-              <span className="location-name"></span>
-              <br />
-              <span className="location-info-text text-gray"></span>
-            </div>
-            <div className="location text-right">
-              <span className="location-name"></span>
-              <br />
-              <span className="location-info-text text-gray"></span>
-            </div>
+          <div className="location">
+            <span className="location-name"></span>
+            <br />
+            <span className="location-info-text text-gray">{item.tuyenXe.noiDon}</span>
           </div>
-       
+          <div className="location text-right">
+            <span className="location-name">{item.tuyenXe.noiTra}</span>
+            <br />
+            <span className="location-info-text text-gray"></span>
+          </div>
+        </div>
           <hr className="divider my-3" />
-          <div className="availability-info">
+          <Col span={24} className="availability-info">
             <div className="availability-details">
-              <span className="ticket-price text-orange">400.000đ</span>
+            <span className="ticket-price text-orange">{item.tuyenXe.gia}</span>
               <div className="availability-dot"></div>
               <span className="seat-type">Giường</span>
               <div className="availability-dot"></div>
               <span className="available-seats text-orange">19 chỗ trống</span>
-          
-            <button type="button" className="custom-button">
-            <span onClick={() => handleSeatModal("trip1")}>Chọn chuyến</span>
-          </button>
+              <button type="button" className="custom-button">
+                <span onClick={() => handleSeatModal("trip1")}>Chọn chuyến</span>
+              </button>
             </div>
-          
-          </div>
+          </Col>
         </div>
+      </Col>
+
+      <Col span={24}>
         <Drawer
           title="Đặt vé xe"
           placement="right"
@@ -254,20 +253,31 @@ useEffect(() => {
         >
           <DatVeForm onClose={onClose} />
         </Drawer>
-      </div>
+      </Col>
+    </Row>
+     )
+        
+      )
+
+     }
     </div>
+    
   );
 }
 
 
 const mapStateToProps = (state) => ({
-  fieldDataTC: state.ListTCReducer.fieldDataTC,
+  listChuyen:state.SearchReducer.listChuyen,
+  listChuyenReturn1:state.SearchReducer.listChuyenReturn1,
+  listChuyenReturn2:state.SearchReducer.listChuyenReturn2,
+  fieldData: state.SearchReducer.fieldData,
+  
 });
 
 const mapDispatchToProps = {
-  loadDataFieldTC,
-  
-  loadDataFieldTCReturn,
+  listSearchOneWay,
+  listSearchReturn,
+  loadDataField,
 };
 
 export default connect(

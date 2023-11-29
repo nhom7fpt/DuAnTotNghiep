@@ -4,8 +4,11 @@ export const ACCOUNT_STATE_CLEAR = "ACCOUNT_STATE_CLEAR";
 
 export const CUSTOM_SET = "CUSTOM_SET";
 export const FIELD_SET = "FIELD_SET";
-
 export const FIELD_LISTTC = "FIELD_LISTTC";
+
+export const LISTCHUYEN = "LISTCHUYEN";
+export const LISTCHUYEN1 = "LISTCHUYEN1";
+export const LISTCHUYEN2 = "LISTCHUYEN2";
 
 
 export const FIELD_ACCOUNT = "FIELD_ACCOUNT";

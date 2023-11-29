@@ -11,8 +11,8 @@ import TimChuyen from "../timChuyen/TimChuyen";
 import { Outlet } from "react-router-dom";
 import { connect } from "react-redux";
 import withRouter from "../../helpers/withRouter";
-import { updateCustom } from "../../redux/actions/actionCusstom";
-import { fillAccount } from "../../redux/actions/actionCusstom";
+import { updateCustom,fillAccount } from "../../redux/actions/actionCusstom";
+
 function Home (props) {
   const user = localStorage.getItem("username");
   

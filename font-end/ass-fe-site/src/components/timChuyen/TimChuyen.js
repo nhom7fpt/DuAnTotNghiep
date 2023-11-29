@@ -5,18 +5,22 @@ import MotChieu from "./MotChieu";
 import KhuHoi from "./KhuHoi";
 import { connect } from "react-redux";
 import withRouter from "../../helpers/withRouter";
-import { loadDataField } from "../../redux/actions/actionSearch";
-import moment from "moment";
-import { loadDataFieldTC,loadDataFieldTCReturn } from "../../redux/actions/actionListTC";
+import { listSearchOneWay, listSearchReturn,  loadDataField } from "../../redux/actions/actionSearch";
+
 function TimChuyen(props) {
-  const [dataSearch, setDataSearch] = useState([])
-  const [startDate, setStartDate] = useState(moment());
+ 
+  const [startDate, setStartDate] = useState(null);
   const [startLocation, setStartLocation] = useState(null);
   const [endLocation, setEndLocation] = useState(null);
+  const [selectedTab, setSelectedTab] = useState("1");
   const { navigate } = props.router;
   const onClick = () => {
-    setDataSearch({diemDi: startLocation, diemDen: endLocation, tgDi: startDate});
-    console.log(dataSearch);
+    if(selectedTab == 1){
+      props.listSearchOneWay(startLocation, endLocation, startDate, navigate);
+    }else{
+      props.listSearchReturn(startLocation, endLocation, startDate, navigate);
+    }
+ 
   };
 
   const { fieldData } = props;
@@ -25,7 +29,7 @@ function TimChuyen(props) {
     value: item,
   }));
 
-  const [selectedTab, setSelectedTab] = useState("1");
+  
 
   const handleChange = (e) => {
     setSelectedTab(e.target.value);
@@ -40,7 +44,7 @@ function TimChuyen(props) {
           Một chiều
         </Radio>
       ),
-      children: <MotChieu setStart={(value) =>setStartLocation(value)} setEnd={setEndLocation} setDay={setStartDate} data={listData} />,
+      children: <MotChieu setStart={setStartLocation} setEnd={setEndLocation} setDay={setStartDate} data={listData} />,
     },
     {
       key: "2",
@@ -72,13 +76,14 @@ function TimChuyen(props) {
 
 const mapStateToProps = (state) => ({
   fieldData: state.SearchReducer.fieldData,
-  fieldDataTC: state.ListTCReducer.fieldDataTC,
+
 });
 
 const mapDispatchToProps = {
   loadDataField,
-   
-  loadDataFieldTCReturn,
+  listSearchOneWay,
+  listSearchReturn
+
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(withRouter(TimChuyen));

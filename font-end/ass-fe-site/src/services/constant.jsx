@@ -2,6 +2,5 @@ export const API_ACC = "http://localhost:8080/api/v2/acc";
 export const API_ACCREG = "http://localhost:8080/api/v2/acc/reg";
 export const API_SEARCH = "http://localhost:8080/api/v2/search";
 export const API_CUSTOM = 'http://localhost:8080/api/v2/cus';
-export const API_ListTC = "http://localhost:8080/api/v2/search";
-export const API_ListTCOneWay="http://localhost:8080/api/v2/search/one-way"          
-export const API_ListTCReturn="http://localhost:8080/api/v2/search/return"  
+
+export const API_IMG = "http://localhost:8080/api/v1/images";

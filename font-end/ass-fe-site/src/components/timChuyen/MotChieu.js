@@ -9,9 +9,9 @@ const MotChieu = (props) => {
     return current.isBefore(moment().startOf("day"));
   };
   const onChange = (value) => {
-
-   
     props.setDay(value);
+    console.log(value);
+
   };
   const onLocationChange = (value, type) => {
     if (type === "start") {
@@ -20,7 +20,7 @@ const MotChieu = (props) => {
       props.setEnd(value);
     }
   };
- const [startDate, setstartDate] = useState(moment()); 
+ 
 
 
 
@@ -65,7 +65,7 @@ const MotChieu = (props) => {
         <span>Ngày đi</span>
         <Space direction="vertical">
           <DatePicker
-            value={startDate}
+     
             onChange={onChange}
             format="DD/MM/YYYY" 
             showTimeSelect

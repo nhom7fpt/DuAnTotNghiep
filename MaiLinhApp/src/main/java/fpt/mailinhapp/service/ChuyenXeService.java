@@ -4,6 +4,7 @@ import fpt.mailinhapp.domain.ChuyenXe;
 import fpt.mailinhapp.dto.ChuyenXeDto;
 import fpt.mailinhapp.exception.BusesException;
 import fpt.mailinhapp.repository.ChuyenXeRepository;
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -57,9 +58,8 @@ public class ChuyenXeService {
         List<ChuyenXe> listEntity = dao.findByTuyenXe_DiemDiLikeAndTuyenXe_DiemDenLike(diemDi,diemDen);
 
         List<ChuyenXeDto> listDto = listEntity.stream().map((item)->{
-            ChuyenXeDto dto = new ChuyenXeDto();
-            BeanUtils.copyProperties(item, dto);
-            return dto;
+            ModelMapper mapper = new ModelMapper();
+            return  mapper.map(item,ChuyenXeDto.class);
         }).collect(Collectors.toList());
 
         return listDto;

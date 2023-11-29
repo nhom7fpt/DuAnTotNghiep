@@ -6,6 +6,7 @@ import fpt.mailinhapp.dto.ThanhVienDto;
 import fpt.mailinhapp.exception.CustomerException;
 import fpt.mailinhapp.repository.AnhDaLuuRepository;
 import fpt.mailinhapp.repository.ThanhVienRepository;
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -60,12 +61,19 @@ public class CustomerService {
                 found.setAnhDaLuu(img);
             }
 
-            if (dto.getAnhDaLuu().getId() != found.getAnhDaLuu().getId()){
-                imgService.deleteImage(found.getAnhDaLuu().getTenTep());
+            if(found.getAnhDaLuu() == null){
                 AnhDaLuu img = new AnhDaLuu();
                 BeanUtils.copyProperties(dto.getAnhDaLuu(), img);
                 imgDao.save(img);
                 found.setAnhDaLuu(img);
+            }else {
+                if (dto.getAnhDaLuu().getId() != found.getAnhDaLuu().getId()){
+                    imgService.deleteImage(found.getAnhDaLuu().getTenTep());
+                    AnhDaLuu img = new AnhDaLuu();
+                    BeanUtils.copyProperties(dto.getAnhDaLuu(), img);
+                    imgDao.save(img);
+                    found.setAnhDaLuu(img);
+                }
             }
         }
 
@@ -94,9 +102,10 @@ public class CustomerService {
 
     public ThanhVienDto findById(String id) {
         var found = dao.findById(id).orElseThrow(()->new CustomerException("Thành viên không tồn tại"));
-        ThanhVienDto dto = new ThanhVienDto();
-        BeanUtils.copyProperties(found, dto);
 
-        return dto;
+        ModelMapper mapper = new ModelMapper();
+
+
+        return mapper.map(found, ThanhVienDto.class);
     }
 }

@@ -5,6 +5,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalTime;
+import java.util.Date;
 
 @Data
 @NoArgsConstructor
@@ -12,5 +13,5 @@ import java.time.LocalTime;
 public class ReqTimMotChieu {
     private String diemDi;
     private String diemDen;
-    private LocalTime tgDi;
+    private Date tgDi;
 }

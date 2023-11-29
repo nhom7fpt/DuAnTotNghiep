@@ -9,10 +9,18 @@ import { updateCustom } from "../redux/actions/actionCusstom";
 import { fillAccount } from "../redux/actions/actionCusstom";
 import { Col, Input, Row, Button, DatePicker } from 'antd';
 import { Form } from 'antd';
+import UploadImage from './UploadImage';
 
 function Thongtintaikhoan(props) {
-    const [profileImage, setProfileImage] = useState('');
+    const [profileImage, setProfileImage] = useState();
     const user = localStorage.getItem("username");
+    const [file, setFlie] = useState(0);
+
+    const onUploadFile = (values) => {
+        setProfileImage(values);
+        setFlie(1);
+   
+      };
    
     const handleImageUpload = (e) => {
         const file = e.target.files[0];
@@ -26,8 +34,8 @@ function Thongtintaikhoan(props) {
     };
 
     const handleFormSubmit = (values) => {
-        console.log(values);
-       props.updateCustom(user, values, navigate);
+       
+       props.updateCustom(user, values,profileImage, navigate);
       
     };
 
@@ -47,9 +55,7 @@ function Thongtintaikhoan(props) {
                         <Row gutter={16}>
                             <Col span={8}>
                                 <div className="left-side" style={{marginTop:'2cm'}}>
-                                    <img src={profileImage || demo} alt="Profile Image" id="profile-image" />
-                                    <input type="file" id="image-upload" accept="image/*" onChange={handleImageUpload} />
-                                    <p className="text">Dung lượng file tối đa 1 MB. Định dạng: .JPEG, .PNG</p>
+                                 <UploadImage file= {file} profileImage={custom.anhDaLuu} onUploadFile = {onUploadFile}></UploadImage>
                                 </div>
                             </Col>
                             <Col >

@@ -3,9 +3,12 @@ import CustomService from "../../services/CustomService";
 import { CUSTOM_SET , FIELD_ACCOUNT } from "./actionType";
 const service = new CustomService();
 
-export const updateCustom = (id ,account, navigate) => async (dispatch) => {
+export const updateCustom = (id ,account,image, navigate) => async (dispatch) => {
+ 
+
   try {
-    const res = await service.updateAccount(id,account);
+    const newCustom = {...account, anhDaLuu: image};
+    const res = await service.updateAccount(id, newCustom);
     console.log(res.data);
     if (res.status === 200) {
       if (res.data) {
