@@ -28,17 +28,21 @@ const UploadImage = (props) => {
     );
   };
 
-  const handleChange = (info) => {
+  // const handleChange = (info) => {
  
 
-  if(info && info.file && info.file.response){
-    props.onUploadFile(info.file.response);
-  }
+  // if(info && info.file && info.file.response){
+  //   props.onUploadFile(info.file.response);
+  // }
 
     
 
 
-  };
+  // };
+  const handleChange = (info) => {
+    console.log(info.file.response);
+    // ... rest of the code
+ };
 
   const handleRemove = (info) => {
     if (info.filename) {
@@ -60,12 +64,22 @@ const UploadImage = (props) => {
     </div>
   );
   const { file,profileImage } = props;
- const avata = profileImage ?    {
-  uid: profileImage.id,
-  name: profileImage.tenAnh,
-  status: 'done',
-  url: ImagesService.getImageUrl(profileImage.tenTep),
-}: ""
+//  const avata = profileImage ?    {
+//   uid: profileImage.id,
+//   name: profileImage.tenAnh,
+//   status: 'done',
+//   url: ImagesService.getImageUrl(profileImage.tenTep),
+// }: ""
+const avata = profileImage
+  ? [
+      {
+        uid: profileImage.id,
+        name: profileImage.tenAnh,
+        status: 'done',
+        url: ImagesService.getImageUrl(profileImage.tenTep),
+      },
+    ]
+  : [];
   console.log(avata);
   return (
     <>
@@ -78,7 +92,8 @@ const UploadImage = (props) => {
         onPreview={handlePreview}
         onChange={handleChange}
         onRemove={handleRemove}
-        
+      
+
       >
         {  file > 0 ? null : uploadButton}
       </Upload>
@@ -90,9 +105,7 @@ const UploadImage = (props) => {
       >
         <img
           alt="PreviewImage"
-          style={{
-            width: "100%",
-          }}
+          className="full-size-image"  
           src={previewImage}
         />
       </Modal>

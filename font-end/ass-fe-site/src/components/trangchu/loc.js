@@ -54,9 +54,10 @@ useEffect(() => {
  
 }, []);
 
-
+let isLocationDisplayed = false;
   return (
-    <div>
+<div className="grid-container-loc">
+ 
       <div className="container-loc" style={{ marginLeft: "5cm" }}>
          <div className="title" style={{marginLeft:'0.5cm'}}>Bộ lọc tìm kiếm</div>
        
@@ -179,16 +180,15 @@ useEffect(() => {
         </div>
         </div>
         </div>
-      </div>
-     {listChuyen.map((item)=>(
+        </div>
+     {listChuyen.map((item, index)=>(
       <Row className="custom-container-loc" key={item.maChuyen}>
-      <Col span={24}>
+      {index === 0 && (
         <div className="hidden-text">
           <span>{item.tuyenXe.diemDi} - {item.tuyenXe.diemDen}</span>
         </div>
-      </Col>
-    
-      <Col span={24}>
+      )}
+      <Col>
         <div className="chuyenxe-loc">
           <Col span={24} className="info-container-loc">
             <span className="departure-time">{item.tuyenXe.tgDi}</span>
@@ -215,9 +215,9 @@ useEffect(() => {
           </Col>
           <div className="location-info">
           <div className="location">
-            <span className="location-name"></span>
+            <span className="location-name">{item.tuyenXe.noiDon}</span>
             <br />
-            <span className="location-info-text text-gray">{item.tuyenXe.noiDon}</span>
+            <span className="location-info-text text-gray"></span>
           </div>
           <div className="location text-right">
             <span className="location-name">{item.tuyenXe.noiTra}</span>
@@ -233,6 +233,7 @@ useEffect(() => {
               <span className="seat-type">Giường</span>
               <div className="availability-dot"></div>
               <span className="available-seats text-orange">19 chỗ trống</span>
+              <span className="btn" style={{color:'blue'}} onClick={() => handleSeatModal("trip1")}>chọn ghế</span>
               <button type="button" className="custom-button">
                 <span onClick={() => handleSeatModal("trip1")}>Chọn chuyến</span>
               </button>
@@ -260,8 +261,9 @@ useEffect(() => {
       )
 
      }
-    </div>
+   
     
+     </div>
   );
 }
 

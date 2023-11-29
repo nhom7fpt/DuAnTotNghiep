@@ -54,10 +54,11 @@ function Thongtintaikhoan(props) {
                     <div className="form-thong-tin-tai-khoan">
                         <Row gutter={16}>
                             <Col span={8}>
-                                <div className="left-side" style={{marginTop:'2cm'}}>
-                                 <UploadImage file= {file} profileImage={custom.anhDaLuu} onUploadFile = {onUploadFile}></UploadImage>
-                                </div>
+                            <div className="left-side" style={{ marginTop: '2cm' }}>
+                            <UploadImage file={file} profileImage={custom.anhDaLuu} onUploadFile={onUploadFile}></UploadImage>
+                          </div>
                             </Col>
+
                             <Col >
                                 <Form 
                                     id="account-information"

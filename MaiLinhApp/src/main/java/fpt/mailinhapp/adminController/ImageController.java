@@ -17,11 +17,7 @@ import org.springframework.web.multipart.MultipartFile;
 @RestController
 @CrossOrigin("*")
 @RequestMapping("api/v1/images")
-<<<<<<< HEAD
 
-=======
-@CrossOrigin
->>>>>>> 827b14155c351c8c2941d910e3c65717a34b8d89
 public class ImageController {
     @Autowired
     FileStorageService service;
@@ -29,11 +25,10 @@ public class ImageController {
     @Autowired
     AnhDaLuuRepository dao;
 
-    @PostMapping(consumes = {MediaType.APPLICATION_JSON_VALUE,
+    @PostMapping(consumes = { MediaType.APPLICATION_JSON_VALUE,
             MediaType.APPLICATION_FORM_URLENCODED_VALUE,
-            MediaType.MULTIPART_FORM_DATA_VALUE},
-            produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity uploadImage(@RequestParam("file")MultipartFile imgFile){
+            MediaType.MULTIPART_FORM_DATA_VALUE }, produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity uploadImage(@RequestParam("file") MultipartFile imgFile) {
         var fileInfo = service.storeUploadImage(imgFile);
 
         AnhDaLuuDto dto = new AnhDaLuuDto();
@@ -53,26 +48,27 @@ public class ImageController {
     }
 
     @GetMapping("{filename:.+}")
-    public ResponseEntity dowFile(@PathVariable String filename, HttpServletRequest req){
+    public ResponseEntity dowFile(@PathVariable String filename, HttpServletRequest req) {
 
         Resource resource = service.loadImageResource(filename);
         String contenType = null;
 
         try {
             contenType = req.getServletContext().getMimeType(resource.getFile().getAbsolutePath());
-        }catch (Exception ex){
+        } catch (Exception ex) {
             throw new FileStorageException("Không thể xác định loại tệp.");
         }
-        if(contenType == null){
+        if (contenType == null) {
             contenType = "application/octet-stream";
         }
-        return  ResponseEntity.ok().contentType(MediaType.parseMediaType(contenType)).
-                header(HttpHeaders.CONTENT_DISPOSITION, "attachment;filename\""
-                        + resource.getFilename()+"\"").body(resource);
+        return ResponseEntity.ok().contentType(MediaType.parseMediaType(contenType))
+                .header(HttpHeaders.CONTENT_DISPOSITION, "attachment;filename\""
+                        + resource.getFilename() + "\"")
+                .body(resource);
     }
 
     @DeleteMapping("{filename:.+}")
-    public ResponseEntity deleteImg(@PathVariable String filename, HttpServletRequest req){
+    public ResponseEntity deleteImg(@PathVariable String filename, HttpServletRequest req) {
         service.deleteImage(filename);
         var imgDelete = dao.findByTenTepLike(filename);
         dao.delete(imgDelete);

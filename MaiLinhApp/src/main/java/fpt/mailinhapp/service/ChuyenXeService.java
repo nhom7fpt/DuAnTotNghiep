@@ -4,10 +4,7 @@ import fpt.mailinhapp.domain.ChuyenXe;
 import fpt.mailinhapp.dto.ChuyenXeDto;
 import fpt.mailinhapp.exception.BusesException;
 import fpt.mailinhapp.repository.ChuyenXeRepository;
-<<<<<<< HEAD
-=======
 import fpt.mailinhapp.respondata.ChuyenTheoTuyen;
->>>>>>> 827b14155c351c8c2941d910e3c65717a34b8d89
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;

@@ -1,4 +1,4 @@
-import ListTCService from "../../services/ListTCService";
+import ListTCService from "../../services/SearchService";
 import { FIELD_LISTTC } from "./actionType";
 
 const service = new ListTCService();
