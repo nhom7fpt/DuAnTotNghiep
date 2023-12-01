@@ -1,7 +1,6 @@
 import React, { useState,useEffect } from 'react';
 import '../css/thongtintaikhoan.css';
 import 'antd/dist/antd.css';
-import demo from '../image/anhdemo.jpg';
 import Menudangnhap from '../components/menudangnhap';
 import { connect } from "react-redux";
 import withRouter from '../helpers/withRouter';

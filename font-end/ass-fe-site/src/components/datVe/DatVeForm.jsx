@@ -6,6 +6,9 @@ import ThongTinForm from "./ThongTinForm";
 import pickup from "../../image/pickup.svg";
 import station from "../../image/station.svg";
 import { SeatSelectionProvider } from "./SeatSelectionContext";
+import { connect } from "react-redux";
+import withRouter from "../../helpers/withRouter";
+import { listSearchOneWay,listSearchReturn,loadDataField } from "../../redux/actions/actionSearch";
 const DatVeForm = (props) => {
   const [steps, setSteps] = useState(0);
 
@@ -20,33 +23,45 @@ const DatVeForm = (props) => {
   const onClose = () => {
     props.onClose();
   };
-
+  const {listChuyen} = props;
   return (
    
      <SeatSelectionProvider>
-    <div className="info-container-loc">
-    <span className="departure-time">10:15</span>
-    <div className="location-details">
-      <img src={pickup} alt="pickup" />
-      <span className="separator">
-        {" "}
-        . . . . . . . . . . . . . . . . . . . . . . . . . . . .{" "}
-      </span>
-      <span
-        className="travel-duration"
-        style={{ marginLeft: "-0.08cm" }}
-      >
-        <span style={{ marginLeft: "0.8cm" }}>20 giờ </span>
-        <br />
-        <span className="small-text">(Asian/Ho Chi Minh)</span>
-      </span>
-      <span className="separator">
-        . . . . . . . . . . . . . . . . . . . . . . . . . . . {" "}
-      </span>
-      <img src={station} alt="station" />
-    </div>
-    <span className="arrival-time">06:15</span>
+     {listChuyen.map((item, index)=>(
+     
+    <div className="info-container-loc" key={item.maChuyen}>
+    {index === 0 && (
+      <div className="location-details">
+      <span className="departure-time">{item.tuyenXe.tgDi}</span>
+        <img src={pickup} alt="pickup" />
+        <span className="separator">
+          {" "}
+          . . . . . . . . . . . . . . . . . . . . . . . . . . . .{" "}
+        </span>
+        <span
+          className="travel-duration"
+          style={{ marginLeft: "-0.08cm" }}
+        >
+          <span style={{ marginLeft: "0.8cm" }}>20 giờ </span>
+          <br />
+          <span className="small-text">(Asian/Ho Chi Minh)</span>
+        </span>
+        <span className="separator">
+          . . . . . . . . . . . . . . . . . . . . . . . . . . . {" "}
+        </span>
+        <img src={station} alt="station" />
+        <span className="arrival-time">{item.tuyenXe.tgDen}</span>
+      </div>
+      )}  
+  
+ 
+   
   </div>
+  )
+        
+  )
+ 
+ }
 
       <Row>
         <Col md={24}>
@@ -100,4 +115,22 @@ const DatVeForm = (props) => {
 
   );
 };
-export default DatVeForm;
+
+const mapStateToProps = (state) => ({
+  listChuyen:state.SearchReducer.listChuyen,
+  listChuyenReturn1:state.SearchReducer.listChuyenReturn1,
+  listChuyenReturn2:state.SearchReducer.listChuyenReturn2,
+  fieldData: state.SearchReducer.fieldData,
+  
+});
+
+const mapDispatchToProps = {
+  listSearchOneWay,
+  listSearchReturn,
+
+};
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(withRouter(DatVeForm));

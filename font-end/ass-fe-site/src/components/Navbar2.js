@@ -14,6 +14,8 @@ import { logout } from "../redux/actions/actionAccount";
 import dropdown from '../image/dangnhap/dropdown-menu.svg';
 import withRouter from '../helpers/withRouter';
 import { connect } from "react-redux";
+import UploadImage from './UploadImage';
+import ImagesService from '../services/imageService';
 
 function Navbar(props) {
  const { navigate } = props.router;
@@ -29,6 +31,9 @@ function Navbar(props) {
   const handleLogout = () => {
     dispatch(logout(navigate));
   };
+  const imageUrl = custom?.anhDaLuu?.tenTep
+  ? ImagesService.getImageUrl(custom.anhDaLuu.tenTep)
+  : null;
 
   useEffect(() => {
     setIsDropdownOpen((custom.hoTen || user) !== null);
@@ -79,7 +84,9 @@ function Navbar(props) {
         <li className="dropdown-container">
           {custom.hoTen ? (
             <NavLink to="#" activeClassName="active" onClick={toggleDropdown}>
+               {imageUrl && <img src={imageUrl} alt="Avatar" style={{ width: '50px', height: '45px', borderRadius: '50%' , marginRight:'10px'}} />}
               {custom.hoTen}  <img src={dropdown} alt="" style={{ width: '36px', height: '36px', marginTop: '-10px' }}/>
+          
             </NavLink>
           ) : (
             <NavLink to="/login" activeClassName="active" exact>
