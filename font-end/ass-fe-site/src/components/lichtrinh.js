@@ -1,6 +1,7 @@
 import React,{ useEffect } from 'react';
 import '../css/lichtrinh.css';
 import muiten from '../image/switch_location.svg';
+import arrow from "../image/trangchu/ic_double_arrow.svg";
 function Lichtrinhpage() {
   useEffect(() => {
     document.title = 'Lịch Trình';
@@ -30,16 +31,16 @@ function Lichtrinhpage() {
 
       <br />
       <div className="info-header">
-        <div className="info-label">Tuyến xe</div>
-        <div className="info-label">Loại xe</div>
-        <div className="info-label">Quãng đường</div>
-        <div className="info-label">Thời gian hành trình</div>
-        <div className="info-label">Giá vé</div>
-        <div className="info-label"></div>
+        <div className="info-label" style={{marginLeft:'-1.5cm'}}>Tuyến xe</div>
+        <div className="info-label"  style={{marginLeft:'1.5cm'}}>Loại xe</div>
+        <div className="info-label" style={{marginLeft:'0.5cm'}}>Quãng đường</div>
+        <div className="info-label" style={{marginLeft:'0.7cm'}}>Thời gian hành trình</div>
+        <div className="info-label-gv" style={{}}>Giá vé</div>
+        <div className="info-label" ></div>
       </div>
       <div className="info-container">
         <div className="info-row">
-          <div className="info-value">An Nhơn<br />TP. Hồ Chí Minh</div>
+          <div className="info-value-kh" style={{marginRight:'-1cm'}}> <span style={{color:'#ff6f00' , fontWeight:'600', fontSize:'16px'}}>An Nhơn</span> <img src={arrow}  style={{marginRight:'10px', marginLeft:'10px'}}/>TP. Hồ Chí Minh</div>
           <div className="info-value">Giường</div>
           <div className="info-value">639km</div>
           <div className="info-value">11 giờ 30 phút</div>
@@ -51,7 +52,7 @@ function Lichtrinhpage() {
       </div>
       <div className="info-container">
         <div className="info-row">
-          <div className="info-value">An Nhơn<br />TP. Hồ Chí Minh</div>
+        <div className="info-value-kh" style={{marginRight:'-1cm'}}> <span style={{color:'#ff6f00' , fontWeight:'600', fontSize:'16px'}}>An Nhơn</span> <img src={arrow}  style={{marginRight:'10px', marginLeft:'10px'}}/>TP. Hồ Chí Minh</div>
           <div className="info-value">Giường</div>
           <div className="info-value">639km</div>
           <div className="info-value">11 giờ 30 phút</div>
@@ -64,7 +65,7 @@ function Lichtrinhpage() {
       </div>
       <div className="info-container">
         <div className="info-row">
-          <div className="info-value">An Nhơn<br />TP. Hồ Chí Minh</div>
+        <div className="info-value-kh" style={{marginRight:'-1cm'}}> <span style={{color:'#ff6f00' , fontWeight:'600', fontSize:'16px'}}>An Nhơn</span> <img src={arrow}  style={{marginRight:'10px', marginLeft:'10px'}}/>TP. Hồ Chí Minh</div>
           <div className="info-value">Giường</div>
           <div className="info-value">639km</div>
           <div className="info-value">11 giờ 30 phút</div>
@@ -77,7 +78,7 @@ function Lichtrinhpage() {
       </div>
       <div className="info-container">
         <div className="info-row">
-          <div className="info-value">An Nhơn<br />TP. Hồ Chí Minh</div>
+        <div className="info-value-kh" style={{marginRight:'-1cm'}}> <span style={{color:'#ff6f00' , fontWeight:'600', fontSize:'16px'}}>An Nhơn</span> <img src={arrow}  style={{marginRight:'10px', marginLeft:'10px'}}/>TP. Hồ Chí Minh</div>
           <div className="info-value">Giường</div>
           <div className="info-value">639km</div>
           <div className="info-value">11 giờ 30 phút</div>
@@ -90,7 +91,7 @@ function Lichtrinhpage() {
       </div>
       <div className="info-container">
         <div className="info-row">
-          <div className="info-value">An Nhơn<br />TP. Hồ Chí Minh</div>
+        <div className="info-value-kh" style={{marginRight:'-1cm'}}> <span style={{color:'#ff6f00' , fontWeight:'600', fontSize:'16px'}}>An Nhơn</span> <img src={arrow}  style={{marginRight:'10px', marginLeft:'10px'}}/>TP. Hồ Chí Minh</div>
           <div className="info-value">Giường</div>
           <div className="info-value">639km</div>
           <div className="info-value">11 giờ 30 phút</div>
@@ -103,7 +104,7 @@ function Lichtrinhpage() {
       </div>
       <div className="info-container">
         <div className="info-row">
-          <div className="info-value">An Nhơn<br />TP. Hồ Chí Minh</div>
+        <div className="info-value-kh" style={{marginRight:'-1cm'}}> <span style={{color:'#ff6f00' , fontWeight:'600', fontSize:'16px'}}>An Nhơn</span> <img src={arrow}  style={{marginRight:'10px', marginLeft:'10px'}}/>TP. Hồ Chí Minh</div>
           <div className="info-value">Giường</div>
           <div className="info-value">639km</div>
           <div className="info-value">11 giờ 30 phút</div>
@@ -116,7 +117,7 @@ function Lichtrinhpage() {
       </div>
       <div className="info-container">
         <div className="info-row">
-          <div className="info-value">An Nhơn<br />TP. Hồ Chí Minh</div>
+        <div className="info-value-kh" style={{marginRight:'-1cm'}}> <span style={{color:'#ff6f00' , fontWeight:'600', fontSize:'16px'}}>An Nhơn</span> <img src={arrow}  style={{marginRight:'10px', marginLeft:'10px'}}/>TP. Hồ Chí Minh</div>
           <div className="info-value">Giường</div>
           <div className="info-value">639km</div>
           <div className="info-value">11 giờ 30 phút</div>
@@ -129,7 +130,7 @@ function Lichtrinhpage() {
       </div>
       <div className="info-container">
         <div className="info-row">
-          <div className="info-value">An Nhơn<br />TP. Hồ Chí Minh</div>
+        <div className="info-value-kh" style={{marginRight:'-1cm'}}> <span style={{color:'#ff6f00' , fontWeight:'600', fontSize:'16px'}}>An Nhơn</span> <img src={arrow}  style={{marginRight:'10px', marginLeft:'10px'}}/>TP. Hồ Chí Minh</div>
           <div className="info-value">Giường</div>
           <div className="info-value">639km</div>
           <div className="info-value">11 giờ 30 phút</div>
@@ -142,7 +143,7 @@ function Lichtrinhpage() {
       </div>
       <div className="info-container">
         <div className="info-row">
-          <div className="info-value">An Nhơn<br />TP. Hồ Chí Minh</div>
+        <div className="info-value-kh" style={{marginRight:'-1cm'}}> <span style={{color:'#ff6f00' , fontWeight:'600', fontSize:'16px'}}>An Nhơn</span> <img src={arrow}  style={{marginRight:'10px', marginLeft:'10px'}}/>TP. Hồ Chí Minh</div>
           <div className="info-value">Giường</div>
           <div className="info-value">639km</div>
           <div className="info-value">11 giờ 30 phút</div>
@@ -155,7 +156,7 @@ function Lichtrinhpage() {
       </div>
       <div className="info-container">
         <div className="info-row">
-          <div className="info-value">An Nhơn<br />TP. Hồ Chí Minh</div>
+        <div className="info-value-kh" style={{marginRight:'-1cm'}}> <span style={{color:'#ff6f00' , fontWeight:'600', fontSize:'16px'}}>An Nhơn</span> <img src={arrow}  style={{marginRight:'10px', marginLeft:'10px'}}/>TP. Hồ Chí Minh</div>
           <div className="info-value">Giường</div>
           <div className="info-value">639km</div>
           <div className="info-value">11 giờ 30 phút</div>
@@ -166,62 +167,11 @@ function Lichtrinhpage() {
         </div>
       
       </div>
-      <div className="info-container">
-        <div className="info-row">
-          <div className="info-value">An Nhơn<br />TP. Hồ Chí Minh</div>
-          <div className="info-value">Giường</div>
-          <div className="info-value">639km</div>
-          <div className="info-value">11 giờ 30 phút</div>
-          <div className="info-value">280,000đ</div>
-          <div className="info-value">
-            <button className="search-button">Tìm chuyến xe</button>
-          </div>
-        </div>
-      
-      </div>
-      <div className="info-container">
-        <div className="info-row">
-          <div className="info-value">An Nhơn<br />TP. Hồ Chí Minh</div>
-          <div className="info-value">Giường</div>
-          <div className="info-value">639km</div>
-          <div className="info-value">11 giờ 30 phút</div>
-          <div className="info-value">280,000đ</div>
-          <div className="info-value">
-            <button className="search-button">Tìm chuyến xe</button>
-          </div>
-        </div>
-      
-      </div>
-      <div className="info-container">
-        <div className="info-row">
-          <div className="info-value">An Nhơn<br />TP. Hồ Chí Minh</div>
-          <div className="info-value">Giường</div>
-          <div className="info-value">639km</div>
-          <div className="info-value">11 giờ 30 phút</div>
-          <div className="info-value">280,000đ</div>
-          <div className="info-value">
-            <button className="search-button">Tìm chuyến xe</button>
-          </div>
-        </div>
-       
-      </div>
-      <div className="info-container">
-        <div className="info-row">
-          <div className="info-value">An Nhơn<br />TP. Hồ Chí Minh</div>
-          <div className="info-value">Giường</div>
-          <div className="info-value">639km</div>
-          <div className="info-value">11 giờ 30 phút</div>
-          <div className="info-value">280,000đ</div>
-          <div className="info-value">
-            <button className="search-button">Tìm chuyến xe</button>
-          </div>
-        </div>
-      
-      </div>
+  
 
       <div className="info-container">
         <div className="info-row">
-          <div className="info-value">An Nhơn<br />TP. Hồ Chí Minh</div>
+        <div className="info-value-kh" style={{marginRight:'-1cm'}}> <span style={{color:'#ff6f00' , fontWeight:'600', fontSize:'16px'}}>An Nhơn</span> <img src={arrow}  style={{marginRight:'10px', marginLeft:'10px'}}/>TP. Hồ Chí Minh</div>
           <div className="info-value">Giường</div>
           <div className="info-value">639km</div>
           <div className="info-value">11 giờ 30 phút</div>
@@ -231,7 +181,7 @@ function Lichtrinhpage() {
           </div>
         </div>
         <div className="info-row">
-          <div className="info-value">An Nhơn<br />TP. Hồ Chí Minh</div>
+        <div className="info-value-kh" style={{marginRight:'-1cm'}}> <span style={{color:'#ff6f00' , fontWeight:'600', fontSize:'16px'}}>An Nhơn</span> <img src={arrow}  style={{marginRight:'10px', marginLeft:'10px'}}/>TP. Hồ Chí Minh</div>
           <div className="info-value">Giường</div>
           <div className="info-value">639km</div>
           <div className="info-value">11 giờ 30 phút</div>

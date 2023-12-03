@@ -1,36 +1,26 @@
 import React, { useState, useEffect } from "react";
 import "../../css/loc.css";
-import money from "../../image/save_money.svg";
-import seat from "../../image/seat.svg";
-import clock from "../../image/clock.svg";
 import pickup from "../../image/pickup.svg";
 import station from "../../image/station.svg";
 import deleteicon from "../../image/trangchu/delete.svg";
-import { Modal } from "react-bootstrap";
-import baner1 from "../../image/baner1.png";
-import { Drawer } from "antd";
+import { Col, Drawer, Row,Pagination  } from "antd";
 import DatVeForm from "../datVe/DatVeForm";
+import { connect } from "react-redux";
+import withRouter from "../../helpers/withRouter";
+import { listSearchOneWay,listSearchReturn,loadDataField } from "../../redux/actions/actionSearch";
 
-function SeatSelection() {
-  const [selectedIcons, setSelectedIcons] = useState([]);
+function SeatSelection(props) {
+
+  const [selectedChuyen, setSelectedChuyen] = useState()
   const [selectedCar, setSelectedCar] = useState([]);
   const [selectedChar, setSelectedChar] = useState([]);
   const [isSeatModalOpen, setIsSeatModalOpen] = useState(false);
-  const [selectedSeats, setSelectedSeats] = useState(new Set());
+
   const [selectedFloor, setSelectedFloor] = useState([]);
 
   const [currentTrip, setCurrentTrip] = useState(null);
-
   const onClose = () => {
     setIsSeatModalOpen(false);
-  };
-
-  const handleIconClick = (iconName) => {
-    if (selectedIcons.includes(iconName)) {
-      setSelectedIcons(selectedIcons.filter((name) => name !== iconName));
-    } else if (selectedIcons.length < 3) {
-      setSelectedIcons([...selectedIcons, iconName]);
-    }
   };
 
   const handlecarClick = (button) => {
@@ -55,13 +45,37 @@ function SeatSelection() {
     }
   };
 
-  const handleSeatModal = (trip) => {
-    setCurrentTrip(trip);
+  const handleSeatModal = (data) => {
+    setCurrentTrip();
     setIsSeatModalOpen(true);
+    setSelectedChuyen(data);
   };
+  const { listChuyen } = props;
+  const [currentPage, setCurrentPage] = useState(1);
+  const pageSize = 3;
+  const getCurrentPageData = () => {
+    const startIndex = (currentPage - 1) * pageSize;
+    const endIndex = startIndex + pageSize;
+    return listChuyen.slice(startIndex, endIndex);
+  };
+  
+  const totalPages = Math.ceil(listChuyen.length / pageSize);
+  
+  const handlePrevPage = () => {
+    setCurrentPage((prevPage) => Math.max(prevPage - 1, 1));
+  };
+  
+  const handleNextPage = () => {
+    setCurrentPage((prevPage) => Math.min(prevPage + 1, totalPages));
+  };
+useEffect(() => {
  
+}, []);
+
+let isLocationDisplayed = false;
   return (
-    <div>
+<div className="grid-container-loc">
+ 
       <div className="container-loc" style={{ marginLeft: "5cm" }}>
          <div className="title" style={{marginLeft:'0.5cm'}}>Bộ lọc tìm kiếm</div>
        
@@ -184,218 +198,78 @@ function SeatSelection() {
         </div>
         </div>
         </div>
-      </div>
-      <div className="custom-container-loc">
+        </div>
+     {getCurrentPageData().map((item, index)=>(
+      <Row className="custom-container-loc" key={item.maChuyen}>
+      {index === 0 && (
         <div className="hidden-text">
-          <span>Đà Nẵng - TP. Hồ Chí Minh</span>
+          <span>{item.tuyenXe.diemDi} - {item.tuyenXe.diemDen}</span>
         </div>
-        <div className="icon-container">
-          <div
-            className={`icon-gia-re custom-icon ${
-              selectedIcons.includes("money") ? "active" : ""
-            }`}
-            onClick={() => handleIconClick("money")}
-          >
-            <img src={money} alt="Giá rẻ" />
-            <span>Giá rẻ bất ngờ</span>
-          </div>
-          <div
-            className={`icon-gio-khoi-hanh custom-icon ${
-              selectedIcons.includes("clock") ? "active" : ""
-            }`}
-            onClick={() => handleIconClick("clock")}
-          >
-            <img src={clock} alt="Giờ khởi hành" />
-            <span>Giờ khởi hành</span>
-          </div>
-          <div
-            className={`icon-ghe-trong custom-icon ${
-              selectedIcons.includes("seat") ? "active" : ""
-            }`}
-            onClick={() => handleIconClick("seat")}
-          >
-            <img src={seat} alt="Ghế trống" />
-            <span>Ghế trống</span>
-          </div>
-        </div>
+      )}
+      <Col>
         <div className="chuyenxe-loc">
-          <div className="info-container-loc">
-            <span className="departure-time">10:15</span>
+          <Col span={24} className="info-container-loc">
+            <span className="departure-time">{item.tuyenXe.tgDi}</span>
             <div className="location-details">
               <img src={pickup} alt="pickup" />
               <span className="separator">
                 {" "}
-                . . . . . . . . . . . . . . . . . . . . . . .{" "}
+                . . . . . . . . . . . . . . . . . . . . . . .
               </span>
               <span
                 className="travel-duration"
                 style={{ marginLeft: "-0.08cm" }}
               >
-                <span style={{ marginLeft: "-0.3cm" }}>20 giờ </span>
+                <span style={{ marginLeft: "-0.3cm" }}>{item.tuyenXe.tgDi}</span>
                 <br />
                 <span className="small-text">(Asian/Ho Chi Minh)</span>
               </span>
               <span className="separator">
-                . . . . . . . . . . . . . . . . . . . . . . . . .{" "}
+                . . . . . . . . . . . . . . . . . . . . . . . . .
               </span>
               <img src={station} alt="station" />
             </div>
-            <span className="arrival-time">06:15</span>
-          </div>
-
+            <span className="arrival-time">{item.tuyenXe.tgDen}</span>
+          </Col>
           <div className="location-info">
-            <div className="location">
-              <span className="location-name">Bến Xe Trung Tâm Đà Nẵng</span>
-              <br />
-              <span className="location-info-text text-gray"></span>
-            </div>
-            <div className="location text-right">
-              <span className="location-name">Bến Xe Miền Tây</span>
-              <br />
-              <span className="location-info-text text-gray"></span>
-            </div>
+          <div className="location">
+            <span className="location-name">{item.tuyenXe.noiDon}</span>
+            <br />
+            <span className="location-info-text text-gray"></span>
           </div>
-        
-          <hr className="divider my-3" />
-          <div className="availability-info">
-            <div className="availability-details">
-              <span className="ticket-price text-orange">400.000đ</span>
-              <div className="availability-dot"></div>
-              <span className="seat-type">Giường</span>
-              <div className="availability-dot"></div>
-              <span className="available-seats text-orange">19 chỗ trống</span>
-              {/* <span
-              className="choose-seat cursor-pointer text-blue-400 underline"
-              onClick={() => handleSeatModal("trip1")}
-            >
-              Chọn ghế
-            </span> */}
-            <button type="button" className="custom-button">
-            <span onClick={() => handleSeatModal("trip1")}>Chọn chuyến</span>
-          </button>
-            </div>
-          
+          <div className="location text-right">
+            <span className="location-name">{item.tuyenXe.noiTra}</span>
+            <br />
+            <span className="location-info-text text-gray"></span>
           </div>
         </div>
-
-        <div className="chuyenxe-loc">
-          <div className="info-container-loc">
-            <span className="departure-time">10:15</span>
-            <div className="location-details">
-              <img src={pickup} alt="pickup" />
-              <span className="separator">
-                {" "}
-                . . . . . . . . . . . . . . . . . . . . . . .{" "}
-              </span>
-              <span
-                className="travel-duration"
-                style={{ marginLeft: "-0.08cm" }}
-              >
-                <span style={{ marginLeft: "-0.3cm" }}>20 giờ </span>
-                <br />
-                <span className="small-text">(Asian/Ho Chi Minh)</span>
-              </span>
-              <span className="separator">
-                . . . . . . . . . . . . . . . . . . . . . . . . {" "}
-              </span>
-              <img src={station} alt="station" />
-            </div>
-            <span className="arrival-time">06:15</span>
-          </div>
-
-          <div className="location-info">
-            <div className="location">
-              <span className="location-name">Bến Xe Trung Tâm Đà Nẵng</span>
-              <br />
-              <span className="location-info-text text-gray"></span>
-            </div>
-            <div className="location text-right">
-              <span className="location-name">Bến Xe Miền Tây</span>
-              <br />
-              <span className="location-info-text text-gray"></span>
-            </div>
-          </div>
-          
           <hr className="divider my-3" />
-          <div className="availability-info">
+          <Col span={24} className="availability-info">
             <div className="availability-details">
-              <span className="ticket-price text-orange">400.000đ</span>
+            <span className="ticket-price text-orange">{item.tuyenXe.gia}</span>
               <div className="availability-dot"></div>
               <span className="seat-type">Giường</span>
               <div className="availability-dot"></div>
               <span className="available-seats text-orange">19 chỗ trống</span>
-              <span
-                className="choose-seat cursor-pointer text-blue-400 underline"
-                onClick={() => handleSeatModal("trip2")}
-              >
-                Chọn ghế
-              </span>
+              <span className="btn" style={{color:'blue'}} onClick={() => handleSeatModal(item)}>chọn ghế</span>
               <button type="button" className="custom-button">
-              <span onClick={() => handleSeatModal("trip1")}>Chọn chuyến</span>
-            </button>
+                <span onClick={() => handleSeatModal(item)}>Chọn chuyến</span>
+              </button>
             </div>
-
-          </div>
+          </Col>
         </div>
-        <div className="chuyenxe-loc">
-          <div className="info-container-loc">
-            <span className="departure-time">10:15</span>
-            <div className="location-details">
-              <img src={pickup} alt="pickup" />
-              <span className="separator">
-                {" "}
-                . . . . . . . . . . . . . . . . . . . . . . .{" "}
-              </span>
-              <span
-                className="travel-duration"
-                style={{ marginLeft: "-0.08cm" }}
-              >
-                <span style={{ marginLeft: "-0.3cm" }}>20 giờ </span>
-                <br />
-                <span className="small-text">(Asian/Ho Chi Minh)</span>
-              </span>
-              <span className="separator">
-                . . . . . . . . . . . . . . . . . . . . . . . . {" "}
-              </span>
-              <img src={station} alt="station" />
-            </div>
-            <span className="arrival-time">06:15</span>
-          </div>
-
-          <div className="location-info">
-            <div className="location">
-              <span className="location-name">Bến Xe Trung Tâm Đà Nẵng</span>
-              <br />
-              <span className="location-info-text text-gray"></span>
-            </div>
-            <div className="location text-right">
-              <span className="location-name">Bến Xe Miền Tây</span>
-              <br />
-              <span className="location-info-text text-gray"></span>
-            </div>
-          </div>
-          
-          <hr className="divider my-3" />
-          <div className="availability-info">
-            <div className="availability-details">
-              <span className="ticket-price text-orange">400.000đ</span>
-              <div className="availability-dot"></div>
-              <span className="seat-type">Giường</span>
-              <div className="availability-dot"></div>
-              <span className="available-seats text-orange">19 chỗ trống</span>
-              <span
-                className="choose-seat cursor-pointer text-blue-400 underline"
-                onClick={() => handleSeatModal("trip2")}
-              >
-                Chọn ghế
-              </span>
-              <button type="button" className="custom-button">
-              <span onClick={() => handleSeatModal("trip1")}>Chọn chuyến</span>
-            </button>
-            </div>
-
-          </div>
-        </div>
+      </Col>
+      {index === 0 && (
+        <div className="pagesizeloc">
+        <Pagination
+          current={currentPage}
+          total={listChuyen.length}
+          pageSize={pageSize}
+          onChange={(page) => setCurrentPage(page)}
+        />
+      </div>
+      )}
+      <Col span={24}>
         <Drawer
           title="Đặt vé xe"
           placement="right"
@@ -405,11 +279,37 @@ function SeatSelection() {
           key={currentTrip}
           size="large"
         >
-          <DatVeForm onClose={onClose} />
+          <DatVeForm chuyen = {selectedChuyen} onClose={onClose} />
         </Drawer>
-      </div>
-    </div>
+      </Col>
+    </Row>
+     )
+        
+      )
+
+     }
+
+    
+     </div>
   );
 }
 
-export default SeatSelection;
+
+const mapStateToProps = (state) => ({
+  listChuyen:state.SearchReducer.listChuyen,
+  listChuyenReturn1:state.SearchReducer.listChuyenReturn1,
+  listChuyenReturn2:state.SearchReducer.listChuyenReturn2,
+  fieldData: state.SearchReducer.fieldData,
+  
+});
+
+const mapDispatchToProps = {
+  listSearchOneWay,
+  listSearchReturn,
+  loadDataField,
+};
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(withRouter(SeatSelection));

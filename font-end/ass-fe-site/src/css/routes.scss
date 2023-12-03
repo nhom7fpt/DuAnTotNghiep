@@ -46,11 +46,11 @@
 }
 
 .route-info p {
-  z-index: 3;
   color: #000000;
-  padding: 10px 20px;
+  padding: 12px 20px;
   text-align: left;
   line-height: 24px;
+  font-size: 16.5px;
 }
 
 .route a {
@@ -101,14 +101,6 @@
   float: left;
 }
 
-.route-info p {
-  z-index: 3;
-  color: #000000;
-  padding: 10px 20px;
-  text-align: left;
-   margin-top: -10px;
-}
-
 
 
 .route-info span {
@@ -119,7 +111,6 @@
 
 .route-info div:not(:last-child) {
   border-bottom: 1px solid #ccc;
-  /* Thêm border dưới đáy mỗi thẻ p trừ thẻ cuối cùng */
 }
 .futa-stats {
   display: flex;
@@ -268,20 +259,20 @@ line-height:24px;
 }
 
 .nav-tabs .nav-link {
-  color: #333; /* Text color of the tabs */
-  border: none; /* Remove the border */
+  color: #333; 
+  border: none; 
 }
 
 .nav-tabs .nav-link.active {
-  color: #007bff; /* Text color of the active tab */
-  border: 2px solid #007bff; /* Border for the active tab */
+  color: #007bff;
+  border: 2px solid #007bff; 
   border-radius: 10px;
   display: flex;
   flex: 1;
-  background-color: transparent; /* Remove the background color for the active tab */
+  background-color: transparent; 
 }
 
-/* End of custom CSS for the tabs */
+
 
 .pt-40 {
   padding-top: 10rem !important;
@@ -377,10 +368,10 @@ line-height:24px;
   margin-left: 40px;
 }
 
-/* Adjust input fields in the "Khứ hồi" tab */
+
 .tab-pane.fade.show.active .input-search {
-  width: 100%; /* Expand the input fields to full width */
-  margin-left: 0; /* Remove margin for the input fields */
+  width: 100%; 
+  margin-left: 0; 
 }
 
 .select-container {
@@ -391,17 +382,7 @@ line-height:24px;
 .custom-select::-webkit-select-placeholder {
   color: transparent;
 }
-// .custom-select {
-//   -webkit-appearance: none;
-//   -moz-appearance: none;
-//   appearance: none;
-//   background: transparent;
-//   background-image: url('https://futabus.vn/images/icons/arrow_down_select.svg');
-//   background-repeat: no-repeat;
-//   background-position: calc(100% - 10px) center; /* Dùng calc để điều chỉnh vị trí mũi tên */
-//   padding-right: 20px; /* Điều chỉnh lề phải để có không gian cho mũi tên */
 
-// }
 .custom-datetime-input {
  
   width: 205px;
@@ -478,4 +459,35 @@ line-height:24px;
 .ant-select-selection-placeholder{
   margin-left: -0.2cm;
   margin-top: 0.2cm;
+}
+.custom-dropdown-timchuyen{
+  background-color: #ffffff !important;
+  color: #111111;
+}
+
+.ant-select-item.ant-select-item-option.ant-select-item-option-active.ant-select-item-option-selected{
+  background-color: #ffffff;
+  font-size: 20px;
+}
+.timchuyen-ink-bar .ant-tabs-ink-bar {
+  display: none !important;
+}
+
+.ant-radio-checked .ant-radio-inner::after {
+  transform: scale(0.5);
+  opacity: 1;
+  transition: all 0.3s cubic-bezier(0.78, 0.14, 0.15, 0.86);
+  background-color:  #f2754e;
+ 
+}
+.ant-radio-wrapper:hover .ant-radio, .ant-radio:hover .ant-radio-inner, .ant-radio-input:focus + .ant-radio-inner {
+  border-color: #f2754e !important;
+}
+
+ .ant-radio-wrapper-checked{
+  color: #f2754e !important;
+}
+.ant-tabs-tab .ant-tabs-tab-active{
+  color: #ef5222 !important;
+  background-color: #f1530fee !important;
 }
