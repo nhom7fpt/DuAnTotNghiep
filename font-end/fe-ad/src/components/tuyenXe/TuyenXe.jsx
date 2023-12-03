@@ -13,6 +13,7 @@ import {
   updateTuyen,
 } from "../../redux/actions/actionTuyenXe";
 import { ExclamationCircleOutlined } from "@ant-design/icons";
+import axios from "axios";
 
 class TuyenXe extends Component {
   constructor(props) {

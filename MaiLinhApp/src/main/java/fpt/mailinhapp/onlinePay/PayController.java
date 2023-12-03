@@ -106,33 +106,7 @@ public class PayController {
         return new ResponseEntity<>(dto,HttpStatus.OK);
     }
 
-    @GetMapping("pay_return")
-    public ResponseEntity payInfo(@RequestParam("vnp_Amount")Long amount,
-                                  @RequestParam("vnp_BankCode") String bankCode,
-                                  @RequestParam("vnp_OrderInfo") String orderInfo,
-                                  @RequestParam("vnp_PayDate") String payDate,
-                                  @RequestParam("vnp_TransactionNo") String transactionNo,
-                                  @RequestParam("vnp_TransactionStatus") String transactionStatus) throws ParseException {
 
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHHmmss");
-        sdf.setTimeZone(TimeZone.getTimeZone("GMT+7"));
-        Date datePay = sdf.parse(payDate);
-        ThanhToanDto dto = new ThanhToanDto();
-        dto.setId(transactionNo);
-        dto.setPayDate(datePay);
-        dto.setOrderInfo(orderInfo);
-        dto.setBank(bankCode);
-        dto.setAmount(amount);
-        if(transactionStatus.equalsIgnoreCase("00")){
-            dto.setStatus(true);
-        }else{
-            dto.setStatus(false);
-        }
-
-        service.save(dto);
-
-        return new ResponseEntity<>(dto,HttpStatus.OK);
-    }
 
 //    @GetMapping("refund_pay")
 //    public ResponseEntity refundPayment() throws IOException {
