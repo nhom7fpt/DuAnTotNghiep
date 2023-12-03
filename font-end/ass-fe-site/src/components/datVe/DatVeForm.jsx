@@ -23,95 +23,90 @@ const DatVeForm = (props) => {
   const onClose = () => {
     props.onClose();
   };
-  const {listChuyen} = props;
+  const { chuyen} = props;
   return (
    
-     <SeatSelectionProvider>
-     {listChuyen.map((item, index)=>(
-     
-    <div className="info-container-loc" key={item.maChuyen}>
-    {index === 0 && (
-      <div className="location-details">
-      <span className="departure-time">{item.tuyenXe.tgDi}</span>
-        <img src={pickup} alt="pickup" />
-        <span className="separator">
-          {" "}
-          . . . . . . . . . . . . . . . . . . . . . . . . . . . .{" "}
-        </span>
-        <span
-          className="travel-duration"
-          style={{ marginLeft: "-0.08cm" }}
-        >
-          <span style={{ marginLeft: "0.8cm" }}>20 giờ </span>
-          <br />
-          <span className="small-text">(Asian/Ho Chi Minh)</span>
-        </span>
-        <span className="separator">
-          . . . . . . . . . . . . . . . . . . . . . . . . . . . {" "}
-        </span>
-        <img src={station} alt="station" />
-        <span className="arrival-time">{item.tuyenXe.tgDen}</span>
-      </div>
-      )}  
-  
- 
-   
-  </div>
-  )
-        
-  )
- 
- }
+    <SeatSelectionProvider>
 
-      <Row>
-        <Col md={24}>
-          <Steps
-            current={steps}
-            items={[
-              {
-                title: "Chỗ mong muốn",
-              },
-              {
-                title: "Điểm đón trả",
-              },
-              {
-                title: "Nhập thông tin",
-              },
-            ]}
-          />
-        </Col>
-      </Row>
-      <Row>
-        <Col md={24}>
-          {steps === 0 && <ChonCho />}
-          {steps === 1 && <ChonDiemTra />}
-          {steps === 2 && <ThongTinForm />}
-        </Col>
-      </Row>
-      <Divider />
-      <Row style={{ float: "right" }}>
-        {steps < 2 && (
-          <Button type="primary" onClick={() => onNext()}>
-            Tiếp tục
-          </Button>
-        )}
-        {steps === 2 && <Button type="primary">Thanh toán</Button>}
-        {steps > 0 && (
-          <Button
-            type="primary"
-            style={{ margin: "0 8px" }}
-            onClick={() => onPrev()}
-          >
-            Trở lại
-          </Button>
-        )}
-        {steps === 0 && (
-          <Button type="primary" style={{ margin: "0 8px" }} onClick={onClose}>
-            Hủy
-          </Button>
-        )}
-      </Row>
-      </SeatSelectionProvider>
+    
+   <div className="info-container-loc" key={chuyen.maChuyen}>
+  
+     <div className="location-details">
+     <span className="departure-time">{chuyen.tuyenXe.tgDi}</span>
+       <img src={pickup} alt="pickup" />
+       <span className="separator">
+         {" "}
+         . . . . . . . . . . . . . . . . . . . . . . . . . . . .{" "}
+       </span>
+       <span
+         className="travel-duration"
+         style={{ marginLeft: "-0.08cm" }}
+       >
+         <span style={{ marginLeft: "0.8cm" }}>20 giờ </span>
+         <br />
+         <span className="small-text">(Asian/Ho Chi Minh)</span>
+       </span>
+       <span className="separator">
+         . . . . . . . . . . . . . . . . . . . . . . . . . . . {" "}
+       </span>
+       <img src={station} alt="station" />
+       <span className="arrival-time">{chuyen.tuyenXe.tgDen}</span>
+     </div>
+      
+ 
+
+  
+ </div>
+
+     <Row>
+       <Col md={24}>
+         <Steps
+           current={steps}
+           items={[
+             {
+               title: "Chỗ mong muốn",
+             },
+             {
+               title: "Điểm đón trả",
+             },
+             {
+               title: "Nhập thông tin",
+             },
+           ]}
+         />
+       </Col>
+     </Row>
+     <Row>
+       <Col md={24}>
+         {steps === 0 && <ChonCho />}
+         {steps === 1 && <ChonDiemTra chuyen={chuyen}/>}
+         {steps === 2 && <ThongTinForm />}
+       </Col>
+     </Row>
+     <Divider />
+     <Row style={{ float: "right" }}>
+       {steps < 2 && (
+         <Button type="primary" onClick={() => onNext()}>
+           Tiếp tục
+         </Button>
+       )}
+       {steps === 2 && <Button type="primary">Thanh toán</Button>}
+       {steps > 0 && (
+         <Button
+           type="primary"
+           style={{ margin: "0 8px" }}
+           onClick={() => onPrev()}
+         >
+           Trở lại
+         </Button>
+       )}
+       {steps === 0 && (
+         <Button type="primary" style={{ margin: "0 8px" }} onClick={onClose}>
+           Hủy
+         </Button>
+       )}
+     </Row>
+     </SeatSelectionProvider>
 
   );
 };

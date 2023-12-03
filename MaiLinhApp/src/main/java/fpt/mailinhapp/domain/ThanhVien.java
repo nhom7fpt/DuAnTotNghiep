@@ -19,9 +19,7 @@ import java.util.Date;
 @Entity
 @Table(name = "thanh_vien")
 public class ThanhVien {
-    @Id
-    @Column(name = "soDT", nullable = false, length = 13)
-    private String soDT;
+
 
     @Column(name = "ho_ten", nullable = true, length = 50)
     private String hoTen;
@@ -51,7 +49,9 @@ public class ThanhVien {
     @JoinColumn(name = "anh_da_luu_id")
     private AnhDaLuu anhDaLuu;
 
-
+    @Id
+    @Column(name = "so_dt", nullable = false, length = 13)
+    private String soDT;
 
     @PrePersist
     public void prePersist() {

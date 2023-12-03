@@ -56,7 +56,8 @@ public class CustomerService {
     @Transactional(rollbackFor = Exception.class)
     public ThanhVienDto updateCustomers(String id, ThanhVienDto dto){
         var found = dao.findById(id).orElseThrow(()-> new CustomerException("Thành viên không tồn tại"));
-        String[] ignoreFields = new String[]{"ngayTao","anhDaLuu"};
+
+        String[] ignoreFields = new String[]{"ngayTao","anhDaLuu","ngayChinhSu","soDT"};
 
         BeanUtils.copyProperties(dto, found, ignoreFields);
 

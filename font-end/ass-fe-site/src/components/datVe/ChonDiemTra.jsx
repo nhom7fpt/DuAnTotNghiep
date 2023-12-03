@@ -7,20 +7,19 @@ import withRouter from "../../helpers/withRouter";
 const ChonDiemTra = (props) => {
   const [value, setValue] = useState(1);
   const { selectedSeats } = useSeatSelection();
-  const {listChuyen} = props;
+  const {chuyen} = props;
   const onChange = (e) => {
     console.log("radio checked", e.target.value);
     setValue(e.target.value);
   };
   return (
     <>
-    {listChuyen.map((item, index)=>(
-      <Row  key={item.maChuyen}>
+      <Row  key={chuyen.maChuyen}>
         <Col style={{ marginTop: "3%" }} md={11}>
           <h4>Điểm đón</h4>
           <Divider></Divider>
           <Radio checked="true">
-            <div>{item.tuyenXe.noiDon}</div>
+            <div>{chuyen.tuyenXe.noiDon}</div>
           </Radio>
         </Col>
         <Col md={1}>
@@ -31,18 +30,18 @@ const ChonDiemTra = (props) => {
           <Divider />
           <Radio.Group onChange={onChange} value={value}>
             <Space direction="vertical">
-              <Radio value={1}>{item.tuyenXe.noiTra}</Radio>
+              <Radio value={1}>{chuyen.tuyenXe.noiTra}</Radio>
               <Radio value={2}>Option B</Radio>
               <Radio value={3}>Option C</Radio>
             </Space>
           </Radio.Group>
         </Col>
       </Row>
-      )
+      
         
-      )
+      
 
-     }
+     
 
     </>
   );

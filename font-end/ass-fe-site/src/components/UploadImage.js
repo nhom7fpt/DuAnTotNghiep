@@ -28,21 +28,18 @@ const UploadImage = (props) => {
     );
   };
 
-  // const handleChange = (info) => {
+  const handleChange = (info) => {
  
 
-  // if(info && info.file && info.file.response){
-  //   props.onUploadFile(info.file.response);
-  // }
+  if(info && info.file && info.file.response){
+    props.onUploadFile(info.file.response);
+  }
 
     
 
 
-  // };
-  const handleChange = (info) => {
-    console.log(info.file.response);
-    // ... rest of the code
- };
+  };
+
 
   const handleRemove = (info) => {
     if (info.filename) {
@@ -64,12 +61,6 @@ const UploadImage = (props) => {
     </div>
   );
   const { file,profileImage } = props;
-//  const avata = profileImage ?    {
-//   uid: profileImage.id,
-//   name: profileImage.tenAnh,
-//   status: 'done',
-//   url: ImagesService.getImageUrl(profileImage.tenTep),
-// }: ""
 const avata = profileImage
   ? [
       {

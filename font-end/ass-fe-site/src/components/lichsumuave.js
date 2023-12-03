@@ -106,7 +106,7 @@ function Lichsimuave() {
         current: currentPage,
         total: data.length,
         showSizeChanger: false,
-        showQuickJumper: true,
+
     };
 
     const paginatedData = data.slice((currentPage - 1) * pageSize, currentPage * pageSize);

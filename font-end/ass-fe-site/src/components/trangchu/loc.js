@@ -3,15 +3,15 @@ import "../../css/loc.css";
 import pickup from "../../image/pickup.svg";
 import station from "../../image/station.svg";
 import deleteicon from "../../image/trangchu/delete.svg";
-import { Col, Drawer, Row } from "antd";
+import { Col, Drawer, Row,Pagination  } from "antd";
 import DatVeForm from "../datVe/DatVeForm";
 import { connect } from "react-redux";
 import withRouter from "../../helpers/withRouter";
 import { listSearchOneWay,listSearchReturn,loadDataField } from "../../redux/actions/actionSearch";
 
 function SeatSelection(props) {
- 
 
+  const [selectedChuyen, setSelectedChuyen] = useState()
   const [selectedCar, setSelectedCar] = useState([]);
   const [selectedChar, setSelectedChar] = useState([]);
   const [isSeatModalOpen, setIsSeatModalOpen] = useState(false);
@@ -45,11 +45,29 @@ function SeatSelection(props) {
     }
   };
 
-  const handleSeatModal = (trip) => {
-    setCurrentTrip(trip);
+  const handleSeatModal = (data) => {
+    setCurrentTrip();
     setIsSeatModalOpen(true);
+    setSelectedChuyen(data);
   };
- const {listChuyen} = props;
+  const { listChuyen } = props;
+  const [currentPage, setCurrentPage] = useState(1);
+  const pageSize = 3;
+  const getCurrentPageData = () => {
+    const startIndex = (currentPage - 1) * pageSize;
+    const endIndex = startIndex + pageSize;
+    return listChuyen.slice(startIndex, endIndex);
+  };
+  
+  const totalPages = Math.ceil(listChuyen.length / pageSize);
+  
+  const handlePrevPage = () => {
+    setCurrentPage((prevPage) => Math.max(prevPage - 1, 1));
+  };
+  
+  const handleNextPage = () => {
+    setCurrentPage((prevPage) => Math.min(prevPage + 1, totalPages));
+  };
 useEffect(() => {
  
 }, []);
@@ -181,7 +199,7 @@ let isLocationDisplayed = false;
         </div>
         </div>
         </div>
-     {listChuyen.map((item, index)=>(
+     {getCurrentPageData().map((item, index)=>(
       <Row className="custom-container-loc" key={item.maChuyen}>
       {index === 0 && (
         <div className="hidden-text">
@@ -233,15 +251,24 @@ let isLocationDisplayed = false;
               <span className="seat-type">Giường</span>
               <div className="availability-dot"></div>
               <span className="available-seats text-orange">19 chỗ trống</span>
-              <span className="btn" style={{color:'blue'}} onClick={() => handleSeatModal("trip1")}>chọn ghế</span>
+              <span className="btn" style={{color:'blue'}} onClick={() => handleSeatModal(item)}>chọn ghế</span>
               <button type="button" className="custom-button">
-                <span onClick={() => handleSeatModal("trip1")}>Chọn chuyến</span>
+                <span onClick={() => handleSeatModal(item)}>Chọn chuyến</span>
               </button>
             </div>
           </Col>
         </div>
       </Col>
-
+      {index === 0 && (
+        <div className="pagesizeloc">
+        <Pagination
+          current={currentPage}
+          total={listChuyen.length}
+          pageSize={pageSize}
+          onChange={(page) => setCurrentPage(page)}
+        />
+      </div>
+      )}
       <Col span={24}>
         <Drawer
           title="Đặt vé xe"
@@ -252,7 +279,7 @@ let isLocationDisplayed = false;
           key={currentTrip}
           size="large"
         >
-          <DatVeForm onClose={onClose} />
+          <DatVeForm chuyen = {selectedChuyen} onClose={onClose} />
         </Drawer>
       </Col>
     </Row>
@@ -261,7 +288,7 @@ let isLocationDisplayed = false;
       )
 
      }
-   
+
     
      </div>
   );

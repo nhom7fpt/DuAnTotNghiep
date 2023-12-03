@@ -24,6 +24,10 @@
 margin-left: 15cm;
 transform: translateY(-16cm);
 }
+.pagesizeloc{
+  transform: translateY(15.5cm);
+  margin-left: 8.5cm;
+}
 
 .title {
   display: flex;
