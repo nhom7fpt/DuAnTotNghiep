@@ -29,9 +29,11 @@ const UploadImage = (props) => {
   };
 
   const handleChange = (info) => {
-    // const { fileList } = info;
-    console.log(info);
-    // props.onUploadFile(fileList.slice());
+    const { fileList } = info;
+
+    props.onUploadFile(fileList.slice());
+
+
   };
 
   const handleRemove = (info) => {
@@ -55,10 +57,11 @@ const UploadImage = (props) => {
   );
   const { fileList } = props;
 
+
   return (
     <>
       <Upload
-        action={ImagesService.getImageUploadUrl}
+        action="http://localhost:8080/api/v1/images/"
         listType="picture-card"
         defaultFileList={fileList}
         multiple={false}

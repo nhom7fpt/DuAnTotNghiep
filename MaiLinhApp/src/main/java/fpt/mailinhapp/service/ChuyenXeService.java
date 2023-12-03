@@ -60,8 +60,9 @@ public class ChuyenXeService {
         List<ChuyenXe> listEntity = dao.findByTuyenXe_DiemDiLikeAndTuyenXe_DiemDenLike(diemDi,diemDen);
 
         List<ChuyenXeDto> listDto = listEntity.stream().map((item)->{
-            ModelMapper mapper = new ModelMapper();
-            return mapper.map(item, ChuyenXeDto.class);
+            ChuyenXeDto dto = new ChuyenXeDto();
+            BeanUtils.copyProperties(item, dto);
+            return dto;
         }).collect(Collectors.toList());
 
         return listDto;

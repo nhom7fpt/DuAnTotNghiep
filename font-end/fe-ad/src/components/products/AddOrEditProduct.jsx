@@ -20,7 +20,6 @@ class AddOrEditProduct extends Component {
       Car: {},
       thuongHieu: [],
       loaiXe: [],
-      fileList: [],
     };
   }
 
@@ -100,7 +99,6 @@ class AddOrEditProduct extends Component {
               goNext={this.goNext}
               loaiXe={loaiXe}
               thuongHieu={thuongHieu}
-              fileList={this.state.fileList}
             ></FormProduct>
           </Col>
         </Row>
