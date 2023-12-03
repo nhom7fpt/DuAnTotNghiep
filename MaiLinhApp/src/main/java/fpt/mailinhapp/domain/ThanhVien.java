@@ -39,15 +39,15 @@ public class ThanhVien {
     @JsonFormat(pattern = "DD-MM-YYYY")
     private Date ngayChinhSu;
 
-    @OneToOne(orphanRemoval = true)
-    @JoinColumn(name = "tai_khoan_ten_tai_khoan")
-    private TaiKhoan taiKhoan;
+
 
     @OneToOne(orphanRemoval = true)
     @JoinColumn(name = "anh_da_luu_id")
     private AnhDaLuu anhDaLuu;
 
-
+    @OneToOne(orphanRemoval = true)
+    @JoinColumn(name = "tai_khoan")
+    private TaiKhoan taiKhoan;
 
     @PrePersist
     public void prePersist() {

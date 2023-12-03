@@ -43,6 +43,10 @@ public class TuyenXeService {
 
         var saveEntity = dao.save(entity);
 
+<<<<<<< HEAD
+=======
+        dto.setMaTuyenXe(saveEntity.getMaTuyenXe());
+>>>>>>> 2eb4b25f78d11eded1b959a12dc827abb97d7505
 
 
         return saveEntity;

@@ -40,9 +40,15 @@ public class CustomerService {
             BeanUtils.copyProperties(saveImg, dto.getAnhDaLuu());
             entity.setAnhDaLuu(saveImg);
         }
+<<<<<<< HEAD
         TaiKhoan tk=new TaiKhoan();
         BeanUtils.copyProperties(dto.getTaiKhoan(),tk);
         entity.setTaiKhoan(tk);
+=======
+        TaiKhoan taiKhoan = new TaiKhoan();
+        BeanUtils.copyProperties(dto.getTaiKhoan(), taiKhoan);
+        entity.setTaiKhoan(taiKhoan);
+>>>>>>> 2eb4b25f78d11eded1b959a12dc827abb97d7505
 
         var saveCus = dao.save(entity);
         dto.setSoDT(saveCus.getSoDT());
