@@ -27,6 +27,9 @@ function Lichtrinhpage(props) {
       uniqueListTuyen.push(item);
     }
   });
+  function formatCurrency(value) {
+    return value.toLocaleString('vi-VN', { style: 'currency', currency: 'VND' });
+  }
 
   useEffect(() => {
     props.loadDataTuyen();
@@ -70,7 +73,7 @@ function Lichtrinhpage(props) {
           <div className="info-value" style={{textAlign:'justify'}}>Giường</div>
           <div className="info-value"style={{textAlign:'justify'}}>639km</div>
           <div className="info-value"style={{textAlign:'justify'}}>11 giờ 30 phút</div>
-          <div className="info-value">{item.gia}</div>
+          <div className="info-value" style={{color:'red'}}>{item.gia !== null && item.gia !== undefined ? formatCurrency(item.gia) : '---'}</div>
           <div className="info-value">
             <button className="search-button" onClick={()=>onClick(item)}>Tìm chuyến xe</button>
           </div>

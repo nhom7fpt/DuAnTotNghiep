@@ -24,7 +24,7 @@ import Thongttk from './components/thongtintaikhoan';
 import Mailinhpay from './components/lichsugiaodich'
 import Vechungtoi from './components/vechungtoi';
 import ThongTin from "./components/trangchu/thongtin"
-import SeatSelection from "./components/trangchu/loc";
+import SeatSelection from "./components/trangchu/listTuyen";
 import store from "./redux/store";
 function App() {
   const [showNavbar, setShowNavbar] = useState(true);
