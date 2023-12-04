@@ -21,7 +21,7 @@ import Tintuc from './components/tintuc';
 import Lsmuave from './components/lichsumuave';
 import Doimk from './components/doimatkhau';
 import Thongttk from './components/thongtintaikhoan';
-import Mailinhpay from './components/lichsugiaodịch'
+import Mailinhpay from './components/lichsugiaodich'
 import Vechungtoi from './components/vechungtoi';
 import ThongTin from "./components/trangchu/thongtin"
 import SeatSelection from "./components/trangchu/loc";

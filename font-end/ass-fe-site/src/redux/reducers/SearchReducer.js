@@ -1,10 +1,12 @@
-import { FIELD_SET, LISTCHUYEN, LISTCHUYEN1, LISTCHUYEN2 } from "../actions/actionType";
+import { FIELD_SET, LISTCHUYEN, LISTCHUYEN1, LISTCHUYEN2, LISTTUYEN_SET } from "../actions/actionType";
 
 const initialState = {
   fieldData: [],
   listChuyen: [],
   listChuyenReturn1 : [],
-  listChuyenReturn2 : []
+  listChuyenReturn2 : [],
+  listTuyen: []
+
 };
 
 const SearchReducer = (state = initialState, { type, payload }) => {
@@ -14,9 +16,11 @@ const SearchReducer = (state = initialState, { type, payload }) => {
     case LISTCHUYEN:
       return {...state, listChuyen: payload};
     case LISTCHUYEN1:
-      return {...state, listChuyenReturn1: payload}
+      return {...state, listChuyenReturn1: payload};
     case LISTCHUYEN2:
-      return {...state, listChuyenReturn2: payload}
+      return {...state, listChuyenReturn2: payload};
+      case LISTTUYEN_SET:
+        return {...state, listTuyen: payload};
     default:
       return state;
   }

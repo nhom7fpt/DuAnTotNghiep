@@ -97,8 +97,15 @@ public class TuyenXeService {
 
         var listData = list.stream().map((item ->{
             return item.getDiemDen();
-        })).distinct().collect(Collectors.toList());
 
-        return listData;
+        })).collect(Collectors.toList());
+
+        for (TuyenXe item : list) {
+            listData.add(item.getDiemDi());
+        };
+
+        var data = listData.stream().distinct().collect(Collectors.toList());
+
+        return data;
     }
 }

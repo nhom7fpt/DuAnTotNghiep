@@ -30,7 +30,8 @@
 
 .info-label
 {
- 
+ margin-right: 20px;
+ margin-left: 20px;
   line-height:24px; 
   font-size: 16px;
  
@@ -38,7 +39,7 @@
 .info-label-gv{
  line-height:24px; 
   font-size: 16px;
-  margin-right: 40px;
+  margin-left: 40px;
 }
 .info-row {
   display: flex;
@@ -50,10 +51,14 @@
 .info-label-gv {
   flex: 1;
 }
+.info-value-kh{
+  width: 300px !important;
+  text-align: justify;
+
+}
 
 .info-value {
   
-  align-items: center;
 }
 
 .search-button {

@@ -4,3 +4,4 @@ export const API_SEARCH = "http://localhost:8080/api/v2/search";
 export const API_CUSTOM = 'http://localhost:8080/api/v2/cus';
 
 export const API_IMG = "http://localhost:8080/api/v1/images";
+export const API_SEARCH_LOCATION = "http://localhost:8080/api/v1/tuyen";

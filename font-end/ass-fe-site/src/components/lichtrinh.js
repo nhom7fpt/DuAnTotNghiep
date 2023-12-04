@@ -1,10 +1,35 @@
-import React,{ useEffect } from 'react';
+import React,{ useEffect,useState } from 'react';
 import '../css/lichtrinh.css';
 import muiten from '../image/switch_location.svg';
 import arrow from "../image/trangchu/ic_double_arrow.svg";
-function Lichtrinhpage() {
+import withRouter from '../helpers/withRouter';
+import { connect } from 'react-redux';
+
+import { listSearchByTuyen, loadDataTuyen } from "../redux/actions/actionSearch";
+
+function Lichtrinhpage(props) {
+  const {listTuyen} = props;
+  const uniqueListTuyen = [];
+  const diemDenSet = new Set();
+
+  const { navigate } = props.router;
+  const { listChuyen } = props;
+  const onClick = (data) => {
+    props.listSearchByTuyen(data.diemDi, data.diemDen, data.gia, navigate);
+    
+  };
+
+  listTuyen.forEach(item => {
+    const key = `${item.diemDi}_${item.diemDen}`;
+    
+    if (!diemDenSet.has(key)) {
+      diemDenSet.add(key);
+      uniqueListTuyen.push(item);
+    }
+  });
+
   useEffect(() => {
-    document.title = 'Lịch Trình';
+    props.loadDataTuyen();
   }, []);
   return (
     <div className="schedule-container-lt">
@@ -31,170 +56,48 @@ function Lichtrinhpage() {
 
       <br />
       <div className="info-header">
-        <div className="info-label" style={{marginLeft:'-1.5cm'}}>Tuyến xe</div>
-        <div className="info-label"  style={{marginLeft:'1.5cm'}}>Loại xe</div>
-        <div className="info-label" style={{marginLeft:'0.5cm'}}>Quãng đường</div>
-        <div className="info-label" style={{marginLeft:'0.7cm'}}>Thời gian hành trình</div>
-        <div className="info-label-gv" style={{}}>Giá vé</div>
+        <div className="info-label" style={{marginLeft:'-1cm'}}>Tuyến xe</div>
+        <div className="info-label"  style={{marginLeft:'3.5cm'}}>Loại xe</div>
+        <div className="info-label" >Quãng đường</div>
+        <div className="info-label" style={{marginRight:'-0.5cm'}}>Thời gian hành trình</div>
+        <div className="info-label-gv" >Giá vé</div>
         <div className="info-label" ></div>
       </div>
-      <div className="info-container">
+      {uniqueListTuyen.map((item) =>
+        ( <div className="info-container">
         <div className="info-row">
-          <div className="info-value-kh" style={{marginRight:'-1cm'}}> <span style={{color:'#ff6f00' , fontWeight:'600', fontSize:'16px'}}>An Nhơn</span> <img src={arrow}  style={{marginRight:'10px', marginLeft:'10px'}}/>TP. Hồ Chí Minh</div>
-          <div className="info-value">Giường</div>
-          <div className="info-value">639km</div>
-          <div className="info-value">11 giờ 30 phút</div>
-          <div className="info-value">280,000đ</div>
+          <div className="info-value-kh" > <span style={{color:'#ff6f00' , fontWeight:'600', fontSize:'16px', width:'250px', wordWrap: 'break-word'}}>{item.diemDi}</span> <img src={arrow}  style={{marginRight:'5px', marginLeft:'5px'}}/>{item.diemDen}</div>
+          <div className="info-value" style={{textAlign:'justify'}}>Giường</div>
+          <div className="info-value"style={{textAlign:'justify'}}>639km</div>
+          <div className="info-value"style={{textAlign:'justify'}}>11 giờ 30 phút</div>
+          <div className="info-value">{item.gia}</div>
           <div className="info-value">
-            <button className="search-button">Tìm chuyến xe</button>
+            <button className="search-button" onClick={()=>onClick(item)}>Tìm chuyến xe</button>
           </div>
         </div>
-      </div>
-      <div className="info-container">
-        <div className="info-row">
-        <div className="info-value-kh" style={{marginRight:'-1cm'}}> <span style={{color:'#ff6f00' , fontWeight:'600', fontSize:'16px'}}>An Nhơn</span> <img src={arrow}  style={{marginRight:'10px', marginLeft:'10px'}}/>TP. Hồ Chí Minh</div>
-          <div className="info-value">Giường</div>
-          <div className="info-value">639km</div>
-          <div className="info-value">11 giờ 30 phút</div>
-          <div className="info-value">280,000đ</div>
-          <div className="info-value">
-            <button className="search-button">Tìm chuyến xe</button>
-          </div>
-        </div>
-  
-      </div>
-      <div className="info-container">
-        <div className="info-row">
-        <div className="info-value-kh" style={{marginRight:'-1cm'}}> <span style={{color:'#ff6f00' , fontWeight:'600', fontSize:'16px'}}>An Nhơn</span> <img src={arrow}  style={{marginRight:'10px', marginLeft:'10px'}}/>TP. Hồ Chí Minh</div>
-          <div className="info-value">Giường</div>
-          <div className="info-value">639km</div>
-          <div className="info-value">11 giờ 30 phút</div>
-          <div className="info-value">280,000đ</div>
-          <div className="info-value">
-            <button className="search-button">Tìm chuyến xe</button>
-          </div>
-        </div>
-    
-      </div>
-      <div className="info-container">
-        <div className="info-row">
-        <div className="info-value-kh" style={{marginRight:'-1cm'}}> <span style={{color:'#ff6f00' , fontWeight:'600', fontSize:'16px'}}>An Nhơn</span> <img src={arrow}  style={{marginRight:'10px', marginLeft:'10px'}}/>TP. Hồ Chí Minh</div>
-          <div className="info-value">Giường</div>
-          <div className="info-value">639km</div>
-          <div className="info-value">11 giờ 30 phút</div>
-          <div className="info-value">280,000đ</div>
-          <div className="info-value">
-            <button className="search-button">Tìm chuyến xe</button>
-          </div>
-        </div>
-     
-      </div>
-      <div className="info-container">
-        <div className="info-row">
-        <div className="info-value-kh" style={{marginRight:'-1cm'}}> <span style={{color:'#ff6f00' , fontWeight:'600', fontSize:'16px'}}>An Nhơn</span> <img src={arrow}  style={{marginRight:'10px', marginLeft:'10px'}}/>TP. Hồ Chí Minh</div>
-          <div className="info-value">Giường</div>
-          <div className="info-value">639km</div>
-          <div className="info-value">11 giờ 30 phút</div>
-          <div className="info-value">280,000đ</div>
-          <div className="info-value">
-            <button className="search-button">Tìm chuyến xe</button>
-          </div>
-        </div>
+      </div>)
+     )}
       
-      </div>
-      <div className="info-container">
-        <div className="info-row">
-        <div className="info-value-kh" style={{marginRight:'-1cm'}}> <span style={{color:'#ff6f00' , fontWeight:'600', fontSize:'16px'}}>An Nhơn</span> <img src={arrow}  style={{marginRight:'10px', marginLeft:'10px'}}/>TP. Hồ Chí Minh</div>
-          <div className="info-value">Giường</div>
-          <div className="info-value">639km</div>
-          <div className="info-value">11 giờ 30 phút</div>
-          <div className="info-value">280,000đ</div>
-          <div className="info-value">
-            <button className="search-button">Tìm chuyến xe</button>
-          </div>
-        </div>
-     
-      </div>
-      <div className="info-container">
-        <div className="info-row">
-        <div className="info-value-kh" style={{marginRight:'-1cm'}}> <span style={{color:'#ff6f00' , fontWeight:'600', fontSize:'16px'}}>An Nhơn</span> <img src={arrow}  style={{marginRight:'10px', marginLeft:'10px'}}/>TP. Hồ Chí Minh</div>
-          <div className="info-value">Giường</div>
-          <div className="info-value">639km</div>
-          <div className="info-value">11 giờ 30 phút</div>
-          <div className="info-value">280,000đ</div>
-          <div className="info-value">
-            <button className="search-button">Tìm chuyến xe</button>
-          </div>
-        </div>
-       
-      </div>
-      <div className="info-container">
-        <div className="info-row">
-        <div className="info-value-kh" style={{marginRight:'-1cm'}}> <span style={{color:'#ff6f00' , fontWeight:'600', fontSize:'16px'}}>An Nhơn</span> <img src={arrow}  style={{marginRight:'10px', marginLeft:'10px'}}/>TP. Hồ Chí Minh</div>
-          <div className="info-value">Giường</div>
-          <div className="info-value">639km</div>
-          <div className="info-value">11 giờ 30 phút</div>
-          <div className="info-value">280,000đ</div>
-          <div className="info-value">
-            <button className="search-button">Tìm chuyến xe</button>
-          </div>
-        </div>
-      
-      </div>
-      <div className="info-container">
-        <div className="info-row">
-        <div className="info-value-kh" style={{marginRight:'-1cm'}}> <span style={{color:'#ff6f00' , fontWeight:'600', fontSize:'16px'}}>An Nhơn</span> <img src={arrow}  style={{marginRight:'10px', marginLeft:'10px'}}/>TP. Hồ Chí Minh</div>
-          <div className="info-value">Giường</div>
-          <div className="info-value">639km</div>
-          <div className="info-value">11 giờ 30 phút</div>
-          <div className="info-value">280,000đ</div>
-          <div className="info-value">
-            <button className="search-button">Tìm chuyến xe</button>
-          </div>
-        </div>
-      
-      </div>
-      <div className="info-container">
-        <div className="info-row">
-        <div className="info-value-kh" style={{marginRight:'-1cm'}}> <span style={{color:'#ff6f00' , fontWeight:'600', fontSize:'16px'}}>An Nhơn</span> <img src={arrow}  style={{marginRight:'10px', marginLeft:'10px'}}/>TP. Hồ Chí Minh</div>
-          <div className="info-value">Giường</div>
-          <div className="info-value">639km</div>
-          <div className="info-value">11 giờ 30 phút</div>
-          <div className="info-value">280,000đ</div>
-          <div className="info-value">
-            <button className="search-button">Tìm chuyến xe</button>
-          </div>
-        </div>
-      
-      </div>
-  
 
-      <div className="info-container">
-        <div className="info-row">
-        <div className="info-value-kh" style={{marginRight:'-1cm'}}> <span style={{color:'#ff6f00' , fontWeight:'600', fontSize:'16px'}}>An Nhơn</span> <img src={arrow}  style={{marginRight:'10px', marginLeft:'10px'}}/>TP. Hồ Chí Minh</div>
-          <div className="info-value">Giường</div>
-          <div className="info-value">639km</div>
-          <div className="info-value">11 giờ 30 phút</div>
-          <div className="info-value">280,000đ</div>
-          <div className="info-value">
-            <button className="search-button">Tìm chuyến xe</button>
-          </div>
-        </div>
-        <div className="info-row">
-        <div className="info-value-kh" style={{marginRight:'-1cm'}}> <span style={{color:'#ff6f00' , fontWeight:'600', fontSize:'16px'}}>An Nhơn</span> <img src={arrow}  style={{marginRight:'10px', marginLeft:'10px'}}/>TP. Hồ Chí Minh</div>
-          <div className="info-value">Giường</div>
-          <div className="info-value">639km</div>
-          <div className="info-value">11 giờ 30 phút</div>
-          <div className="info-value">280,000đ</div>
-          <div className="info-value">
-            <button className="search-button">Tìm chuyến xe</button>
-          </div>
-        </div>
-
-       
-      </div>
     </div>
   );
 }
 
-export default Lichtrinhpage;
+
+
+const mapStateToProps = (state) => ({
+  listTuyen:state.SearchReducer.listTuyen,
+
+
+});
+
+const mapDispatchToProps = {
+  loadDataTuyen,
+  listSearchByTuyen
+};
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+
+)(withRouter(Lichtrinhpage));
