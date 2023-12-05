@@ -2,14 +2,21 @@ import React, { Component } from "react";
 import withRouter from "../../helpers/withRouter";
 import HeaderContent from "../common/HeaderContent";
 import { Button, Col, Divider, Row, Space, Steps } from "antd";
-import FormProduct from "./FormProduct";
-import UploadImage from "./UploadImage";
+import CarService from "../../services/CarService";
 import { SaveOutlined } from "@ant-design/icons";
-
+import TuyenXeService from "../../services/TuyenXeService";
 import { connect } from "react-redux";
-import { insterCar, updateCar, clearCars } from "../../redux/actions/actionCar";
+import {
+  insterChuyen,
+  updateChuyen,
+  clearChuyen,
+} from "../../redux/actions/actionChuyen";
+import FormChuyen from "./FormChuyen";
+import { toast } from "react-toastify";
+import TransferNhanVien from "./TransferNhanVien";
+import NhanVienService from "../../services/NhanVienService";
 
-class AddOrEditProduct extends Component {
+class AddOrEditChuyen extends Component {
   constructor(props) {
     super(props);
 
@@ -19,18 +26,27 @@ class AddOrEditProduct extends Component {
       NhanViens: [],
       nhanViensUpdate: [],
       listNhanVien: [],
+      xe: [],
+      tuyen: [],
     };
   }
   goNext = (values) => {
-    this.setState({ ...this.state, chuyen: values, step: 1 });
+    const { xe, tuyen } = this.state;
+
+    const xeChon = xe.find((item) => item.bienSoXe === values.xe);
+    const tuyenChon = tuyen.find((item) => item.maTuyenXe === values.tuyenXe);
+
+    const newChuyen = { ...values, xe: xeChon, tuyen: tuyenChon };
+    console.log(newChuyen);
+    this.setState({ ...this.state, chuyen: newChuyen, step: 1 });
   };
   goPrevi = () => {
     this.setState({ ...this.state, step: 0 });
   };
 
-  // componentDidMount = () => {
-  //   this.loadData();
-  // };
+  componentDidMount = () => {
+    this.loadData();
+  };
 
   // static getDerivedStateFromProps(nextProps, prevState) {
   //   if (
@@ -57,29 +73,35 @@ class AddOrEditProduct extends Component {
 
   updateProduct = () => {};
 
-  // loadData = async () => {
-  //   try {
-  //     const categoryService = new CategoryService();
-  //     const categoryRes = await categoryService.getCategory();
+  loadData = async () => {
+    try {
+      const carServer = new CarService();
+      const tuyenService = new TuyenXeService();
+      const nhanVienService = new NhanVienService();
 
-  //     this.setState({
-  //       ...this.state,
-  //       categories: categoryRes.data,
-  //     });
-  //   } catch (error) {
-  //     console.log(error);
-  //     toast.error("Error: " + error);
-  //   }
-  // };
+      const XeRes = await carServer.getCar();
+      const tuyenRes = await tuyenService.getTuyen();
+      const nhanVienRes = await nhanVienService.getNhanVien();
+      this.setState({
+        ...this.state,
+        listNhanVien: nhanVienRes.data,
+        xe: XeRes.data,
+        tuyen: tuyenRes.data,
+      });
+    } catch (error) {
+      console.log(error);
+      toast.error("Error: " + error);
+    }
+  };
   render() {
     const { navigate } = this.props.router;
-    const { step, listNhanVien, NhanViens } = this.state;
+    const { step, xe, tuyen, listNhanVien } = this.state;
     const { chuyen } = this.props;
     return (
       <>
         <HeaderContent
           title={
-            chuyen && chuyen.maChuyen ? "Update Product" : "Add New Product"
+            chuyen && chuyen.maChuyen ? "Cập nhật chuyến" : "Thêm chuyến mới"
           }
           navigate={navigate}
         />
@@ -90,10 +112,9 @@ class AddOrEditProduct extends Component {
               current={step}
               items={[
                 {
-                  title: "Base Information",
-                  description: "Fill basic Information",
+                  title: "Thông tin chuyến",
                 },
-                { title: "Images", description: "Choose the list images" },
+                { title: "Nhân viên", description: "Chọn nhân viên chuyến xe" },
               ]}
             ></Steps>
           </Col>
@@ -104,22 +125,20 @@ class AddOrEditProduct extends Component {
             {step === 0 && (
               <>
                 <Divider></Divider>
-                <FormProduct
-                  product={chuyen}
+                <FormChuyen
+                  chuyen={chuyen}
                   goNext={this.goNext}
-                  categories={listNhanVien}
-                ></FormProduct>
+                  xe={xe}
+                  tuyen={tuyen}
+                ></FormChuyen>
               </>
             )}
             {step === 1 && (
               <>
+                <TransferNhanVien list={listNhanVien} />
                 <Divider></Divider>
                 <Row>
                   <Col md={24}>
-                    <UploadImage
-                      onUploadFile={this.onUploadFile}
-                      fileList={NhanViens}
-                    ></UploadImage>
                     <Divider></Divider>
                     <div style={{ float: "right" }}>
                       <Space>
@@ -153,12 +172,12 @@ const mapStateToProps = (state) => ({
 });
 
 const mapDispatchToProps = {
-  insterCar,
-  updateCar,
-  clearCars,
+  insterChuyen,
+  updateChuyen,
+  clearChuyen,
 };
 
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(withRouter(AddOrEditProduct));
+)(withRouter(AddOrEditChuyen));

@@ -9,7 +9,6 @@ import {
   CAR_SET,
 } from "./actiontypes";
 
-
 const service = new CarService();
 
 export const insterCar = (Car, navigate) => async (dispatch) => {
@@ -19,15 +18,13 @@ export const insterCar = (Car, navigate) => async (dispatch) => {
       type: COMMON_LOADING_SET,
       payload: true,
     });
-    const res = await service.insterCar(Car)
+    const res = await service.insterCar(Car);
 
     if (res && res.status === 201) {
       dispatch({
         type: CAR_SET,
         payload: res.data,
       });
-
-
 
       dispatch({
         type: CAR_ADDEND,
@@ -38,7 +35,7 @@ export const insterCar = (Car, navigate) => async (dispatch) => {
         type: COMMON_LOADING_SET,
         payload: false,
       });
-      toast.success("Save Done");
+      toast.success("Lưu thành công");
     }
   } catch (error) {
     dispatch({
@@ -56,7 +53,7 @@ export const insterCar = (Car, navigate) => async (dispatch) => {
   });
 
   clearCars();
-  navigate("/product/list");
+  navigate("/xe/danhsach");
 };
 
 export const updateCar = (bienSoXe, Car, navigate) => async (dispatch) => {
@@ -78,7 +75,7 @@ export const updateCar = (bienSoXe, Car, navigate) => async (dispatch) => {
         type: COMMON_LOADING_SET,
         payload: false,
       });
-      toast.success("Update Done");
+      toast.success("Cập nhật thành công");
     }
   } catch (error) {
     dispatch({
@@ -95,7 +92,7 @@ export const updateCar = (bienSoXe, Car, navigate) => async (dispatch) => {
     payload: true,
   });
   clearCars();
-  navigate("/product/list");
+  navigate("/xe/danhsach");
 };
 
 export const getListCars = () => async (dispatch) => {
@@ -137,7 +134,7 @@ export const CarEditData = (Car, navigate) => (dispatch) => {
     type: CAR_SET,
     payload: Car,
   });
-  navigate("/product/edit/" + Car.bienSoXe);
+  navigate("/xe/capnhat/" + Car.bienSoXe);
 };
 
 export const deleteCar = (bienSoXe) => async (dispatch) => {
@@ -148,10 +145,7 @@ export const deleteCar = (bienSoXe) => async (dispatch) => {
     });
     const res = await service.deleteCar(bienSoXe);
 
-
-
     if (res && res.status === 200) {
-
       dispatch({
         type: CARS_DEL,
         payload: bienSoXe,

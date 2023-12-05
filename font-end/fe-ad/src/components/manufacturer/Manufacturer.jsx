@@ -59,7 +59,8 @@ class Manufacturer extends Component {
   openDeleteModal = (data) => {
     this.setState({ ...this.state, manufacturer: data });
 
-    const message = "Do you want to delete the Manufacturer " + data.name;
+    const message =
+      "Do you want to delete the Manufacturer " + data.tenThuongHieu;
 
     Modal.confirm({
       title: "Confirm",
@@ -85,7 +86,7 @@ class Manufacturer extends Component {
             this.setState({ ...this.state, open: true });
           }}
         >
-          New Manufacturer
+          Thêm mới
         </Button>
 
         <FormManufacturer

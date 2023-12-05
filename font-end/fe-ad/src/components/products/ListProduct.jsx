@@ -11,7 +11,6 @@ import {
 } from "../../redux/actions/actionCar";
 
 class ListProduct extends Component {
-
   onEdit = (data) => {
     this.props.CarEditData(data, this.props.router.navigate);
   };
@@ -27,15 +26,15 @@ class ListProduct extends Component {
     const { navigate } = this.props.router;
     return (
       <>
-        <HeaderContent title="List Product" navigate={navigate} />
+        <HeaderContent title="Danh sách xe" navigate={navigate} />
 
         <Button
           type="primary"
           onClick={() => {
-            navigate("/product/add");
+            navigate("/xe/them");
           }}
         >
-          New Product
+          Thêm mới
         </Button>
 
         <ProductList

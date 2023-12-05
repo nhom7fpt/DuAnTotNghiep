@@ -86,7 +86,7 @@ class NhanVienList extends Component {
             width={200}
             render={(_, record) => (
               <Space size="middle">
-                <Tooltip placement="top" title="Edit Product" color="blue">
+                <Tooltip placement="top" title="Cập nhật" color="blue">
                   <Button
                     key={record.key}
                     type="link"
@@ -96,14 +96,14 @@ class NhanVienList extends Component {
                     <BiEdit color="blue" size={24} />
                   </Button>
                 </Tooltip>
-                <Tooltip placement="top" title="Delete Product" color="red">
+                <Tooltip placement="top" title="Xóa" color="red">
                   <Popconfirm
                     key={record.key}
-                    title="Delete the task"
-                    description="Are you sure to delete this product?"
+                    title="Thông báo"
+                    description="Bạn thực sự muốn xóa"
                     onConfirm={() => this.props.onConfirm(record)}
-                    okText="Yes"
-                    cancelText="No"
+                    okText="Đúng"
+                    cancelText="Không"
                   >
                     <Button type="link" danger>
                       <BiSolidTrash size={24}></BiSolidTrash>

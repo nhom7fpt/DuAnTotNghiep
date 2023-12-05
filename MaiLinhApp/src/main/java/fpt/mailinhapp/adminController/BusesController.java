@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.*;
 import java.time.LocalTime;
 
 @RestController
+@CrossOrigin
 @RequestMapping("api/v1/chuyen")
 public class BusesController {
     @Autowired

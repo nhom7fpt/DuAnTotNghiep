@@ -21,8 +21,6 @@ class ListManufacturer extends Component {
     return (
       <div>
         <Table dataSource={dataSource} rowKey="id">
-
-
           <Column
             title="ID"
             key="id"
@@ -51,7 +49,7 @@ class ListManufacturer extends Component {
                   size="small"
                   onClick={() => this.props.editManu(record)}
                 >
-                  <BiEdit /> Edit
+                  <BiEdit /> Cập nhật
                 </Button>
                 <Button
                   key={record.key}
@@ -60,7 +58,7 @@ class ListManufacturer extends Component {
                   size="small"
                   onClick={() => this.props.openDeleteModal(record)}
                 >
-                  <BiSolidTrash /> Delete
+                  <BiSolidTrash /> Xóa
                 </Button>
               </Space>
             )}

@@ -12,16 +12,14 @@ const AccountEdit = ({ visible, acc, onClose, onOkUpdate }) => {
       tenTaiKhoan: acc.tenTaiKhoan,
       matKhau: acc.matKhau,
       vaiTro: value,
-      
     }));
-    
   };
-  
+
   return (
     <Modal
       open={visible}
-      title="Customers Update"
-      okText="Update"
+      title="Cập nhật tài khoản"
+      okText="Cập nhật"
       onCancel={onClose}
       onOk={() => onOkUpdate(formData)}
       width={300}

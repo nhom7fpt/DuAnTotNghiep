@@ -13,8 +13,6 @@ import {
 } from "../../redux/actions/actionLoaixe";
 
 class ListCategory extends Component {
-
-
   componentDidMount = () => {
     this.props.getListLoaiXe();
   };
@@ -24,10 +22,8 @@ class ListCategory extends Component {
   };
 
   editLoaiXe = (data) => {
-
-
     const { navigate } = this.props.router;
-    navigate("/category/update/" + data.id);
+    navigate("/loaixe/capnhat/" + data.id);
   };
 
   openDeleteModal = (data) => {
@@ -88,14 +84,12 @@ class ListCategory extends Component {
             key="soGhe"
             dataIndex="soGhe"
             align="center"
-
           ></Column>
           <Column
             title="Loại Ghế"
             key="loaiGhe"
             dataIndex="loaiGhe"
             align="center"
-
           ></Column>
 
           <Column

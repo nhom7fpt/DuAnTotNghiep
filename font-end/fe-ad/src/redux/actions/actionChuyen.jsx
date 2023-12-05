@@ -172,9 +172,17 @@ export const getChuyen = (id) => async (dispatch) => {
   }
 };
 
+export const ChuyenEditData = (chuyen, navigate) => (dispatch) => {
+  dispatch({
+    type: CHUYEN_SET,
+    payload: chuyen,
+  });
+  navigate("/chuyen/capnhat/" + chuyen.maChuyen);
+};
+
 export const clearChuyen = () => async (dispatch) => {
   dispatch({
     type: CHUYEN_SET,
-    payload: { id: "", name: "", status: "Visible" },
+    payload: { maChuyen: "", soKhach: "", nhanVien: [], tuyenXe: "", xe: "" },
   });
 };

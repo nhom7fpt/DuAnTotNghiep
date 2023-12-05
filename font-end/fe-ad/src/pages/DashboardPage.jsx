@@ -24,6 +24,9 @@ import Home from "../components/home/Home";
 import AddOrEdit from "../components/categories/AddOrEdit";
 import ListCategory from "../components/categories/ListCategory";
 
+import ListChuyen from "../components/chuyenXe/ListChuyen";
+import AddOrEditChuyen from "../components/chuyenXe/AddOrEditChuyen";
+
 import AddOrEditProduct from "../components/products/AddOrEditProduct";
 import ListProduct from "../components/products/ListProduct";
 
@@ -70,61 +73,92 @@ const DashboardPage = () => {
             },
             {
               key: "2",
-              icon: <MdCategory />,
-              label: "Category",
-              children: [
-                {
-                  key: "21",
-                  icon: <MdAddCircleOutline />,
-                  label: "Add Category",
-                  onClick: () => navigate("/category/add"),
-                },
-                {
-                  key: "22",
-                  icon: <MdFormatListBulleted />,
-                  label: "List Category",
-                  onClick: () => navigate("/category/list"),
-                },
-              ],
+              icon: <MdSupervisorAccount />,
+              label: "Tuyến xe",
+              onClick: () => navigate("/tuyen"),
             },
             {
               key: "3",
-              icon: <MdAllInbox />,
-              label: "Quản lý xe",
+              icon: <MdCategory />,
+              label: "Chuyến xe",
               children: [
                 {
                   key: "31",
                   icon: <MdAddCircleOutline />,
-                  label: "Add Product",
-                  onClick: () => navigate("/product/add"),
+                  label: "Thêm",
+                  onClick: () => navigate("/chuyen/them"),
                 },
                 {
                   key: "32",
                   icon: <MdFormatListBulleted />,
-                  label: "List Product",
-                  onClick: () => navigate("/product/list"),
+                  label: "Danh sách",
+                  onClick: () => navigate("/chuyen/danhsach"),
                 },
               ],
             },
             {
               key: "4",
-              icon: <AiFillCreditCard />,
-              label: "Orders",
-              onClick: () => navigate("/order"),
+              icon: <MdCategory />,
+              label: "Loại xe",
+              children: [
+                {
+                  key: "41",
+                  icon: <MdAddCircleOutline />,
+                  label: "Thêm",
+                  onClick: () => navigate("/loaixe/them"),
+                },
+                {
+                  key: "52",
+                  icon: <MdFormatListBulleted />,
+                  label: "Danh sách",
+                  onClick: () => navigate("/loaixe/danhsach"),
+                },
+              ],
             },
             {
-              key: "5",
+              key: "6",
+              icon: <MdSupervisorAccount />,
+              label: "Thương hiệu",
+              onClick: () => navigate("/thuonghieu"),
+            },
+            {
+              key: "7",
+              icon: <MdAllInbox />,
+              label: "Quản lý xe",
+              children: [
+                {
+                  key: "71",
+                  icon: <MdAddCircleOutline />,
+                  label: "Thêm",
+                  onClick: () => navigate("/xe/them"),
+                },
+                {
+                  key: "72",
+                  icon: <MdFormatListBulleted />,
+                  label: "Danh sách",
+                  onClick: () => navigate("/xe/danhsach"),
+                },
+              ],
+            },
+            {
+              key: "8",
+              icon: <AiFillCreditCard />,
+              label: "Đặt vé",
+              onClick: () => navigate("/datve"),
+            },
+            {
+              key: "9",
               icon: <MdRequestPage />,
               label: "Nhân viên",
               children: [
                 {
-                  key: "51",
+                  key: "91",
                   icon: <MdAddCircleOutline />,
                   label: "Thêm",
                   onClick: () => navigate("/nhanvien/them"),
                 },
                 {
-                  key: "52",
+                  key: "92",
                   icon: <MdFormatListBulleted />,
                   label: "Danh sách",
                   onClick: () => navigate("/nhanvien/danhsach"),
@@ -132,32 +166,27 @@ const DashboardPage = () => {
               ],
             },
             {
-              key: "6",
+              key: "10",
               icon: <MdStackedBarChart />,
               label: "Statistical",
             },
             {
-              key: "7",
+              key: "11",
               icon: <MdManageAccounts />,
-              label: "Profiles",
-              onClick: () => navigate("/account/acc"),
+              label: "Quản lý tài khoản",
+              onClick: () => navigate("/taikhoan"),
             },
+
             {
-              key: "8",
+              key: "12",
               icon: <MdSupervisorAccount />,
-              label: "manufacturer",
-              onClick: () => navigate("/manufacturer"),
-            },
-            {
-              key: "9",
-              icon: <MdSupervisorAccount />,
-              label: "Tuyến xe",
+              label: "Thông tin tài khoản",
               onClick: () => navigate("/tuyen"),
             },
             {
-              key: "10",
+              key: "13",
               icon: <MdLogout />,
-              label: "Logout",
+              label: "Đăng xuất",
             },
           ]}
         />
@@ -206,29 +235,36 @@ const DashboardPage = () => {
           <div className="content-panel">
             <Routes>
               <Route path="/" element={<Home />} />
-              <Route path="/category/add" element={<AddOrEdit key="a" />} />
+              <Route path="/loaixe/them" element={<AddOrEdit key="a" />} />
               <Route
-                path="/category/update/:id"
+                path="/loaixe/capnhat/:id"
                 element={<AddOrEdit key="u" />}
               />
-              <Route path="/category/list" element={<ListCategory />} />
+              <Route path="/loaixe/danhsach" element={<ListCategory />} />
 
-              <Route path="/product/list" element={<ListProduct />} />
+              <Route path="/xe/danhsach" element={<ListProduct />} />
+              <Route path="/xe/them" element={<AddOrEditProduct key="p" />} />
               <Route
-                path="/product/add"
-                element={<AddOrEditProduct key="p" />}
-              />
-              <Route
-                path="/product/edit/:id"
+                path="/xe/capnhat/:id"
                 element={<AddOrEditProduct key="o" />}
               />
 
-              <Route path="/account/acc" element={<ListAccount />} />
+              <Route path="/chuyen/danhsach" element={<ListChuyen />} />
+              <Route
+                path="/chuyen/them"
+                element={<AddOrEditChuyen key="t" />}
+              />
+              <Route
+                path="/chuyen/capnhat/:id"
+                element={<AddOrEditChuyen key="g" />}
+              />
 
-              <Route path="/order" element={<ListOrder />} />
-              <Route path="/order/orderdetail/:id" element={<OrderDetail />} />
-              <Route path="/login" element={<Login />} />
-              <Route path="/manufacturer" element={<Manufacturer />} />
+              <Route path="/taikhoan" element={<ListAccount />} />
+
+              <Route path="/datve" element={<ListOrder />} />
+              <Route path="/datve/vechitiet/:id" element={<OrderDetail />} />
+              <Route path="/dangnhap" element={<Login />} />
+              <Route path="/thuonghieu" element={<Manufacturer />} />
               <Route path="/tuyen" element={<TuyenXe />} />
 
               <Route path="/nhanvien/danhsach" element={<ListNhanVien />} />

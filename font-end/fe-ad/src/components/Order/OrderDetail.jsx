@@ -17,7 +17,7 @@ const OrderDetail = ({ orderDetail, getListOrderDetail, navigate }) => {
   console.log(orderDetail);
   return (
     <>
-      <HeaderContent title="Order Detail" navigate={navigate} />
+      <HeaderContent title="Vé chi tiết" navigate={navigate} />
       <ListOrderDetail odd={orderDetail} total={total} />
     </>
   );

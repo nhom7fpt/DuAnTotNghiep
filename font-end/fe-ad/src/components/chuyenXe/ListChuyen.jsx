@@ -1,33 +1,32 @@
 import React, { Component } from "react";
 import HeaderContent from "../common/HeaderContent";
 import { Button } from "antd";
-import ProductList from "./ProductList";
+import ChuyenList from "./ChuyenList";
 import withRouter from "../../helpers/withRouter";
 import { connect } from "react-redux";
 import {
-  CarEditData,
-  getListCars,
-  deleteCar,
-} from "../../redux/actions/actionCar";
+  ChuyenEditData,
+  getListChuyen,
+  deleteChuyen,
+} from "../../redux/actions/actionChuyen";
 
-class ListProduct extends Component {
-
+class ListChuyen extends Component {
   onEdit = (data) => {
-    this.props.CarEditData(data, this.props.router.navigate);
+    this.props.ChuyenEditData(data, this.props.router.navigate);
   };
   onConfirm = (data) => {
-    this.props.deleteCar(data.bienSoXe);
+    this.props.deleteChuyen(data.bienSoXe);
   };
   componentDidMount = () => {
-    this.props.getListCars();
+    this.props.getListChuyen();
   };
   render() {
-    const { Cars } = this.props;
+    const { chuyens } = this.props;
 
     const { navigate } = this.props.router;
     return (
       <>
-        <HeaderContent title="List Product" navigate={navigate} />
+        <HeaderContent title="Danh sách chuyến xe" navigate={navigate} />
 
         <Button
           type="primary"
@@ -35,11 +34,11 @@ class ListProduct extends Component {
             navigate("/product/add");
           }}
         >
-          New Product
+          Thêm mới
         </Button>
 
-        <ProductList
-          Cars={Cars}
+        <ChuyenList
+          chuyens={chuyens}
           onEdit={this.onEdit}
           onConfirm={this.onConfirm}
         />
@@ -49,17 +48,17 @@ class ListProduct extends Component {
 }
 
 const mapStateToProps = (state) => ({
-  Car: state.CarReducer.Car,
-  Cars: state.CarReducer.Cars,
+  chuyen: state.ChuyenReducer.chuyen,
+  chuyens: state.ChuyenReducer.chuyens,
 });
 
 const mapDispatchToProps = {
-  CarEditData,
-  getListCars,
-  deleteCar,
+  ChuyenEditData,
+  getListChuyen,
+  deleteChuyen,
 };
 
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(withRouter(ListProduct));
+)(withRouter(ListChuyen));

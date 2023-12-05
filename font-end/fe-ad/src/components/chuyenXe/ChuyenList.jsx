@@ -24,71 +24,43 @@ class ChuyenList extends Component {
   };
 
   render() {
-    const { Cars } = this.props;
-    console.log(Cars);
+    const { chuyens } = this.props;
+    console.log(chuyens);
 
     return (
       <>
-        <Table dataSource={Cars} rowKey="bienSoXe">
+        <Table dataSource={chuyens} rowKey="maChuyen">
           <Column
-            title="Biển Số Xe"
-            key="bienSoXe"
-            dataIndex="bienSoXe"
+            title="Mã chuyến xe"
+            key="maChuyen"
+            dataIndex="maChuyen"
             align="center"
           ></Column>
           <Column
-            title="Số Ghế"
-            key="loaiXe"
-            dataIndex="loaiXe"
+            title="Số khách đã đi"
+            key="soKhach"
+            dataIndex="soKhach"
+            align="center"
+          ></Column>
+
+          <Column
+            title="Tuyến xe"
+            key="tuyenXe"
+            dataIndex="tuyenXe"
             align="center"
             render={(text, record) => (
-              <label>{record ? record.loaiXe.soGhe : ""}</label>
+              <label>
+                {record.tuyenXe.diemDi} - {record.tuyenXe.diemDen}
+              </label>
             )}
           ></Column>
 
           <Column
-            title="Ngày Mua"
-            key="ngayMua"
-            dataIndex="ngayMua"
+            title="Biển số xe"
+            key="xe"
+            dataIndex="xe"
             align="center"
-          />
-
-          <Column
-            title="Ngày Đăng Kiểm"
-            key="ngayDangKiem"
-            dataIndex="ngayDangKiem"
-            align="center"
-          />
-
-          <Column
-            title="Giá Mua"
-            key="giaMua"
-            dataIndex="giaMua"
-            align="center"
-          ></Column>
-
-          <Column
-            title="Nơi Mua"
-            key="noiMua"
-            dataIndex="noiMua"
-            align="center"
-          ></Column>
-          <Column
-            title="Thương Hiệu"
-            key="thuongHieu"
-            dataIndex="thuongHieu"
-            align="center"
-            render={(text, record) => (
-              <label>{record.thuongHieu.tenThuongHieu}</label>
-            )}
-          ></Column>
-
-          <Column
-            title="Loại Xe"
-            key="loaiXe"
-            dataIndex="loaiXe"
-            align="center"
-            render={(text, record) => <label>{record.loaiXe.tenLoai}</label>}
+            render={(text, record) => <label>{record.xe.bienSoXe}</label>}
           ></Column>
 
           <Column
@@ -98,7 +70,7 @@ class ChuyenList extends Component {
             width={200}
             render={(_, record) => (
               <Space size="middle">
-                <Tooltip placement="top" title="Edit Product" color="blue">
+                <Tooltip placement="top" title="Cập nhật" color="blue">
                   <Button
                     key={record.key}
                     type="link"
@@ -108,14 +80,14 @@ class ChuyenList extends Component {
                     <BiEdit color="blue" size={24} />
                   </Button>
                 </Tooltip>
-                <Tooltip placement="top" title="Delete Product" color="red">
+                <Tooltip placement="top" title="Xóa" color="red">
                   <Popconfirm
                     key={record.key}
-                    title="Delete the task"
-                    description="Are you sure to delete this product?"
+                    title="Thông báo"
+                    description="Bạn thực sự muốn xóa ?"
                     onConfirm={() => this.props.onConfirm(record)}
-                    okText="Yes"
-                    cancelText="No"
+                    okText="Đúng"
+                    cancelText="Không"
                   >
                     <Button type="link" danger>
                       <BiSolidTrash size={24}></BiSolidTrash>

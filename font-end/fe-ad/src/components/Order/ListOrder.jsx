@@ -23,7 +23,7 @@ export class ListOrder extends Component {
 
     return (
       <>
-        <HeaderContent title="List Order" navigate={navigate} />
+        <HeaderContent title="Danh sách đặt vé" navigate={navigate} />
 
         <OrderList od={order} onGoDetail={this.onGoDetail}></OrderList>
       </>

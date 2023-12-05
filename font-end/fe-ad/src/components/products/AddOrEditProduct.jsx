@@ -30,7 +30,7 @@ class AddOrEditProduct extends Component {
   clearform = () => {
     const { navigate } = this.props.router;
     this.props.clearCars();
-    navigate("/product/add");
+    navigate("/xe/them");
   };
 
   goNext = async (values) => {
@@ -42,8 +42,6 @@ class AddOrEditProduct extends Component {
     const th = thuongHieu.find((item) => item.id === values.thuongHieu);
 
     let newCar = { ...values, loaiXe: lx, thuongHieu: th };
-
-    console.log(newCar);
 
     if (Car && Car.bienSoXe) {
       await updateCar(newCar.bienSoXe, newCar, navigate);
@@ -78,7 +76,7 @@ class AddOrEditProduct extends Component {
     return (
       <>
         <HeaderContent
-          title={Car && Car.bienSoXe ? "Update Product" : "Add New Product"}
+          title={Car && Car.bienSoXe ? "Cập nhật  xe" : "Thêm xe mới"}
           navigate={navigate}
         />
 

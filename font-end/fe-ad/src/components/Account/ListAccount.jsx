@@ -31,7 +31,7 @@ export class ListAccount extends Component {
     const { accounts } = this.props;
     return (
       <>
-        <HeaderContent title="List Accounts" navigate={navigate} />
+        <HeaderContent title="Danh sách tài khoản" navigate={navigate} />
 
         <AccountList
           onOkUpdateAcc={this.onOkUpdateAcc}

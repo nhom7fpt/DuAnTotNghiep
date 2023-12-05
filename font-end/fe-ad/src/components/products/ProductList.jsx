@@ -42,10 +42,12 @@ class ProductList extends Component {
                     width="100%"
                     src={ImagesService.getImageUrl(record.anhDaLuu.tenTep)}
                   />
-                ) : (<Image
-                  width="100%"
-                  src="https://t3.ftcdn.net/jpg/04/34/72/82/240_F_434728286_OWQQvAFoXZLdGHlObozsolNeuSxhpr84.jpg"
-                />)}
+                ) : (
+                  <Image
+                    width="100%"
+                    src="https://t3.ftcdn.net/jpg/04/34/72/82/240_F_434728286_OWQQvAFoXZLdGHlObozsolNeuSxhpr84.jpg"
+                  />
+                )}
               </Space>
             )}
           ></Column>
@@ -71,7 +73,6 @@ class ProductList extends Component {
             key="ngayMua"
             dataIndex="ngayMua"
             align="center"
-
           />
 
           <Column
@@ -79,7 +80,6 @@ class ProductList extends Component {
             key="ngayDangKiem"
             dataIndex="ngayDangKiem"
             align="center"
-
           />
 
           <Column
@@ -110,11 +110,8 @@ class ProductList extends Component {
             key="loaiXe"
             dataIndex="loaiXe"
             align="center"
-            render={(text, record) => (
-              <label>{record.loaiXe.tenLoai}</label>
-            )}
+            render={(text, record) => <label>{record.loaiXe.tenLoai}</label>}
           ></Column>
-
 
           <Column
             title="Action"
@@ -123,8 +120,7 @@ class ProductList extends Component {
             width={200}
             render={(_, record) => (
               <Space size="middle">
-
-                <Tooltip placement="top" title="Edit Product" color="blue">
+                <Tooltip placement="top" title="Cập nhật" color="blue">
                   <Button
                     key={record.key}
                     type="link"
@@ -134,14 +130,14 @@ class ProductList extends Component {
                     <BiEdit color="blue" size={24} />
                   </Button>
                 </Tooltip>
-                <Tooltip placement="top" title="Delete Product" color="red">
+                <Tooltip placement="top" title="Xóa" color="red">
                   <Popconfirm
                     key={record.key}
-                    title="Delete the task"
-                    description="Are you sure to delete this product?"
+                    title="Thông báo"
+                    description="Bạn thực sự muốn xóa "
                     onConfirm={() => this.props.onConfirm(record)}
-                    okText="Yes"
-                    cancelText="No"
+                    okText="Đúng"
+                    cancelText="Không"
                   >
                     <Button type="link" danger>
                       <BiSolidTrash size={24}></BiSolidTrash>

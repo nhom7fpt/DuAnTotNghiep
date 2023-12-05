@@ -67,16 +67,13 @@ class AddOrEdit extends Component {
     }
 
     return null;
-  };
-
+  }
 
   onSubmitForm = (values) => {
     const { navigate } = this.props.router;
     if (values.id != null) {
       this.props.insterloaiXe(values, navigate);
-
-    }
-    else {
+    } else {
       this.props.updateloaiXe(values.id, values, navigate);
     }
     console.log(values);
@@ -93,7 +90,7 @@ class AddOrEdit extends Component {
     return (
       <div>
         <HeaderContent
-          title={loaiXe.id ? "Update loaiXe" : "Add New loaiXe"}
+          title={loaiXe.id ? "Cập nhập loại xe" : "Thêm mới loại xe"}
           navigate={navigate}
         />
         <Form
@@ -151,7 +148,7 @@ class AddOrEdit extends Component {
                   style={{ float: "right" }}
                   loading={isLoading}
                 >
-                  Save
+                  Lưu
                 </Button>
               ) : (
                 <Popconfirm
@@ -167,7 +164,7 @@ class AddOrEdit extends Component {
                     style={{ float: "right" }}
                     loading={isLoading}
                   >
-                    Update
+                    Cập nhật
                   </Button>
                 </Popconfirm>
               )}

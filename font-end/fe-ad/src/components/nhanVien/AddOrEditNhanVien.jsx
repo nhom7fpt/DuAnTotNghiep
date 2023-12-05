@@ -38,7 +38,9 @@ class AddOrEditNhanVien extends Component {
       <>
         <HeaderContent
           title={
-            nhanVien && nhanVien.soCCCD ? "Update Product" : "Add New Product"
+            nhanVien && nhanVien.soCCCD
+              ? "Cập nhật nhân viên"
+              : "Thêm mới nhân viên"
           }
           navigate={navigate}
         />
