@@ -310,4 +310,15 @@ transform: translateY(-16cm);
   display: flex;
   flex-direction: row; 
 }
-
+.btn-gialisttuyen {
+  display: inline-block;
+  font-size: 14px;
+  font-weight: bold;
+  text-align: center;
+  text-decoration: none;
+  cursor: pointer;
+  border-radius: 5px;
+  color: blue;
+  background-color: transparent;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}

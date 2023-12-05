@@ -8,10 +8,11 @@ import station from "../../image/station.svg";
 import { SeatSelectionProvider } from "./SeatSelectionContext";
 import { connect } from "react-redux";
 import withRouter from "../../helpers/withRouter";
+
 import { listSearchOneWay,listSearchReturn,loadDataField } from "../../redux/actions/actionSearch";
 const DatVeForm = (props) => {
   const [steps, setSteps] = useState(0);
-
+  const user = localStorage.getItem("username");
   const onNext = () => {
     setSteps(steps + 1);
   };

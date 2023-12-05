@@ -11,11 +11,11 @@ nav {
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
 }
 .logo img{
-  width:  295px;
-  height: 84px;
+  width:  250px;
+  height: 60px;
   margin-bottom: 400px;
   margin-left: 12.5cm;
-  margin-bottom: -90px;
+  margin-bottom: -85px;
 }
 
 .logo{
@@ -35,7 +35,7 @@ nav {
 #navbar li {
   list-style: none;
   margin: 0;
-  padding: 0 20px;
+  padding: 0 25px;
   position: relative;
   font-size:20px;
   font-weight: 700;
@@ -45,7 +45,7 @@ nav {
 
 }
 #navbar li {
-  margin-left: 20px; /* Khoảng cách giữa các mục menu */
+  margin-left: 25px; /* Khoảng cách giữa các mục menu */
 }
 
 #navbar li a {
@@ -167,14 +167,14 @@ button {
 .dropdown {
   position: absolute;
   top: 100%;
-  left: 0;
+
   display: none;
   background-color: #fff;
   border: 1px solid #ffffff;
   border-radius: 4px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   z-index: 1;
-  width: 200px;
+  width: 220px;
 }
 
 .dropdown a {
@@ -184,6 +184,7 @@ button {
   color: rgb(46, 46, 46) !important;
   font-size: 14px;
   text-align: left;
+  margin-left: 10px;
   
 }
 
@@ -193,4 +194,12 @@ button {
 
 .dropdown-container:hover .dropdown {
   display: block;
+}
+.btn-login-page{
+  color: rgb(0, 0, 0) !important;
+  border-radius: 20px !important;
+  font-size: 14px !important;
+}
+.dropdown-container .text-btn-login-page{
+  color: rgb(234, 55, 55) !important;
 }

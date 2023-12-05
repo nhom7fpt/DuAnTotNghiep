@@ -11,6 +11,7 @@ import { Form } from 'antd';
 import UploadImage from './UploadImage';
 
 function Thongtintaikhoan(props) {
+    const [hoTenValue, setHoTenValue] = useState('');
     const [profileImage, setProfileImage] = useState();
     const user = localStorage.getItem("username");
     const [file, setFlie] = useState(0);
@@ -34,7 +35,11 @@ function Thongtintaikhoan(props) {
 
     const handleFormSubmit = (values) => {
        
-       props.updateCustom(user, values,profileImage, navigate);
+        if (hoTenValue.length > 25) {
+            alert('Họ tên không được vượt quá 25 ký tự.');
+        } else {
+            props.updateCustom(user, values, profileImage, navigate);
+        }
       
     };
 
@@ -64,9 +69,14 @@ function Thongtintaikhoan(props) {
                                     onFinish={handleFormSubmit}
                                     style={{marginLeft:'8cm', marginTop:'-12cm'}}
                                 >
-                                    <Form.Item label="Họ và tên :" name="hoTen"  initialValue={custom?.hoTen || ""} >
-                                        <Input  style={{ width: '340px',  marginLeft:'20px', height: '45px'}} />
-                                        
+                                    <Form.Item label="Họ và tên :" name="hoTen" initialValue={custom?.hoTen || ""}
+                                        rules={[
+                                            { required: true, message: 'Vui lòng nhập họ và tên!' },
+                                            { max: 25, message: 'Họ tên không được vượt quá 25 ký tự!' }
+                                        ]}
+                                    >
+                                        <Input style={{ width: '340px', marginLeft: '20px', height: '45px' }} />
+
                                     </Form.Item>
                                     <Form.Item label="Số điện thoại:" name="id" initialValue={user} >
                                         <Input placeholder="0123456789" disabled style={{ width: '340px',  height: '45px'}}/>
