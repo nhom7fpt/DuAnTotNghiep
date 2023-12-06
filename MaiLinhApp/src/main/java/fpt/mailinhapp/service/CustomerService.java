@@ -8,6 +8,7 @@ import fpt.mailinhapp.dto.ThanhVienDto;
 import fpt.mailinhapp.exception.CustomerException;
 import fpt.mailinhapp.repository.AnhDaLuuRepository;
 import fpt.mailinhapp.repository.ThanhVienRepository;
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -40,15 +41,15 @@ public class CustomerService {
             BeanUtils.copyProperties(saveImg, dto.getAnhDaLuu());
             entity.setAnhDaLuu(saveImg);
         }
-<<<<<<< HEAD
+
         TaiKhoan tk=new TaiKhoan();
         BeanUtils.copyProperties(dto.getTaiKhoan(),tk);
         entity.setTaiKhoan(tk);
-=======
+
         TaiKhoan taiKhoan = new TaiKhoan();
         BeanUtils.copyProperties(dto.getTaiKhoan(), taiKhoan);
         entity.setTaiKhoan(taiKhoan);
->>>>>>> 2eb4b25f78d11eded1b959a12dc827abb97d7505
+
 
         var saveCus = dao.save(entity);
         dto.setSoDT(saveCus.getSoDT());
@@ -59,7 +60,8 @@ public class CustomerService {
     @Transactional(rollbackFor = Exception.class)
     public ThanhVienDto updateCustomers(String id, ThanhVienDto dto){
         var found = dao.findById(id).orElseThrow(()-> new CustomerException("Thành viên không tồn tại"));
-        String[] ignoreFields = new String[]{"ngayTao","anhDaLuu"};
+
+        String[] ignoreFields = new String[]{"ngayTao","anhDaLuu","ngayChinhSu","soDT"};
 
         BeanUtils.copyProperties(dto, found, ignoreFields);
 
@@ -72,18 +74,28 @@ public class CustomerService {
                 found.setAnhDaLuu(img);
             }
 
-            if (dto.getAnhDaLuu().getId() != found.getAnhDaLuu().getId()){
-                imgService.deleteImage(found.getAnhDaLuu().getTenTep());
+            if(found.getAnhDaLuu() == null){
                 AnhDaLuu img = new AnhDaLuu();
                 BeanUtils.copyProperties(dto.getAnhDaLuu(), img);
                 imgDao.save(img);
                 found.setAnhDaLuu(img);
+            }else {
+                if (dto.getAnhDaLuu().getId() != found.getAnhDaLuu().getId()){
+                    imgService.deleteImage(found.getAnhDaLuu().getTenTep());
+                    AnhDaLuu img = new AnhDaLuu();
+                    BeanUtils.copyProperties(dto.getAnhDaLuu(), img);
+                    imgDao.save(img);
+                    found.setAnhDaLuu(img);
+                }
             }
         }
 
+
         var saveEntity = dao.save(found);
 
+
         dto.setSoDT(found.getSoDT());
+
         return dto;
     }
 
@@ -105,8 +117,10 @@ public class CustomerService {
 
     public ThanhVienDto findById(String id) {
         var found = dao.findById(id).orElseThrow(()->new CustomerException("Thành viên không tồn tại"));
-        ThanhVienDto dto = new ThanhVienDto();
-        BeanUtils.copyProperties(found, dto);
+        ModelMapper mapper = new ModelMapper();
+
+        var dto = mapper.map(found, ThanhVienDto.class);
+
 
         return dto;
     }
