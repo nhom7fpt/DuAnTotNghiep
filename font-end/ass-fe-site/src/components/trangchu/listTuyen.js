@@ -32,6 +32,7 @@ function SeatSelection(props) {
     const endIndex = startIndex + pageSize;
     return listChuyen.slice(startIndex, endIndex);
   };
+  console.log(listChuyen);
   
   const totalPages = Math.ceil(listChuyen.length / pageSize);
   

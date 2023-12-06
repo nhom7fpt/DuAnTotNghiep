@@ -84,9 +84,9 @@ export const loadDataTuyen = () => async (dispatch) => {
 
 };
 
-export const listSearchByTuyen = (diemDi,diemDen, gia, navigate) => async (dispatch) => {
+export const listSearchByTuyen = (diemDi,diemDen, navigate) => async (dispatch) => {
   try {
-    const data = {diemDi: diemDi, diemDen: diemDen, gia: gia};
+    const data = {diemDi: diemDi, diemDen: diemDen};
     const res = await service.loadListChuyen(data);
     console.log(res);
  ;
@@ -100,7 +100,7 @@ export const listSearchByTuyen = (diemDi,diemDen, gia, navigate) => async (dispa
   } catch (error) {
     console.log(error);
   }
-  navigate("/timchuyen")
+
 
 
 };

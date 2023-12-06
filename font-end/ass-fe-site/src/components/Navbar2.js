@@ -10,6 +10,7 @@ import pro from '../image/dangnhap/Profile.svg';
 import futa from '../image/dangnhap/futaPay.svg';
 import log from '../image/dangnhap/Logout.svg';
 import usericon from '../image/trangchu/usericon.svg';
+import defaultAvatar from '../image/anhnobita.jpg';
 import 'react-notifications/lib/notifications.css';
 import { logout } from "../redux/actions/actionAccount";
 import dropdown from '../image/dangnhap/dropdown-menu.svg';
@@ -65,7 +66,7 @@ function Navbar(props) {
         </li>
         <li>
           <NavLink to="/tracuu" activeClassName="active">
-            Tra cứu vé
+            Tra Cứu Vé
           </NavLink>
         </li>
         <li>
@@ -86,7 +87,11 @@ function Navbar(props) {
         <div className="dropdown-container"style={{marginTop:'-4cm', marginLeft:'-1cm'}}>
           {custom.hoTen ? (
             <NavLink to="#" ClassName="text-btn-login-page" onClick={toggleDropdown} style={{color:'white'}}>
-               {imageUrl && <img src={imageUrl} alt="Avatar" style={{ width: '50px', height: '45px', borderRadius: '50%' , marginRight:'10px'}} />}
+            {imageUrl ? (
+              <img src={imageUrl} alt="Avatar" style={{ width: '50px', height: '45px', borderRadius: '50%', marginRight: '10px' }} />
+            ) : (
+              <img src={defaultAvatar} alt="Default Avatar" style={{ width: '50px', height: '45px', borderRadius: '50%', marginRight: '10px' }} />
+            )}
               {custom.hoTen}  <img src={dropdown} alt="" style={{ width: '26px', height: '26px', marginTop: '-5px' }}/>
           
             </NavLink>

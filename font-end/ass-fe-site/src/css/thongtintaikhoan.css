@@ -3,7 +3,6 @@
 .thong-tin-tai-khoan{
     width: 950px;
     height: 700px;
-    
 
 }
 
@@ -31,30 +30,14 @@
     padding: 25px;
 }
 
-.left-side {
-    flex: 1;
+.imgae-tttk{
+    
     width: 247px;
     height: 394px;
     padding: 8px;
 }
 
-.left-side img {
-    width: 200px;
-    height: 200px;
-    padding: 30px;
-    border-radius: 9999px;
-}
 
-.left-side p{
-    color: #637280;
-    font-size: 15px;
-    margin: 16px 0px 0px;
-    text-align: center;
-}
-
-.left-side input[type="file"] {
-    margin-top: 10px;
-}
 
 .right-side-tttk {
     flex: 1;
@@ -132,13 +115,33 @@
     height: 100%;
     object-fit: cover;
   }
-  .ant-upload-list-picture-card .ant-upload-list-item-thumbnail, .ant-upload-list-picture-card .ant-upload-list-item-thumbnail img {
-    position: static;
-    display: block;
-    width: 130px;
-    height: 220px;
-    -o-object-fit: contain;
-     object-fit: contain; 
-    margin-top: -1.5cm;
-    margin-left: -10px;
+ 
+.ant-upload-list-item-info img{
+   width: 4000px !important;
+
+   border-radius: 50% !important;
+}
+.ant-upload-list-item img{
+   
+border-radius: 20% !important;
+  
+    
+}
+
+.ant-upload-list-item{    
+    border-radius: 50% !important;
+        margin-right: -2cm;
+        
+}
+img.ant-upload-list-item-image{    
+    border-radius:100% !important;
+     height: 200px !important;
+     width: 400px !important;
+}
+.ant-upload-list-picture-card-container {
+    display: inline-block;
+    width: 220px;
+    height: 250px;
+    margin: 0 8px 8px 0;
+    vertical-align: top;
 }

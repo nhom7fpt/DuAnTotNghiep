@@ -16,7 +16,7 @@ function Lichtrinhpage(props) {
   const { listChuyen } = props;
   const onClick = (data) => {
     props.listSearchByTuyen(data.diemDi, data.diemDen, data.gia, navigate);
-    
+    navigate("/timchuyen");
   };
 
   listTuyen.forEach(item => {
@@ -67,18 +67,20 @@ function Lichtrinhpage(props) {
         <div className="info-label" ></div>
       </div>
       {uniqueListTuyen.map((item) =>
-        ( <div className="info-container">
-        <div className="info-row">
-          <div className="info-value-kh" > <span style={{color:'#ff6f00' , fontWeight:'600', fontSize:'16px', width:'250px', wordWrap: 'break-word'}}>{item.diemDi}</span> <img src={arrow}  style={{marginRight:'5px', marginLeft:'5px'}}/>{item.diemDen}</div>
-          <div className="info-value" style={{textAlign:'justify'}}>Giường</div>
-          <div className="info-value"style={{textAlign:'justify'}}>639km</div>
-          <div className="info-value"style={{textAlign:'justify'}}>11 giờ 30 phút</div>
-          <div className="info-value" style={{color:'red'}}>{item.gia !== null && item.gia !== undefined ? formatCurrency(item.gia) : '---'}</div>
-          <div className="info-value">
-            <button className="search-button" onClick={()=>onClick(item)}>Tìm chuyến xe</button>
+        ( 
+          <div className="info-container" key={listTuyen}>
+          <div className="info-row">
+            <div className="info-value-kh" > <span style={{color:'#ff6f00' , fontWeight:'600', fontSize:'16px', width:'250px', wordWrap: 'break-word'}}>{item.diemDi}</span> <img src={arrow}  style={{marginRight:'5px', marginLeft:'5px'}}/>{item.diemDen}</div>
+            <div className="info-value" style={{textAlign:'justify'}}>Giường</div>
+            <div className="info-value"style={{textAlign:'justify'}}>639km</div>
+            <div className="info-value"style={{textAlign:'justify'}}>11 giờ 30 phút</div>
+            <div className="info-value" style={{color:'red'}}>{item.gia !== null && item.gia !== undefined ? formatCurrency(item.gia) : '---'}</div>
+            <div className="info-value">
+              <button className="search-button" onClick={()=>onClick(item)}>Tìm chuyến xe</button>
+            </div>
           </div>
         </div>
-      </div>)
+      )
      )}
       
 
