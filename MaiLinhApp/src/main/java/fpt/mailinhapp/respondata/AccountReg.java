@@ -11,4 +11,5 @@ public class AccountReg {
     private String tenTaiKhoan;
     private String matKhau;
     private String hoTen;
+    private String newPassword;
 }

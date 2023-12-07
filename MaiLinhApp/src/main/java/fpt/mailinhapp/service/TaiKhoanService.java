@@ -31,8 +31,6 @@ public class TaiKhoanService {
         BeanUtils.copyProperties(dto, entity);
 
 
-
-
         dao.save(entity);
 
         return dto;
@@ -67,4 +65,19 @@ public class TaiKhoanService {
         BeanUtils.copyProperties(found,dto);
         return dto;
     }
+    @Transactional(rollbackFor = Exception.class)
+    public void changePassword(String id, TaiKhoanDto dto) {
+        var found = dao.findById(id).orElseThrow(() -> new AccountException("Tài khoản không tồn tại"));
+
+        if (!dto.getMatKhau().equals(found.getMatKhau())) {
+            throw new AccountException("Mật khẩu cũ không đúng");
+        }
+
+        // Update mật khẩu mới
+        found.setMatKhau(dto.getNewPassword());
+        dao.save(found);
+    }
+
+
+
 }
