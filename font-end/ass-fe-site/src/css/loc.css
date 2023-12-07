@@ -1,4 +1,7 @@
 
+.ant-row.custom-container-loc{
+  height: 225px !important;
+}
 
 .container-loc {
   width: 350px;
@@ -8,11 +11,16 @@
   font-weight: medium;
   border-radius: 10px;
   height: 600px;
+ 
 }
-.grid-container-loc {
+.grid-listtuyen-container-loc {
   width: 100%;
-  max-height: 900px;
+  max-height: 720px;
   min-height: 300px;
+}
+.listtuyen-404{
+  margin-left: 10cm;
+  transform: translateY(-15cm);
 }
 
 .custom-container-loc {
@@ -25,9 +33,10 @@ margin-left: 15cm;
 transform: translateY(-16cm);
 }
 .pagesizeloc{
-  transform: translateY(15.5cm);
+  transform: translateY(13.5cm);
   margin-left: 8.5cm;
 }
+
 
 .title {
   display: flex;
@@ -164,6 +173,7 @@ transform: translateY(-16cm);
   width:750px;
   border: #111111;
 
+
 }
 
 .departure-time,
@@ -213,12 +223,6 @@ transform: translateY(-16cm);
 .text-gray {
   color: #777;
 }
-
-/* .special-note {
-  font-size: 12px;
-  margin-bottom: 20px;
-  text-align: left;
-} */
 
 .underline {
   text-decoration: underline;

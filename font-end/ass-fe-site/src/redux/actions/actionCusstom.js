@@ -5,7 +5,6 @@ const service = new CustomService();
 
 export const updateCustom = (id ,account,image, navigate) => async (dispatch) => {
  
-
   try {
     const newCustom = {...account, anhDaLuu: image};
     console.log(newCustom);

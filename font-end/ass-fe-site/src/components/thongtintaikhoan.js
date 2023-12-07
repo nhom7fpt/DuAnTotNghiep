@@ -9,7 +9,6 @@ import { fillAccount } from "../redux/actions/actionCusstom";
 import { Col, Input, Row, Button, DatePicker } from 'antd';
 import { Form } from 'antd';
 import UploadImage from './UploadImage';
-
 function Thongtintaikhoan(props) {
     const [hoTenValue, setHoTenValue] = useState('');
     const [profileImage, setProfileImage] = useState();
