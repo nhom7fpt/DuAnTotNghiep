@@ -59,8 +59,9 @@ let isLocationDisplayed = false;
      {listChuyen.length === 0 ? (
       <Result
         status="404"
-        title="Không có dữ liệu"
-        subTitle="Rất tiếc, không có chuyến đi nào được tìm thấy."
+        title="Rất tiếc, MaiLinhTour không tìm thấy kết quả cho bạn"
+      
+        subTitle="không có chuyến đi nào được tìm thấy."
         extra={<Button type="primary">Quay lại trang chủ</Button>}
         className="listtuyen-404"
       />
