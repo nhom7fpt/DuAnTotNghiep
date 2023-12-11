@@ -5,6 +5,7 @@ import moment from "moment";
 import muiten from "../../image/switch_location.svg";
 import '../../css/routes.scss';
 const MotChieu = (props) => {
+ 
 
   const disabledDate = (current) => {
     return current.isBefore(moment().startOf("day"));
@@ -21,7 +22,6 @@ const MotChieu = (props) => {
       props.setEnd(value);
     }
   };
- 
 
 
 
@@ -39,6 +39,7 @@ const MotChieu = (props) => {
           placeholder="Chọn điểm đi"
         
           onChange={(value) => onLocationChange(value, "start")}
+        
           filterOption={filterOption}
           options={data}
           dropdownClassName="custom-dropdown-timchuyen" 
@@ -56,6 +57,7 @@ const MotChieu = (props) => {
           placeholder="Chọn điểm đến"
           optionFilterProp="children"
           onChange={(value) => onLocationChange(value, "end")}
+         
           filterOption={filterOption}
           options={data}
           style={{marginLeft:'-0.6cm'}}

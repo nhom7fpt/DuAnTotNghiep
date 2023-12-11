@@ -1,22 +1,35 @@
 import React, { useEffect, useState } from 'react';
 import '../css/datlaimatkhau.css';
 import Menudangnhap from '../components/menudangnhap';
-import { fillAccount } from "../redux/actions/actionCusstom";
 import  withRouter  from '../helpers/withRouter';
 import { connect } from 'react-redux';
 import { change } from '../redux/actions/actionAccount';
 import { Form, Input, Button } from 'antd';
+import { toast } from 'react-toastify'; 
 
+import 'react-toastify/dist/ReactToastify.css'; 
 function PasswordResetPage (props) {
   const { navigate } = props.router;
   const user = localStorage.getItem("username");
-  const { account } = props;
 
   const handleFormSubmit = async (values) => {
-   
-     props.change(user, values, navigate)
+    if (values.newPassword.length < 6) {
+      toast.error('Vui lòng nhập ít nhất 6 kí tự!', {
+        position: "top-right",
+        reverseOrder: false,
+        autoClose: 1000,
+        hideProgressBar: true,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        
+      });
+     
+    } else {
+      props.change(user, values, navigate);
+    }
   };
-  const { custom } = props;
   useEffect(() => {
   }, []);
 
@@ -47,18 +60,12 @@ function PasswordResetPage (props) {
                     className='mkc-dlmk'
                     />
                   </Form.Item>
-                  <label className="old-password-lable" >
-                  Mật khẩu mới
-                </label>
+                  <label className="old-password-lable">Mật khẩu mới</label>
                   <Form.Item
                     name="newPassword"
                     rules={[{ required: true, message: 'Vui lòng nhập mật khẩu mới!' }]}
                   >
-                    <Input.Password 
-                    placeholder="Nhập mật khẩu mới" 
-                    className='mkc-dlmk'
-                 
-                    />
+                    <Input.Password placeholder="Nhập mật khẩu mới" className="mkc-dlmk" />
                   </Form.Item>
                   <label className="old-password-lable" >
                   Xác nhận mật khẩu
@@ -66,7 +73,7 @@ function PasswordResetPage (props) {
                   <Form.Item
                   name="confirmNewPassword"
                   rules={[
-                    { required: true, message: 'Vui lòng xác nhận mật khẩu mới!' },
+                    { required: true, message: 'Vui lòng xác nhận mật!' },
                     ({ getFieldValue }) => ({
                       validator(_, value) {
                         if (!value || getFieldValue('newPassword') === value) {
@@ -83,9 +90,9 @@ function PasswordResetPage (props) {
                   />
                 </Form.Item>
                   <Form.Item>
-                  <Button type="primary" htmlType="submit" className='btn-dmk'>
+                  <button type="submit" className='btn-dmk'>
                   Xác nhận
-                  </Button>
+                  </button>
               </Form.Item>
               </Form>
             </div>
@@ -97,13 +104,11 @@ function PasswordResetPage (props) {
 };
 
 const mapStateToProps = (state) => ({
-  custom: state.CustomReducer.custom,
   account: state.AccountReducer.accoust,
 });
 
 const mapDispatchToProps = {
   change,
-  fillAccount
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(withRouter(PasswordResetPage));

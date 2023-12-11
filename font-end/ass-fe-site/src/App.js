@@ -1,4 +1,4 @@
-// App.js
+
 import React, { useState, useEffect } from 'react';
 import './App.css';
 import Navbar from './components/Navbar2';
@@ -28,7 +28,6 @@ import SeatSelection from "./components/trangchu/listTuyen";
 import store from "./redux/store";
 function App() {
   const [showNavbar, setShowNavbar] = useState(true);
-
   return (
     <Provider store={store}>
       <BrowserRouter>
@@ -44,7 +43,7 @@ function App() {
               <Route path="/lienhe" element={<ContactPage />} />
               <Route path="/login" element={<LoginPage />} />
               <Route path="/lichtrinh" element={<Lichtrinh />} />
-              <Route path="/dvtc" element={<Dvtc />} />
+              <Route path="/thongtinve" element={<Dvtc />} />
               <Route path="/trangchu" element={<Trangchu />} />
               <Route path="/tracuu" element={<Tracuu />} />
               <Route path="/tintuc" element={<Tintuc />} />

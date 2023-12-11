@@ -1,14 +1,17 @@
 import React from 'react';
+import { connect } from 'react-redux';
+import withRouter from '../../helpers/withRouter';
 
-const Titledvtc = () => {
+function Titledvtc (props)  {
+  const { custom } = props;
   return (
    <article className="datvethanhcong">
    <div className="card-body" style={{ marginLeft: '4cm' }}>
      <div className="page-title-dv" style={{marginBottom:'10px', marginLeft:'-0.7cm'}}>Đặt chỗ thành công</div>
      <div className="content">
        <div className="notification-dvtc" style={{ width: '637px', marginLeft:'-1.6cm' }}>
-         <span>
-           Thông tin chuyến đi đã được gửi đến <strong>kieuoanh@gmail.com</strong>, bạn hãy kiểm tra nhé!
+         <span style={{width:'650px', textAlign:'justify', marginLeft:'20px'}}>
+           Thông tin chuyến đi đã được gửi đến <strong >{custom.email}</strong>, bạn hãy kiểm tra nhé!
          </span>
        </div>
        <div className="subtitle" style={{ color: '#484848', marginTop: '10px', fontWeight: 700, lineHeight: '24px', width:'100px', marginLeft:'-0.3cm'}}>
@@ -62,4 +65,9 @@ const Titledvtc = () => {
   );
 };
 
-export default Titledvtc;
+
+const mapStateToProps = (state) => ({
+  custom: state.CustomReducer.custom,
+});
+
+export default connect(mapStateToProps)(withRouter(Titledvtc));

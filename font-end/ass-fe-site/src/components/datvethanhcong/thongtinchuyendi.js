@@ -1,6 +1,9 @@
 import React from 'react'; 
+import { connect } from 'react-redux';
+import withRouter from '../../helpers/withRouter';
 
-const Thongtinchuyendi = () => {
+function Thongtinchuyendi (props) {
+  const { custom } = props;
   return (
     <div className='pagedatvethanhcong'>
     <div className="thongtinchuyendi" style={{ marginRight: '5cm', marginTop: '-28.5cm', width:'317px' }}>
@@ -15,11 +18,11 @@ const Thongtinchuyendi = () => {
     </div>
     <div className="info-row-dvtc">
       <div>HỌ TÊN</div>
-      <div>Kiều Oanh</div>
+      <div>{custom.hoTen}</div>
     </div>
     <div className="info-row-dvtc">
       <div>SỐ ĐIỆN THOẠI</div>
-      <div>0337316703</div>
+      <div>{custom.soDT}</div>
     </div>
     <div className="info-row-dvtc">
       <div >SỐ CMND/CCCD</div>
@@ -27,7 +30,7 @@ const Thongtinchuyendi = () => {
     </div>
     <div className="info-row-dvtc">
       <div>EMAIL</div>
-      <div >kieuoanh@gmail.com</div>
+      <div >{custom.email}</div>
     </div>
     <div className="info-row-dvtc">
       <div>NHÀ XE</div>
@@ -81,4 +84,8 @@ const Thongtinchuyendi = () => {
   );
 };
 
-export default Thongtinchuyendi;
+const mapStateToProps = (state) => ({
+  custom: state.CustomReducer.custom,
+});
+
+export default connect(mapStateToProps)(withRouter(Thongtinchuyendi));

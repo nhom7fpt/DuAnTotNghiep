@@ -12,6 +12,8 @@ function TimChuyen(props) {
   const [startDate, setStartDate] = useState(null);
   const [startLocation, setStartLocation] = useState(null);
   const [endLocation, setEndLocation] = useState(null);
+  const [startLocation2, setStartLocation2] = useState(null);
+  const [endLocation2, setEndLocation2] = useState(null);
   const [selectedTab, setSelectedTab] = useState("1");
   const { navigate } = props.router;
   const onClick = () => {
@@ -20,7 +22,11 @@ function TimChuyen(props) {
     }else{
       props.listSearchReturn(startLocation, endLocation, startDate, navigate);
     }
- 
+    if(selectedTab == 2){
+      props.listSearchOneWay(startLocation2, endLocation2, startDate, navigate);
+    }else{
+      props.listSearchReturn(startLocation2, endLocation2, startDate, navigate);
+    }
   };
 
   const { fieldData } = props;
@@ -53,7 +59,7 @@ function TimChuyen(props) {
           Khứ hồi
         </Radio>
       ),
-      children: <KhuHoi data={listData} />,
+      children: <KhuHoi setStart={setStartLocation2} setEnd={setEndLocation2} setDay={setStartDate} data={listData} />,
     },
   ];
 
