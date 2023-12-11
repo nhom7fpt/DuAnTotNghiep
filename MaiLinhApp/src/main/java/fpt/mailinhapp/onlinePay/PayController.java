@@ -6,6 +6,7 @@ import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -23,14 +24,14 @@ import java.text.SimpleDateFormat;
 import java.util.*;
 
 
-@RestController
+@Controller
 @RequestMapping("api/v1/payment")
 public class PayController {
 
     @Autowired
     PayMentService service;
     @GetMapping("create_pay")
-    public ResponseEntity createPayment() throws UnsupportedEncodingException {
+    public String createPayment() throws UnsupportedEncodingException {
 
         String vnp_Command = "pay";
         String orderType = "other";
@@ -103,11 +104,11 @@ public class PayController {
         dto.setMessage("successfully");
         dto.setUrl(paymentUrl);
 
-        return new ResponseEntity<>(dto,HttpStatus.OK);
+        return "redirect:"+paymentUrl;
     }
 
     @GetMapping("pay_return")
-    public ResponseEntity payInfo(@RequestParam("vnp_Amount")Long amount,
+    public String payInfo(@RequestParam("vnp_Amount")Long amount,
                                   @RequestParam("vnp_BankCode") String bankCode,
                                   @RequestParam("vnp_OrderInfo") String orderInfo,
                                   @RequestParam("vnp_PayDate") String payDate,
@@ -131,7 +132,7 @@ public class PayController {
 
         service.save(dto);
 
-        return new ResponseEntity<>(dto,HttpStatus.OK);
+        return "redirect:http://localhost:3000/thongtinve"+ dto.getId();
     }
 
 //    @GetMapping("refund_pay")

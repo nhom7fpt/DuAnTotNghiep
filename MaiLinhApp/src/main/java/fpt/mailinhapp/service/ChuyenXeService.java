@@ -2,8 +2,10 @@ package fpt.mailinhapp.service;
 
 import fpt.mailinhapp.domain.ChuyenXe;
 import fpt.mailinhapp.dto.ChuyenXeDto;
+import fpt.mailinhapp.dto.NhanVienDto;
 import fpt.mailinhapp.exception.BusesException;
 import fpt.mailinhapp.repository.ChuyenXeRepository;
+import fpt.mailinhapp.repository.NhanVienRepository;
 import fpt.mailinhapp.respondata.ChuyenTheoTuyen;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.BeanUtils;
@@ -20,6 +22,8 @@ import java.util.stream.Collectors;
 public class ChuyenXeService {
     @Autowired
     ChuyenXeRepository dao;
+    @Autowired
+    NhanVienRepository nvDao;
 
     @Transactional(rollbackFor = Exception.class)
     public ChuyenXeDto instertChuyenXe(ChuyenXeDto dto){
@@ -75,6 +79,19 @@ public class ChuyenXeService {
         List<ChuyenXeDto> listDto = listEntity.stream().map((item)->{
             ModelMapper mapper = new ModelMapper();
             return mapper.map(item, ChuyenXeDto.class);
+        }).collect(Collectors.toList());
+
+        return listDto;
+    }
+
+    public List<NhanVienDto> getListNhanVienByChuyen(){
+        var found = nvDao.findNhanVienWithChuyenXe();
+        if(found == null){
+            return null;
+        }
+        var listDto = found.stream().map(item->{
+            ModelMapper mapper = new ModelMapper();
+            return mapper.map(item, NhanVienDto.class);
         }).collect(Collectors.toList());
 
         return listDto;

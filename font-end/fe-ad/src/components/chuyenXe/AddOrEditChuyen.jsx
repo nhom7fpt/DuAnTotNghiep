@@ -15,6 +15,7 @@ import FormChuyen from "./FormChuyen";
 import { toast } from "react-toastify";
 import TransferNhanVien from "./TransferNhanVien";
 import NhanVienService from "../../services/NhanVienService";
+import ChuyenXeService from "../../services/ChuyenXeService";
 
 class AddOrEditChuyen extends Component {
   constructor(props) {
@@ -23,19 +24,19 @@ class AddOrEditChuyen extends Component {
     this.state = {
       step: 0,
       chuyen: {},
-      NhanViens: [],
-      nhanViensUpdate: [],
-      listNhanVien: [],
+      nhanViens: [],
       xe: [],
       tuyen: [],
     };
   }
   goNext = (values) => {
     const { xe, tuyen } = this.state;
+    console.log(xe);
 
     const xeChon = xe.find((item) => item.bienSoXe === values.xe);
     const tuyenChon = tuyen.find((item) => item.maTuyenXe === values.tuyenXe);
-
+    console.log(xeChon);
+    console.log(tuyenChon);
     const newChuyen = { ...values, xe: xeChon, tuyen: tuyenChon };
     console.log(newChuyen);
     this.setState({ ...this.state, chuyen: newChuyen, step: 1 });
@@ -48,40 +49,28 @@ class AddOrEditChuyen extends Component {
     this.loadData();
   };
 
-  // static getDerivedStateFromProps(nextProps, prevState) {
-  //   if (
-  //     nextProps.product &&
-  //     nextProps.product.images &&
-  //     nextProps.product.images.length > 0
-  //   ) {
-  //     let productImages = [];
+  handleTargetKeysChange = (targetKeys) => {
+    this.setState({ nhanViens: targetKeys });
+  };
+  saveProduct = () => {
+    const { nhanViens } = this.state;
+    console.log(nhanViens);
+  };
 
-  //     if (nextProps.product.images) {
-  //       productImages = nextProps.product.images.map((item) => ({
-  //         ...item,
-  //         uid: item.id,
-  //         url: ProductService.getProductImageUrl(item.fileName),
-  //         status: "done",
-  //       }));
-  //     }
-  //     return { ...prevState, productImages: productImages };
-  //   }
-  //   return null;
-  // }
-
-  saveProduct = () => {};
-
-  updateProduct = () => {};
+  updateProduct = () => {
+    const { nhanViens } = this.state;
+    console.log(nhanViens);
+  };
 
   loadData = async () => {
     try {
       const carServer = new CarService();
       const tuyenService = new TuyenXeService();
       const nhanVienService = new NhanVienService();
-
       const XeRes = await carServer.getCar();
       const tuyenRes = await tuyenService.getTuyen();
       const nhanVienRes = await nhanVienService.getNhanVien();
+      console.log(XeRes);
       this.setState({
         ...this.state,
         listNhanVien: nhanVienRes.data,
@@ -92,10 +81,18 @@ class AddOrEditChuyen extends Component {
       console.log(error);
       toast.error("Error: " + error);
     }
+    this.loadNhanVien();
   };
+  loadNhanVien = () => {
+    const { chuyen } = this.props;
+    if (chuyen && chuyen.nhanViens) {
+      this.setState({ ...this.state, nhanViens: chuyen.nhanViens });
+    }
+  };
+
   render() {
     const { navigate } = this.props.router;
-    const { step, xe, tuyen, listNhanVien } = this.state;
+    const { step, listNhanVien } = this.state;
     const { chuyen } = this.props;
     return (
       <>
@@ -125,17 +122,16 @@ class AddOrEditChuyen extends Component {
             {step === 0 && (
               <>
                 <Divider></Divider>
-                <FormChuyen
-                  chuyen={chuyen}
-                  goNext={this.goNext}
-                  xe={xe}
-                  tuyen={tuyen}
-                ></FormChuyen>
+                <FormChuyen chuyen={chuyen} goNext={this.goNext}></FormChuyen>
               </>
             )}
             {step === 1 && (
               <>
-                <TransferNhanVien list={listNhanVien} />
+                <TransferNhanVien
+                  list={listNhanVien}
+                  chuyen={chuyen}
+                  handleTargetKeysChange={this.handleTargetKeysChange}
+                />
                 <Divider></Divider>
                 <Row>
                   <Col md={24}>

@@ -1,44 +1,79 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Transfer } from "antd";
-
+import ChuyenXeService from "../../services/ChuyenXeService";
 const TransferNhanVien = (props) => {
-  const { list } = props;
-  console.log(list);
-  const listData = list.map((i) => ({
-    key: i.soCCCD,
-    title: i.hoTen,
-  }));
+  const [listData, setListData] = useState([]);
   const [targetKeys, setTargetKeys] = useState([]);
   const [selectedKeys, setSelectedKeys] = useState([]);
-  const [disabled, setDisabled] = useState(false);
-  const handleChange = (newTargetKeys, direction, moveKeys) => {
+  const [listDisabled, setListDisabled] = useState([]);
+  const { list, chuyen, handleTargetKeysChange } = props;
+  const handleChange = (newTargetKeys) => {
     setTargetKeys(newTargetKeys);
-    console.log("targetKeys: ", newTargetKeys);
-    console.log("direction: ", direction);
-    console.log("moveKeys: ", moveKeys);
+    handleTargetKeysChange(newTargetKeys);
   };
   const handleSelectChange = (sourceSelectedKeys, targetSelectedKeys) => {
     setSelectedKeys([...sourceSelectedKeys, ...targetSelectedKeys]);
-    console.log("sourceSelectedKeys: ", sourceSelectedKeys);
-    console.log("targetSelectedKeys: ", targetSelectedKeys);
-  };
-  const handleScroll = (direction, e) => {
-    console.log("direction:", direction);
-    console.log("target:", e.target);
   };
 
+  useEffect(() => {
+    const loadData = async () => {
+      const service = new ChuyenXeService();
+      const nhanVienRes = await service.listDisabled();
+      nhanVienRes && nhanVienRes.data && setListDisabled(nhanVienRes.data);
+    };
+    loadData();
+  }, []);
+
+  useEffect(() => {
+    const loadListByChuyen = () => {
+      if (chuyen && chuyen.nhanViens) {
+        const newDisabled = listDisabled.filter((nv) =>
+          chuyen.nhanViens.some((chuyenNV) => chuyenNV.soCCCD === nv.soCCCD)
+        );
+        setListDisabled(newDisabled);
+        const targetList = chuyen.nhanViens.map((i) => i.soCCCD);
+
+        setTargetKeys(targetList);
+      }
+    };
+    loadListByChuyen();
+  }, [chuyen]);
+
+  useEffect(() => {
+    const loadDisbaled = () => {
+      if (listDisabled) {
+        const newData = list.map((i) => ({
+          key: i.soCCCD,
+          title: i.hoTen,
+          disabled: listDisabled.some((dis) => i.soCCCD === dis.soCCCD),
+        }));
+        if (targetKeys) {
+          const newDataWithDisabled = newData.map((item) => ({
+            ...item,
+            disabled: targetKeys.includes(item.key) ? false : item.disabled,
+          }));
+
+          setListData(newDataWithDisabled);
+        } else {
+          setListData(newData);
+        }
+      } else {
+        const data = list.map((i) => ({ key: i.soCCCD, title: i.hoTen }));
+        setListData(data);
+      }
+    };
+    loadDisbaled();
+  }, [listDisabled]);
   return (
     <>
       <Transfer
         dataSource={listData}
-        titles={["Nhân viên", "Chỉ định"]}
+        titles={["Source", "Target"]}
         targetKeys={targetKeys}
         selectedKeys={selectedKeys}
         onChange={handleChange}
         onSelectChange={handleSelectChange}
-        onScroll={handleScroll}
         render={(item) => item.title}
-        disabled={disabled}
         oneWay
         style={{
           marginBottom: 16,

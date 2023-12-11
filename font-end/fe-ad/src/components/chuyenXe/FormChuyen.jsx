@@ -14,12 +14,20 @@ import {
 import React, { Component } from "react";
 import dayjs from "dayjs";
 import customParseFormat from "dayjs/plugin/customParseFormat";
-import { DatePicker, Space } from "antd";
 
-import ImagesService from "../../services/ImagesService";
+import CarService from "../../services/CarService";
+import TuyenXeService from "../../services/TuyenXeService";
 dayjs.extend(customParseFormat);
 const dateFormat = "dd-MM-YYYY";
 class FormChuyen extends Component {
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      xe: [],
+      tuyen: [],
+    };
+  }
   form = React.createRef();
 
   goNext = () => {
@@ -41,8 +49,29 @@ class FormChuyen extends Component {
     }
   }
 
+  loadData = async () => {
+    try {
+      const xeService = new CarService();
+      const tuyenService = new TuyenXeService();
+
+      const xeRes = await xeService.getCar();
+      const tuyenRes = await tuyenService.getTuyen();
+
+      this.setState({
+        xe: xeRes.data,
+        tuyen: tuyenRes.data,
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  };
+  componentDidMount = () => {
+    this.loadData();
+  };
   render() {
-    const { chuyen, xe, tuyen } = this.props;
+    const { chuyen } = this.props;
+    const { xe, tuyen } = this.state;
+
     const listXe = xe.map((item) => {
       const loai = {
         label: item.bienSoXe,
@@ -58,9 +87,10 @@ class FormChuyen extends Component {
       return data;
     });
 
-    const XeId = chuyen ? "" : chuyen.xe.bienSoXe;
-    const Tuyen = chuyen ? "" : chuyen.tuyenXe.maTuyen;
-
+    const xeId = chuyen && chuyen.xe ? chuyen.xe.bienSoXe : "";
+    const tuyenId = chuyen && chuyen.tuyenXe ? chuyen.tuyenXe.maTuyenXe : "";
+    console.log(xeId);
+    console.log(tuyenId);
     return (
       <>
         <Form layout="vertical" className="form" size="middle" ref={this.form}>
@@ -69,7 +99,7 @@ class FormChuyen extends Component {
               <Form.Item
                 label="Mã Chuyến xe"
                 name="maChuyen"
-                initialValue={chuyen.id}
+                initialValue={chuyen.maChuyen}
               >
                 <Input disabled={true}></Input>
               </Form.Item>
@@ -82,10 +112,10 @@ class FormChuyen extends Component {
                 <Input></Input>
               </Form.Item>
               <Form.Item label="Xe" name="xe">
-                <Select options={listXe} defaultValue={XeId}></Select>
+                <Select options={listXe} defaultValue={xeId}></Select>
               </Form.Item>
               <Form.Item label="Tuyến xe chạy" name="tuyenXe">
-                <Select options={listTuyen} defaultValue={Tuyen}></Select>
+                <Select options={listTuyen} defaultValue={tuyenId}></Select>
               </Form.Item>
             </Col>
           </Row>

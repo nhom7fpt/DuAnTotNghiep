@@ -63,4 +63,10 @@ public class BusesController {
         service.deleteChuyen(id);
         return new ResponseEntity<>(HttpStatus.OK);
     }
+
+    @GetMapping("nhanvien")
+    public ResponseEntity getListNhanVienChuyen(){
+
+        return new ResponseEntity<>(service.getListNhanVienByChuyen(), HttpStatus.OK);
+    }
 }

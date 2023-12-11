@@ -1,5 +1,5 @@
 import { toast } from "react-toastify";
-import ChuyenService from "../../services/ChuyenXeService";
+import ChuyenXeService from "../../services/ChuyenXeService";
 import {
   CHUYENS_DELETE,
   CHUYENS_SET,
@@ -8,7 +8,7 @@ import {
   COMMON_LOADING_SET,
 } from "./actiontypes";
 
-const service = new ChuyenService();
+const service = new ChuyenXeService();
 
 export const insterChuyen = (Chuyen, navigate) => async (dispatch) => {
   try {
