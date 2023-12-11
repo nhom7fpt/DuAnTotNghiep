@@ -2,8 +2,17 @@ export const ACCOUNT_SET = "ACCOUNT_SET";
 export const ACCOUNT_DEL = "ACCOUNT_DEL";
 export const ACCOUNT_STATE_CLEAR = "ACCOUNT_STATE_CLEAR";
 
+export const CUSTOM_SET = "CUSTOM_SET";
 export const FIELD_SET = "FIELD_SET";
-export const ACCOUNT_UPDATE = "ACCOUNT_UPDATE";
+export const FIELD_LISTTC = "FIELD_LISTTC";
+
+export const LISTCHUYEN = "LISTCHUYEN";
+export const LISTCHUYEN1 = "LISTCHUYEN1";
+export const LISTCHUYEN2 = "LISTCHUYEN2";
+
+
+export const LISTTUYEN_SET = "LISTTUYEN";
+
 export const FIELD_ACCOUNT = "FIELD_ACCOUNT";
 export const GET_ACCOUNT_SUCCESS = 'GET_ACCOUNT_SUCCESS';
 export const GET_ACCOUNT_FAILURE = 'GET_ACCOUNT_FAILURE';

@@ -13,11 +13,11 @@
 
 .info-header {
   display: flex;
-  justify-content: space-between;
-  align-items: center;
+  height: 54px;
+  border-radius: 15px;
   padding: 10px;
-  border: 1px solid #565656; /* Đường viền xung quanh với màu tương tự */
-  border-radius: 10px; 
+  border: 1px solid #e1e1e1; 
+
 }
 
 .info-container{
@@ -28,35 +28,48 @@
   margin-top: 0.5cm;
 }
 
-.info-label {
-  margin-bottom: 10px;
-  line-height:24px;
-
+.info-label
+{
+ margin-right: 20px;
+ margin-left: 20px;
+  line-height:24px; 
+  font-size: 16px;
+ 
 }
-
+.info-label-gv{
+ line-height:24px; 
+  font-size: 16px;
+  margin-left: 40px;
+}
 .info-row {
   display: flex;
-  margin-bottom: 10px;
+  margin-bottom: 15px;
 }
 
 .info-label,
-.info-value {
+.info-value,
+.info-label-gv {
   flex: 1;
+}
+.info-value-kh{
+  width: 300px !important;
+  text-align: justify;
+
 }
 
 .info-value {
   
-  align-items: center;
 }
 
 .search-button {
   background-color: rgb(250, 197, 114);
   color: rgb(0, 0, 0);
   border: none;
-  padding: 10px 20px;
   cursor: pointer;
   margin-left: auto;
-  border-radius: 20px; /* Thêm border-radius để bo tròn nút */
+  border-radius: 20px; 
+  width: 119px !important;
+  height: 32px;
 }
 
 .search-button:hover {
@@ -65,7 +78,7 @@
 .search-input {
   flex: 1;
   border: 1px solid #ddd;
-  border-radius: 20px; /* Bo tròn góc của trường nhập */
+  border-radius: 40px; 
   padding: 10px;
   font-size: 16px;
   outline: none;

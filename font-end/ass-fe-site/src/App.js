@@ -12,18 +12,19 @@ import "react-toastify/dist/ReactToastify.css";
 
 import ContactPage from './components/lienhe';
 import LoginPage from "./components/login/loginand";
+import Quenmk from "./components/login/quenmk";
 import Lichtrinh from './components/lichtrinh';
 import Trangchu from "./components/trangchu/trangchu";
 import Tracuu from './components/tracuu';
+import Dvtc from './components/datvethanhcong/datvetc';
 import Tintuc from './components/tintuc';
 import Lsmuave from './components/lichsumuave';
 import Doimk from './components/doimatkhau';
 import Thongttk from './components/thongtintaikhoan';
-import Mailinhpay from './components/lichsugiaodịch'
+import Mailinhpay from './components/lichsugiaodich'
 import Vechungtoi from './components/vechungtoi';
-import { NotificationContainer } from 'react-notifications';
 import ThongTin from "./components/trangchu/thongtin"
-import SeatSelection from "./components/trangchu/loc";
+import SeatSelection from "./components/trangchu/listTuyen";
 import store from "./redux/store";
 function App() {
   const [showNavbar, setShowNavbar] = useState(true);
@@ -43,17 +44,17 @@ function App() {
               <Route path="/lienhe" element={<ContactPage />} />
               <Route path="/login" element={<LoginPage />} />
               <Route path="/lichtrinh" element={<Lichtrinh />} />
+              <Route path="/dvtc" element={<Dvtc />} />
               <Route path="/trangchu" element={<Trangchu />} />
               <Route path="/tracuu" element={<Tracuu />} />
               <Route path="/tintuc" element={<Tintuc />} />
               <Route path="/vechungtoi" element={<Vechungtoi />} />
               <Route path="/Lsmuave" element={<Lsmuave />} />
               <Route path="/doimk" element={<Doimk />} />
+              <Route path="/quenmk" element={<Quenmk />} />
               <Route path="/thongttk" element={<Thongttk />} />
               <Route path="/Mailinhpay" element={<Mailinhpay />} />
              
-              {/* Định nghĩa các Route khác ở đây nếu cần */}
-
             </Routes>
             <ToastContainer
               position="top-right"

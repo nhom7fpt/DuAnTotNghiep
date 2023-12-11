@@ -4,9 +4,9 @@ import { Button, Form, Input } from "antd";
 import { BsTelephoneFill } from "react-icons/bs";
 import { PiPasswordFill } from "react-icons/pi";
 import { toast } from "react-toastify";
-import { NotificationContainer } from "react-notifications";
 import "react-notifications/lib/notifications.css";
 import DangKyForm from "./DangKyForm";
+import { NavLink } from "react-router-dom";
 
 
 const DangNhapForm = (props) => {
@@ -88,9 +88,12 @@ const DangNhapForm = (props) => {
             {keyTabs === 1 ? "Đăng nhập" : "Đăng ký"}
           </Button>
         </Form.Item>
+        <NavLink exact to="/quenmk" style={{marginLeft:'-3.8cm'}}>
+          Quên mật khẩu
+        </NavLink>
       </Form.Item>
 
-      <NotificationContainer />
+     
     </Form>
   );
 };

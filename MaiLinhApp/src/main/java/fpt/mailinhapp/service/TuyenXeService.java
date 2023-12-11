@@ -44,7 +44,9 @@ public class TuyenXeService {
         var saveEntity = dao.save(entity);
 
 
+
         dto.setMaTuyenXe(saveEntity.getMaTuyenXe());
+
 
 
 
@@ -99,9 +101,16 @@ public class TuyenXeService {
         var list = dao.findAll();
 
         var listData = list.stream().map((item ->{
-            return item.getDiemDi();
-        })).distinct().collect(Collectors.toList());
+            return item.getDiemDen();
 
-        return listData;
+        })).collect(Collectors.toList());
+
+        for (TuyenXe item : list) {
+            listData.add(item.getDiemDi());
+        };
+
+        var data = listData.stream().distinct().collect(Collectors.toList());
+
+        return data;
     }
 }

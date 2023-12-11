@@ -72,14 +72,14 @@ const ThongTin = () => {
           <br />
         </div>
         <div className="row">
-          {/* Tuyến đường từ TP. Hồ Chí Minh */}
+       
           <div className="col-md-4 ">
             <div className="route mx-auto">
               <img src={saigon} alt="Tuyến TP. Hồ Chí Minh" />
               <div className="overlay">Tuyến xe từ</div>
               <div className="overlay-text">TP Hồ Chí Minh</div>
               <div className="route-info">
-                <div>
+                <div >
                   <p>
                     <a href="#">Đà Lạt</a> <span>280,000đ</span> <br />
                     305km - 8 giờ - 01/10/2023

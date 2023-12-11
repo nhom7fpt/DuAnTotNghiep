@@ -1,3 +1,8 @@
+
+.ant-row.custom-container-loc{
+  height: 225px !important;
+}
+
 .container-loc {
   width: 350px;
   background: #F8F9F9;
@@ -8,6 +13,30 @@
   height: 600px;
  
 }
+.grid-listtuyen-container-loc {
+  width: 100%;
+  max-height: 720px;
+  min-height: 300px;
+}
+.listtuyen-404{
+  margin-left: 10cm;
+  transform: translateY(-15cm);
+}
+
+.custom-container-loc {
+  flex-grow: 1;
+  border-radius: 10px;
+  padding: 20px;
+  margin-bottom: 30px;
+  width: 750px;
+margin-left: 15cm;
+transform: translateY(-16cm);
+}
+.pagesizeloc{
+  transform: translateY(13.5cm);
+  margin-left: 8.5cm;
+}
+
 
 .title {
   display: flex;
@@ -42,7 +71,7 @@
 .checkbox-label {
   display: flex;
   color: #212529;
-  margin-bottom: 10px; /* Giảm khoảng cách giữa các lựa chọn */
+  margin-bottom: 10px; 
 }
 
 .checkbox-input {
@@ -87,26 +116,24 @@
   margin: 12px 0;
 }
 
-.custom-container-loc {
-  background: #fff;
-  border-radius: 10px;
-  padding: 20px;
-  margin-left: 15cm;
-  margin-top: -16.5cm;
-  width: 800px;
-}
 
-.hidden-text {
+/* .grid-container-loc {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px; /* Khoảng cách giữa các hàng */
+
+
+.hidden-text span{
   color: #111111;
   font-size: 20px;
   font-weight: 500;
   line-height: 28px;
-  margin-bottom: 15px;
-  margin-right: 16cm;
-  width: 300px;
+  text-align: justify;
+  width: 200px;
+  margin-top: 100px;
 }
 
-.icon-container {
+/* .icon-container {
   display: flex;
   align-items: center;
   margin-top: 12px;
@@ -132,7 +159,7 @@
   background-color: #fef6f3;
   color: #ef5222;
 }
-
+ */
 
 .button:hover {
   background-color: #FF3333;
@@ -143,10 +170,10 @@
   border-radius: 20px;
   padding: 20px;
   box-shadow: 1px 2px 4px rgba(0, 0, 0, 0.1);
-  margin-bottom: 1cm;
   width:750px;
-  height: 200px;
   border: #111111;
+
+
 }
 
 .departure-time,
@@ -170,7 +197,6 @@
 .location-details .separator,
 .location-details .travel-duration {
   margin: 0 5px;
-  /* Điều chỉnh khoảng cách */
 }
 
 
@@ -197,12 +223,6 @@
 .text-gray {
   color: #777;
 }
-
-/* .special-note {
-  font-size: 12px;
-  margin-bottom: 20px;
-  text-align: left;
-} */
 
 .underline {
   text-decoration: underline;
@@ -257,10 +277,12 @@
   color: white;
   padding: 10px 15px;
   border: none;
-  border-radius: 10px;  
   position: absolute;
   margin-left: 16cm;
   height: 40px !important;
+  border-radius: 20px; 
+  height: 60px;
+  width: 120px;
 }
 
 .custom-button:hover {
@@ -292,4 +314,15 @@
   display: flex;
   flex-direction: row; 
 }
-
+.btn-gialisttuyen {
+  display: inline-block;
+  font-size: 14px;
+  font-weight: bold;
+  text-align: center;
+  text-decoration: none;
+  cursor: pointer;
+  border-radius: 5px;
+  color: blue;
+  background-color: transparent;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}

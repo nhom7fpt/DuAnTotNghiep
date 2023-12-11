@@ -1,24 +1,23 @@
 import React, { useState } from 'react';
-import '../css/lichsumuave.css';
+import '../css/datlaimatkhau.css';
 import { useDispatch } from 'react-redux';
 import history from '../image/dangnhap/History.svg';
-import address from '../image/dangnhap/Address.svg';
 import pass from '../image/dangnhap/Password.svg';
 import pro from '../image/dangnhap/Profile.svg';
 import futa from '../image/dangnhap/futaPay.svg';
+import address from '../image/dangnhap/Address.svg';
 import log from '../image/dangnhap/Logout.svg';
 import { NavLink } from 'react-router-dom';
 import { logout } from "../redux/actions/actionAccount";
 import withRouter from '../helpers/withRouter';
-// Import CSS cho DatePicker
 function Menudangnap(props) {
-    const {navigate} = props.router;
+    const { navigate } = props.router;
     const dispatch = useDispatch();
     const handleLogout = () => {
         dispatch(logout(navigate));
-      };
+    };
     return (
-        <div className="sidebar-dat-lai-mat-khau" style={{ marginTop: '1cm'}}>
+        <div className="sidebar-dat-lai-mat-khau" style={{ marginTop: '1cm' }}>
             <ul>
                 <li>
                     <NavLink exact to="/Mailinhpay">
@@ -36,9 +35,9 @@ function Menudangnap(props) {
                     </NavLink>
                 </li>
                 <li>
-                    <a href="#">
-                        <img src={address} alt="Địa chỉ mua vé" /> Địa chỉ mua vé
-                    </a>
+                    <NavLink exact to="#">
+                        <img src={address} alt="Đại chỉ mua vé" /> Địa chỉ mua vé
+                    </NavLink>
                 </li>
                 <li>
                     <NavLink exact to="/doimk">

@@ -38,7 +38,7 @@
 }
 
 .sidebar-dat-lai-mat-khau li:hover {
-    background-color: #fff7f5; /* Màu nền khi trỏ vào */
+    background-color: #fff7f5; 
 }
 
 .sidebar-dat-lai-mat-khau a {
@@ -56,10 +56,8 @@
     vertical-align: middle;
 }
 
-/* New CSS for the password reset form */
 .dat-lai-mat-khau{
     margin-top: 41px;
-    width: 838px;
     height: 636px;
     margin-left: 32px;
    
@@ -117,160 +115,9 @@
     margin-bottom: 6px;
 }
 
-.form-check input[type="password"]{
-    width: 95%;
-    height: 36px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    padding: 10px;
-    font-size: 16px;
-    margin-top: 4px;
-}
 
-/*  */
 
-.old-password {
-    margin-top: 20px;
-    position: relative;
-}
 
-.old-password label {
-    display: block;
-    font-size: 16px;
-    color: #333;
-    margin-bottom: 6px;
-}
-
-.old-password input[type="text"] {
-    width: 95%;
-    height: 36px;
-    border: 1px solid #ccc;
-    border-radius: 8px;
-    padding: 10px;
-    font-size: 16px;
-    margin-top: 4px;
-    transition: none;
-}
-
-.old-password i {
-    position: absolute;
-    top: 50%;
-    right: 10px;
-    transform: translateY(-50%);
-    cursor: pointer;
-    color: #807d7d;
-    font-size: 18px;
-    margin-top: 3%;
-}
-
-.old-password i:hover{
-    color: #111111;
-}
-
-/*  */
-
-.password-input {
-    margin-top: 20px;
-    position: relative;
-    
-}
-
-.password-input label {
-    display: block;
-    font-size: 16px;
-    color: #333;
-    margin-bottom: 6px;
-}
-
-.password-input input[type="text"] {
-    width: 95%;
-    height: 36px;
-    border: 1px solid #ccc;
-    border-radius: 8px;
-    padding: 10px;
-    font-size: 16px;
-    margin-top: 4px;
-    transition: none;
-}
-
-.password-input i {
-    position: absolute;
-    top: 50%;
-    right: 10px;
-    transform: translateY(-50%);
-    cursor: pointer;
-    color: #807d7d;
-    font-size: 18px;
-    margin-top: 3%;
-}
-
-.password-input i:hover{
-    color: #111111;
-}
-
-/*  */
-
-.confirm-password {
-    margin-top: 20px;
-}
-
-.confirm-password {
-    margin-top: 20px;
-    position: relative;
-}
-
-.confirm-password label {
-    display: block;
-    font-size: 16px;
-    color: #333;
-    margin-bottom: 6px;
-}
-
-.confirm-password input[type="text"] {
-    width: 95%;
-    height: 36px;
-    border: 1px solid #ccc;
-    border-radius: 8px;
-    padding: 10px;
-    font-size: 16px;
-    margin-top: 4px;
-    transition: none;
-}
-
-.confirm-password i {
-    position: absolute;
-    top: 50%;
-    right: 10px;
-    transform: translateY(-50%);
-    cursor: pointer;
-    color: #807d7d;
-    font-size: 18px;
-    margin-top: 3%;
-}
-
-.confirm-password i:hover{
-    color: #111111;
-}
-/*  */
-
-.form-check .button-container{
-    margin-top: 49px;
-    text-align: center;
-    
-}
-
-.form-check .btn-cancel{
-    padding: 12px 24px;
-    color: #111111;
-    border: none;
-    border-radius: 20px;
-    cursor: pointer;
-    font-size: 16px;
-    margin-right: 10px;
-    width: 120px;
-    display: inline-block;
-    background-color: #ccc;
-}
 
 .form-check .btn-confirm{
     padding: 12px 24px;
@@ -284,22 +131,33 @@
     display: inline-block;
 }
 
-/* Add hover effect to buttons */
-.form-check .btn-cancel:hover{
-    border: 1px solid #ef5222;
-    color: #ef5222;
-    /* height: 40px; */
-    display: inline-block;
-}
-
-.form-check .btn-confirm:hover {
-    background-color: #e7653e;
-    display: inline-block;
-}
-
-.lable{
-    color:
-#333333;
-font-family:
-InterTight;
-}
+.mkc-dlmk #matKhau.ant-input{
+    height: 25px !important;
+  }
+  .old-password-lable{
+    height: 22px;
+    width: 150px;
+    text-align: justify;
+    margin-left: -48%;
+  }
+  .ant-input-affix-wrapper.ant-input-password.mkc-dlmk{
+    height: 36px;
+    border-radius: 20px;
+    width: 350px !important;
+  }
+  .mkc-dlmk #newPassword.ant-input{
+    height: 25px;
+  }
+  .mkc-dlmk #confirmNewPassword.ant-input{
+    height: 25px;
+  }
+  .btn-dmk{
+    background-color:#f1530fee;
+    color: rgb(255, 255, 255);
+    border: none;
+    cursor: pointer;
+    margin-left: auto;
+    border-radius: 20px; 
+    width: 119px !important;
+    height: 32px;
+  }

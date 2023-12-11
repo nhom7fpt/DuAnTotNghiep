@@ -1,8 +1,23 @@
 import axios from "axios";
-import { API_SEARCH } from "./constant";
-
+import { API_SEARCH,API_SEARCH_LOCATION } from "./constant";
 export default class SearchService {
   loadDataField = async () => {
     return await axios.get(API_SEARCH);
+  };
+  loadDataTuyen = async () => {
+    return await axios.get(API_SEARCH_LOCATION);
+  };
+  loadListChuyen = async (data) => {
+    console.log(data);
+    return await axios.post(API_SEARCH+"/one-way", data);
+  };
+
+  loadListChuyenByTuyen = async (data) => {
+   
+    return await axios.post(API_SEARCH+"/findbuses", data);
+  };
+
+  loadListChuyenReturn = async (tc) => {
+    return await axios.post(API_SEARCH + "/return", tc);
   };
 }

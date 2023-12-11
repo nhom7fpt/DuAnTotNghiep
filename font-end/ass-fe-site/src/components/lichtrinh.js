@@ -1,9 +1,38 @@
-import React,{ useEffect } from 'react';
+import React,{ useEffect,useState } from 'react';
 import '../css/lichtrinh.css';
 import muiten from '../image/switch_location.svg';
-function Lichtrinhpage() {
+import arrow from "../image/trangchu/ic_double_arrow.svg";
+import withRouter from '../helpers/withRouter';
+import { connect } from 'react-redux';
+
+import { listSearchByTuyen, loadDataTuyen } from "../redux/actions/actionSearch";
+
+function Lichtrinhpage(props) {
+  const {listTuyen} = props;
+  const uniqueListTuyen = [];
+  const diemDenSet = new Set();
+
+  const { navigate } = props.router;
+  const { listChuyen } = props;
+  const onClick = (data) => {
+    props.listSearchByTuyen(data.diemDi, data.diemDen, data.gia, navigate);
+    navigate("/timchuyen");
+  };
+
+  listTuyen.forEach(item => {
+    const key = `${item.diemDi}_${item.diemDen}`;
+    
+    if (!diemDenSet.has(key)) {
+      diemDenSet.add(key);
+      uniqueListTuyen.push(item);
+    }
+  });
+  function formatCurrency(value) {
+    return value.toLocaleString('vi-VN', { style: 'currency', currency: 'VND' });
+  }
+
   useEffect(() => {
-    document.title = 'Lịch Trình';
+    props.loadDataTuyen();
   }, []);
   return (
     <div className="schedule-container-lt">
@@ -30,221 +59,50 @@ function Lichtrinhpage() {
 
       <br />
       <div className="info-header">
-        <div className="info-label">Tuyến xe</div>
-        <div className="info-label">Loại xe</div>
-        <div className="info-label">Quãng đường</div>
-        <div className="info-label">Thời gian hành trình</div>
-        <div className="info-label">Giá vé</div>
-        <div className="info-label"></div>
+        <div className="info-label" style={{marginLeft:'-1cm'}}>Tuyến xe</div>
+        <div className="info-label"  style={{marginLeft:'3.5cm'}}>Loại xe</div>
+        <div className="info-label" >Quãng đường</div>
+        <div className="info-label" style={{marginRight:'-0.5cm'}}>Thời gian hành trình</div>
+        <div className="info-label-gv" >Giá vé</div>
+        <div className="info-label" ></div>
       </div>
-      <div className="info-container">
-        <div className="info-row">
-          <div className="info-value">An Nhơn<br />TP. Hồ Chí Minh</div>
-          <div className="info-value">Giường</div>
-          <div className="info-value">639km</div>
-          <div className="info-value">11 giờ 30 phút</div>
-          <div className="info-value">280,000đ</div>
-          <div className="info-value">
-            <button className="search-button">Tìm chuyến xe</button>
+      {uniqueListTuyen.map((item) =>
+        ( 
+          <div className="info-container" key={listTuyen}>
+          <div className="info-row">
+            <div className="info-value-kh" > <span style={{color:'#ff6f00' , fontWeight:'600', fontSize:'16px', width:'250px', wordWrap: 'break-word'}}>{item.diemDi}</span> <img src={arrow}  style={{marginRight:'5px', marginLeft:'5px'}}/>{item.diemDen}</div>
+            <div className="info-value" style={{textAlign:'justify'}}>Giường</div>
+            <div className="info-value"style={{textAlign:'justify'}}>639km</div>
+            <div className="info-value"style={{textAlign:'justify'}}>11 giờ 30 phút</div>
+            <div className="info-value" style={{color:'red'}}>{item.gia !== null && item.gia !== undefined ? formatCurrency(item.gia) : '---'}</div>
+            <div className="info-value">
+              <button className="search-button" onClick={()=>onClick(item)}>Tìm chuyến xe</button>
+            </div>
           </div>
         </div>
-      </div>
-      <div className="info-container">
-        <div className="info-row">
-          <div className="info-value">An Nhơn<br />TP. Hồ Chí Minh</div>
-          <div className="info-value">Giường</div>
-          <div className="info-value">639km</div>
-          <div className="info-value">11 giờ 30 phút</div>
-          <div className="info-value">280,000đ</div>
-          <div className="info-value">
-            <button className="search-button">Tìm chuyến xe</button>
-          </div>
-        </div>
-  
-      </div>
-      <div className="info-container">
-        <div className="info-row">
-          <div className="info-value">An Nhơn<br />TP. Hồ Chí Minh</div>
-          <div className="info-value">Giường</div>
-          <div className="info-value">639km</div>
-          <div className="info-value">11 giờ 30 phút</div>
-          <div className="info-value">280,000đ</div>
-          <div className="info-value">
-            <button className="search-button">Tìm chuyến xe</button>
-          </div>
-        </div>
-    
-      </div>
-      <div className="info-container">
-        <div className="info-row">
-          <div className="info-value">An Nhơn<br />TP. Hồ Chí Minh</div>
-          <div className="info-value">Giường</div>
-          <div className="info-value">639km</div>
-          <div className="info-value">11 giờ 30 phút</div>
-          <div className="info-value">280,000đ</div>
-          <div className="info-value">
-            <button className="search-button">Tìm chuyến xe</button>
-          </div>
-        </div>
-     
-      </div>
-      <div className="info-container">
-        <div className="info-row">
-          <div className="info-value">An Nhơn<br />TP. Hồ Chí Minh</div>
-          <div className="info-value">Giường</div>
-          <div className="info-value">639km</div>
-          <div className="info-value">11 giờ 30 phút</div>
-          <div className="info-value">280,000đ</div>
-          <div className="info-value">
-            <button className="search-button">Tìm chuyến xe</button>
-          </div>
-        </div>
+      )
+     )}
       
-      </div>
-      <div className="info-container">
-        <div className="info-row">
-          <div className="info-value">An Nhơn<br />TP. Hồ Chí Minh</div>
-          <div className="info-value">Giường</div>
-          <div className="info-value">639km</div>
-          <div className="info-value">11 giờ 30 phút</div>
-          <div className="info-value">280,000đ</div>
-          <div className="info-value">
-            <button className="search-button">Tìm chuyến xe</button>
-          </div>
-        </div>
-     
-      </div>
-      <div className="info-container">
-        <div className="info-row">
-          <div className="info-value">An Nhơn<br />TP. Hồ Chí Minh</div>
-          <div className="info-value">Giường</div>
-          <div className="info-value">639km</div>
-          <div className="info-value">11 giờ 30 phút</div>
-          <div className="info-value">280,000đ</div>
-          <div className="info-value">
-            <button className="search-button">Tìm chuyến xe</button>
-          </div>
-        </div>
-       
-      </div>
-      <div className="info-container">
-        <div className="info-row">
-          <div className="info-value">An Nhơn<br />TP. Hồ Chí Minh</div>
-          <div className="info-value">Giường</div>
-          <div className="info-value">639km</div>
-          <div className="info-value">11 giờ 30 phút</div>
-          <div className="info-value">280,000đ</div>
-          <div className="info-value">
-            <button className="search-button">Tìm chuyến xe</button>
-          </div>
-        </div>
-      
-      </div>
-      <div className="info-container">
-        <div className="info-row">
-          <div className="info-value">An Nhơn<br />TP. Hồ Chí Minh</div>
-          <div className="info-value">Giường</div>
-          <div className="info-value">639km</div>
-          <div className="info-value">11 giờ 30 phút</div>
-          <div className="info-value">280,000đ</div>
-          <div className="info-value">
-            <button className="search-button">Tìm chuyến xe</button>
-          </div>
-        </div>
-      
-      </div>
-      <div className="info-container">
-        <div className="info-row">
-          <div className="info-value">An Nhơn<br />TP. Hồ Chí Minh</div>
-          <div className="info-value">Giường</div>
-          <div className="info-value">639km</div>
-          <div className="info-value">11 giờ 30 phút</div>
-          <div className="info-value">280,000đ</div>
-          <div className="info-value">
-            <button className="search-button">Tìm chuyến xe</button>
-          </div>
-        </div>
-      
-      </div>
-      <div className="info-container">
-        <div className="info-row">
-          <div className="info-value">An Nhơn<br />TP. Hồ Chí Minh</div>
-          <div className="info-value">Giường</div>
-          <div className="info-value">639km</div>
-          <div className="info-value">11 giờ 30 phút</div>
-          <div className="info-value">280,000đ</div>
-          <div className="info-value">
-            <button className="search-button">Tìm chuyến xe</button>
-          </div>
-        </div>
-      
-      </div>
-      <div className="info-container">
-        <div className="info-row">
-          <div className="info-value">An Nhơn<br />TP. Hồ Chí Minh</div>
-          <div className="info-value">Giường</div>
-          <div className="info-value">639km</div>
-          <div className="info-value">11 giờ 30 phút</div>
-          <div className="info-value">280,000đ</div>
-          <div className="info-value">
-            <button className="search-button">Tìm chuyến xe</button>
-          </div>
-        </div>
-      
-      </div>
-      <div className="info-container">
-        <div className="info-row">
-          <div className="info-value">An Nhơn<br />TP. Hồ Chí Minh</div>
-          <div className="info-value">Giường</div>
-          <div className="info-value">639km</div>
-          <div className="info-value">11 giờ 30 phút</div>
-          <div className="info-value">280,000đ</div>
-          <div className="info-value">
-            <button className="search-button">Tìm chuyến xe</button>
-          </div>
-        </div>
-       
-      </div>
-      <div className="info-container">
-        <div className="info-row">
-          <div className="info-value">An Nhơn<br />TP. Hồ Chí Minh</div>
-          <div className="info-value">Giường</div>
-          <div className="info-value">639km</div>
-          <div className="info-value">11 giờ 30 phút</div>
-          <div className="info-value">280,000đ</div>
-          <div className="info-value">
-            <button className="search-button">Tìm chuyến xe</button>
-          </div>
-        </div>
-      
-      </div>
 
-      <div className="info-container">
-        <div className="info-row">
-          <div className="info-value">An Nhơn<br />TP. Hồ Chí Minh</div>
-          <div className="info-value">Giường</div>
-          <div className="info-value">639km</div>
-          <div className="info-value">11 giờ 30 phút</div>
-          <div className="info-value">280,000đ</div>
-          <div className="info-value">
-            <button className="search-button">Tìm chuyến xe</button>
-          </div>
-        </div>
-        <div className="info-row">
-          <div className="info-value">An Nhơn<br />TP. Hồ Chí Minh</div>
-          <div className="info-value">Giường</div>
-          <div className="info-value">639km</div>
-          <div className="info-value">11 giờ 30 phút</div>
-          <div className="info-value">280,000đ</div>
-          <div className="info-value">
-            <button className="search-button">Tìm chuyến xe</button>
-          </div>
-        </div>
-
-       
-      </div>
     </div>
   );
 }
 
-export default Lichtrinhpage;
+
+
+const mapStateToProps = (state) => ({
+  listTuyen:state.SearchReducer.listTuyen,
+
+
+});
+
+const mapDispatchToProps = {
+  loadDataTuyen,
+  listSearchByTuyen
+};
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+
+)(withRouter(Lichtrinhpage));

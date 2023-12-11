@@ -76,8 +76,6 @@ const ChonCho = () => {
 
   useEffect(() => {
     createData();
-
-    // Lấy trạng thái ghế đã chọn từ localStorage khi tải component
     const storedSelectedSeatsLower = JSON.parse(localStorage.getItem("selectedSeatsLower") || "[]");
     setSelectedSeatsLower(storedSelectedSeatsLower);
 

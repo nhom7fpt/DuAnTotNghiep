@@ -13,14 +13,6 @@
   width: 100%;
 }
 
-.login h3 {
-  padding-top: 20px;
-  font-size: 1.5rem;
-  line-height: 2rem;
-  text-transform: uppercase;
-  color: #f2754e;
-}
-
 /* CSS cho tab */
 .tab-form {
   display: flex;
@@ -114,9 +106,10 @@
 }
 .ant-tabs-tab.ant-tabs-tab-active .ant-tabs-tab-btn {
   color: #f2754e !important;
-  
+ 
   text-shadow: 0 0 0.25px currentcolor;
 }
+
 .ant-tabs{
   .ant-form{
     .ant-form-horizontal{
@@ -132,4 +125,39 @@
     }
    
   }
+}
+.ant-tabs-tab:hover {
+  color: #f2754e !important;
+
+ 
+}
+.ant-tabs-tab {
+  font-size: 18px !important;
+  
+}
+.ant-tabs-tab {
+  font-size: 16px !important;
+}
+.ant-tabs-ink-bar {
+  position: absolute;
+  background: rgb(255, 24, 24) !important;
+  pointer-events: none !important;
+
+}
+.text-center a:hover{
+  color: #f2754e;
+  text-decoration: none;
+  font-weight: bold;
+}
+#basic_email.ant-input{
+  height: 25px !important;
+}
+.dangki-tenTaiKhoan #basic_tenTaiKhoan.ant-input{
+  height: 25px !important;
+}
+.dangki-tenTaiKhoan #basic_matKhau.ant-input{
+  height: 25px !important;
+}
+.dangki-tenTaiKhoan #basic_hoTen.ant-input{
+  height: 25px !important;
 }

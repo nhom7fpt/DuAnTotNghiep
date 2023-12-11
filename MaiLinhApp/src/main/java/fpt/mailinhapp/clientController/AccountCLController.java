@@ -15,6 +15,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+import fpt.mailinhapp.exception.AccountException;
 
 @RestController
 @RequestMapping("api/v2/acc")
@@ -34,9 +35,10 @@ public class AccountCLController {
         if(error != null){
             return error;
         }
-        TaiKhoanDto tkDto = new TaiKhoanDto(dto.getTenTaiKhoan(), dto.getMatKhau(), VaiTro.ThanhVien);
+        TaiKhoanDto tkDto = new TaiKhoanDto(dto.getTenTaiKhoan(), dto.getMatKhau(), VaiTro.ThanhVien, dto.getNewPassword());
 
         var newDto = service.insertAccount(tkDto);
+
 
         ThanhVienDto tv = new ThanhVienDto();
         tv.setTaiKhoan(tkDto);
@@ -47,14 +49,20 @@ public class AccountCLController {
 
 
 
+        customerService.insertCustomers(tv);
+
+        System.out.println(tv.getTaiKhoan().getTenTaiKhoan());
+
        var saveTV = customerService.insertCustomers(tv);
 
+        System.out.println(saveTV.getTaiKhoan().getTenTaiKhoan());
 
 
 
 
         return new ResponseEntity<>(newDto, HttpStatus.CREATED);
     }
+
     @PostMapping
     public ResponseEntity loginAcc(@Validated @RequestBody TaiKhoanDto dto, BindingResult result){
         ResponseEntity error = errorService.mapValidationField(result);
@@ -66,6 +74,14 @@ public class AccountCLController {
 
         return new ResponseEntity<>(newDto,HttpStatus.ACCEPTED);
     }
-
+    @PostMapping("changepassword/{id}")
+    public ResponseEntity changePassword(@PathVariable String id, @RequestBody TaiKhoanDto dto) {
+        try {
+            service.changePassword(id, dto);
+            return new ResponseEntity<>("Đổi mật khẩu thành công !!!", HttpStatus.OK);
+        } catch (AccountException e) {
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
+        }
+    }
 
 }

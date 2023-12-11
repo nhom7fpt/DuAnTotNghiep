@@ -33,7 +33,7 @@ const KhuHoi = (props) => {
               onChange={onChange}
               filterOption={filterOption}
               options={data}
-              
+              className="tc-timchuyen"
             />
           </Col>
           <Col md={2} className="location-image">
@@ -50,6 +50,7 @@ const KhuHoi = (props) => {
               filterOption={filterOption}
               options={data}
               style={{marginLeft:'-0.6cm'}}
+              className="tc-timchuyen"
             />
           </Col>
 
