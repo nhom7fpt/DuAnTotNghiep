@@ -24,7 +24,7 @@ public class PayReturnController {
     PayMentService service;
 
 
-    @GetMapping("/api/v2/payreturn")
+    @GetMapping("/api/v1/payment")
     public String payInfo(@RequestParam("vnp_Amount") Long amount,
                           @RequestParam("vnp_BankCode") String bankCode,
                           @RequestParam("vnp_OrderInfo") String orderInfo,

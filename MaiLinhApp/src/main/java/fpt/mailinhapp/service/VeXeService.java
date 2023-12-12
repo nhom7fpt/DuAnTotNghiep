@@ -7,6 +7,7 @@ import fpt.mailinhapp.dto.VeXeChiTietDto;
 import fpt.mailinhapp.exception.TicketsException;
 import fpt.mailinhapp.repository.DatVeRepository;
 import fpt.mailinhapp.repository.VeXeChiTietRepository;
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -76,6 +77,17 @@ public class VeXeService {
             return dto;
         }).collect(Collectors.toList());
 
-        return listDto;
+        return listDto;git
+    }
+    public List<DatVeDto> findByAccount(String id){
+        var found = dao.findByTaiKhoan_TenTaiKhoan(id);
+
+
+        var dto = found.stream().map(i->{
+            ModelMapper mapper = new ModelMapper();
+            return mapper.map(i, DatVeDto.class);
+        }).collect(Collectors.toList());
+
+        return dto;
     }
 }

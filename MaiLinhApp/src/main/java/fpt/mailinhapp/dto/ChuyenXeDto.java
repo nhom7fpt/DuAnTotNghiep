@@ -20,6 +20,6 @@ public class ChuyenXeDto implements Serializable {
     Long maChuyen;
     String soKhach;
     private List<NhanVienDto> nhanViens = new ArrayList<>();
-    TuyenXeDto tuyenXe;
-    XeDto xe;
+    Integer tuyenXe;
+    String xe;
 }

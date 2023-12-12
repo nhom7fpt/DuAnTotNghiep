@@ -1,11 +1,14 @@
 package fpt.mailinhapp.service;
 
 import fpt.mailinhapp.domain.ChuyenXe;
+import fpt.mailinhapp.domain.TuyenXe;
 import fpt.mailinhapp.dto.ChuyenXeDto;
 import fpt.mailinhapp.dto.NhanVienDto;
 import fpt.mailinhapp.exception.BusesException;
 import fpt.mailinhapp.repository.ChuyenXeRepository;
 import fpt.mailinhapp.repository.NhanVienRepository;
+import fpt.mailinhapp.repository.TuyenXeRepository;
+import fpt.mailinhapp.repository.XeRepository;
 import fpt.mailinhapp.respondata.ChuyenTheoTuyen;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.BeanUtils;
@@ -24,12 +27,18 @@ public class ChuyenXeService {
     ChuyenXeRepository dao;
     @Autowired
     NhanVienRepository nvDao;
+    @Autowired
+    TuyenXeRepository tuyenDao;
+    @Autowired
+    XeRepository xeDao;
 
     @Transactional(rollbackFor = Exception.class)
     public ChuyenXeDto instertChuyenXe(ChuyenXeDto dto){
         ChuyenXe entity = new ChuyenXe();
 
-        BeanUtils.copyProperties(dto,entity);
+        BeanUtils.copyProperties(dto,entity, new String[]{"xe","tuyenXe"});
+
+        TuyenXe tx = tuyenDao.findById(dto.getTuyenXe()).get();
 
         var savEntity = dao.save(entity);
 
