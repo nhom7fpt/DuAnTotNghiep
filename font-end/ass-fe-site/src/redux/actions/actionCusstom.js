@@ -2,7 +2,62 @@ import { toast } from "react-toastify";
 import CustomService from "../../services/CustomService";
 import { CUSTOM_SET , FIELD_ACCOUNT } from "./actionType";
 const service = new CustomService();
+export const quenMK = (account, navigate) => async (dispatch) => {
+  try {
+    const res = await service.quenMK(account);
 
+    if (res.status === 200) {
+      dispatch({
+        type: CUSTOM_SET,
+        payload: res.data,
+      });
+
+      toast.success('Vui lòng check email', {
+        position: "top-right",
+        reverseOrder: false,
+        autoClose: 1000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "colored",
+      });
+  
+      navigate("/");
+    } 
+  } catch (error) {
+    if (error.response && error.response.status === 400) {
+      const errorMessage =
+        error.response.data || '';
+
+      toast.error(errorMessage, {
+        position: "top-right",
+        autoClose: 2000,
+        hideProgressBar: true,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "colored",
+        backgroundColor: "#ff0000",
+      });
+    } else {
+      toast.error('Không có dữ liệu trả về từ máy chủ!', {
+        position: "top-right",
+        autoClose: 2000,
+        hideProgressBar: true,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "colored",
+        backgroundColor: "#ff0000", 
+        });
+  
+    }
+    }
+  }
 export const updateCustom = (id ,account,image, navigate) => async (dispatch) => {
  
   try {

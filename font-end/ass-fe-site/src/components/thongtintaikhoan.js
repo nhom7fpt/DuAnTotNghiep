@@ -109,7 +109,7 @@ function Thongtintaikhoan(props) {
 }
 
 const mapStateToProps = (state) => ({
-    custom: state.CustomReducer.custom,
+    custom:state.CustomReducer.custom,
 });
 
 const mapDispatchToProps = {

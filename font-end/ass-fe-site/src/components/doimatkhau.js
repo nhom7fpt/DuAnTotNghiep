@@ -8,7 +8,7 @@ import { Form, Input, Button } from 'antd';
 import { toast } from 'react-toastify'; 
 
 import 'react-toastify/dist/ReactToastify.css'; 
-function PasswordResetPage (props) {
+const PasswordResetPage =(props)=> {
   const { navigate } = props.router;
   const user = localStorage.getItem("username");
 

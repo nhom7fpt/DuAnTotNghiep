@@ -10,6 +10,9 @@ export const LISTCHUYEN = "LISTCHUYEN";
 export const LISTCHUYEN1 = "LISTCHUYEN1";
 export const LISTCHUYEN2 = "LISTCHUYEN2";
 
+export const PAY_SET = "PAY_SET";
+
+export const ORDER_SET = "ORDER_SET";
 
 export const LISTTUYEN_SET = "LISTTUYEN";
 

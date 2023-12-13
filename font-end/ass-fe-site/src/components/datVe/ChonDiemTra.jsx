@@ -1,4 +1,4 @@
-import { Col, Divider, Radio, Row, Space } from "antd";
+import { Button, Col, Divider, Radio, Row, Space } from "antd";
 import React, { useState } from "react";
 import { useSeatSelection } from "./SeatSelectionContext";
 import { listSearchOneWay,listSearchReturn,loadDataField } from "../../redux/actions/actionSearch";
@@ -12,6 +12,9 @@ const ChonDiemTra = (props) => {
     console.log("radio checked", e.target.value);
     setValue(e.target.value);
   };
+  const onNext = ()=>{
+    props.onNext(value);
+  }
   return (
     <>
       <Row  key={chuyen.maChuyen}>
@@ -37,11 +40,17 @@ const ChonDiemTra = (props) => {
           </Radio.Group>
         </Col>
       </Row>
-      
-        
-      
+      <Row style={{ float: "right" }}>
+  
+      <Button type="primary" onClick={() => onNext()}>
+        Tiếp tục
+      </Button>
 
-     
+      <Button type="primary" style={{ margin: "0 8px" }} onClick={()=>props.onPrev()}>
+        Quay lại
+      </Button>
+
+  </Row>
 
     </>
   );

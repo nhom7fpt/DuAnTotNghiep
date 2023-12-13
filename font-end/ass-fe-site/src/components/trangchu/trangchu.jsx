@@ -12,6 +12,7 @@ import { Outlet } from "react-router-dom";
 import { connect } from "react-redux";
 import withRouter from "../../helpers/withRouter";
 import { updateCustom,fillAccount } from "../../redux/actions/actionCusstom";
+import { loadDataTuyen } from "../../redux/actions/actionSearch";
 
 function Home (props) {
   const user = localStorage.getItem("username");
@@ -21,6 +22,7 @@ function Home (props) {
   useEffect(() => {
     document.title = "Trang chủ";
     props.fillAccount(user, {});
+    props.loadDataTuyen();
     return () => {
       document.title = "Mai Linh TOUR";
     };
@@ -54,7 +56,8 @@ const mapStateToProps = (state) => ({
 });
 
 const mapDispatchToProps = {
-  fillAccount
+  fillAccount,
+  loadDataTuyen
 };
 
 export default connect(

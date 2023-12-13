@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState,useEffect } from "react";
 import { Button, Form, Input } from "antd";
 import { toast } from "react-toastify";
 import "react-notifications/lib/notifications.css";
@@ -6,19 +6,24 @@ import text from "../../image/logo/Text-mailinh.png";
 import { NavLink } from "react-router-dom";
 import { MdAttachEmail } from "react-icons/md";
 import { BsTelephoneFill } from "react-icons/bs";
-
+import { connect } from "react-redux";
+import withRouter from "../../helpers/withRouter";
+import { quenMK } from "../../redux/actions/actionCusstom";
 const QuenMatKhauForm = (props) => {
  
+  const { custom } = props;
+    const { navigate } = props.router;
 
-  const onFinish = (values) => {
-    props.onFinish(values);
-  };
-
-  const onFinishFailed = (errorInfo) => {
-    toast.error(errorInfo);
-  };
-
-
+  const handleFormSubmit = (values) => {
+       
+    props.quenMK(values,navigate);
+     
+    }
+  
+  
+    useEffect(() => {
+      
+    }, []);
   return (
    
     <div className="container h-custom">
@@ -50,6 +55,7 @@ const QuenMatKhauForm = (props) => {
               Quên mật khẩu
             </h3>
             <Form
+            onFinish={handleFormSubmit}
               name=""
               labelCol={{
                 span: 8,
@@ -60,12 +66,11 @@ const QuenMatKhauForm = (props) => {
               style={{
                 maxWidth: 600,
               }}
-              onFinish={onFinish}
-              onFinishFailed={onFinishFailed}
+             
               autoComplete="off"
             >
             <Form.Item
-            name="tenTaiKhoan"
+            name="soDT"
             rules={[
               {
                 required: true,
@@ -126,4 +131,16 @@ const QuenMatKhauForm = (props) => {
   );
 };
 
-export default QuenMatKhauForm;
+
+const mapStateToProps = (state) => ({
+  custom:state.CustomReducer.custom,
+});
+
+const mapDispatchToProps = {
+  quenMK
+};
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(withRouter(QuenMatKhauForm));

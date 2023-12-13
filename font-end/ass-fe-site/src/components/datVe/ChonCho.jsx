@@ -1,16 +1,14 @@
-import { Checkbox, Col, Row, Card, message } from "antd";
+import { Checkbox, Col, Row, Card, message, Button } from "antd";
 import React, { useEffect, useState } from "react";
 import { IoClipboard, IoClipboardOutline } from 'react-icons/io5';
 import './Choncho.css';
 import { useSeatSelection } from './SeatSelectionContext';
-
-const ChonCho = () => {
+const ChonCho = (props) => {
   const [dataLower, setDataLower] = useState([]);
   const [dataUpper, setDataUpper] = useState([]);
   const [selectedSeatsLower, setSelectedSeatsLower] = useState([]);
   const [selectedSeatsUpper, setSelectedSeatsUpper] = useState([]);
-  const dis = [5, 7, 9];
-
+  const dis = ['A1'];
   const onChange = (values, floor) => {
     if (floor === 'lower') {
       setSelectedSeatsLower(values);
@@ -33,11 +31,15 @@ const ChonCho = () => {
       });
       setDataUpper(updatedDataUpper);
     }
-
-    // Lưu trạng thái ghế đã chọn vào localStorage
     localStorage.setItem("selectedSeatsLower", JSON.stringify(selectedSeatsLower));
     localStorage.setItem("selectedSeatsUpper", JSON.stringify(selectedSeatsUpper));
   };
+
+  const onNext = () =>{
+    const newData = selectedSeatsLower.concat(selectedSeatsUpper);
+
+    props.onNext(newData);
+  }
 
   const createData = () => {
     let numRows = 8;
@@ -84,6 +86,7 @@ const ChonCho = () => {
   }, []);
 
   return (
+    <>
     <Row>
       <Col md={6} style={{marginTop:'0.4cm', marginRight:'1.2cm'}}>
         <div className="seat-status">
@@ -122,6 +125,18 @@ const ChonCho = () => {
         )}
       </Col>
     </Row>
+    <Row style={{ float: "right" }}>
+  
+      <Button type="primary" onClick={() => onNext()}>
+        Tiếp tục
+      </Button>
+
+      <Button type="primary" style={{ margin: "0 8px" }} onClick={()=>props.onClose()}>
+        Hủy
+      </Button>
+
+  </Row>
+    </>
   );
 };
 

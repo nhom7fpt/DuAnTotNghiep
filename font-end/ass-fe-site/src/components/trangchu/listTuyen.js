@@ -9,8 +9,10 @@ import { connect } from "react-redux";
 import withRouter from "../../helpers/withRouter";
 import { listSearchOneWay,listSearchReturn,loadDataField } from "../../redux/actions/actionSearch";
 import Boloc from"./boloc"
+import SearchService from "../../services/SearchService";
 function SeatSelection(props) {
   const [hasData, setHasData] = useState(true);
+
   const [selectedChuyen, setSelectedChuyen] = useState()
   const [isSeatModalOpen, setIsSeatModalOpen] = useState(false);
   const [currentTrip, setCurrentTrip] = useState(null);
@@ -24,15 +26,11 @@ function SeatSelection(props) {
     setIsSeatModalOpen(true);
     setSelectedChuyen(data);
   };
-  const { listChuyen } = props;
+  const { listChuyen, listTuyen } = props;
   const [currentPage, setCurrentPage] = useState(1);
   const pageSize = 3;
-  const getCurrentPageData = () => {
-    const startIndex = (currentPage - 1) * pageSize;
-    const endIndex = startIndex + pageSize;
-    return listChuyen.slice(startIndex, endIndex);
-  };
-  console.log(listChuyen);
+  
+ 
   
   const totalPages = Math.ceil(listChuyen.length / pageSize);
   
@@ -46,10 +44,23 @@ function SeatSelection(props) {
   function formatCurrency(value) {
     return value ? value.toLocaleString('vi-VN', { style: 'currency', currency: 'VND' }) : '---';
   }
+   
   
-  useEffect(() => {
-
-  }, []);
+  const getCurrentPageData = () => {
+    const startIndex = (currentPage - 1) * pageSize;
+    const endIndex = startIndex + pageSize;
+    const newList = listChuyen.map(i=>{
+      const tuyen = listTuyen.find(t=> i.tuyenXe === t.maTuyenXe);
+      return ({
+        ...i,
+        tuyenXe : tuyen
+      })
+    })
+    console.log(listTuyen);
+    console.log(newList);
+    console.log(listChuyen);
+    return newList.slice(startIndex, endIndex);
+  };
 
 let isLocationDisplayed = false;
   return (
@@ -67,6 +78,7 @@ let isLocationDisplayed = false;
       />
     ) : (
       getCurrentPageData().map((item, index) => (
+        
         <Row className="custom-container-loc" key={item.maChuyen}>
         {index === 0 && (
           <div className="hidden-text">
@@ -162,6 +174,7 @@ const mapStateToProps = (state) => ({
   listChuyen:state.SearchReducer.listChuyen,
   listChuyenReturn1:state.SearchReducer.listChuyenReturn1,
   listChuyenReturn2:state.SearchReducer.listChuyenReturn2,
+  listTuyen: state.SearchReducer.listTuyen,
   fieldData: state.SearchReducer.fieldData,
   
 });

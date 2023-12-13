@@ -1,80 +1,72 @@
-import React, { useState } from 'react';
+import React, { useState,useEffect } from 'react';
 import '../css/lichsumuave.css';
 import { DatePicker, Input, Button, Select, Table, Empty } from 'antd';
 import 'antd/dist/antd.css';
 import Menudangnhap from '../components/menudangnhap';
+import { connect } from 'react-redux';
+import withRouter from '../helpers/withRouter';
+import { orderhistory } from '../redux/actions/actionOrderhistory';
+import SearchService from '../services/SearchService';
 
 const { Option } = Select;
 
-function Lichsimuave() {
+function Lichsimuave(props) {
     const [selectedDate, setSelectedDate] = useState(null);
+    const [data, setData] = useState([]);
+
     const [currentPage, setCurrentPage] = useState(1);
     const [pageSize, setPageSize] = useState(3);
     const handleDateChange = (date) => {
         setSelectedDate(date);
     };
-    const data = [
-        {
-            key: '1',
-            maGiaoDich: 'GD001',
-            soTien: '1000000 VND',
-            noiDung: 'Mua vé đi Hà Nội',
-            thoiGian: '2023-01-01 10:00',
-            trangThai: 'Đã thanh toán',
-        },
-        {
-            key: '2',
-            maGiaoDich: 'GD002',
-            soTien: '800000 VND',
-            noiDung: 'Mua vé đi Hồ Chí Minh',
-            thoiGian: '2023-02-15 15:30',
-            trangThai: 'Chưa thanh toán',
-        },
-        {
-            key: '3',
-            maGiaoDich: 'GD003',
-            soTien: '1200000 VND',
-            noiDung: 'Mua vé đi Đà Nẵng',
-            thoiGian: '2023-03-20 08:45',
-            trangThai: 'Đã thanh toán',
-        },
-        {
-            key: '4',
-            maGiaoDich: 'GD004',
-            soTien: '1000000 VND',
-            noiDung: 'Mua vé đi Hà Nội',
-            thoiGian: '2023-01-01 10:00',
-            trangThai: 'Đã thanh toán',
-        },
-        {
-            key: '5',
-            maGiaoDich: 'GD005',
-            soTien: '800000 VND',
-            noiDung: 'Mua vé đi Hồ Chí Minh',
-            thoiGian: '2023-02-15 15:30',
-            trangThai: 'Chưa thanh toán',
-        },
-        {
-            key: '6',
-            maGiaoDich: 'GD006',
-            soTien: '1200000 VND',
-            noiDung: 'Mua vé đi Đà Nẵng',
-            thoiGian: '2023-03-20 08:45',
-            trangThai: 'Đã thanh toán',
-        },
-    ];
+    const user = localStorage.getItem("username");
+    
+    const listData = props.listData || [];
 
+   const loadNewData =async ()=>{
+    const service = new SearchService();
+    const tuyenRes = await service.loadDataTuyen();
+    const listTuyen = tuyenRes.data;
+    if(listData){
+        const newListData = listData.map(i=>{
+            const tuyen = listTuyen.find(t=>t.maTuyenXe === i.chuyenXe.tuyenXe);
+          
+            return ({
+                key: i.maVe,
+                maVe: i.maVe,
+                soLuong: i.soLuong,
+                tongTien: i.tongTien,
+                noiDung: `${tuyen.diemDi} - ${tuyen.diemDen} (${tuyen.tgDi})`,
+                ngayDatVe: i.ngayDatVe
+            })
+        });
+
+        setData(newListData);
+    }
+   }
+    
+    // const data = listData.map(item => ({
+    //     ...item,
+    //     soLuong: item.soLuong,
+    //     tongTien: item.tongTien,
+    // }));
     const columns = [
         {
             title: 'Mã giao dịch',
-            dataIndex: 'maGiaoDich',
-            key: 'maGiaoDich',
+            dataIndex: 'maVe',
+            key: 'maVe',
             align: 'center',
         },
         {
-            title: 'Số tiền',
-            dataIndex: 'soTien',
-            key: 'soTien',
+            title: 'Số lượng',
+            dataIndex: 'soLuong',
+            key: 'soLuong',
+            align: 'center',
+        },
+        {
+            title: 'Tổng tiền',
+            dataIndex: 'tongTien',
+            key: 'tongTien',
             align: 'center',
         },
         {
@@ -85,9 +77,12 @@ function Lichsimuave() {
         },
         {
             title: 'Thời gian',
-            dataIndex: 'thoiGian',
-            key: 'thoiGian',
+            dataIndex: 'ngayDatVe',
+            key: 'ngayDatVe',
             align: 'center',
+            render: (text, record) => (
+                <span>{record.ngayDatVe ? formatDate(record.ngayDatVe) : ''}</span>
+              ),
         },
         {
             title: 'Trạng thái',
@@ -104,12 +99,24 @@ function Lichsimuave() {
     const paginationConfig = {
         pageSize: pageSize,
         current: currentPage,
-        total: data.length,
+        total: listData.length,
         showSizeChanger: false,
 
     };
+    const formatDate = (dateString) => {
+        const options = { year: 'numeric', month: '2-digit', day: '2-digit' };
+        return new Date(dateString).toLocaleDateString('en-GB', options);
+      };
+    const paginatedData = listData.slice((currentPage - 1) * pageSize, currentPage * pageSize);
+    useEffect(() => {
+        props.orderhistory(user);
+      
+    },[]);
 
-    const paginatedData = data.slice((currentPage - 1) * pageSize, currentPage * pageSize);
+    useEffect(() => {
+        loadNewData();
+      
+    },[]);
 
     return (
         <div className="border">
@@ -123,9 +130,6 @@ function Lichsimuave() {
                                     <div className="col conten">
                                         <h2 style={{ fontWeight: 500, fontSize: '26px', lineHeight: '31px' }}> Lịch sử mua vé</h2>
                                         <span>Theo dõi và quản lý quá trình lịch sử mua vé của bạn</span>
-                                    </div>
-                                    <div className="col datve">
-                                        <Button className="btn_datve">Đặt Vé</Button>
                                     </div>
                                 </div>
                                 <div className="flex flex-wrap gap-6 pt-4">
@@ -185,4 +189,14 @@ function Lichsimuave() {
     );
 }
 
-export default Lichsimuave;
+
+const mapStateToProps = (state) => ({
+    listData: state.Oderhistory.listData,
+  });
+  
+  const mapDispatchToProps = {
+    orderhistory
+  };
+  
+  export default connect(mapStateToProps, mapDispatchToProps)(withRouter(Lichsimuave));
+  
