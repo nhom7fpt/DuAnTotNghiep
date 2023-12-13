@@ -1,22 +1,20 @@
 package fpt.mailinhapp.onlinePay;
 
+import fpt.mailinhapp.dto.ChuyenXeDto;
+import fpt.mailinhapp.dto.DatVeDto;
+import fpt.mailinhapp.dto.InfoDto;
 import fpt.mailinhapp.dto.ThanhToanDto;
+
 import fpt.mailinhapp.service.PayMentService;
-import org.json.JSONObject;
+import fpt.mailinhapp.service.VeXeService;
+import org.modelmapper.ModelMapper;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.io.*;
 
-import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
-import java.net.URL;
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
 import java.text.ParseException;
@@ -25,17 +23,36 @@ import java.util.*;
 
 
 @Controller
+@CrossOrigin
 @RequestMapping("api/v1/payment")
 public class PayController {
 
     @Autowired
     PayMentService service;
-    @GetMapping("create_pay")
-    public String createPayment() throws UnsupportedEncodingException {
+    @Autowired
+    VeXeService veXeService;
+
+
+    DatVeDto trunggian = new DatVeDto();
+
+    @PostMapping
+    public String getData(@RequestBody DatVeDto dto){
+        BeanUtils.copyProperties(dto, trunggian);
+        InfoDto info = new InfoDto();
+        BeanUtils.copyProperties(dto.getInfo(),info);
+        ChuyenXeDto chuyen = new ChuyenXeDto();
+        chuyen.setMaChuyen(dto.getChuyenXe().getMaChuyen());
+        trunggian.setInfo(info);
+        trunggian.setChuyenXe(chuyen);
+
+        return "redirect:http://localhost:8080/api/v1/payment/create_pay/"+ dto.getTongTien();
+    }
+    @GetMapping("create_pay/{amount}")
+    public String createPayment(@PathVariable Long money) throws UnsupportedEncodingException {
 
         String vnp_Command = "pay";
         String orderType = "other";
-        long amount = 10000*100;
+        long amount = money*100;
         String bankCode = "";
 
         String vnp_TxnRef = Config.getRandomNumber(8);
@@ -128,11 +145,15 @@ public class PayController {
             dto.setStatus(true);
         }else{
             dto.setStatus(false);
-        }
+        };
 
         service.save(dto);
 
-        return "redirect:http://localhost:3000/thongtinve"+ dto.getId();
+        trunggian.setThanhToan(dto);
+
+        veXeService.createVe(trunggian);
+
+        return "redirect:http://localhost:3000/thongtinve/"+ dto.getId();
     }
 
 //    @GetMapping("refund_pay")

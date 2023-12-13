@@ -1,6 +1,8 @@
 package fpt.mailinhapp.dto;
 
-import fpt.mailinhapp.domain.KhuyenMai;
+import fpt.mailinhapp.domain.DatVe;
+import fpt.mailinhapp.dto.ChuyenXeDto;
+import fpt.mailinhapp.dto.InfoDto;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -11,7 +13,7 @@ import java.util.Date;
 import java.util.List;
 
 /**
- * DTO for {@link fpt.mailinhapp.domain.DatVe}
+ * DTO for {@link DatVe}
  */
 @Data
 @AllArgsConstructor
@@ -19,10 +21,13 @@ import java.util.List;
 public class DatVeDto implements Serializable {
     Long maVe;
     Integer soLuong;
-    Float tongTien;
-    TaiKhoanDto taiKhoan;
+    Long tongTien;
+    String noiTra;
+    List<String> choNgoi;
     ChuyenXeDto chuyenXe;
-    List<VeXeChiTietDto> veXeChiTiets;
-    private Date ngayDatVe;
-    private KhuyenMaiDto khuyenMai;
+    InfoDto info;
+    Date ngayDatVe;
+    Date ngayDi;
+    ThanhToanDto thanhToan;
+
 }

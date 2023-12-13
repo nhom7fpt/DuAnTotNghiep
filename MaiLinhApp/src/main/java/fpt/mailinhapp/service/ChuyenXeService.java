@@ -1,7 +1,9 @@
 package fpt.mailinhapp.service;
 
 import fpt.mailinhapp.domain.ChuyenXe;
+import fpt.mailinhapp.domain.NhanVien;
 import fpt.mailinhapp.domain.TuyenXe;
+import fpt.mailinhapp.domain.Xe;
 import fpt.mailinhapp.dto.ChuyenXeDto;
 import fpt.mailinhapp.dto.NhanVienDto;
 import fpt.mailinhapp.exception.BusesException;
@@ -18,7 +20,9 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -36,9 +40,19 @@ public class ChuyenXeService {
     public ChuyenXeDto instertChuyenXe(ChuyenXeDto dto){
         ChuyenXe entity = new ChuyenXe();
 
-        BeanUtils.copyProperties(dto,entity, new String[]{"xe","tuyenXe"});
+        BeanUtils.copyProperties(dto,entity, new String[]{"xe","tuyenXe","nhanViens"});
 
         TuyenXe tx = tuyenDao.findById(dto.getTuyenXe()).get();
+        Xe xe = xeDao.findById(dto.getXe()).get();
+        List<NhanVien> nhanVienList = new ArrayList<>();
+        for (NhanVienDto i : dto.getNhanViens()) {
+            NhanVien byId = nvDao.findById(i.getSoCCCD()).get();
+            nhanVienList.add(byId);
+        }
+
+        entity.setXe(xe);
+        entity.setTuyenXe(tx);
+        entity.setNhanViens(nhanVienList);
 
         var savEntity = dao.save(entity);
 
@@ -51,7 +65,25 @@ public class ChuyenXeService {
     public ChuyenXeDto updateChuyenXe(Long id,ChuyenXeDto dto){
         var found = dao.findById(id).orElseThrow(()->new BusesException("Chuyến xe không tồn tại"));
 
-        BeanUtils.copyProperties(dto, found);
+        BeanUtils.copyProperties(dto, found,new String[]{"xe","tuyenXe","nhanViens"});
+
+        List<NhanVien> nhanVienList = new ArrayList<>();
+        for (NhanVienDto i : dto.getNhanViens()) {
+            NhanVien byId = nvDao.findById(i.getSoCCCD()).get();
+            nhanVienList.add(byId);
+        }
+        found.setNhanViens(nhanVienList);
+
+        if(dto.getXe() != null){
+            Xe xe = xeDao.findById(dto.getXe()).get();
+            found.setXe(xe);
+        }
+
+        if(dto.getTuyenXe() != null){
+            TuyenXe tx = tuyenDao.findById(dto.getTuyenXe()).get();
+            found.setTuyenXe(tx);
+        }
+
 
         var saveEntity = dao.save(found);
 

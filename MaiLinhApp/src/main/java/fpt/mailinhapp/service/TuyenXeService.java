@@ -25,7 +25,7 @@ public class TuyenXeService {
     @Transactional(rollbackFor = Exception.class)
     public TuyenXe createBuses(TuyenXeDto dto){
         TuyenXe entity = new TuyenXe();
-        BeanUtils.copyProperties(dto, entity, new String[]{"tgDi","tgDen"});
+        BeanUtils.copyProperties(dto, entity, new String[]{"tgDi","tgDen","noiTras"});
 
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSSX");
 

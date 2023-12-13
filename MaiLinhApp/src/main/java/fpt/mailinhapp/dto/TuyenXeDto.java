@@ -9,6 +9,10 @@ import java.io.Serializable;
 import java.sql.Date;
 import java.sql.Time;
 import java.time.LocalTime;
+import java.util.ArrayList;
+import java.util.LinkedHashSet;
+import java.util.List;
+import java.util.Set;
 
 /**
  * DTO for {@link fpt.mailinhapp.domain.TuyenXe}
@@ -21,7 +25,8 @@ public class TuyenXeDto implements Serializable {
     String diemDi;
     String diemDen;
     String noiDon;
-    String noiTra;
+    private Set<NoiTraDto> noiTras = new LinkedHashSet<>();
+
     String  tgDi;
     String tgDen;
     Long gia;

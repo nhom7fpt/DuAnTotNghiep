@@ -1,5 +1,6 @@
 package fpt.mailinhapp.domain;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Getter;
@@ -15,38 +16,49 @@ import java.util.List;
 @Table(name = "dat_ve")
 public class DatVe {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "dat_ve_gen")
+    @SequenceGenerator(name = "dat_ve_gen", sequenceName = "dat_ve_seq", allocationSize = 7)
     @Column(name = "ma_ve", nullable = false)
     private Long maVe;
 
-    @Column(name = "so_luong", nullable = false)
+    @Column(name = "so_luong")
     private Integer soLuong;
 
-    @Column(name = "tong_tien", nullable = false)
-    private Float tongTien;
+    @Column(name = "tong_tien")
+    private Long tongTien;
+
+    @Column(name = "noi_tra", length = 200)
+    private String noiTra;
+
+    @ElementCollection
+    @Column(name = "cho_ngoi", length = 5)
+    @CollectionTable(name = "dat_ve_choNgoi", joinColumns = @JoinColumn(name = "owner_id"))
+    private List<String> choNgoi = new ArrayList<>();
 
     @ManyToOne
-    @JoinColumn(name = "tai_khoan")
-    private TaiKhoan taiKhoan;
-
-    @OneToOne(orphanRemoval = true)
-    @JoinColumn(name = "chuyen_xe")
+    @JoinColumn(name = "chuyen_xe_ma_chuyen")
     private ChuyenXe chuyenXe;
 
-    @JsonIgnore
-    @OneToMany(mappedBy = "datVe", orphanRemoval = true)
-    private List<VeXeChiTiet> veXeChiTiets = new ArrayList<>();
+    @OneToOne(orphanRemoval = true)
+    @JoinColumn(name = "info_id")
+    private Info info;
 
     @Temporal(TemporalType.DATE)
+    @JsonFormat(pattern = "DD-MM-YYYY")
     @Column(name = "ngay_dat_ve")
     private Date ngayDatVe;
 
-    @ManyToOne
-    @JoinColumn(name = "khuyen_mai_ma_khuyen_mai")
-    private KhuyenMai khuyenMai;
+    @Temporal(TemporalType.DATE)
+    @JsonFormat(pattern = "DD-MM-YYYY")
+    @Column(name = "ngay_di")
+    private Date ngayDi;
 
     @OneToOne(orphanRemoval = true)
     @JoinColumn(name = "thanh_toan_id")
     private ThanhToan thanhToan;
 
+    @PrePersist
+    public void prePersist() {
+        ngayDatVe = new Date();
+    }
 }

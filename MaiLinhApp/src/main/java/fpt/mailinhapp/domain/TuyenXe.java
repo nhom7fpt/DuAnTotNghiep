@@ -8,8 +8,7 @@ import org.hibernate.proxy.HibernateProxy;
 
 import java.sql.Time;
 import java.time.LocalTime;
-import java.util.Date;
-import java.util.Objects;
+import java.util.*;
 
 @Getter
 @Setter
@@ -30,8 +29,7 @@ public class TuyenXe {
     @Column(name = "noi_don")
     private String noiDon;
 
-    @Column(name = "noi_tra")
-    private String noiTra;
+
 
     @JsonFormat(pattern = "HH:mm")
     @Column(name = "tgian_di")
@@ -43,5 +41,10 @@ public class TuyenXe {
     @Column(name = "gia")
     private Long gia;
 
+    @ManyToMany
+    @JoinTable(name = "tuyen_xe_noiTras",
+            joinColumns = @JoinColumn(name = "tuyenXe_ma_Tuyen_xe"),
+            inverseJoinColumns = @JoinColumn(name = "noiTras_id"))
+    private Set<NoiTra> noiTras = new LinkedHashSet<>();
 
 }

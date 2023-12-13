@@ -19,34 +19,23 @@ public class TicketsController {
     VeXeService service;
     @Autowired
     MapValidationErrorService errorService;
-
-    @GetMapping
-    public ResponseEntity getList(){
-        return new ResponseEntity<>(service.findAll(), HttpStatus.OK);
-    }
-
     @PostMapping
-    public ResponseEntity insertTickets(@Validated @RequestBody DatVeDto dto, BindingResult result){
-        ResponseEntity error = errorService.mapValidationField(result);
+    public ResponseEntity createTicket(@Validated @RequestBody DatVeDto dto, BindingResult result){
 
+        ResponseEntity error = errorService.mapValidationField(result);
         if(error != null){
             return error;
         }
 
-        var saveTicket = service.createTickets(dto);
+        var saveDto = service.createVe(dto);
 
-        return new ResponseEntity<>(saveTicket, HttpStatus.CREATED);
+        return new ResponseEntity<>(dto, HttpStatus.CREATED);
     }
 
-    @DeleteMapping("{id}")
-    public ResponseEntity deleteTicket(@PathVariable Long id){
-        service.removeTickets(id);
-
-        return new ResponseEntity<>(HttpStatus.OK);
+    @GetMapping
+    public ResponseEntity getAll(){
+        return new ResponseEntity<>(service.findAll(), HttpStatus.OK);
     }
 
-    @GetMapping("/{id}")
-    public ResponseEntity getTicketDetail(@PathVariable Long id){
-        return new ResponseEntity<>(service.findById(id),HttpStatus.OK);
-    }
+    
 }
