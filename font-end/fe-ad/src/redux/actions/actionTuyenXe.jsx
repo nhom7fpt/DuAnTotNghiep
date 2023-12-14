@@ -193,3 +193,11 @@ export const clearTuyen = () => async (dispatch) => {
     },
   });
 };
+
+export const TuyenEditData = (tuyen, navigate) => (dispatch) => {
+  dispatch({
+    type: TUYENXE_SET,
+    payload: tuyen,
+  });
+  navigate("/tuyen/capnhat/" + tuyen.maTuyenXe);
+};

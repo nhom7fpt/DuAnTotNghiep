@@ -13,9 +13,7 @@ export class ListOrder extends Component {
     this.props.getListOrder();
   };
   onGoDetail = (data) => {
-    this.props.router.navigate(
-      `/order/orderdetail/${data.maVe}?total=${data.tongTien}`
-    );
+    this.props.router.navigate(`/datve/vechitiet/${data.maVe}`);
   };
   render() {
     const { navigate } = this.props.router;

@@ -26,7 +26,6 @@ class ChuyenList extends Component {
   render() {
     const { chuyens } = this.props;
     console.log(chuyens);
-
     return (
       <>
         <Table dataSource={chuyens} rowKey="maChuyen">

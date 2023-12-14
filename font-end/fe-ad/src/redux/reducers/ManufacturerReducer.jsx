@@ -29,7 +29,7 @@ const ManufacturerReducer = (state = initialState, { type, payload }) => {
 
       return {
         ...state,
-        manufactureres: [payload, ...newmanu],
+        manufactureres: newmanu,
       };
 
     case MANUFACTURER_UPDATE:

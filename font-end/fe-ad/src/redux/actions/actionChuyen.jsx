@@ -28,7 +28,7 @@ export const insterChuyen = (Chuyen, navigate) => async (dispatch) => {
         payload: false,
       });
       toast.success("Save Done");
-      navigate("/Chuyen/list");
+      navigate("/chuyen/danhsach");
     }
   } catch (error) {
     dispatch({
@@ -49,8 +49,8 @@ export const updateChuyen = (id, Chuyen, navigate) => async (dispatch) => {
       payload: true,
     });
     const res = await service.updateChuyen(id, Chuyen);
-
-    if (res.status === 201) {
+    console.log(res);
+    if (res.status === 200) {
       dispatch({
         type: CHUYEN_SET,
         payload: res.data,
@@ -60,7 +60,7 @@ export const updateChuyen = (id, Chuyen, navigate) => async (dispatch) => {
         payload: false,
       });
       toast.success("Update Done");
-      navigate("/Chuyen/list");
+      navigate("/chuyen/danhsach");
     }
   } catch (error) {
     dispatch({
@@ -135,9 +135,9 @@ export const deleteChuyen = (id) => async (dispatch) => {
       type: COMMON_LOADING_SET,
       payload: false,
     });
-    //   toast.error(
-    //     error.response.data ? error.response.data.message : error.message
-    //   );
+    toast.error(
+      error.response.data ? error.response.data.message : error.message
+    );
   }
 };
 

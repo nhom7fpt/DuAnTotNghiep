@@ -11,26 +11,23 @@ import {
   updateChuyen,
   clearChuyen,
 } from "../../redux/actions/actionChuyen";
-import FormChuyen from "./FormChuyen";
+import FormTuyenXe from "./FormTuyenXe";
 import { toast } from "react-toastify";
-import TransferNhanVien from "./TransferNhanVien";
-import NhanVienService from "../../services/NhanVienService";
-import ChuyenXeService from "../../services/ChuyenXeService";
+import TransferNoiTra from "./TransferNoiTra";
 
-class AddOrEditChuyen extends Component {
+class AddOrEditTuyen extends Component {
   constructor(props) {
     super(props);
 
     this.state = {
       step: 0,
-      chuyen: {},
-      nhanViens: [],
-      xe: [],
-      tuyen: [],
+      tuyenXe: {},
+      noiTra: [],
+      listNoiTra: [],
     };
   }
   goNext = (values) => {
-    this.setState({ ...this.state, chuyen: values, step: 1 });
+    this.setState({ ...this.state, tuyenXe: values, step: 1 });
   };
   goPrevi = () => {
     this.setState({ ...this.state, step: 0 });
@@ -39,70 +36,36 @@ class AddOrEditChuyen extends Component {
   componentDidMount = () => {
     this.loadData();
   };
-
   handleTargetKeysChange = (targetKeys) => {
-    this.setState({ nhanViens: targetKeys });
+    this.setState({ ...this.state, noiTra: targetKeys });
   };
   saveProduct = () => {
-    const { nhanViens, chuyen, listNhanVien } = this.state;
-    const { navigate } = this.props.router;
-    const nhanVienChon = listNhanVien.filter((item) =>
-      nhanViens.includes(item.soCCCD)
-    );
-
-    const newChuyen = { ...chuyen, nhanViens: nhanVienChon };
-
-    this.props.insterChuyen(newChuyen, navigate);
+    const { tuyenXe, noiTra, listNoiTra } = this.state;
+    const nhanVienChon = listNoiTra.filter((item) => noiTra.includes(item.id));
+    const newdata = { ...tuyenXe, noiTras: nhanVienChon };
+    console.log(newdata);
   };
 
   updateProduct = () => {
-    const { nhanViens, chuyen, listNhanVien } = this.state;
-    const { navigate } = this.props.router;
-    const nhanVienChon = listNhanVien.filter((item) =>
-      nhanViens.includes(item.soCCCD)
-    );
-
-    const newChuyen = { ...chuyen, nhanViens: nhanVienChon };
-    this.props.updateChuyen(newChuyen.maChuyen, newChuyen, navigate);
+    const { tuyenXe, noiTra } = this.state;
   };
 
   loadData = async () => {
-    try {
-      const carServer = new CarService();
-      const tuyenService = new TuyenXeService();
-      const nhanVienService = new NhanVienService();
-      const XeRes = await carServer.getCar();
-      const tuyenRes = await tuyenService.getTuyen();
-      const nhanVienRes = await nhanVienService.getNhanVien();
-      console.log(XeRes);
-      this.setState({
-        ...this.state,
-        listNhanVien: nhanVienRes.data,
-        xe: XeRes.data,
-        tuyen: tuyenRes.data,
-      });
-    } catch (error) {
-      console.log(error);
-      toast.error("Error: " + error);
-    }
-    this.loadNhanVien();
-  };
-  loadNhanVien = () => {
-    const { chuyen } = this.props;
-    if (chuyen && chuyen.nhanViens) {
-      this.setState({ ...this.state, nhanViens: chuyen.nhanViens });
-    }
+    const service = new TuyenXeService();
+    const res = await service.getListNoiTra();
+    res && res.data && this.setState({ ...this.state, listNoiTra: res.data });
   };
 
   render() {
     const { navigate } = this.props.router;
-    const { step, listNhanVien } = this.state;
-    const { chuyen } = this.props;
+    const { step, listNoiTra } = this.state;
+    const { tuyenXe } = this.props;
+
     return (
       <>
         <HeaderContent
           title={
-            chuyen && chuyen.maChuyen ? "Cập nhật chuyến" : "Thêm chuyến mới"
+            tuyenXe && tuyenXe.maTuyenXe ? "Cập nhật tuyến" : "Thêm tuyến mới"
           }
           navigate={navigate}
         />
@@ -126,14 +89,17 @@ class AddOrEditChuyen extends Component {
             {step === 0 && (
               <>
                 <Divider></Divider>
-                <FormChuyen chuyen={chuyen} goNext={this.goNext}></FormChuyen>
+                <FormTuyenXe
+                  tuyenXe={tuyenXe}
+                  goNext={this.goNext}
+                ></FormTuyenXe>
               </>
             )}
             {step === 1 && (
               <>
-                <TransferNhanVien
-                  list={listNhanVien}
-                  chuyen={chuyen}
+                <TransferNoiTra
+                  list={listNoiTra}
+                  tuyenXe={tuyenXe}
                   handleTargetKeysChange={this.handleTargetKeysChange}
                 />
                 <Divider></Divider>
@@ -145,7 +111,7 @@ class AddOrEditChuyen extends Component {
                         <Button type="primary" onClick={this.goPrevi}>
                           Previous
                         </Button>
-                        {chuyen && chuyen.maChuyen ? (
+                        {tuyenXe && tuyenXe.maTuyenXe ? (
                           <Button type="primary" onClick={this.updateProduct}>
                             <SaveOutlined /> Update
                           </Button>
@@ -168,7 +134,7 @@ class AddOrEditChuyen extends Component {
 }
 
 const mapStateToProps = (state) => ({
-  chuyen: state.ChuyenReducer.chuyen,
+  tuyenXe: state.TuyenXeReducer.tuyenXe,
 });
 
 const mapDispatchToProps = {
@@ -180,4 +146,4 @@ const mapDispatchToProps = {
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(withRouter(AddOrEditChuyen));
+)(withRouter(AddOrEditTuyen));

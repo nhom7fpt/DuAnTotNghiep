@@ -53,9 +53,15 @@ public class DatVe {
     @Column(name = "ngay_di")
     private Date ngayDi;
 
+
+
     @OneToOne(orphanRemoval = true)
     @JoinColumn(name = "thanh_toan_id")
     private ThanhToan thanhToan;
+
+    @Temporal(TemporalType.DATE)
+    @Column(name = "ngay_ve")
+    private Date ngayVe;
 
     @PrePersist
     public void prePersist() {

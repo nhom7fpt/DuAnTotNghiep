@@ -13,6 +13,7 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalTime;
+import java.util.Date;
 
 @RestController
 @CrossOrigin
@@ -68,5 +69,12 @@ public class BusesController {
     public ResponseEntity getListNhanVienChuyen(){
 
         return new ResponseEntity<>(service.getListNhanVienByChuyen(), HttpStatus.OK);
+    }
+    @GetMapping("/cho/{id}")
+    public ResponseEntity getListCho(@PathVariable Long id){
+        Date now = new Date();
+        var data = service.getCho(id,now,now);
+
+        return new ResponseEntity<>(data, HttpStatus.OK);
     }
 }

@@ -5,19 +5,21 @@ import { Card, Col, Divider, Image, Row, Space, Statistic, Table } from "antd";
 
 export class ListOrderDetail extends Component {
   render() {
-    const { odd, total } = this.props;
-
-    const totalFunds = odd.reduce((total, item) => total + item.price, 0);
-    const quantity = odd.length;
-    const giaVe = total / quantity;
+    const { odd } = this.props;
+    console.log(odd);
+    const quantity = odd && odd.choNgoi ? odd.choNgoi.length : 0;
+    const data =
+      odd && odd.choNgoi
+        ? odd.choNgoi.map((i) => ({
+            nguoiMua: odd.info.hoTen,
+            sdt: odd.info.soDT,
+            email: odd.email,
+            choNgoi: i,
+          }))
+        : [];
     return (
       <>
         <Row gutter={16}>
-          <Col span={8}>
-            <Card bordered={false}>
-              <Statistic title="Giá vé" value={giaVe} suffix="VND" />
-            </Card>
-          </Col>
           <Col span={8}>
             <Card bordered={false}>
               <Statistic
@@ -33,7 +35,7 @@ export class ListOrderDetail extends Component {
             <Card bordered={false}>
               <Statistic
                 title="Tổng tiền"
-                value={total}
+                value={odd.tongTien}
                 valueStyle={{
                   color: "red",
                 }}
@@ -44,7 +46,7 @@ export class ListOrderDetail extends Component {
         </Row>
         <Divider></Divider>
         {odd !== null ? (
-          <Table dataSource={odd} rowKey="id">
+          <Table dataSource={data} rowKey="id">
             <Column
               title="Người mua"
               key="nguoiMua"
@@ -65,16 +67,11 @@ export class ListOrderDetail extends Component {
               dataIndex="ngayDi"
               align="center"
             ></Column>
-            <Column
-              title="Thời gian đi"
-              key="thoiGianDi"
-              dataIndex="thoiGianDi"
-              align="center"
-            ></Column>
+
             <Column
               title="Vị trí ngồi"
-              key="viTriNgoi"
-              dataIndex="viTriNgoi"
+              key="choNgoi"
+              dataIndex="choNgoi"
               align="center"
             ></Column>
           </Table>

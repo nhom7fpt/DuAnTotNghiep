@@ -34,6 +34,7 @@ public class TuyenXe {
     @JsonFormat(pattern = "HH:mm")
     @Column(name = "tgian_di")
     private LocalTime tgDi;
+
     @JsonFormat(pattern = "HH:mm")
     @Column(name = "tgian_den")
     private LocalTime tgDen;

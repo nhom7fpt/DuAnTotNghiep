@@ -7,6 +7,7 @@ import { BiSolidTrash } from "react-icons/bi";
 export class OrderList extends Component {
   render() {
     const { od } = this.props;
+    console.log(od);
     return (
       <>
         <Table dataSource={od} rowKey="maVe">
@@ -25,16 +26,12 @@ export class OrderList extends Component {
           ></Column>
 
           <Column
-            title="Tài khoản"
-            key="taiKhoan"
-            dataIndex="taiKhoan"
+            title="Người mua"
+            key="info"
+            dataIndex="info"
             align="center"
             render={(_, record) => (
-              <label>
-                {record && record.taiKhoan != null
-                  ? record.taiKhoan.tenTaiKhoan
-                  : ""}
-              </label>
+              <label>{record && record.info ? record.info.hoTen : ""}</label>
             )}
           ></Column>
 

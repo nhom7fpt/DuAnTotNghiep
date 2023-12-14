@@ -55,13 +55,6 @@ class ListManufacturer extends Component {
           ></Column>
 
           <Column
-            title="Nơi trả"
-            key="noiTra"
-            dataIndex="noiTra"
-            align="center"
-          ></Column>
-
-          <Column
             title="Thời gia đi"
             key="tgDi"
             dataIndex="tgDi"

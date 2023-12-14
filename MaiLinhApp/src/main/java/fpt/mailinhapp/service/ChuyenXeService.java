@@ -7,10 +7,7 @@ import fpt.mailinhapp.domain.Xe;
 import fpt.mailinhapp.dto.ChuyenXeDto;
 import fpt.mailinhapp.dto.NhanVienDto;
 import fpt.mailinhapp.exception.BusesException;
-import fpt.mailinhapp.repository.ChuyenXeRepository;
-import fpt.mailinhapp.repository.NhanVienRepository;
-import fpt.mailinhapp.repository.TuyenXeRepository;
-import fpt.mailinhapp.repository.XeRepository;
+import fpt.mailinhapp.repository.*;
 import fpt.mailinhapp.respondata.ChuyenTheoTuyen;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.BeanUtils;
@@ -21,6 +18,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -35,6 +33,8 @@ public class ChuyenXeService {
     TuyenXeRepository tuyenDao;
     @Autowired
     XeRepository xeDao;
+    @Autowired
+    DatVeRepository datVeDao;
 
     @Transactional(rollbackFor = Exception.class)
     public ChuyenXeDto instertChuyenXe(ChuyenXeDto dto){
@@ -135,5 +135,12 @@ public class ChuyenXeService {
         }).collect(Collectors.toList());
 
         return listDto;
+    }
+
+    public List<String> getCho(Long id, Date ngayDi, Date ngayVe){
+
+        var found = datVeDao.findByChuyenXe_MaChuyenAndNgayDiOrNgayVe(id,ngayDi,ngayVe);
+        List<String> data = found.stream().flatMap(i->i.getChoNgoi().stream()).collect(Collectors.toList());
+        return data;
     }
 }

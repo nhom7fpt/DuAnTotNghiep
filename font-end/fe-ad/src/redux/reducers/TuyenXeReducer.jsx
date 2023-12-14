@@ -29,7 +29,7 @@ const TuyenXeReducer = (state = initialState, { type, payload }) => {
 
       return {
         ...state,
-        tuyenXes: [payload, ...newmanu],
+        tuyenXes: newmanu,
       };
 
     case TUYENXE_UPDATE:

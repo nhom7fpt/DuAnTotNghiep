@@ -27,7 +27,7 @@ const ChuyenReducer = (state = initialState, { type, payload }) => {
 
       return {
         ...state,
-        chuyens: [payload, ...newmanu],
+        chuyens: newmanu,
       };
 
     case CHUYEN_UPDATE:

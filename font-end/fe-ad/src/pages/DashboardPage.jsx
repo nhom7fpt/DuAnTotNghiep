@@ -38,6 +38,7 @@ import Manufacturer from "../components/manufacturer/Manufacturer";
 import ListNhanVien from "../components/nhanVien/ListNhanVien";
 import AddOrEditNhanVien from "../components/nhanVien/AddOrEditNhanVien";
 import TuyenXe from "../components/tuyenXe/TuyenXe";
+import AddOrEditTuyen from "../components/tuyenXe/AddOrEditTuyen";
 
 const { Header, Sider, Content } = Layout;
 
@@ -75,7 +76,20 @@ const DashboardPage = () => {
               key: "2",
               icon: <MdSupervisorAccount />,
               label: "Tuyến xe",
-              onClick: () => navigate("/tuyen"),
+              children: [
+                {
+                  key: "81",
+                  icon: <MdAddCircleOutline />,
+                  label: "Thêm",
+                  onClick: () => navigate("/tuyen/them"),
+                },
+                {
+                  key: "82",
+                  icon: <MdFormatListBulleted />,
+                  label: "Danh sách",
+                  onClick: () => navigate("/tuyen"),
+                },
+              ],
             },
             {
               key: "3",
@@ -266,7 +280,11 @@ const DashboardPage = () => {
               <Route path="/dangnhap" element={<Login />} />
               <Route path="/thuonghieu" element={<Manufacturer />} />
               <Route path="/tuyen" element={<TuyenXe />} />
-
+              <Route path="/tuyen/them" element={<AddOrEditTuyen />} />
+              <Route
+                path="/tuyen/capnhat/:id"
+                element={<AddOrEditTuyen key="m" />}
+              />
               <Route path="/nhanvien/danhsach" element={<ListNhanVien />} />
               <Route
                 path="/nhanvien/them"

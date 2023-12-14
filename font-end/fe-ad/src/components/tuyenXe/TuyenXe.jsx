@@ -3,14 +3,13 @@ import HeaderContent from "../common/HeaderContent";
 import ListTuyen from "./ListTuyenXe";
 import withRouter from "../../helpers/withRouter";
 import { Button, Modal } from "antd";
-import FormTuyen from "./FormTuyenXe";
+
 import { connect } from "react-redux";
 import {
-  insterTuyen,
+  TuyenEditData,
   getListTuyen,
   clearList,
   deleteTuyen,
-  updateTuyen,
 } from "../../redux/actions/actionTuyenXe";
 import { ExclamationCircleOutlined } from "@ant-design/icons";
 
@@ -36,18 +35,15 @@ class TuyenXe extends Component {
     this.props.getListTuyen();
   };
 
-  onCreate = (value) => {
-    this.props.insterTuyen(value);
-    this.setState({ open: false, ...this.state });
-  };
   onEdit = (value) => {
     const { navigate } = this.props.router;
     this.props.updateTuyen(value.maTuyenXe, value, navigate);
-    this.setState({ open: false, ...this.state });
   };
   editManu = (data) => {
-    this.setState({ open: true, tuyenXe: data });
+    const { navigate } = this.props.router;
+    this.props.TuyenEditData(data, navigate);
   };
+
   onCancel = () => {
     this.setState({
       open: false,
@@ -64,7 +60,7 @@ class TuyenXe extends Component {
     });
   };
   handleDeleteManu = (data) => {
-    this.props.deleteTuyen(data.id);
+    this.props.deleteTuyen(data.maTuyenXe);
     this.setState({
       ...this.state,
       tuyenXe: {
@@ -112,13 +108,6 @@ class TuyenXe extends Component {
           Thêm tuyến
         </Button>
 
-        <FormTuyen
-          tuyenXe={this.state.tuyenXe}
-          open={open}
-          onCreate={this.onCreate}
-          onEdit={this.onEdit}
-          onCancel={this.onCancel}
-        />
         <ListTuyen
           dataSource={tuyenXes}
           openDeleteModal={this.openDeleteModal}
@@ -135,11 +124,11 @@ const mapStateToProps = (state) => ({
 });
 
 const mapDispatchToProps = {
-  insterTuyen,
   getListTuyen,
   clearList,
-  updateTuyen,
+
   deleteTuyen,
+  TuyenEditData,
 };
 
 export default connect(

@@ -1,9 +1,14 @@
 package fpt.mailinhapp.service;
 
+import fpt.mailinhapp.domain.DatVe;
+import fpt.mailinhapp.domain.NoiTra;
 import fpt.mailinhapp.domain.TuyenXe;
 import fpt.mailinhapp.dto.TuyenXeDto;
 import fpt.mailinhapp.exception.BusesException;
+import fpt.mailinhapp.repository.DatVeRepository;
+import fpt.mailinhapp.repository.NoiTraRepository;
 import fpt.mailinhapp.repository.TuyenXeRepository;
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -14,6 +19,7 @@ import java.time.LocalTime;
 import java.time.OffsetDateTime;
 import java.time.ZoneOffset;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -22,6 +28,10 @@ import java.util.stream.Collectors;
 public class TuyenXeService {
     @Autowired
     TuyenXeRepository dao;
+    @Autowired
+    NoiTraRepository traDao;
+    @Autowired
+    DatVeRepository datVeDao;
     @Transactional(rollbackFor = Exception.class)
     public TuyenXe createBuses(TuyenXeDto dto){
         TuyenXe entity = new TuyenXe();
@@ -113,4 +123,16 @@ public class TuyenXeService {
 
         return data;
     }
+
+    public List<NoiTra> findAllTra() {
+        return traDao.findAll();
+    }
+
+    public TuyenXeDto findByid(Integer id){
+        var found = dao.findById(id).orElseThrow(()-> new BusesException("Mã tuyến xe không tồn tại"));
+        ModelMapper mapper = new ModelMapper();
+        return mapper.map(found, TuyenXeDto.class);
+    }
+
+
 }

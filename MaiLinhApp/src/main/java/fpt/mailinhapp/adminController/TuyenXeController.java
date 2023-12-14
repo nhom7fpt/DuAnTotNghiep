@@ -49,4 +49,16 @@ public class TuyenXeController {
         service.deleteBuses(id);
         return new ResponseEntity<>("Xóa thành công", HttpStatus.OK);
     }
+
+    @GetMapping("/noitra")
+    public ResponseEntity getListNoiTra(){
+        return new ResponseEntity<>(service.findAllTra(), HttpStatus.OK);
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity getById(@PathVariable Integer id){
+        var found = service.findByid(id);
+        return new ResponseEntity<>(found, HttpStatus.OK);
+    }
+
 }

@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("api/v1/tickets")
-@CrossOrigin
+@CrossOrigin("*")
 public class TicketsController {
 
     @Autowired
@@ -37,5 +37,10 @@ public class TicketsController {
         return new ResponseEntity<>(service.findAll(), HttpStatus.OK);
     }
 
-    
+    @GetMapping("/{id}")
+    public  ResponseEntity getVeXeChitiet(@PathVariable Long id){
+        var found = service.findById(id);
+
+        return new ResponseEntity<>(found, HttpStatus.OK);
+    }
 }

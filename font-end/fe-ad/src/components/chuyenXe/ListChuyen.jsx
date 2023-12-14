@@ -15,7 +15,9 @@ class ListChuyen extends Component {
     this.props.ChuyenEditData(data, this.props.router.navigate);
   };
   onConfirm = (data) => {
-    this.props.deleteChuyen(data.bienSoXe);
+    const { navigate } = this.props.router;
+    this.props.deleteChuyen(data.maChuyen);
+    navigate("/chuyen/danhsach");
   };
   componentDidMount = () => {
     this.props.getListChuyen();
@@ -31,7 +33,7 @@ class ListChuyen extends Component {
         <Button
           type="primary"
           onClick={() => {
-            navigate("/product/add");
+            navigate("/chuyen/them");
           }}
         >
           Thêm mới

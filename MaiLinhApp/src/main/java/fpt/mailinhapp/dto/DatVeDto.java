@@ -28,6 +28,7 @@ public class DatVeDto implements Serializable {
     InfoDto info;
     Date ngayDatVe;
     Date ngayDi;
+    Date ngayVe;
     ThanhToanDto thanhToan;
 
 }

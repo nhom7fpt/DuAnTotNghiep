@@ -4,6 +4,7 @@ import fpt.mailinhapp.domain.DatVe;
 import fpt.mailinhapp.domain.Info;
 import fpt.mailinhapp.domain.ThanhToan;
 import fpt.mailinhapp.dto.DatVeDto;
+import fpt.mailinhapp.exception.TicketsException;
 import fpt.mailinhapp.repository.DatVeRepository;
 import fpt.mailinhapp.repository.InfoRepository;
 import org.modelmapper.ModelMapper;
@@ -58,5 +59,11 @@ public class VeXeService {
             return dto;
         }
         return null;
+    }
+
+    public DatVeDto findById(Long id){
+        var found = dao.findById(id).orElseThrow(()-> new TicketsException("Mã vé không tồn tại"));
+        ModelMapper mapper = new ModelMapper();
+        return mapper.map(found,DatVeDto.class);
     }
 }

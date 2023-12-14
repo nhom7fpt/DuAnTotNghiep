@@ -21,4 +21,8 @@ export default class TuyenXeService {
   updateTuyenXe = async (id, tuyen) => {
     return await axios.patch(API_TUYEN + "/" + id, tuyen);
   };
+
+  getListNoiTra = async () => {
+    return await axios.get(API_TUYEN + "/noitra");
+  };
 }
