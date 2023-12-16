@@ -70,11 +70,5 @@ public class BusesController {
 
         return new ResponseEntity<>(service.getListNhanVienByChuyen(), HttpStatus.OK);
     }
-    @GetMapping("/cho/{id}")
-    public ResponseEntity getListCho(@PathVariable Long id){
-        Date now = new Date();
-        var data = service.getCho(id,now,now);
 
-        return new ResponseEntity<>(data, HttpStatus.OK);
-    }
 }

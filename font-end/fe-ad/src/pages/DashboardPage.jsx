@@ -39,7 +39,9 @@ import ListNhanVien from "../components/nhanVien/ListNhanVien";
 import AddOrEditNhanVien from "../components/nhanVien/AddOrEditNhanVien";
 import TuyenXe from "../components/tuyenXe/TuyenXe";
 import AddOrEditTuyen from "../components/tuyenXe/AddOrEditTuyen";
-
+import ThongKe from "../components/thongKe/doanhThu/ThongKe";
+import SoVe from "../components/thongKe/ve/SoVe";
+import ThongKeTuyen from "../components/thongKe/tuyen/ThongKeTuyen";
 const { Header, Sider, Content } = Layout;
 
 const DashboardPage = () => {
@@ -182,7 +184,21 @@ const DashboardPage = () => {
             {
               key: "10",
               icon: <MdStackedBarChart />,
-              label: "Statistical",
+              label: "Thống kê",
+              children: [
+                {
+                  key: "101",
+                  icon: <MdAddCircleOutline />,
+                  label: "Doanh thu",
+                  onClick: () => navigate("/thongke/doanhthu"),
+                },
+                {
+                  key: "102",
+                  icon: <MdFormatListBulleted />,
+                  label: "Số lượng vé",
+                  onClick: () => navigate("/thongke/ve"),
+                },
+              ],
             },
             {
               key: "11",
@@ -281,6 +297,9 @@ const DashboardPage = () => {
               <Route path="/thuonghieu" element={<Manufacturer />} />
               <Route path="/tuyen" element={<TuyenXe />} />
               <Route path="/tuyen/them" element={<AddOrEditTuyen />} />
+              <Route path="/thongke/doanhthu" element={<ThongKe />} />
+              <Route path="/thongke/ve" element={<SoVe />} />
+
               <Route
                 path="/tuyen/capnhat/:id"
                 element={<AddOrEditTuyen key="m" />}

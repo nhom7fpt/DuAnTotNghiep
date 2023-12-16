@@ -1,6 +1,7 @@
 package fpt.mailinhapp.clientController;
 
 import fpt.mailinhapp.dto.ChuyenXeDto;
+import fpt.mailinhapp.respondata.ChoDto;
 import fpt.mailinhapp.respondata.ChuyenTheoTuyen;
 import fpt.mailinhapp.respondata.ReqTimMotChieu;
 import fpt.mailinhapp.respondata.Return2List;
@@ -14,6 +15,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Date;
 import java.util.List;
 
 @RestController
@@ -22,6 +24,7 @@ import java.util.List;
 public class SearchController {
     @Autowired
     ChuyenXeService service;
+
     @Autowired
     TuyenXeService tuyenXeService;
     @Autowired
@@ -72,5 +75,13 @@ public class SearchController {
         var list = service.findByTuyen(dto);
 
         return new ResponseEntity<>(list, HttpStatus.OK);
+    }
+
+    @GetMapping("/cho")
+    public ResponseEntity getListCho(@RequestBody ChoDto dto){
+        Date now = new Date();
+        var data = service.getCho(dto.getId(),dto.getNgayDi(),dto.getNgayVe());
+
+        return new ResponseEntity<>(data, HttpStatus.OK);
     }
 }
