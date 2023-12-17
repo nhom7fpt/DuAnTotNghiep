@@ -93,14 +93,7 @@ class AddOrEdit extends Component {
           title={loaiXe.id ? "Cập nhập loại xe" : "Thêm mới loại xe"}
           navigate={navigate}
         />
-        <Button
-          type="primary"
-          onClick={() => {
-            this.setState({ ...this.state, open: true });
-          }}
-        >
-          Làm mới
-        </Button>
+
         <Form
           layout="vertical"
           className="Form"

@@ -18,7 +18,7 @@ class FormNoiTra extends Component {
   };
 
   componentDidUpdate(prevProps) {
-    // Kiểm tra xem prop manufacturer có thay đổi hay không
+    // Kiểm tra xem prop  có thay đổi hay không
     if (this.props.noiTra !== prevProps.noiTra) {
       // Cập nhật form với các giá trị ban đầu mới
       this.form.current.setFieldsValue({

@@ -14,4 +14,8 @@ export default class ThongKeService {
   getSoVeQuy = async () => {
     return await axios.get(API_THONGKE + "/ve/quy");
   };
+
+  getTong = async () => {
+    return await axios.get(API_THONGKE + "/doanhthu");
+  };
 }

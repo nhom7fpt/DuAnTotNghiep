@@ -41,6 +41,7 @@ import TuyenXe from "../components/tuyenXe/TuyenXe";
 import AddOrEditTuyen from "../components/tuyenXe/AddOrEditTuyen";
 import ThongKe from "../components/thongKe/doanhThu/ThongKe";
 import SoVe from "../components/thongKe/ve/SoVe";
+import NoiTra from "../components/noiTra/NoiTra";
 
 const { Header, Sider, Content } = Layout;
 
@@ -71,7 +72,7 @@ const DashboardPage = () => {
             {
               key: "1",
               icon: <MdHome />,
-              label: "Home",
+              label: "Nơi trả",
               onClick: () => navigate("/"),
             },
             {
@@ -264,7 +265,7 @@ const DashboardPage = () => {
         >
           <div className="content-panel">
             <Routes>
-              <Route path="/" element={<Home />} />
+              <Route path="/" element={<NoiTra />} />
               <Route path="/loaixe/them" element={<AddOrEdit key="a" />} />
               <Route
                 path="/loaixe/capnhat/:id"

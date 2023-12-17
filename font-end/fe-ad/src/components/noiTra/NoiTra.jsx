@@ -40,7 +40,7 @@ class NoiTra extends Component {
     this.props.updateNoiTra(value.id, value);
   };
   editManu = (data) => {
-    this.setState({ open: true, manufacturer: data });
+    this.setState({ open: true, noiTra: data });
   };
   onCancel = () => {
     this.setState({

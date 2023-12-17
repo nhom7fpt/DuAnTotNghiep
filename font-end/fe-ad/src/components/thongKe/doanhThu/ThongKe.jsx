@@ -9,11 +9,13 @@ import ThongKeService from "../../../services/ThongKeService";
 const ThongKe = () => {
   const [data, setData] = useState([]);
   const [quy, setQuy] = useState([]);
+  const [tong, setTong] = useState(0);
   useEffect(() => {
     const loadData = async () => {
       const service = new ThongKeService();
       const res = await service.getDoanhThu();
       const resQuy = await service.getDoanhThuQuy();
+      const resMoney = await service.getTong();
       if (res && res.data) {
         const list = res.data.map((i) => ({
           type: `Tháng ${i[0]}`,
@@ -23,6 +25,8 @@ const ThongKe = () => {
       }
 
       resQuy && resQuy.data && setQuy(resQuy.data);
+
+      resMoney && resMoney && setTong(resMoney.data);
     };
 
     loadData();
@@ -32,7 +36,7 @@ const ThongKe = () => {
     <>
       <Row>
         <Col md={24}>
-          <CarTong />
+          <CarTong tong={tong} />
         </Col>
       </Row>
       <Row>

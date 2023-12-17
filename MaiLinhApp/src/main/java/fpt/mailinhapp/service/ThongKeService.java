@@ -16,6 +16,15 @@ public class ThongKeService {
         var list = dao.thongKeTheoThang(nam);
         return list;
     }
+    public Long getTongTien(Integer nam){
+        Long money = 0L;
+        var list = dao.thongKeTheoThang(nam);
+        for(Object[] row: list){
+            Long tien = (Long) row[1];
+            money+=tien;
+        }
+        return money;
+    }
     public List<Long> thongKeDoanhThuQuy(Integer nam){
         Long q1 = 0L;
         Long q2 = 0L;

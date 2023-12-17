@@ -34,7 +34,7 @@ public class NoiTraService {
     }
     @Transactional(rollbackFor = Exception.class)
     public void deleteNoiTra(Long id){
-        var found = dao.findById(id).orElseThrow(()-> new BusesException("Nơi trả không tônf tại"));
+        var found = dao.findById(id).orElseThrow(()-> new BusesException("Nơi trả không tồn tại"));
         dao.delete(found);
     }
 

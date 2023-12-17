@@ -39,4 +39,10 @@ public class ThongKeController {
         var data = service.thongKeVeQuy(nam);
         return  new ResponseEntity<>(data, HttpStatus.OK);
     }
+    @GetMapping("doanhthu")
+    public ResponseEntity getTongDoanhThu(){
+        Integer nam = 2023;
+        var data = service.getTongTien(nam);
+        return new ResponseEntity<>(data, HttpStatus.OK);
+    }
 }
