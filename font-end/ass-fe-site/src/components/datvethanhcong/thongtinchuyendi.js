@@ -1,9 +1,18 @@
 import React from 'react'; 
 import { connect } from 'react-redux';
 import withRouter from '../../helpers/withRouter';
-
+import { useLocation, useParams } from 'react-router-dom';
 function Thongtinchuyendi (props) {
-  const { custom } = props;
+  const { custom,tongTien  } = props;
+  const hoTen = localStorage.getItem("hoTen");
+  const soDT = localStorage.getItem("soDT");
+  const email = localStorage.getItem("email");
+  const { search } = useLocation();
+
+  const params = new URLSearchParams(search);
+
+  const id = params.get('id');
+ 
   return (
     <div className='pagedatvethanhcong'>
     <div className="thongtinchuyendi" style={{ marginRight: '5cm', marginTop: '-28.5cm', width:'317px' }}>
@@ -14,15 +23,15 @@ function Thongtinchuyendi (props) {
       <div className="card-body">
       <div className="info-row-dvtc">
       <div>MÃ ĐƠN HÀNG</div>
-      <div>45T9Q0G</div>
+      <div>{id}</div>
     </div>
     <div className="info-row-dvtc">
       <div>HỌ TÊN</div>
-      <div>{custom.hoTen}</div>
+      <div>{hoTen}</div>
     </div>
     <div className="info-row-dvtc">
       <div>SỐ ĐIỆN THOẠI</div>
-      <div>{custom.soDT}</div>
+      <div>{soDT}</div>
     </div>
     <div className="info-row-dvtc">
       <div >SỐ CMND/CCCD</div>
@@ -30,7 +39,7 @@ function Thongtinchuyendi (props) {
     </div>
     <div className="info-row-dvtc">
       <div>EMAIL</div>
-      <div >{custom.email}</div>
+      <div >{email}</div>
     </div>
     <div className="info-row-dvtc">
       <div>NHÀ XE</div>
@@ -75,7 +84,7 @@ function Thongtinchuyendi (props) {
         </section>
         <section className="info-row-dvtc">
           <div style={{ fontSize: '14px', color: 'black' }}>Tổng tiền</div>
-          <div style={{ fontSize: '14px', color: '#000' }}>250.000 ₫</div>
+          <div style={{ fontSize: '14px', color: '#000' }}>{ }</div>
         </section>
       </div>
     </article>

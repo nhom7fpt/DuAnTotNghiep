@@ -31,7 +31,11 @@
     
   }
   .ant-table-pagination.ant-pagination {
-    margin: 36px 0;
-    margin-right: 5cm;
+    position: absolute !important;
+  bottom: 0 !important; /* Điều chỉnh giá trị này để đặt vị trí theo ý muốn */
+  right: 200px !important; /* Điều chỉnh giá trị này để đặt vị trí theo ý muốn */
+  z-index: 1000 !important;
+  left: auto !important;
+  top: 350px !important;
+ 
 }
-  

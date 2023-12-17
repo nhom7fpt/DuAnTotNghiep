@@ -1,44 +1,46 @@
 import React, { useEffect, useState } from 'react';
 import '../css/tracuu.css';
-function MyComponent() {
-    useEffect(() => {
-        document.title = 'Tra cứu';
-    
-        return () => {
-          document.title = 'Mai Linh TOUR';
-        };
-      }, []);
-    const [isFocused, setFocused] = useState(false);
+import { connect } from 'react-redux';
+import withRouter from '../helpers/withRouter';
+import { gethistory } from '../redux/actions/actionOrderhistory';
 
-    const handleInputFocus = () => {
-        setFocused(true);
-    }
+function Tracuu(props) {
+  const { navigate } = props.router;
+  useEffect(() => {
+    document.title = 'Tra cứu';
 
-    const handleInputBlur = () => {
-        setFocused(false);
-    }
+    return () => {
+      document.title = 'Mai Linh TOUR';
+    };
+  }, []);
 
-    return (
-        <div className="tracuu">
-            <h1 className="mb-4">Tra cứu thông tin đặt vé</h1>
-            <div className={`search-input-container ${isFocused ? 'focused' : ''}`}>
-                <input
-                 
-                    className="search-input"
-                    id="phoneNumber"
-                    placeholder="Vui lòng nhập số điện thoại"
-                    onFocus={handleInputFocus}
-                    onBlur={handleInputBlur}
-                />
-                <span className="placeholder-label">Số điện thoại</span>
-            </div>
-            <div className="search-input-container">
-                <input  className="search-input" id="ticketNumber" placeholder="Vui lòng nhập mã vé" />
-                <span className="placeholder-label">Mã vé</span>
-            </div>
-            <button className="search-button">Tra cứu</button>
-        </div>
-    );
+  const handleSearchClick = () => {
+    const mave = document.getElementById('ticketNumber').value;
+    // Gọi hàm gethistory từ props
+    props.gethistory(mave, navigate);
+  };
+
+  return (
+    <div className="tracuu">
+      <h1 className="mb-4">Tra cứu thông tin đặt vé</h1>
+      <div className="search-input-container">
+        <input className="search-input" id="ticketNumber" placeholder="Vui lòng nhập mã vé" />
+        <span className="placeholder-label">Mã vé</span>
+      </div>
+      {/* Gọi handleSearchClick khi nút "Tra cứu" được nhấp */}
+      <button className="search-button" onClick={handleSearchClick}>
+        Tra cứu
+      </button>
+    </div>
+  );
 }
 
-export default MyComponent;
+const mapStateToProps = (state) => ({
+  listData: state.Oderhistory.listData,
+});
+
+const mapDispatchToProps = {
+  gethistory,
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(withRouter(Tracuu));

@@ -12,12 +12,16 @@ import "moment/locale/vi";
 import withRouter from "../../helpers/withRouter";
 
 import { listSearchOneWay,listSearchReturn,loadDataField } from "../../redux/actions/actionSearch";
+import PayService from "../../services/PayService";
+import Thongtinchuyendi from "../datvethanhcong/thongtinchuyendi";
 const DatVeForm = (props) => {
   const [steps, setSteps] = useState(0);
   const [choNgoi,setChoNgoi] = useState([]);
   const [noiTra,setNoiTra] = useState("");
   const [custom, setCustom] = useState(props.custom || "");
   const user = localStorage.getItem("username");
+  const { navigate } = props.router;
+  const [tongTien, setTongTien] = useState(0);
   const onNext = (values) => {
     switch (steps) {
       case 0:
@@ -45,30 +49,50 @@ const DatVeForm = (props) => {
   const onClose = () => {
     props.onClose();
   };
-  const handlePayment = () => {
+  const handlePayment = async () => {
     const { chuyen } = props;
     const tongTien = chuyen.tuyenXe.gia * choNgoi.length;
-
-    const currentDate = moment(); // Lấy ngày hiện tại sử dụng moment
-    const formattedDate = currentDate.format("YYYY-MM-DD"); // Format ngày giống với ngày trả về từ máy chủ
-
+    setTongTien(tongTien);
+  
+    const currentDate = moment();
+    const formattedDate = currentDate.format("YYYY-MM-DD");
+  
     if (custom.anhDaLuu) {
       const newCus = { hoTen: custom.hoTen, email: custom.email, soDT: custom.soDT };
       setCustom(newCus);
     }
 
+    const sl = choNgoi && choNgoi.length 
+  
     const newData = {
-      chuyen: chuyen,
+      chuyenXe: chuyen,
       noiTra: noiTra,
       info: { ...custom, ngayDatVe: formattedDate },
       tongTien: tongTien,
-      choNgoi: choNgoi
+      choNgoi: choNgoi,
+      soLuong: sl
     };
-
+    
     console.log("Dữ liệu đi:", newData);
-  };
 
+    const service = new PayService();
+    const res = await service.creatpay(newData);
+   
+    try {
+  
+      if (res && res.data) {
+        window.location.href = res.data;
+        
+      } else {
+        console.error("URL thanh toán không khả dụng!");
+      }
+    } catch (error) {
+      console.error("Lỗi khi gọi loadDataPay:", error);
+    }
+  };
+  
   const { chuyen} = props;
+  console.log(chuyen);
   return (
    
     <SeatSelectionProvider>
@@ -130,8 +154,10 @@ const DatVeForm = (props) => {
      </Row>
    
      <Row style={{ float: "right" }}>
-      
+    
+
        {steps === 2 && <Button type="primary" onClick={handlePayment}>Thanh toán</Button>}
+   
        {steps === 2 && (
          <Button
            type="primary"
@@ -159,7 +185,7 @@ const mapStateToProps = (state) => ({
   listChuyenReturn2:state.SearchReducer.listChuyenReturn2,
   fieldData: state.SearchReducer.fieldData,
   listData: state.Oderhistory.listData,
-  
+  loadData : state.PayReducer.loadData,
 });
 
 const mapDispatchToProps = {

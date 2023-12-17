@@ -127,6 +127,10 @@ export const fillAccount = (id ,account, navigate) => async (dispatch) => {
         type: CUSTOM_SET,
         payload: res.data,
       });
+      localStorage.setItem("hoTen", res.data.hoTen);
+      localStorage.setItem("email", res.data.email);
+      localStorage.setItem("soDT", res.data.soDT);
+      localStorage.setItem("anh", res.data.anhDaLuu.tenTep);
     }
   } catch (error) {
     console.log(error);

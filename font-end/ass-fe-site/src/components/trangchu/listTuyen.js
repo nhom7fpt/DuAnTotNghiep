@@ -34,13 +34,7 @@ function SeatSelection(props) {
   
   const totalPages = Math.ceil(listChuyen.length / pageSize);
   
-  const handlePrevPage = () => {
-    setCurrentPage((prevPage) => Math.max(prevPage - 1, 1));
-  };
-  
-  const handleNextPage = () => {
-    setCurrentPage((prevPage) => Math.min(prevPage + 1, totalPages));
-  };
+
   function formatCurrency(value) {
     return value ? value.toLocaleString('vi-VN', { style: 'currency', currency: 'VND' }) : '---';
   }
@@ -112,12 +106,12 @@ let isLocationDisplayed = false;
             </Col>
             <div className="location-info">
             <div className="location">
-              <span className="location-name">{item.tuyenXe.noiDon}</span>
+              <span className="location-name">{item.tuyenXe.diemDi}</span>
               <br />
               <span className="location-info-text text-gray"></span>
             </div>
             <div className="location text-right">
-              <span className="location-name">{item.tuyenXe.noiTra}</span>
+              <span className="location-name">{item.tuyenXe.diemDen}</span>
               <br />
               <span className="location-info-text text-gray"></span>
             </div>

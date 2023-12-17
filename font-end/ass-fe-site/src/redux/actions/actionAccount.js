@@ -87,7 +87,7 @@ export const login = (account, navigate) => async (dispatch) => {
       });
 
       localStorage.setItem("username", res.data.tenTaiKhoan);
-  
+    
       navigate("/");
     } 
   } catch (error) {
@@ -187,8 +187,7 @@ export const login = (account, navigate) => async (dispatch) => {
     }
     export const logoutchange = (navigate) => async (dispatch) => {
       try {
-        localStorage.removeItem("username");
-       
+    
        
         dispatch({
           type: ACCOUNT_SET,
@@ -197,6 +196,8 @@ export const login = (account, navigate) => async (dispatch) => {
         dispatch({
           type: ACCOUNT_STATE_CLEAR,
         });
+        localStorage.clear();
+       
         toast.success('Vui lòng đăng  nhập lại ', {
           position: "top-right",
           autoClose: 1000,
@@ -223,8 +224,8 @@ export const login = (account, navigate) => async (dispatch) => {
           title: 'Xác nhận đăng xuất',
           content: 'Bạn có chắc chắn muốn đăng xuất?',
           onOk: () => {
-            localStorage.removeItem("username");
-    
+            localStorage.clear();
+             
             dispatch({
               type: ACCOUNT_SET,
               payload: null,

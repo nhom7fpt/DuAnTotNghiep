@@ -32,12 +32,14 @@ const ChonDiemTra = (props) => {
           <h4>Điểm trả</h4>
           <Divider />
           <Radio.Group onChange={onChange} value={value}>
-            <Space direction="vertical">
-              <Radio value={1}>{chuyen.tuyenXe.noiTra}</Radio>
-              <Radio value={2}>Option B</Radio>
-              <Radio value={3}>Option C</Radio>
-            </Space>
-          </Radio.Group>
+          <Space direction="vertical">
+            {chuyen.tuyenXe.noiTras.map((noiTraItem) => (
+              <Radio key={noiTraItem.id} value={noiTraItem.noiTra}>
+                {noiTraItem.noiTra}
+              </Radio>
+            ))}
+          </Space>
+        </Radio.Group>
         </Col>
       </Row>
       <Row style={{ float: "right" }}>

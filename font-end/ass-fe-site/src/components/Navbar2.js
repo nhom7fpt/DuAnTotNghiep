@@ -25,8 +25,10 @@ function Navbar(props) {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const dispatch = useDispatch();
   const user = localStorage.getItem("username");
+  const hoTen = localStorage.getItem("hoTen");
+  const anhDL = localStorage.getItem("anh");
   const { custom } = props;
-
+  const storedImageUrl = localStorage.getItem("imageUrl");
   const toggleDropdown = () => {
     setIsDropdownOpen(!isDropdownOpen);
   };
@@ -39,6 +41,11 @@ function Navbar(props) {
   : null;
 
   useEffect(() => {
+    if (imageUrl) {
+      localStorage.setItem("imageUrl", imageUrl);
+    }
+  
+    setIsDropdownOpen((custom.hoTen || user) !== null);
     setIsDropdownOpen((custom.hoTen || user) !== null);
     return () => {
       const activeNavLink = document.querySelector('#navbar li a.active');
@@ -46,7 +53,7 @@ function Navbar(props) {
         activeNavLink.classList.remove('active');
       }
     };
-  }, [custom.hoTen, user]);
+  }, [custom.hoTen, user,imageUrl]);
   return (
     <nav className="navbar-container">
       <ul id="navbar">
@@ -85,14 +92,14 @@ function Navbar(props) {
           </NavLink>
         </li>
         <div className="dropdown-container"style={{marginTop:'-4cm', marginLeft:'-1cm'}}>
-          {custom.hoTen ? (
+          {hoTen ? (
             <NavLink to="#" ClassName="text-btn-login-page" onClick={toggleDropdown} style={{color:'white'}}>
-            {imageUrl ? (
-              <img src={imageUrl} alt="Avatar" style={{ width: '50px', height: '45px', borderRadius: '50%', marginRight: '10px' }} />
+            {storedImageUrl ? (
+              <img src={storedImageUrl} alt="Avatar" style={{ width: '50px', height: '45px', borderRadius: '50%', marginRight: '10px' }} />
             ) : (
               <img src={defaultAvatar} alt="Default Avatar" style={{ width: '50px', height: '45px', borderRadius: '50%', marginRight: '10px' }} />
             )}
-              {custom.hoTen}  <img src={dropdown} alt="" style={{ width: '26px', height: '26px', marginTop: '-5px' }}/>
+              {hoTen}  <img src={dropdown} alt="" style={{ width: '26px', height: '26px', marginTop: '-5px' }}/>
           
             </NavLink>
           ) : (

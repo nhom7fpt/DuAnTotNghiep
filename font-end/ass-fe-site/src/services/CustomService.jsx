@@ -10,7 +10,7 @@ export default class CustomService {
     return await axios.get( API_CUSTOM + "/" + id, account);
   };
   quenMK = async (account) => {
-    return await axios.patch( API_CUSTOM + "/quenMK" +  account);
+    return await axios.patch( API_QUENMK, account);
   };
   }
   

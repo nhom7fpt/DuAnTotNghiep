@@ -6,8 +6,8 @@ export default class OrderhistoryService {
     return axios.get(API_LSDATVE +"findbyaccount/"+ id,data);
   };
 
-  ListByMave = async (id,data) => {
-    return axios.get(API_LSDATVE +"findbymave/"+ id,data);
+  ByMaThanhToan = async (id) => {
+    return axios.get(API_LSDATVE +"getByMaThanhToan/"+ id);
   };
 
 

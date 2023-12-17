@@ -10,6 +10,9 @@ import { Col, Input, Row, Button, DatePicker } from 'antd';
 import { Form } from 'antd';
 import UploadImage from './UploadImage';
 function Thongtintaikhoan(props) {
+    const hoTen = localStorage.getItem("hoTen");
+    const soDT = localStorage.getItem("soDT");
+    const email = localStorage.getItem("email");
     const [hoTenValue, setHoTenValue] = useState('');
     const [profileImage, setProfileImage] = useState();
     const user = localStorage.getItem("username");
@@ -68,7 +71,7 @@ function Thongtintaikhoan(props) {
                                     onFinish={handleFormSubmit}
                                     style={{marginLeft:'8cm', marginTop:'-12cm'}}
                                 >
-                                    <Form.Item label="Họ và tên :" name="hoTen" initialValue={custom?.hoTen || ""}
+                                    <Form.Item label="Họ và tên :" name="hoTen" initialValue={hoTen || ""}
                                         rules={[
                                             { required: true, message: 'Vui lòng nhập họ và tên!' },
                                             { max: 25, message: 'Họ tên không được vượt quá 25 ký tự!' }

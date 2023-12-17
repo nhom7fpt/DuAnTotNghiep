@@ -43,7 +43,8 @@ function App() {
               <Route path="/lienhe" element={<ContactPage />} />
               <Route path="/login" element={<LoginPage />} />
               <Route path="/lichtrinh" element={<Lichtrinh />} />
-              <Route path="/thongtinve" element={<Dvtc />} />
+              <Route path="/thongtinve/:id" element={<Dvtc />} />
+
               <Route path="/trangchu" element={<Trangchu />} />
               <Route path="/tracuu" element={<Tracuu />} />
               <Route path="/tintuc" element={<Tintuc />} />
