@@ -29,7 +29,7 @@ export const insterloaiXe = (loaiXe, navigate) => async (dispatch) => {
         payload: false,
       });
       toast.success("Save Done");
-      navigate("/loaiXe/list");
+      navigate("/loaiXe/danhsach");
     }
   } catch (error) {
     dispatch({
@@ -40,7 +40,6 @@ export const insterloaiXe = (loaiXe, navigate) => async (dispatch) => {
     //   error.response.data ? error.response.data.message : error.message
     // );
     console.log(error);
-
   }
 };
 
@@ -111,7 +110,6 @@ export const clearList = () => async (dispatch) => {
 };
 
 export const deleteLoaiXe = (id) => async (dispatch) => {
-
   try {
     dispatch({
       type: COMMON_LOADING_SET,
@@ -151,8 +149,6 @@ export const getloaiXe = (id) => async (dispatch) => {
       payload: true,
     });
     const res = await service.getItem(id);
-
-
 
     if (res.status === 200) {
       dispatch({

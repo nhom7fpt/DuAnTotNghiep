@@ -72,7 +72,7 @@ export const updateManufacturer =
           payload: false,
         });
         toast.success("Update Done");
-        navigate("/Manufacturer/list");
+        navigate("/thuonghieu");
       }
     } catch (error) {
       dispatch({

@@ -34,7 +34,8 @@ class Manufacturer extends Component {
     this.props.insterManufacturer(value);
   };
   onEdit = (value) => {
-    this.props.updateManufacturer(value.id, value);
+    const { navigate } = this.props;
+    this.props.updateManufacturer(value.id, value, navigate);
   };
   editManu = (data) => {
     this.setState({ open: true, manufacturer: data });

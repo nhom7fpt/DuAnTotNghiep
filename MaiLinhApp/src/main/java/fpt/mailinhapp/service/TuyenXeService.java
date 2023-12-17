@@ -19,6 +19,7 @@ import java.time.LocalTime;
 import java.time.OffsetDateTime;
 import java.time.ZoneOffset;
 import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -33,15 +34,16 @@ public class TuyenXeService {
     @Autowired
     DatVeRepository datVeDao;
     @Transactional(rollbackFor = Exception.class)
-    public TuyenXe createBuses(TuyenXeDto dto){
+    public TuyenXe createBuses(TuyenXeDto dto) {
         TuyenXe entity = new TuyenXe();
-        BeanUtils.copyProperties(dto, entity, new String[]{"tgDi","tgDen","noiTras"});
+        BeanUtils.copyProperties(dto, entity, new String[]{"tgDi", "tgDen", "noiTras"});
 
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSSX");
 
         OffsetDateTime offsetDateTimeStart = OffsetDateTime.parse(dto.getTgDi(), formatter);
+        offsetDateTimeStart = offsetDateTimeStart.withNano(0); // Gán lại giá trị mới
         OffsetDateTime offsetDateTimeEnd = OffsetDateTime.parse(dto.getTgDen(), formatter);
-
+        offsetDateTimeEnd = offsetDateTimeEnd.withNano(0); // Gán lại giá trị mới
         OffsetDateTime timeZoneStart = offsetDateTimeStart.withOffsetSameInstant(ZoneOffset.ofHours(7));
         OffsetDateTime timeZoneEnd = offsetDateTimeEnd.withOffsetSameInstant(ZoneOffset.ofHours(7));
 
@@ -53,12 +55,7 @@ public class TuyenXeService {
 
         var saveEntity = dao.save(entity);
 
-
-
         dto.setMaTuyenXe(saveEntity.getMaTuyenXe());
-
-
-
 
         return saveEntity;
     }
@@ -73,6 +70,7 @@ public class TuyenXeService {
 
         if(dto.getTgDi() != null){
             OffsetDateTime offsetDateTimeStart = OffsetDateTime.parse(dto.getTgDi(), formatter);
+            offsetDateTimeStart.withNano(0);
             OffsetDateTime timeZoneStart = offsetDateTimeStart.withOffsetSameInstant(ZoneOffset.ofHours(7));
             LocalTime tgDi = timeZoneStart.toLocalTime();
             found.setTgDi(tgDi);
@@ -80,8 +78,7 @@ public class TuyenXeService {
 
         if(dto.getTgDen() != null) {
             OffsetDateTime offsetDateTimeEnd = OffsetDateTime.parse(dto.getTgDen(), formatter);
-
-
+            offsetDateTimeEnd.withNano(0);
             OffsetDateTime timeZoneEnd = offsetDateTimeEnd.withOffsetSameInstant(ZoneOffset.ofHours(7));
 
 
@@ -104,8 +101,42 @@ public class TuyenXeService {
     }
 
     public List<TuyenXe> findAll() {
-        return dao.findAll();
+        List<TuyenXe> allTuyenXe = dao.findAll();
+
+        // Kiểm tra và xử lý ngày giờ trước khi trả về
+        for (TuyenXe tuyenXe : allTuyenXe) {
+            validateAndFixDateTimeFields(tuyenXe);
+        }
+
+        return allTuyenXe;
     }
+
+    private void validateAndFixDateTimeFields(TuyenXe tuyenXe) {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm:ss.SSSSSSS");
+
+        try {
+            // Parse thành OffsetDateTime để có thể truy cập nanoseconds
+            OffsetDateTime offsetDateTimeStart = OffsetDateTime.parse(tuyenXe.getTgDi().toString(), formatter);
+            OffsetDateTime offsetDateTimeEnd = OffsetDateTime.parse(tuyenXe.getTgDen().toString(), formatter);
+
+            // Kiểm tra và xử lý giá trị nanoseconds không hợp lệ
+            if (offsetDateTimeStart.getNano() < 0 || offsetDateTimeStart.getNano() >= 1_000_000_000) {
+                offsetDateTimeStart = offsetDateTimeStart.withNano(0);
+            }
+
+            if (offsetDateTimeEnd.getNano() < 0 || offsetDateTimeEnd.getNano() >= 1_000_000_000) {
+                offsetDateTimeEnd = offsetDateTimeEnd.withNano(0);
+            }
+
+            // Set lại thời gian trong đối tượng TuyenXe
+            tuyenXe.setTgDi(offsetDateTimeStart.toLocalTime());
+            tuyenXe.setTgDen(offsetDateTimeEnd.toLocalTime());
+        } catch (DateTimeParseException e) {
+            // Xử lý ngoại lệ khi parse ngày giờ
+            e.printStackTrace(); // hoặc log thông báo lỗi
+        }
+    }
+
 
     public List<String> loadLocation(){
         var list = dao.findAll();

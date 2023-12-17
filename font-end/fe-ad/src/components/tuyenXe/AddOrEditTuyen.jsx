@@ -7,10 +7,10 @@ import { SaveOutlined } from "@ant-design/icons";
 import TuyenXeService from "../../services/TuyenXeService";
 import { connect } from "react-redux";
 import {
-  insterChuyen,
-  updateChuyen,
-  clearChuyen,
-} from "../../redux/actions/actionChuyen";
+  insterTuyen,
+  updateTuyen,
+  clearTuyen,
+} from "../../redux/actions/actionTuyenXe";
 import FormTuyenXe from "./FormTuyenXe";
 import { toast } from "react-toastify";
 import TransferNoiTra from "./TransferNoiTra";
@@ -32,6 +32,9 @@ class AddOrEditTuyen extends Component {
   goPrevi = () => {
     this.setState({ ...this.state, step: 0 });
   };
+  clearTuyenXe = () => {
+    this.props.clearTuyen();
+  };
 
   componentDidMount = () => {
     this.loadData();
@@ -43,11 +46,14 @@ class AddOrEditTuyen extends Component {
     const { tuyenXe, noiTra, listNoiTra } = this.state;
     const nhanVienChon = listNoiTra.filter((item) => noiTra.includes(item.id));
     const newdata = { ...tuyenXe, noiTras: nhanVienChon };
-    console.log(newdata);
+    this.props.insterTuyen(newdata);
   };
 
   updateProduct = () => {
-    const { tuyenXe, noiTra } = this.state;
+    const { tuyenXe, noiTra, listNoiTra } = this.state;
+    const nhanVienChon = listNoiTra.filter((item) => noiTra.includes(item.id));
+    const newdata = { ...tuyenXe, noiTras: nhanVienChon };
+    this.props.updateTuyen(newdata);
   };
 
   loadData = async () => {
@@ -69,7 +75,15 @@ class AddOrEditTuyen extends Component {
           }
           navigate={navigate}
         />
-
+        <Button
+          type="primary"
+          onClick={() => {
+            this.clearTuyenXe();
+          }}
+          style={{ marginBottom: "5%" }}
+        >
+          Làm mới
+        </Button>
         <Row>
           <Col md={24}>
             <Steps
@@ -138,9 +152,9 @@ const mapStateToProps = (state) => ({
 });
 
 const mapDispatchToProps = {
-  insterChuyen,
-  updateChuyen,
-  clearChuyen,
+  insterTuyen,
+  updateTuyen,
+  clearTuyen,
 };
 
 export default connect(

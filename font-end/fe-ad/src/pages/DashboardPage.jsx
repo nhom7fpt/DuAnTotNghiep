@@ -41,7 +41,7 @@ import TuyenXe from "../components/tuyenXe/TuyenXe";
 import AddOrEditTuyen from "../components/tuyenXe/AddOrEditTuyen";
 import ThongKe from "../components/thongKe/doanhThu/ThongKe";
 import SoVe from "../components/thongKe/ve/SoVe";
-import ThongKeTuyen from "../components/thongKe/tuyen/ThongKeTuyen";
+
 const { Header, Sider, Content } = Layout;
 
 const DashboardPage = () => {

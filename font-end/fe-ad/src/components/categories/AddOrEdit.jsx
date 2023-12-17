@@ -41,7 +41,7 @@ class AddOrEdit extends Component {
 
     if (id) {
       this.props.getloaiXe(id);
-      console.log("getloaiXe");
+      const { loaiXe } = this.props;
     } else {
       this.props.clearloaiXe();
       console.log("clearloaiXe");
@@ -49,12 +49,12 @@ class AddOrEdit extends Component {
   };
 
   static getDerivedStateFromProps(nextProps, prevState) {
-    if (nextProps.loaiXe && prevState.loaiXe.id !== nextProps.loaiXe.id) {
+    if (nextProps.LoaiXe && prevState.loaiXe.id !== nextProps.LoaiXe.id) {
       return {
         ...prevState,
-        loaiXe: nextProps.loaiXe,
+        loaiXe: nextProps.LoaiXe,
       };
-    } else if (!nextProps.loaiXe) {
+    } else if (!nextProps.LoaiXe) {
       return {
         ...prevState,
         loaiXe: {
@@ -93,6 +93,14 @@ class AddOrEdit extends Component {
           title={loaiXe.id ? "Cập nhập loại xe" : "Thêm mới loại xe"}
           navigate={navigate}
         />
+        <Button
+          type="primary"
+          onClick={() => {
+            this.setState({ ...this.state, open: true });
+          }}
+        >
+          Làm mới
+        </Button>
         <Form
           layout="vertical"
           className="Form"
