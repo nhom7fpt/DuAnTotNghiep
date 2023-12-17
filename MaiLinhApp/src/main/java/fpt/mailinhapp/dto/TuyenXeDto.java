@@ -14,9 +14,6 @@ import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Set;
 
-/**
- * DTO for {@link fpt.mailinhapp.domain.TuyenXe}
- */
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
@@ -26,7 +23,6 @@ public class TuyenXeDto implements Serializable {
     String diemDen;
     String noiDon;
     private Set<NoiTraDto> noiTras = new LinkedHashSet<>();
-
     String  tgDi;
     String tgDen;
     Long gia;

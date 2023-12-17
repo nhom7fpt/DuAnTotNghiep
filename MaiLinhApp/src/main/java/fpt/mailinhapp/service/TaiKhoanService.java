@@ -1,7 +1,6 @@
 package fpt.mailinhapp.service;
 
 import fpt.mailinhapp.domain.TaiKhoan;
-import fpt.mailinhapp.domain.VaiTro;
 import fpt.mailinhapp.dto.TaiKhoanDto;
 import fpt.mailinhapp.exception.AccountException;
 import fpt.mailinhapp.repository.TaiKhoanRepository;
@@ -9,8 +8,6 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.util.StringUtils;
-import org.springframework.validation.annotation.Validated;
 
 import java.util.List;
 import java.util.Optional;
@@ -72,8 +69,6 @@ public class TaiKhoanService {
         if (!dto.getMatKhau().equals(found.getMatKhau())) {
             throw new AccountException("Mật khẩu cũ không đúng");
         }
-
-        // Update mật khẩu mới
         found.setMatKhau(dto.getNewPassword());
         dao.save(found);
     }

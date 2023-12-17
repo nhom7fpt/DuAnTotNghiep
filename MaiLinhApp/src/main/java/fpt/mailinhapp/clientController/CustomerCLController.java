@@ -1,5 +1,4 @@
 package fpt.mailinhapp.clientController;
-
 import fpt.mailinhapp.dto.ThanhVienDto;
 import fpt.mailinhapp.service.CustomerService;
 import fpt.mailinhapp.service.MapValidationErrorService;
@@ -35,6 +34,18 @@ public class CustomerCLController {
     @GetMapping("/{id}")
     public ResponseEntity loadData(@PathVariable String id){
         return new ResponseEntity<>(service.findById(id), HttpStatus.OK);
+    }
+    @PatchMapping("/quenMK")
+    public ResponseEntity<String> resetPassword(@RequestBody ThanhVienDto dto) {
+        String soDT = dto.getSoDT();
+        String email = dto.getEmail();
+
+        try {
+            service.doimk(soDT, email);
+            return ResponseEntity.ok("Mật khẩu đã được thay đổi và gửi về email.");
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
     }
 
 }

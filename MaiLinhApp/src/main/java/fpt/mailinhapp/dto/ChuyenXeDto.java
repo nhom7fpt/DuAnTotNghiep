@@ -22,4 +22,6 @@ public class ChuyenXeDto implements Serializable {
     private List<NhanVienDto> nhanViens = new ArrayList<>();
     Integer tuyenXe;
     String xe;
+    XeDto xedto;
+    NhanVienDto nhanvien;
 }

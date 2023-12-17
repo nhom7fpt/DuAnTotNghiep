@@ -101,22 +101,48 @@ public class ChuyenXeService {
         return dao.findAll();
     }
 
-    public List<ChuyenXeDto> timChuyen(String diemDi, String diemDen){
-        List<ChuyenXe> listEntity = dao.findByTuyenXe_DiemDiLikeAndTuyenXe_DiemDenLike(diemDi,diemDen);
+//    public List<ChuyenXeDto> timChuyen(String diemDi, String diemDen) {
+//        List<ChuyenXe> listEntity = dao.findByTuyenXe_DiemDiLikeAndTuyenXe_DiemDenLike(diemDi, diemDen);
+//
+//
+//        LocalTime now = LocalTime.now();
+//
+//        List<ChuyenXe> listData = listEntity.stream()
+//                .filter(chuyenXe -> parseTime(chuyenXe.getTuyenXe().getTgDi()).isAfter(now))
+//                .collect(Collectors.toList());
+//
+//        List<ChuyenXeDto> listDto = listData.stream().map(item -> {
+//            ModelMapper mapper = new ModelMapper();
+//            return mapper.map(item, ChuyenXeDto.class);
+//        }).collect(Collectors.toList());
+//
+//        return listDto;
+//    }
+public List<ChuyenXeDto> timChuyen(String diemDi, String diemDen){
+    List<ChuyenXe> listEntity = dao.findByTuyenXe_DiemDiLikeAndTuyenXe_DiemDenLike(diemDi,diemDen);
 
-        List<ChuyenXeDto> listDto = listEntity.stream().map((item)->{
-            ModelMapper mapper = new ModelMapper();
-            return mapper.map(item, ChuyenXeDto.class);
-        }).collect(Collectors.toList());
+    List<ChuyenXeDto> listDto = listEntity.stream().map((item)->{
+        ModelMapper mapper = new ModelMapper();
+        return mapper.map(item, ChuyenXeDto.class);
+    }).collect(Collectors.toList());
 
-        return listDto;
+    return listDto;
+}
+
+    private LocalTime parseTime(LocalTime time) {
+        return time;
     }
 
-    public List<ChuyenXeDto> findByTuyen(ChuyenTheoTuyen dto){
-
+    public List<ChuyenXeDto> findByTuyen(ChuyenTheoTuyen dto) {
         List<ChuyenXe> listEntity = dao.findByTuyenXe_DiemDiLikeAndTuyenXe_DiemDenLike(dto.getDiemDi(), dto.getDiemDen());
 
-        List<ChuyenXeDto> listDto = listEntity.stream().map((item)->{
+        LocalTime now = LocalTime.now();
+
+        List<ChuyenXe> listData = listEntity.stream()
+                .filter(chuyenXe -> parseTime(chuyenXe.getTuyenXe().getTgDi()).isAfter(now))
+                .collect(Collectors.toList());
+
+        List<ChuyenXeDto> listDto = listData.stream().map(item -> {
             ModelMapper mapper = new ModelMapper();
             return mapper.map(item, ChuyenXeDto.class);
         }).collect(Collectors.toList());

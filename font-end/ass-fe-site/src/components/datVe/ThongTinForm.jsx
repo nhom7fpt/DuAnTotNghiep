@@ -29,11 +29,7 @@ const ThongTinForm = (props) => {
         </Form.Item>
      
       </Form>
-      <Radio.Group>
-      <Radio value={1}>Thanh toán bằng tiền mặt</Radio>
-      <Radio value={2}>Thanh toán online</Radio>
-
-    </Radio.Group>
+     
     </Col>
   </Row>
   )

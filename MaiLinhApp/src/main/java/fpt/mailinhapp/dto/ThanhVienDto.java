@@ -7,9 +7,6 @@ import lombok.Value;
 
 import java.io.Serializable;
 
-/**
- * DTO for {@link fpt.mailinhapp.domain.ThanhVien}
- */
 @Data
 @NoArgsConstructor
 @AllArgsConstructor

@@ -18,14 +18,6 @@ public class LichSuMuaVeService {
     @Autowired
     private DatVeRepository datVeRepository;
 
-    @Transactional(rollbackFor = Exception.class)
-    public DatVeDto findLichSuMuaVeByMaVe(Long maVe) {
-        DatVe datVe = datVeRepository.findByMaVe(maVe)
-                .orElseThrow(() -> new BusesException("Không tìm thấy lịch sử mua vé với mã vé: " + maVe));
-
-        ModelMapper modelMapper = new ModelMapper();
-        return modelMapper.map(datVe, DatVeDto.class);
-    }
 
     @Transactional(rollbackFor = Exception.class)
     public List<DatVeDto> findAllLichSuMuaVe() {

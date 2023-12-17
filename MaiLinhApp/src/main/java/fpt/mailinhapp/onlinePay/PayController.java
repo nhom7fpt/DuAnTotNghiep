@@ -1,15 +1,16 @@
 package fpt.mailinhapp.onlinePay;
 
-import fpt.mailinhapp.dto.ChuyenXeDto;
-import fpt.mailinhapp.dto.DatVeDto;
-import fpt.mailinhapp.dto.InfoDto;
-import fpt.mailinhapp.dto.ThanhToanDto;
+import fpt.mailinhapp.config.DatVeHolder;
+import fpt.mailinhapp.dto.*;
 
+import fpt.mailinhapp.service.EmailService;
+import org.springframework.ui.Model;
 import fpt.mailinhapp.service.PayMentService;
 import fpt.mailinhapp.service.VeXeService;
 import org.modelmapper.ModelMapper;
-import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
@@ -26,33 +27,44 @@ import java.util.*;
 @CrossOrigin
 @RequestMapping("api/v1/payment")
 public class PayController {
-
+    @Autowired
+    private EmailService emailService;
     @Autowired
     PayMentService service;
     @Autowired
     VeXeService veXeService;
+    @Autowired
+    private DatVeHolder datVeHolder;
 
 
-    DatVeDto trunggian = new DatVeDto();
+    @PostMapping()
+    public ResponseEntity createPayment(@RequestBody Map<String, Object> requestData) throws UnsupportedEncodingException {
+        DatVeDto trungGian = new DatVeDto();
+        ModelMapper mapper = new ModelMapper();
+        ChuyenXeDto cx = mapper.map(requestData.get("chuyenXe"), ChuyenXeDto.class);
 
-    @PostMapping
-    public String getData(@RequestBody DatVeDto dto){
-        BeanUtils.copyProperties(dto, trunggian);
-        InfoDto info = new InfoDto();
-        BeanUtils.copyProperties(dto.getInfo(),info);
-        ChuyenXeDto chuyen = new ChuyenXeDto();
-        chuyen.setMaChuyen(dto.getChuyenXe().getMaChuyen());
-        trunggian.setInfo(info);
-        trunggian.setChuyenXe(chuyen);
+        String nt = String.valueOf(requestData.get("noiTra"));
+        InfoDto info = mapper.map(requestData.get("info"), InfoDto.class);
+        Integer soLuong = (Integer) requestData.get("soLuong");
+        List<String> choNgoi = (List<String>) requestData.get("choNgoi");
+        Integer tongTienInteger = (Integer) requestData.get("tongTien");
+        Long tien = tongTienInteger != null ? Long.valueOf(tongTienInteger) : null;
 
-        return "redirect:http://localhost:8080/api/v1/payment/create_pay/"+ dto.getTongTien();
-    }
-    @GetMapping("create_pay/{amount}")
-    public String createPayment(@PathVariable Long money) throws UnsupportedEncodingException {
+
+
+        trungGian.setInfo(info);
+        trungGian.setChuyenXe(cx);
+        trungGian.setChoNgoi(choNgoi);
+        trungGian.setNoiTra(nt);
+        trungGian.setTongTien(tien);
+        trungGian.setSoLuong(soLuong);
+
+        datVeHolder.setTrunggian(trungGian);
+
 
         String vnp_Command = "pay";
         String orderType = "other";
-        long amount = money*100;
+        long amount = tien*100;
         String bankCode = "";
 
         String vnp_TxnRef = Config.getRandomNumber(8);
@@ -121,17 +133,18 @@ public class PayController {
         dto.setMessage("successfully");
         dto.setUrl(paymentUrl);
 
-        return "redirect:"+paymentUrl;
+        return new ResponseEntity(paymentUrl, HttpStatus.OK);
     }
 
     @GetMapping("pay_return")
-    public String payInfo(@RequestParam("vnp_Amount")Long amount,
-                                  @RequestParam("vnp_BankCode") String bankCode,
-                                  @RequestParam("vnp_OrderInfo") String orderInfo,
-                                  @RequestParam("vnp_PayDate") String payDate,
-                                  @RequestParam("vnp_TransactionNo") String transactionNo,
-                                  @RequestParam("vnp_TransactionStatus") String transactionStatus) throws ParseException {
-
+    public String payInfo(@RequestParam("vnp_Amount") Long amount,
+                          @RequestParam("vnp_BankCode") String bankCode,
+                          @RequestParam("vnp_OrderInfo") String orderInfo,
+                          @RequestParam("vnp_PayDate") String payDate,
+                          @RequestParam("vnp_TransactionNo") String transactionNo,
+                          @RequestParam("vnp_TransactionStatus") String transactionStatus,
+                          Model model) throws ParseException {
+        DatVeDto trunggian = datVeHolder.getTrunggian();
         SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHHmmss");
         sdf.setTimeZone(TimeZone.getTimeZone("GMT+7"));
         Date datePay = sdf.parse(payDate);
@@ -141,94 +154,39 @@ public class PayController {
         dto.setOrderInfo(orderInfo);
         dto.setBank(bankCode);
         dto.setAmount(amount);
-        if(transactionStatus.equalsIgnoreCase("00")){
+        if (transactionStatus.equalsIgnoreCase("00")) {
             dto.setStatus(true);
-        }else{
+            service.save(dto);
+            trunggian.setThanhToan(dto);
+            veXeService.createVe(trunggian);
+            String toEmail = trunggian.getInfo().getEmail();
+            String statusMessage = trunggian.getThanhToan().getStatus() ? "Thành công" : "Thất bại";
+            String subject = "Thanh toán " + statusMessage + " cho đơn hàng - Order #" + dto.getId();
+            String redirectUrl = "redirect:http://localhost:3000/thongtinve/" + dto.getId();
+            String text = "Cảm ơn Quý khách đã sử dụng dịch vụ của MAILINHTOUR." +
+                    "!<br>" +
+                    "MAILINH xin thông báo giao dịch của Quý khách đã được thực hiện như sau:" +
+                    "<br>" +
+                    "<br>" +
+                    "ID: " + dto.getId() + "<br>" +
+                    "Tên Khách hàng:" + trunggian.getInfo().getHoTen()+ "<br>" +
+                    "Số ghế:" + trunggian.getChoNgoi()+ "<br>" +
+                    "Tổng tiền: " + trunggian.getTongTien() + " VND<br>" +
+                    "Ngày đặt: " + dto.getPayDate()+ "<br>" +
+                    "Tình trạng: " + statusMessage + "<br>" +
+                    "Thông tin chi tiết xin vui lòng check trong lịch sử giao dịch cửa website:" + redirectUrl + "<br>" ;
+            emailService.sendEmail(toEmail, subject, text);
+
+            return redirectUrl;
+
+        } else {
             dto.setStatus(false);
-        };
+            String redirectUrl = "redirect:http://localhost:3000/datvethatbai";
+            return redirectUrl;
+        }
 
-        service.save(dto);
 
-        trunggian.setThanhToan(dto);
 
-        veXeService.createVe(trunggian);
-
-        return "redirect:http://localhost:3000/thongtinve/"+ dto.getId();
     }
-
-//    @GetMapping("refund_pay")
-//    public ResponseEntity refundPayment() throws IOException {
-//        String vnp_RequestId = Config.getRandomNumber(8);
-//        String vnp_Version = Config.vnp_Version;
-//        String vnp_Command = "refund";
-//        String vnp_TmnCode = Config.vnp_TmnCode;
-//        String vnp_TransactionType = req.getParameter("trantype");
-//        String vnp_TxnRef = req.getParameter("order_id");
-//        long amount = Integer.parseInt(req.getParameter("amount"))*100;
-//        String vnp_Amount = String.valueOf(amount);
-//        String vnp_OrderInfo = "Hoan tien GD OrderId:" + vnp_TxnRef;
-//        String vnp_TransactionNo = ""; //Assuming value of the parameter "vnp_TransactionNo" does not exist on your system.
-//        String vnp_TransactionDate = req.getParameter("trans_date");
-//        String vnp_CreateBy = req.getParameter("user");
-//
-//        Calendar cld = Calendar.getInstance(TimeZone.getTimeZone("Etc/GMT+7"));
-//        SimpleDateFormat formatter = new SimpleDateFormat("yyyyMMddHHmmss");
-//        String vnp_CreateDate = formatter.format(cld.getTime());
-//
-//        String vnp_IpAddr = Config.getIpAddress(req);
-//
-//        JSONObject vnp_Params = new JSONObject ();
-//
-//        vnp_Params.append("vnp_RequestId", vnp_RequestId);
-//        vnp_Params.append("vnp_Version", vnp_Version);
-//        vnp_Params.append("vnp_Command", vnp_Command);
-//        vnp_Params.append("vnp_TmnCode", vnp_TmnCode);
-//        vnp_Params.append("vnp_TransactionType", vnp_TransactionType);
-//        vnp_Params.append("vnp_TxnRef", vnp_TxnRef);
-//        vnp_Params.append("vnp_Amount", vnp_Amount);
-//        vnp_Params.append("vnp_OrderInfo", vnp_OrderInfo);
-//
-//        if(vnp_TransactionNo != null && !vnp_TransactionNo.isEmpty())
-//        {
-//            vnp_Params.append("vnp_TransactionNo", "{get value of vnp_TransactionNo}");
-//        }
-//
-//        vnp_Params.append("vnp_TransactionDate", vnp_TransactionDate);
-//        vnp_Params.append("vnp_CreateBy", vnp_CreateBy);
-//        vnp_Params.append("vnp_CreateDate", vnp_CreateDate);
-//        vnp_Params.append("vnp_IpAddr", vnp_IpAddr);
-//
-//        String hash_Data= String.join("|", vnp_RequestId, vnp_Version, vnp_Command, vnp_TmnCode,
-//                vnp_TransactionType, vnp_TxnRef, vnp_Amount, vnp_TransactionNo, vnp_TransactionDate,
-//                vnp_CreateBy, vnp_CreateDate, vnp_IpAddr, vnp_OrderInfo);
-//
-//        String vnp_SecureHash = Config.hmacSHA512(Config.secretKey, hash_Data.toString());
-//
-//        vnp_Params.append("vnp_SecureHash", vnp_SecureHash);
-//
-//        URL url = new URL (Config.vnp_ApiUrl);
-//        HttpURLConnection con = (HttpURLConnection)url.openConnection();
-//        con.setRequestMethod("POST");
-//        con.setRequestProperty("Content-Type", "application/json");
-//        con.setDoOutput(true);
-//        DataOutputStream wr = new DataOutputStream(con.getOutputStream());
-//        wr.writeBytes(vnp_Params.toString());
-//        wr.flush();
-//        wr.close();
-//        int responseCode = con.getResponseCode();
-//        System.out.println("nSending 'POST' request to URL : " + url);
-//        System.out.println("Post Data : " + vnp_Params);
-//        System.out.println("Response Code : " + responseCode);
-//        BufferedReader in = new BufferedReader(
-//                new InputStreamReader(con.getInputStream()));
-//        String output;
-//        StringBuffer response = new StringBuffer();
-//        while ((output = in.readLine()) != null) {
-//            response.append(output);
-//        }
-//        in.close();
-//        System.out.println(response.toString());
-//
-//    }
 
 }

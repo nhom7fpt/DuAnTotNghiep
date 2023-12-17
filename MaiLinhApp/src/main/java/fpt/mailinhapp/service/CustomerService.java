@@ -8,15 +8,16 @@ import fpt.mailinhapp.dto.ThanhVienDto;
 import fpt.mailinhapp.exception.CustomerException;
 import fpt.mailinhapp.repository.AnhDaLuuRepository;
 import fpt.mailinhapp.repository.ThanhVienRepository;
+import jakarta.mail.MessagingException;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Bean;
+
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
+import java.util.UUID;
 import java.util.List;
-import java.util.Optional;
+
 
 @Service
 public class CustomerService {
@@ -28,7 +29,8 @@ public class CustomerService {
 
     @Autowired
     FileStorageService imgService;
-
+    @Autowired
+    private EmailService emailService;
     @Transactional(rollbackFor = Exception.class)
     public ThanhVienDto insertCustomers(ThanhVienDto dto){
         ThanhVien entity = new ThanhVien();
@@ -125,5 +127,24 @@ public class CustomerService {
 
 
         return dto;
+    }
+
+    @Transactional(rollbackFor = Exception.class)
+    public void doimk(String soDT, String email) throws MessagingException {
+        ThanhVien thanhVien = dao.findBySoDTAndEmail(soDT, email)
+                .orElseThrow(() -> new CustomerException("Thông tin không hợp lệ"));
+
+
+        String newPassword = generateNewPassword();
+
+        thanhVien.getTaiKhoan().setMatKhau(newPassword);
+        dao.save(thanhVien);
+
+        emailService.sendPasswordResetEmail(thanhVien.getEmail(), newPassword);
+    }
+
+    private String generateNewPassword() {
+        String newPassword = UUID.randomUUID().toString().replace("-", "");
+        return newPassword.substring(0, 8);
     }
 }

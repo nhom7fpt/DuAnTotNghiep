@@ -37,10 +37,5 @@ public class TicketsController {
         return new ResponseEntity<>(service.findAll(), HttpStatus.OK);
     }
 
-    @GetMapping("/{id}")
-    public  ResponseEntity getVeXeChitiet(@PathVariable Long id){
-        var found = service.findById(id);
 
-        return new ResponseEntity<>(found, HttpStatus.OK);
-    }
 }
