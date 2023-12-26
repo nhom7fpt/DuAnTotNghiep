@@ -49,8 +49,8 @@ public class ThuongHieuController {
         return new ResponseEntity<>(updateDto, HttpStatus.OK);
     }
 
-    @DeleteMapping()
-    public ResponseEntity deleteThuongHieu(Long id){
+    @DeleteMapping("/{id}")
+    public ResponseEntity deleteThuongHieu(@PathVariable Long id){
         service.deleteThuongHieu(id);
         return new ResponseEntity<>("Xoá thành công ", HttpStatus.OK);
     }

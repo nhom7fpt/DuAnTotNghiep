@@ -49,12 +49,12 @@ class AddOrEdit extends Component {
   };
 
   static getDerivedStateFromProps(nextProps, prevState) {
-    if (nextProps.loaiXe && prevState.loaiXe.id !== nextProps.loaiXe.id) {
+    if (nextProps.LoaiXe && prevState.loaiXe.id !== nextProps.LoaiXe.id) {
       return {
         ...prevState,
-        loaiXe: nextProps.loaiXe,
+        loaiXe: nextProps.LoaiXe,
       };
-    } else if (!nextProps.loaiXe) {
+    } else if (!nextProps.LoaiXe) {
       return {
         ...prevState,
         loaiXe: {

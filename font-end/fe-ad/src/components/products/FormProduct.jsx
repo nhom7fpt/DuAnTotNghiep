@@ -18,7 +18,6 @@ import { DatePicker, Space } from "antd";
 
 import ImagesService from "../../services/ImagesService";
 dayjs.extend(customParseFormat);
-const dateFormat = "dd-MM-YYYY";
 class FormProduct extends Component {
   form = React.createRef();
 
@@ -83,11 +82,6 @@ class FormProduct extends Component {
       return data;
     });
 
-    const ngayMuaData = Car.ngayMua ? dayjs(Car.ngayMua, dateFormat) : "";
-    const ngayDKData = Car.ngayDangKiem
-      ? dayjs(Car.ngayDangKiem, dateFormat)
-      : "";
-
     const loaiXeId = Car.loaiXe ? Car.loaiXe.id : "";
     const thuongHieuId = Car.thuongHieu ? Car.thuongHieu.id : "";
 
@@ -104,29 +98,13 @@ class FormProduct extends Component {
                 <Input disabled={Car.bienSoXe ? true : false}></Input>
               </Form.Item>
 
-              <Form.Item label="Ngày Mua" name="ngayMua">
-                <DatePicker defaultValue={ngayMuaData}></DatePicker>
-              </Form.Item>
-              <Form.Item label="Ngày Đăng Kiểm" name="ngayDangKiem">
-                <DatePicker defaultValue={ngayDKData}></DatePicker>
-              </Form.Item>
-              <Form.Item
-                label="Giá Mua"
-                name="giaMua"
-                initialValue={Car.giaMua}
-              >
-                <Input></Input>
-              </Form.Item>
-              <Form.Item
-                label="Nơi Mua"
-                name="noiMua"
-                initialValue={Car.noiMua}
-              >
-                <Input></Input>
-              </Form.Item>
               <Form.Item label="Loại Ghế" name="loaiXe">
                 <Select options={listLoai} defaultValue={loaiXeId}></Select>
               </Form.Item>
+
+              {/* <Form.Item label="Nha xe" name="nhaXe">
+                <Select options={listLoai} defaultValue={loaiXeId}></Select>
+              </Form.Item> */}
               <Form.Item label="Thương Hiệu" name="thuongHieu">
                 <Select
                   options={listThuongHieu}

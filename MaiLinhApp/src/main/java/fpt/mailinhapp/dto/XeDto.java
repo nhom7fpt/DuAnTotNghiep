@@ -18,13 +18,9 @@ import java.util.Set;
 @AllArgsConstructor
 public class XeDto implements Serializable {
     String bienSoXe;
-
-    Date ngayMua;
-    Date ngayDangKiem;
-    Long giaMua;
-    String noiMua;
     AnhDaLuuDto anhDaLuu;
-
     private ThuongHieuDto thuongHieu;
     private LoaiXeDto loaiXe;
+    private NhaXeDto nhaXe;
+
 }

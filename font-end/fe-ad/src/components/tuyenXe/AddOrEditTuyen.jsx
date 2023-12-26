@@ -7,10 +7,10 @@ import { SaveOutlined } from "@ant-design/icons";
 import TuyenXeService from "../../services/TuyenXeService";
 import { connect } from "react-redux";
 import {
-  insterChuyen,
-  updateChuyen,
-  clearChuyen,
-} from "../../redux/actions/actionChuyen";
+  insterTuyen,
+  updateTuyen,
+  clearTuyen,
+} from "../../redux/actions/actionTuyenXe";
 import FormTuyenXe from "./FormTuyenXe";
 import { toast } from "react-toastify";
 import TransferNoiTra from "./TransferNoiTra";
@@ -43,11 +43,15 @@ class AddOrEditTuyen extends Component {
     const { tuyenXe, noiTra, listNoiTra } = this.state;
     const nhanVienChon = listNoiTra.filter((item) => noiTra.includes(item.id));
     const newdata = { ...tuyenXe, noiTras: nhanVienChon };
-    console.log(newdata);
+    this.props.insterTuyen(newdata);
   };
 
   updateProduct = () => {
-    const { tuyenXe, noiTra } = this.state;
+    const { navigate } = this.props.router;
+    const { tuyenXe, noiTra, listNoiTra } = this.state;
+    const nhanVienChon = listNoiTra.filter((item) => noiTra.includes(item.id));
+    const newdata = { ...tuyenXe, noiTras: nhanVienChon };
+    this.props.updateTuyen(tuyenXe.maTuyenXe, newdata, navigate);
   };
 
   loadData = async () => {
@@ -138,9 +142,9 @@ const mapStateToProps = (state) => ({
 });
 
 const mapDispatchToProps = {
-  insterChuyen,
-  updateChuyen,
-  clearChuyen,
+  insterTuyen,
+  updateTuyen,
+  clearTuyen,
 };
 
 export default connect(

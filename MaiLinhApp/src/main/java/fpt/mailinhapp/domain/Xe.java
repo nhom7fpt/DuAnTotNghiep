@@ -22,21 +22,7 @@ public class Xe {
     @Column(name = "bien_so_xe", nullable = false)
     private String bienSoXe;
 
-    @JsonFormat(pattern = "dd-MM-yyyy")
-    @Temporal(TemporalType.DATE)
-    @Column(name = "ngay_mua", nullable = true)
-    private Date ngayMua;
 
-    @JsonFormat(pattern = "dd-MM-YYYY")
-    @Temporal(TemporalType.DATE)
-    @Column(name = "ngay_dang_kiem")
-    private Date ngayDangKiem;
-
-    @Column(name = "gia_mua", nullable = false)
-    private Long giaMua;
-
-    @Column(name = "noi_mua")
-    private String noiMua;
 
     @OneToOne(orphanRemoval = true)
     @JoinColumn(name = "anh_da_luu_id")
@@ -54,5 +40,9 @@ public class Xe {
     @ManyToOne
     @JoinColumn(name = "loai_xe_id")
     private LoaiXe loaiXe;
+
+    @ManyToOne
+    @JoinColumn(name = "nha_xe_id")
+    private NhaXe nhaXe;
 
 }

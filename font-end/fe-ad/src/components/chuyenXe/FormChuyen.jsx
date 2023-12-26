@@ -104,13 +104,6 @@ class FormChuyen extends Component {
                 <Input disabled={true}></Input>
               </Form.Item>
 
-              <Form.Item
-                label="Số khách"
-                name="soKhach"
-                initialValue={chuyen.soKhach}
-              >
-                <Input></Input>
-              </Form.Item>
               <Form.Item label="Xe" name="xe">
                 <Select options={listXe} defaultValue={xeId}></Select>
               </Form.Item>

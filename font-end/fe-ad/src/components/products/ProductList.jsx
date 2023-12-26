@@ -58,43 +58,15 @@ class ProductList extends Component {
             dataIndex="bienSoXe"
             align="center"
           ></Column>
+
           <Column
-            title="Số Ghế"
-            key="loaiXe"
-            dataIndex="loaiXe"
+            title="Nhà xe"
+            key="nhaXe"
+            dataIndex="nhaXe"
             align="center"
-            render={(text, record) => (
-              <label>{record ? record.loaiXe.soGhe : ""}</label>
-            )}
+            render={(text, record) => <label>test</label>}
           ></Column>
 
-          <Column
-            title="Ngày Mua"
-            key="ngayMua"
-            dataIndex="ngayMua"
-            align="center"
-          />
-
-          <Column
-            title="Ngày Đăng Kiểm"
-            key="ngayDangKiem"
-            dataIndex="ngayDangKiem"
-            align="center"
-          />
-
-          <Column
-            title="Giá Mua"
-            key="giaMua"
-            dataIndex="giaMua"
-            align="center"
-          ></Column>
-
-          <Column
-            title="Nơi Mua"
-            key="noiMua"
-            dataIndex="noiMua"
-            align="center"
-          ></Column>
           <Column
             title="Thương Hiệu"
             key="thuongHieu"

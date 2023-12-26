@@ -49,41 +49,39 @@ export const insterManufacturer = (manufacturer) => async (dispatch) => {
   }
 };
 
-export const updateManufacturer =
-  (id, manufacturer, navigate) => async (dispatch) => {
-    try {
+export const updateManufacturer = (id, manufacturer) => async (dispatch) => {
+  try {
+    dispatch({
+      type: COMMON_LOADING_SET,
+      payload: true,
+    });
+    const res = await service.updateManufacturer(id, manufacturer);
+    console.log(res);
+    if (res.status === 200) {
       dispatch({
-        type: COMMON_LOADING_SET,
-        payload: true,
+        type: MANUFACTURER_UPDATE,
+        payload: id,
       });
-      const res = await service.updateManufacturer(id, manufacturer);
-      console.log(res);
-      if (res.status === 200) {
-        dispatch({
-          type: MANUFACTURER_UPDATE,
-          payload: id,
-        });
-        dispatch({
-          type: MANUFACTURER_APPEND,
-          payload: res.data,
-        });
-        dispatch({
-          type: COMMON_LOADING_SET,
-          payload: false,
-        });
-        toast.success("Update Done");
-        navigate("/Manufacturer/list");
-      }
-    } catch (error) {
+      dispatch({
+        type: MANUFACTURER_APPEND,
+        payload: res.data,
+      });
       dispatch({
         type: COMMON_LOADING_SET,
         payload: false,
       });
-      toast.error(
-        error.response.data ? error.response.data.message : error.message
-      );
+      toast.success("Update Done");
     }
-  };
+  } catch (error) {
+    dispatch({
+      type: COMMON_LOADING_SET,
+      payload: false,
+    });
+    toast.error(
+      error.response.data ? error.response.data.message : error.message
+    );
+  }
+};
 
 export const getListManufacturer = () => async (dispatch) => {
   try {

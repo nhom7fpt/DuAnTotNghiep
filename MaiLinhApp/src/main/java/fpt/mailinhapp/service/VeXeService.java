@@ -160,4 +160,10 @@ public class VeXeService {
         }
     }
 
+    public DatVeDto findById(Long id){
+        var found = dao.findById(id).orElseThrow(()-> new TicketsException("Mã vé không tồn tại"));
+        ModelMapper mapper = new ModelMapper();
+        return mapper.map(found,DatVeDto.class);
+    }
+
 }

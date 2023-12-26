@@ -36,6 +36,7 @@ export const insterTuyen = (tuyen) => async (dispatch) => {
         payload: false,
       });
       toast.success("Save Done");
+      clearTuyen();
     }
   } catch (error) {
     dispatch({
@@ -63,6 +64,7 @@ export const updateTuyen = (id, tuyen, navigate) => async (dispatch) => {
         payload: false,
       });
       toast.success("Update Done");
+      clearTuyen();
       navigate("/tuyen");
     }
   } catch (error) {

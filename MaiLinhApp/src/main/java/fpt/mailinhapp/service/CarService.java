@@ -70,14 +70,6 @@ public class CarService {
         var found =  dao.findById(id).orElseThrow(()-> new CarsException("Xe không tồn tại"));
 
 
-        Date ngDangKiem = new Date();
-        Date ngMua = new Date();
-        if(dto.getNgayDangKiem() == null){
-             ngDangKiem = found.getNgayDangKiem();
-        }
-        if(dto.getNgayMua() == null){
-             ngMua = found.getNgayMua();
-        }
 
         BeanUtils.copyProperties(dto, found, "anhDaLuu");
 
@@ -91,12 +83,7 @@ public class CarService {
             BeanUtils.copyProperties(dto.getAnhDaLuu(), img);
             found.setAnhDaLuu(img);
         }
-        if(dto.getNgayDangKiem() == null){
-             found.setNgayDangKiem(ngDangKiem);
-        }
-        if(dto.getNgayMua() == null){
-            found.setNgayMua(ngMua);
-        }
+
 
 
          var saveEntity =dao.save(found);

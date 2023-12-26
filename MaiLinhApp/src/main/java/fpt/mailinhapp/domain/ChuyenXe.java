@@ -17,8 +17,6 @@ public class ChuyenXe {
     @Column(name = "ma_chuyen", nullable = false)
     private Long maChuyen;
 
-    @Column(name = "so_khach")
-    private String soKhach;
 
 
 

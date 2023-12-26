@@ -31,8 +31,5 @@ public class NhanVien {
     @JoinColumn(name = "anh_da_luu_id")
     private AnhDaLuu anhDaLuu;
 
-    @OneToOne(orphanRemoval = true)
-    @JoinColumn(name = "tai_khoan_ten_tai_khoan")
-    private TaiKhoan taiKhoan;
 
 }

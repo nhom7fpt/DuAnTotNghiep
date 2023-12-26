@@ -24,7 +24,7 @@ const ManufacturerReducer = (state = initialState, { type, payload }) => {
 
     case MANUFACTURERES_DELETE:
       const newmanu = state.manufactureres.filter(
-        (item) => item.id !== payload.id
+        (item) => item.id !== payload
       );
 
       return {
