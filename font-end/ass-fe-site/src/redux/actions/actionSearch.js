@@ -21,9 +21,9 @@ export const loadDataField = () => async (dispatch) => {
 
 };
 
-export const listSearchOneWay = (start, end, date, navigate) => async (dispatch) => {
+export const listSearchOneWay = (start, end, ngayDi) => async (dispatch) => {
   try {
-    const data = {diemDi: start, diemDen: end, tgDi: date}
+    const data = { diemDi: start, diemDen: end, ngayDi: ngayDi };
     
     const res = await service.loadListChuyen(data);
     console.log(res);
@@ -38,14 +38,14 @@ export const listSearchOneWay = (start, end, date, navigate) => async (dispatch)
   } catch (error) {
     console.log(error);
   }
-  navigate("/timchuyen")
+ 
 
 
 };
 
-export const listSearchReturn = (start, end, date, navigate) => async (dispatch) => {
+export const listSearchReturn = (start, end, ngayDi) => async (dispatch) => {
   try {
-    const data = {diemDi: start, diemDen: end, tgDi: date}
+    const data = { diemDi: start, diemDen: end, ngayDi: ngayDi };
     const res = await service.loadListChuyenReturn(data);
     console.log(res);
 
@@ -61,11 +61,9 @@ export const listSearchReturn = (start, end, date, navigate) => async (dispatch)
     }
   } catch (error) {
     console.log(error);
-  }
-  navigate("/timchuyen")
-
-
+  };
 };
+
 export const loadDataTuyen = () => async (dispatch) => {
   try {
     const res = await service.loadDataTuyen();

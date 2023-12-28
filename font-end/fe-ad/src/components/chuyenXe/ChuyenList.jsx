@@ -24,11 +24,12 @@ class ChuyenList extends Component {
   };
 
   render() {
+   
     const { chuyens } = this.props;
-    console.log(chuyens);
+    const reversedChuyens = [...chuyens].reverse(); 
     return (
       <>
-        <Table dataSource={chuyens} rowKey="maChuyen">
+        <Table dataSource={reversedChuyens} rowKey="maChuyen">
           <Column
             title="Mã chuyến xe"
             key="maChuyen"

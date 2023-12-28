@@ -1,6 +1,7 @@
 package fpt.mailinhapp.clientController;
 
 import fpt.mailinhapp.dto.ChuyenXeDto;
+import fpt.mailinhapp.dto.TuyenXeDto;
 import fpt.mailinhapp.respondata.ChoDto;
 import fpt.mailinhapp.respondata.ChuyenTheoTuyen;
 import fpt.mailinhapp.respondata.ReqTimMotChieu;
@@ -14,12 +15,12 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
-
+import java.time.LocalDate;
 import java.util.Date;
 import java.util.List;
 
 @RestController
-@CrossOrigin
+@CrossOrigin("*")
 @RequestMapping("api/v2/search")
 public class SearchController {
     @Autowired
@@ -37,22 +38,21 @@ public class SearchController {
         if(error != null){
             return error;
         }
-
-        List<ChuyenXeDto> dto = service.timChuyen(data.getDiemDi(), data.getDiemDen());
-
+        LocalDate ngayDi = (data.getNgayDi() != null) ? data.getNgayDi() : LocalDate.now();
+        List<ChuyenXeDto> dto = service.timChuyen(data.getDiemDi(), data.getDiemDen(), ngayDi);
         return new ResponseEntity<>(dto, HttpStatus.OK);
     }
 
     @PostMapping("return")
-    public ResponseEntity findReturnTicket(@Validated @RequestBody ReqTimMotChieu data, BindingResult result){
+    public ResponseEntity findReturnTicket(@Validated @RequestBody TuyenXeDto data, BindingResult result){
         ResponseEntity error = errorService.mapValidationField(result);
 
         if(error != null){
             return error;
         }
 
-        List<ChuyenXeDto> dto = service.timChuyen(data.getDiemDi(), data.getDiemDen());
-        List<ChuyenXeDto> dto2 = service.timChuyen(data.getDiemDen(), data.getDiemDi());
+        List<ChuyenXeDto> dto = service.timChuyen(data.getDiemDi(), data.getDiemDen(), data.getNgayDi());
+        List<ChuyenXeDto> dto2 = service.timChuyen(data.getDiemDen(), data.getDiemDi(), data.getNgayDi());
 
         Return2List newList = new Return2List(dto,dto2);
 
@@ -76,7 +76,6 @@ public class SearchController {
 
         return new ResponseEntity<>(list, HttpStatus.OK);
     }
-
     @GetMapping("/cho")
     public ResponseEntity getListCho(@RequestBody ChoDto dto){
         Date now = new Date();

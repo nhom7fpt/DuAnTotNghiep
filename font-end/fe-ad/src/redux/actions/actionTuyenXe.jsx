@@ -12,7 +12,7 @@ import {
 
 const service = new TuyenXeService();
 
-export const insterTuyen = (tuyen) => async (dispatch) => {
+export const insterTuyen = (tuyen , navigate) => async (dispatch) => {
   try {
     dispatch({
       type: COMMON_LOADING_SET,
@@ -38,6 +38,7 @@ export const insterTuyen = (tuyen) => async (dispatch) => {
       toast.success("Save Done");
       clearTuyen();
     }
+    navigate("/tuyen")
   } catch (error) {
     dispatch({
       type: COMMON_LOADING_SET,

@@ -15,18 +15,21 @@ function TimChuyen(props) {
   const [startLocation2, setStartLocation2] = useState(null);
   const [endLocation2, setEndLocation2] = useState(null);
   const [selectedTab, setSelectedTab] = useState("1");
+  const [ngayDi, setNgayDi] = useState(null); // Thêm state cho ngayDi
   const { navigate } = props.router;
+
   const onClick = () => {
-    if(selectedTab == 1){
-      props.listSearchOneWay(startLocation, endLocation, startDate, navigate);
-    }else{
-      props.listSearchReturn(startLocation, endLocation, startDate, navigate);
+    if (selectedTab === "1") {
+      props.listSearchOneWay(startLocation, endLocation, ngayDi, navigate);
+    } else {
+      props.listSearchReturn(startLocation, endLocation,  ngayDi, navigate);
     }
-    if(selectedTab == 2){
-      props.listSearchOneWay(startLocation2, endLocation2, startDate, navigate);
-    }else{
-      props.listSearchReturn(startLocation2, endLocation2, startDate, navigate);
+    if (selectedTab === "2") {
+      props.listSearchOneWay(startLocation2, endLocation2, ngayDi, navigate);
+    } else {
+      props.listSearchReturn(startLocation2, endLocation2, ngayDi, navigate);
     }
+    navigate("/timchuyen")
   };
 
   const { fieldData } = props;
@@ -35,31 +38,29 @@ function TimChuyen(props) {
     value: item,
   }));
 
-  
-
   const handleChange = (e) => {
     setSelectedTab(e.target.value);
-    console.log(e.target.value);
   };
 
   const items = [
     {
       key: "1",
       label: (
-        <Radio value="1" onChange={handleChange} checked={selectedTab === "1"} style={{ fontSize:'15px'}}>
+        <Radio value="1" onChange={handleChange} checked={selectedTab === "1"} style={{ fontSize: '15px' }}>
           Một chiều
         </Radio>
       ),
-      children: <MotChieu setStart={setStartLocation} setEnd={setEndLocation} setDay={setStartDate} data={listData} />,
+      
+      children: <MotChieu setStart={setStartLocation} setEnd={setEndLocation} setNgayDi={setNgayDi} data={listData} />,
     },
     {
       key: "2",
       label: (
-        <Radio value="2" onChange={handleChange} checked={selectedTab === "2"} style={{marginLeft:'-20px', fontSize:'15px'}}>
+        <Radio value="2" onChange={handleChange} checked={selectedTab === "2"} style={{ marginLeft: '-20px', fontSize: '15px' }}>
           Khứ hồi
         </Radio>
       ),
-      children: <KhuHoi setStart={setStartLocation2} setEnd={setEndLocation2} setDay={setStartDate} data={listData} />,
+      children: <KhuHoi setStart={setStartLocation2} setEnd={setEndLocation2}  setNgayDi={setNgayDi} data={listData} />,
     },
   ];
 
@@ -68,15 +69,12 @@ function TimChuyen(props) {
   }, []);
 
   return (
- 
-      <Col className="timchuyen-ink-bar">
-        <Tabs defaultActiveKey="1" items={items} />
-        <Button className="tcx-button" onClick={onClick}>
-          Tìm chuyến xe
-        </Button>
-        
-      </Col>
-
+    <Col className="timchuyen-ink-bar">
+      <Tabs defaultActiveKey="1" items={items} />
+      <Button className="tcx-button" onClick={onClick}>
+        Tìm chuyến xe
+      </Button>
+    </Col>
   );
 }
 

@@ -76,7 +76,8 @@ let isLocationDisplayed = false;
         <Row className="custom-container-loc" key={item.maChuyen}>
         {index === 0 && (
           <div className="hidden-text">
-            <span>{item.tuyenXe.diemDi} - {item.tuyenXe.diemDen}</span>
+            <span>{item.tuyenXe.diemDi} - {item.tuyenXe.diemDen} ({listChuyen.length})</span>
+          
           </div>
         )}
         <Col>

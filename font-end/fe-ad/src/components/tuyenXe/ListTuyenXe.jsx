@@ -8,7 +8,7 @@ import { BiEdit, BiSolidTrash } from "react-icons/bi";
 class ListManufacturer extends Component {
   render() {
     const { dataSource, isLoading } = this.props;
-
+    const reversedDataSource = dataSource.slice().reverse();
     if (isLoading) {
       return (
         <>
@@ -18,7 +18,7 @@ class ListManufacturer extends Component {
     }
     return (
       <div>
-        <Table dataSource={dataSource} rowKey="maTuyenXe">
+        <Table dataSource={reversedDataSource} rowKey="maTuyenXe">
           <Column
             title="Mã tuyến xe"
             key="maTuyenXe"

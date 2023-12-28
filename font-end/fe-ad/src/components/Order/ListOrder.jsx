@@ -18,12 +18,12 @@ export class ListOrder extends Component {
   render() {
     const { navigate } = this.props.router;
     const { order } = this.props;
-
+    const reversedOrder = order.slice().reverse();
     return (
       <>
-        <HeaderContent title="Danh sách đặt vé" navigate={navigate} />
+      <HeaderContent title="Danh sách đặt vé" navigate={navigate} />
 
-        <OrderList od={order} onGoDetail={this.onGoDetail}></OrderList>
+      <OrderList od={reversedOrder} onGoDetail={this.onGoDetail} />
       </>
     );
   }

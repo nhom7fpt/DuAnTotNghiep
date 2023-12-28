@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 import lombok.Value;
 
 import java.io.Serializable;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -24,4 +25,5 @@ public class ChuyenXeDto implements Serializable {
     String xe;
     XeDto xedto;
     NhanVienDto nhanvien;
+
 }

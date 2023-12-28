@@ -123,7 +123,8 @@ export const login = (account, navigate) => async (dispatch) => {
     }
   }
 
-  export const change = (id,account,navigate) => async (dispatch) => {
+
+ export const change = (id,account,navigate) => async (dispatch) => {
     try {
    
 
@@ -185,6 +186,7 @@ export const login = (account, navigate) => async (dispatch) => {
       }
       }
     }
+
     export const logoutchange = (navigate) => async (dispatch) => {
       try {
     

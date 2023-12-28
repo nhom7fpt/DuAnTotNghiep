@@ -10,8 +10,6 @@ import { connect } from 'react-redux';
 import { orderhistory } from '../redux/actions/actionOrderhistory';
 import withRouter from '../helpers/withRouter';
 
-
-
 function Lichsimuave(props) {
   const [loading, setLoading] = useState(true);
   const [selectedDate, setSelectedDate] = useState(null);
@@ -35,6 +33,9 @@ function Lichsimuave(props) {
         if (chuyenXe && chuyenXe.tuyenXe) {
           const maTuyenXe = chuyenXe.tuyenXe;
           const tuyenXe = listTuyen.find((t) => t.maTuyenXe === maTuyenXe);
+
+          ///Sử dụng hàm find để tìm kiếm tuyến xe trong danh sách listTuyen dựa trên điều kiện t.maTuyenXe === maTuyenXe.
+          //Nếu tìm thấy, tuyenXe sẽ chứa thông tin về tuyến xe.
 
           if (tuyenXe) {
             return `${tuyenXe.diemDi} - ${tuyenXe.diemDen} (${tuyenXe.tgDi})`;
@@ -153,7 +154,7 @@ function Lichsimuave(props) {
 
     // Load dữ liệu mới dựa trên selectedDate
     loadNewData();
-  }, [selectedDate, props.listData]); // Trigger the effect when selectedDate or props.listData changes
+  }, [selectedDate, props.listData]);
 
   return (
     <div className="border">

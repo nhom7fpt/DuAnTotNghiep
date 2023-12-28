@@ -3,7 +3,7 @@ import { Button, Popconfirm, Space, Table, Tooltip } from "antd";
 import Column from "antd/es/table/Column";
 import { MdPreview } from "react-icons/md";
 import { BiSolidTrash } from "react-icons/bi";
-
+import moment from "moment"; 
 export class OrderList extends Component {
   render() {
     const { od } = this.props;
@@ -23,6 +23,7 @@ export class OrderList extends Component {
             key="ngayDatVe"
             dataIndex="ngayDatVe"
             align="center"
+          
           ></Column>
 
           <Column
@@ -85,20 +86,7 @@ export class OrderList extends Component {
                   </Button>
                 </Tooltip>
 
-                <Tooltip placement="top" title="Delete Order" color="red">
-                  <Popconfirm
-                    key={record.key}
-                    title="Delete the task"
-                    description="Are you sure to delete this order?"
-                    onConfirm={() => this.props.onConfirm(record)}
-                    okText="Yes"
-                    cancelText="No"
-                  >
-                    <Button type="link" danger>
-                      <BiSolidTrash size={24}></BiSolidTrash>
-                    </Button>
-                  </Popconfirm>
-                </Tooltip>
+             
               </Space>
             )}
           ></Column>

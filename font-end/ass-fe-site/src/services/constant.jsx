@@ -14,3 +14,4 @@ export const API_LSDATVE = "http://localhost:8080/api/v2/vexe/";
 
 
 
+export const API_SEARCH_MOTCHIEU = "http://localhost:8080/api/v2/search/one-way";

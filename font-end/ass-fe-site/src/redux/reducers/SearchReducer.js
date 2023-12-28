@@ -13,6 +13,7 @@ const SearchReducer = (state = initialState, { type, payload }) => {
   switch (type) {
     case FIELD_SET:
       return { ...state, fieldData: payload };
+      
     case LISTCHUYEN:
       return {...state, listChuyen: payload};
     case LISTCHUYEN1:

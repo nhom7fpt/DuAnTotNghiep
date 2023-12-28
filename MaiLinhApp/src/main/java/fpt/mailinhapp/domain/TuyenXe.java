@@ -4,9 +4,7 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
-import org.hibernate.proxy.HibernateProxy;
-
-import java.sql.Time;
+import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.*;
 
@@ -29,8 +27,6 @@ public class TuyenXe {
     @Column(name = "noi_don")
     private String noiDon;
 
-
-
     @JsonFormat(pattern = "HH:mm")
     @Column(name = "tgian_di")
     private LocalTime tgDi;
@@ -38,6 +34,14 @@ public class TuyenXe {
     @JsonFormat(pattern = "HH:mm")
     @Column(name = "tgian_den")
     private LocalTime tgDen;
+
+    @JsonFormat(pattern = "yyyy-MM-dd")
+    @Column(name = "ngay_di")
+    private LocalDate ngayDi;
+
+    @JsonFormat(pattern = "yyyy-MM-dd")
+    @Column(name = "ngay_ve")
+    private LocalDate ngayVe;
 
     @Column(name = "gia")
     private Long gia;
@@ -47,5 +51,4 @@ public class TuyenXe {
             joinColumns = @JoinColumn(name = "tuyenXe_ma_Tuyen_xe"),
             inverseJoinColumns = @JoinColumn(name = "noiTras_id"))
     private Set<NoiTra> noiTras = new LinkedHashSet<>();
-
 }

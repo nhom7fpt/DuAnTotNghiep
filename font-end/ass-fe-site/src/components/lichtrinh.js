@@ -16,7 +16,9 @@ function Lichtrinhpage(props) {
   const { listChuyen } = props;
   const onClick = (data) => {
     props.listSearchByTuyen(data.diemDi, data.diemDen, data.gia, navigate);
-    navigate("/timchuyen");
+  
+    const query = `?diemDi=${data.diemDi}&diemDen=${data.diemDen}`;
+    navigate(`/timchuyen/${query}`);
   };
 
   listTuyen.forEach(item => {
@@ -66,7 +68,7 @@ function Lichtrinhpage(props) {
         <div className="info-label-gv" >Giá vé</div>
         <div className="info-label" ></div>
       </div>
-      {uniqueListTuyen.map((item) =>
+      {uniqueListTuyen.reverse().map((item) =>
         ( 
           <div className="info-container" key={listTuyen}>
           <div className="info-row">

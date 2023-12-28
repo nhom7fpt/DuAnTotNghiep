@@ -86,14 +86,8 @@ function Thongtintaikhoan(props) {
                                     <Form.Item label="Email:" name="email" initialValue={custom?.email || ''}>
                                         <Input placeholder="kiuoanh@gmail.com" style={{ width: '340px',  marginLeft:'45px', height: '45px'}}/>
                                     </Form.Item>
-                                    <Form.Item label="Ngày sinh:" name="dob">
-                                        <DatePicker 
-                                        placeholder={["Ngày sinh"]}
-                                        format="DD/MM/YYYY"
-                                        className='ngaysinh' 
-                                        />
-                                    </Form.Item>
-                                    <Form.Item label="Địa chỉ:" name="diaChi" >
+                                    
+                                    <Form.Item label="Địa chỉ:" name="diaChi" initialValue={custom?.diaChi} >
                                         <Input.TextArea  placeholder="Đà Nẵng" style={{height:'80px',marginLeft:'50px', width: '340px'}} />
                                     </Form.Item>
                                     <Form.Item>

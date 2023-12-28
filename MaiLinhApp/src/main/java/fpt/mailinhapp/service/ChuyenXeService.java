@@ -15,6 +15,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
@@ -118,8 +119,10 @@ public class ChuyenXeService {
 //
 //        return listDto;
 //    }
-public List<ChuyenXeDto> timChuyen(String diemDi, String diemDen){
-    List<ChuyenXe> listEntity = dao.findByTuyenXe_DiemDiLikeAndTuyenXe_DiemDenLike(diemDi,diemDen);
+public List<ChuyenXeDto> timChuyen(String diemDi, String diemDen, LocalDate ngayDi) {
+
+
+    List<ChuyenXe> listEntity = dao.findByTuyenXe_DiemDiLikeAndTuyenXe_DiemDenLikeAndTuyenXe_NgayDi(diemDi, diemDen,ngayDi);
 
     List<ChuyenXeDto> listDto = listEntity.stream().map((item)->{
         ModelMapper mapper = new ModelMapper();

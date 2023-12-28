@@ -8,6 +8,7 @@ const { RangePicker } = DatePicker;
 const KhuHoi = (props) => {
   const [startDate, setStartDate] = useState(moment());
   const [returnDate, setReturnDate] = useState(null);
+  const [ngayDi, setNgayDi] = useState(moment());
 
   const disabledDate = (current) => {
     // So sánh current với ngày hiện tại, nếu current trước ngày hiện tại thì trả về true (vô hiệu hóa), ngược lại trả về false (có thể chọn)
@@ -18,11 +19,12 @@ const KhuHoi = (props) => {
   };
   const onLocationChange = (value, type) => {
     if (type === "start") {
-      props.setStart(value);
+      props.setStart({ value, ngayDi });
     } else {
-      props.setEnd(value);
+      props.setEnd({ value, ngayDi });
     }
   };
+  
   const filterOption = (input, option) =>
     (option?.label ?? "").toLowerCase().includes(input.toLowerCase());
 
@@ -36,7 +38,7 @@ const KhuHoi = (props) => {
     
       placeholder="Chọn điểm đi"
     
-      onChange={(value) => onLocationChange(value, "start")}
+   
     
       filterOption={filterOption}
       options={data}
@@ -54,7 +56,7 @@ const KhuHoi = (props) => {
       showSearch
       placeholder="Chọn điểm đến"
       optionFilterProp="children"
-      onChange={(value) => onLocationChange(value, "end")}
+   
      
       filterOption={filterOption}
       options={data}
@@ -64,16 +66,22 @@ const KhuHoi = (props) => {
 
       <Col md={1}></Col>
       <Col md={7}>
-        <span>Ngày đi - Ngày về</span>
-        <Space direction="vertical">
-          <RangePicker
-            placeholder={["Ngày đi", "Ngày về"]}
-            onChange={onChange}
-            format="DD/MM/YYYY"
-            style={{marginLeft:'-0.5cm'}}
-          />
-        </Space>
-      </Col>
+      <span>Ngày đi</span>
+      <Space direction="vertical">
+        <DatePicker
+        
+        
+          showTimeSelect
+          timeFormat="HH:mm:ss"
+          id="datepicker"
+          disabledDate={disabledDate}
+          picker="date"
+          placeholder="Chọn thời gian đi"
+          style={{ marginLeft: '-0.5cm' }}
+        />
+      </Space>
+    </Col>
+    
     </Row>
   );
 };
