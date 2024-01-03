@@ -41,4 +41,6 @@ public class NoiTraService {
     public List<NoiTra> findAll() {
         return dao.findAll();
     }
+
+
 }

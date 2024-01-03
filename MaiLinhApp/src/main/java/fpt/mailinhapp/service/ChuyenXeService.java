@@ -102,35 +102,35 @@ public class ChuyenXeService {
         return dao.findAll();
     }
 
-//    public List<ChuyenXeDto> timChuyen(String diemDi, String diemDen) {
-//        List<ChuyenXe> listEntity = dao.findByTuyenXe_DiemDiLikeAndTuyenXe_DiemDenLike(diemDi, diemDen);
-//
-//
+    public List<ChuyenXeDto> timChuyen(String diemDi, String diemDen) {
+        List<ChuyenXe> listEntity = dao.findByTuyenXe_DiemDiLikeAndTuyenXe_DiemDenLike(diemDi, diemDen);
+
+
 //        LocalTime now = LocalTime.now();
 //
 //        List<ChuyenXe> listData = listEntity.stream()
 //                .filter(chuyenXe -> parseTime(chuyenXe.getTuyenXe().getTgDi()).isAfter(now))
 //                .collect(Collectors.toList());
+
+        List<ChuyenXeDto> listDto = listEntity.stream().map(item -> {
+            ModelMapper mapper = new ModelMapper();
+            return mapper.map(item, ChuyenXeDto.class);
+        }).collect(Collectors.toList());
+
+        return listDto;
+    }
+//public List<ChuyenXeDto> timChuyen(String diemDi, String diemDen, LocalDate ngayDi) {
 //
-//        List<ChuyenXeDto> listDto = listData.stream().map(item -> {
-//            ModelMapper mapper = new ModelMapper();
-//            return mapper.map(item, ChuyenXeDto.class);
-//        }).collect(Collectors.toList());
 //
-//        return listDto;
-//    }
-public List<ChuyenXeDto> timChuyen(String diemDi, String diemDen, LocalDate ngayDi) {
-
-
-    List<ChuyenXe> listEntity = dao.findByTuyenXe_DiemDiLikeAndTuyenXe_DiemDenLikeAndTuyenXe_NgayDi(diemDi, diemDen,ngayDi);
-
-    List<ChuyenXeDto> listDto = listEntity.stream().map((item)->{
-        ModelMapper mapper = new ModelMapper();
-        return mapper.map(item, ChuyenXeDto.class);
-    }).collect(Collectors.toList());
-
-    return listDto;
-}
+//    List<ChuyenXe> listEntity = dao.findByTuyenXe_DiemDiLikeAndTuyenXe_DiemDenLikeAndTuyenXe_NgayDi(diemDi, diemDen,ngayDi);
+//
+//    List<ChuyenXeDto> listDto = listEntity.stream().map((item)->{
+//        ModelMapper mapper = new ModelMapper();
+//        return mapper.map(item, ChuyenXeDto.class);
+//    }).collect(Collectors.toList());
+//
+//    return listDto;
+//}
 
     private LocalTime parseTime(LocalTime time) {
         return time;
@@ -166,9 +166,9 @@ public List<ChuyenXeDto> timChuyen(String diemDi, String diemDen, LocalDate ngay
         return listDto;
     }
 
-    public List<String> getCho(Long id, Date ngayDi, Date ngayVe){
+    public List<String> getCho(Long id, Date ngayDi){
 
-        var found = datVeDao.findByChuyenXe_MaChuyenAndNgayDiOrNgayVe(id,ngayDi,ngayVe);
+        var found = datVeDao.findByChuyenXe_MaChuyenAndNgayDi(id,ngayDi);
         List<String> data = found.stream().flatMap(i->i.getChoNgoi().stream()).collect(Collectors.toList());
         return data;
     }

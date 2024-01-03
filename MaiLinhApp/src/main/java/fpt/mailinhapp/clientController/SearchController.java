@@ -6,6 +6,7 @@ import fpt.mailinhapp.respondata.ChoDto;
 import fpt.mailinhapp.respondata.ChuyenTheoTuyen;
 import fpt.mailinhapp.respondata.ReqTimMotChieu;
 import fpt.mailinhapp.respondata.Return2List;
+import fpt.mailinhapp.service.CarService;
 import fpt.mailinhapp.service.ChuyenXeService;
 import fpt.mailinhapp.service.MapValidationErrorService;
 import fpt.mailinhapp.service.TuyenXeService;
@@ -25,9 +26,10 @@ import java.util.List;
 public class SearchController {
     @Autowired
     ChuyenXeService service;
-
     @Autowired
     TuyenXeService tuyenXeService;
+    @Autowired
+    CarService carService;
     @Autowired
     MapValidationErrorService errorService;
 
@@ -39,7 +41,7 @@ public class SearchController {
             return error;
         }
         LocalDate ngayDi = (data.getNgayDi() != null) ? data.getNgayDi() : LocalDate.now();
-        List<ChuyenXeDto> dto = service.timChuyen(data.getDiemDi(), data.getDiemDen(), ngayDi);
+        List<ChuyenXeDto> dto = service.timChuyen(data.getDiemDi(), data.getDiemDen());
         return new ResponseEntity<>(dto, HttpStatus.OK);
     }
 
@@ -51,8 +53,8 @@ public class SearchController {
             return error;
         }
 
-        List<ChuyenXeDto> dto = service.timChuyen(data.getDiemDi(), data.getDiemDen(), data.getNgayDi());
-        List<ChuyenXeDto> dto2 = service.timChuyen(data.getDiemDen(), data.getDiemDi(), data.getNgayDi());
+        List<ChuyenXeDto> dto = service.timChuyen(data.getDiemDi(), data.getDiemDen());
+        List<ChuyenXeDto> dto2 = service.timChuyen(data.getDiemDen(), data.getDiemDi());
 
         Return2List newList = new Return2List(dto,dto2);
 
@@ -76,11 +78,22 @@ public class SearchController {
 
         return new ResponseEntity<>(list, HttpStatus.OK);
     }
-    @GetMapping("/cho")
+    @PostMapping("/cho")
     public ResponseEntity getListCho(@RequestBody ChoDto dto){
-        Date now = new Date();
-        var data = service.getCho(dto.getId(),dto.getNgayDi(),dto.getNgayVe());
+        System.out.println(dto.getId());
+        if(dto.getNgayDi() == null){
+            Date now = new Date();
+            dto.setNgayDi(now);
+        }
+        var data = service.getCho(dto.getId(),dto.getNgayDi());
 
         return new ResponseEntity<>(data, HttpStatus.OK);
     }
+
+    @GetMapping("/soghe/{id}")
+    public ResponseEntity getSoCho(@PathVariable String id){
+        var xe = carService.findById(id);
+        return new ResponseEntity(xe.getLoaiXe().getSoGhe(),HttpStatus.OK);
+    }
+
 }

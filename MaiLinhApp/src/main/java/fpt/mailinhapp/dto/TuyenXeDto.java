@@ -18,7 +18,5 @@ public class TuyenXeDto implements Serializable {
     private Set<NoiTraDto> noiTras = new LinkedHashSet<>();
     String  tgDi;
     String tgDen;
-    private LocalDate ngayDi;
-    private LocalDate ngayVe;
     Long gia;
 }

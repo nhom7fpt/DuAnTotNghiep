@@ -12,5 +12,4 @@ import java.util.Date;
 public class ChoDto {
     Long id;
     Date ngayDi;
-    Date ngayVe;
 }
