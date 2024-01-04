@@ -104,40 +104,38 @@ public class TuyenXeService {
         List<TuyenXe> allTuyenXe = dao.findAll();
 
         // Kiểm tra và xử lý ngày giờ trước khi trả về
-        for (TuyenXe tuyenXe : allTuyenXe) {
-            validateAndFixDateTimeFields(tuyenXe);
-        }
+//        for (TuyenXe tuyenXe : allTuyenXe) {
+//            validateAndFixDateTimeFields(tuyenXe);
+//        }
 
         return allTuyenXe;
     }
 
-    private void validateAndFixDateTimeFields(TuyenXe tuyenXe) {
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm:ss.SSSSSSS");
-
-        try {
-            // Parse thành OffsetDateTime để có thể truy cập nanoseconds
-            OffsetDateTime offsetDateTimeStart = OffsetDateTime.parse(tuyenXe.getTgDi().toString(), formatter);
-            OffsetDateTime offsetDateTimeEnd = OffsetDateTime.parse(tuyenXe.getTgDen().toString(), formatter);
-
-            // Kiểm tra và xử lý giá trị nanoseconds không hợp lệ
-            if (offsetDateTimeStart.getNano() < 0 || offsetDateTimeStart.getNano() >= 1_000_000_000) {
-                offsetDateTimeStart = offsetDateTimeStart.withNano(0);
-            }
-
-            if (offsetDateTimeEnd.getNano() < 0 || offsetDateTimeEnd.getNano() >= 1_000_000_000) {
-                offsetDateTimeEnd = offsetDateTimeEnd.withNano(0);
-            }
-
-            // Set lại thời gian trong đối tượng TuyenXe
-            tuyenXe.setTgDi(offsetDateTimeStart.toLocalTime());
-            tuyenXe.setTgDen(offsetDateTimeEnd.toLocalTime());
-        } catch (DateTimeParseException e) {
-            // Xử lý ngoại lệ khi parse ngày giờ
-            e.printStackTrace(); // hoặc log thông báo lỗi
-        }
-    }
-
-
+//    private void validateAndFixDateTimeFields(TuyenXe tuyenXe) {
+//        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm:ss.SSSSSSS");
+//
+//        try {
+//
+//            OffsetDateTime offsetDateTimeStart = OffsetDateTime.parse(tuyenXe.getTgDi().toString(), formatter);
+//            OffsetDateTime offsetDateTimeEnd = OffsetDateTime.parse(tuyenXe.getTgDen().toString(), formatter);
+//
+//
+//            if (offsetDateTimeStart.getNano() < 0 || offsetDateTimeStart.getNano() >= 1_000_000_000) {
+//                offsetDateTimeStart = offsetDateTimeStart.withNano(0);
+//            }
+//
+//            if (offsetDateTimeEnd.getNano() < 0 || offsetDateTimeEnd.getNano() >= 1_000_000_000) {
+//                offsetDateTimeEnd = offsetDateTimeEnd.withNano(0);
+//            }
+//            tuyenXe.setTgDi(offsetDateTimeStart.toLocalTime());
+//            tuyenXe.setTgDen(offsetDateTimeEnd.toLocalTime());
+//        } catch (DateTimeParseException e) {
+//
+//            e.printStackTrace();
+//        }
+//    }
+//
+//
     public List<String> loadLocation(){
         var list = dao.findAll();
 

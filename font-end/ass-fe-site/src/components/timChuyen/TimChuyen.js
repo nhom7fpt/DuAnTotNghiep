@@ -15,21 +15,22 @@ function TimChuyen(props) {
   const [startLocation2, setStartLocation2] = useState(null);
   const [endLocation2, setEndLocation2] = useState(null);
   const [selectedTab, setSelectedTab] = useState("1");
-  const [ngayDi, setNgayDi] = useState(null); // Thêm state cho ngayDi
+  const [ngayDi, setNgayDi] = useState(null);
+  const [ngayVe, setNgayVe] = useState(null); 
   const { navigate } = props.router;
 
   const onClick = () => {
     if (selectedTab === "1") {
       props.listSearchOneWay(startLocation, endLocation, ngayDi, navigate);
-    } else {
-      props.listSearchReturn(startLocation, endLocation,  ngayDi, navigate);
+      const query = `?ngayDi=${ngayDi}&startLocation=${startLocation}&endLocation=${endLocation}`;
+      navigate(`/timchuyen/${query}`);
     }
     if (selectedTab === "2") {
-      props.listSearchOneWay(startLocation2, endLocation2, ngayDi, navigate);
-    } else {
-      props.listSearchReturn(startLocation2, endLocation2, ngayDi, navigate);
+      props.listSearchReturn(startLocation2, endLocation2, ngayDi, ngayVe, navigate);
+      const query = `?ngayDi=${ngayDi}&ngayVe=${ngayVe}&startLocation2=${startLocation2}&endLocation2=${endLocation2}`;
+      navigate(`/timchuyen2/${query}`);
     }
-    navigate("/timchuyen")
+   
   };
 
   const { fieldData } = props;
@@ -60,7 +61,7 @@ function TimChuyen(props) {
           Khứ hồi
         </Radio>
       ),
-      children: <KhuHoi setStart={setStartLocation2} setEnd={setEndLocation2}  setNgayDi={setNgayDi} data={listData} />,
+      children: <KhuHoi setStart={setStartLocation2} setEnd={setEndLocation2}  setNgayDi={setNgayDi} setNgayVe={setNgayVe} data={listData} />,
     },
   ];
 

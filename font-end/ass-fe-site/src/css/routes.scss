@@ -217,12 +217,12 @@ line-height:24px;
   text-align:center;
 }
 .dot {
-  border: 5px solid #fffbfb !important; /* Màu viền cho chấm tròn */
-  margin: 0 5px !important; /* Khoảng cách giữa các chấm tròn */
+  border: 5px solid #fffbfb !important; 
+  margin: 0 5px !important; 
   border-radius: 60% !important; 
 }
 
-/* CSS cho chấm tròn khi nó được chọn (active) */
+
 .control-dots .dot.selected {
   border: 7px solid #f1530fee !important; 
   border-radius: 20% !important; 
@@ -401,7 +401,7 @@ line-height:24px;
     left: 43%;
     color: white;
     font-weight: bolder;
-    margin-top: 0.5cm;
+    margin-top: 2.8cm;
   
   }
   .tcx-button:hover{
@@ -440,6 +440,21 @@ line-height:24px;
 .ant-select-selector {
   height: 70px !important;
   width: 350px !important;
+  border: 1px solid #d9d9d9 !important;
+  border-radius: 10px !important;
+  padding: 12px 25px !important;
+}
+.khuhoiinput .ant-select-selector{
+  height: 70px !important;
+  width: 270px !important;
+  border: 1px solid #d9d9d9 !important;
+  border-radius: 10px !important;
+  padding: 12px 25px !important;
+}
+.ant-picker.khuhoiinput
+{
+  height: 70px !important;
+  width: 260px !important;
   border: 1px solid #d9d9d9 !important;
   border-radius: 10px !important;
   padding: 12px 25px !important;

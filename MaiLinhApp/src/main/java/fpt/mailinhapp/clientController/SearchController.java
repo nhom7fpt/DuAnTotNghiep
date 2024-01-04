@@ -16,8 +16,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import java.time.LocalDate;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 
 @RestController
 @CrossOrigin("*")
@@ -44,21 +43,26 @@ public class SearchController {
     }
 
     @PostMapping("return")
-    public ResponseEntity findReturnTicket(@Validated @RequestBody TuyenXeDto data, BindingResult result){
+    public ResponseEntity<Map<String, List<ChuyenXeDto>>> findReturnTicket(@Validated @RequestBody ReqTimMotChieu data, BindingResult result) {
         ResponseEntity error = errorService.mapValidationField(result);
 
-        if(error != null){
+        if (error != null) {
             return error;
         }
 
-        List<ChuyenXeDto> dto = service.timChuyen(data.getDiemDi(), data.getDiemDen(), data.getNgayDi());
-        List<ChuyenXeDto> dto2 = service.timChuyen(data.getDiemDen(), data.getDiemDi(), data.getNgayDi());
+        LocalDate ngayDi = data.getNgayDi();
+        LocalDate ngayVe = data.getNgayVe();
 
-        Return2List newList = new Return2List(dto,dto2);
+        try {
+            Map<String, List<ChuyenXeDto>> resultDto = service.timChuyen2(data.getDiemDi(), data.getDiemDen(), ngayDi, ngayVe);
 
-        return new ResponseEntity<>(newList, HttpStatus.OK);
+            return new ResponseEntity<>(resultDto, HttpStatus.OK);
+        } catch (Exception e) {
+
+            e.printStackTrace();
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
     }
-
     @GetMapping
     public ResponseEntity loadLocation(){
         var data = tuyenXeService.loadLocation();

@@ -47,7 +47,6 @@ const MotChieu = (props) => {
       setDiemDenValue(diemDenValue);
       props.setEnd(diemDenValue);
     }
-  
 
   }, []);
   

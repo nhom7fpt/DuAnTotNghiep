@@ -15,4 +15,5 @@ public class ReqTimMotChieu {
     private String diemDen;
     private LocalTime tgDi;
     private LocalDate ngayDi;
+    private LocalDate ngayVe;
 }

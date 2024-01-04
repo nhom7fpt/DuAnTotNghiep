@@ -26,6 +26,7 @@ import Mailinhpay from './components/lichsugiaodich'
 import Vechungtoi from './components/vechungtoi';
 import ThongTin from "./components/trangchu/thongtin"
 import SeatSelection from "./components/trangchu/listTuyen";
+import SeatSelection2 from "./components/trangchu/listTuyen2";
 import store from "./redux/store";
 function App() {
   const [showNavbar, setShowNavbar] = useState(true);
@@ -39,6 +40,7 @@ function App() {
             <Route path="/" element={<Trangchu />}>
             <Route index element={<ThongTin />} />
             <Route path="timchuyen" element={<SeatSelection />} />
+            <Route path="timchuyen2" element={<SeatSelection2 />} />
           </Route>
              
               <Route path="/lienhe" element={<ContactPage />} />

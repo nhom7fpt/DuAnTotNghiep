@@ -12,7 +12,9 @@ import Boloc from"./boloc"
 import SearchService from "../../services/SearchService";
 function SeatSelection(props) {
   const [hasData, setHasData] = useState(true);
-
+  const queryParams = new URLSearchParams(window.location.search);
+  const diemDi = queryParams.get("startLocation")
+  const diemDen = queryParams.get("endLocation")
   const [selectedChuyen, setSelectedChuyen] = useState()
   const [isSeatModalOpen, setIsSeatModalOpen] = useState(false);
   const [currentTrip, setCurrentTrip] = useState(null);
@@ -60,7 +62,11 @@ let isLocationDisplayed = false;
   return (
 <div className="grid-listtuyen-container-loc">
      <Boloc />
-  
+     <div className="hiddentext">
+     <span>
+     {diemDi} - {diemDen} ({listChuyen.length})
+     </span>
+     </div>
      {listChuyen.length === 0 ? (
       <Result
         status="404"
@@ -70,16 +76,11 @@ let isLocationDisplayed = false;
         extra={<Button type="primary">Quay lại trang chủ</Button>}
         className="listtuyen-404"
       />
+      
     ) : (
       getCurrentPageData().map((item, index) => (
         
         <Row className="custom-container-loc" key={item.maChuyen}>
-        {index === 0 && (
-          <div className="hidden-text">
-            <span>{item.tuyenXe.diemDi} - {item.tuyenXe.diemDen} ({listChuyen.length})</span>
-          
-          </div>
-        )}
         <Col>
           <div className="chuyenxe-loc">
             <Col span={24} className="info-container-loc">
@@ -132,17 +133,18 @@ let isLocationDisplayed = false;
               </div>
             </Col>
           </div>
+          {index === 0 && (
+            <div className="pagesizeloc">
+            <Pagination
+              current={currentPage}
+              total={listChuyen.length}
+              pageSize={pageSize}
+              onChange={(page) => setCurrentPage(page)}
+            />
+          </div>
+          ) }
         </Col>
-        {index === 0 && (
-          <div className="pagesizeloc">
-          <Pagination
-            current={currentPage}
-            total={listChuyen.length}
-            pageSize={pageSize}
-            onChange={(page) => setCurrentPage(page)}
-          />
-        </div>
-        )}
+    
         <Col span={24}>
           <Drawer
             title="Đặt vé xe"
@@ -184,3 +186,4 @@ export default connect(
   mapStateToProps,
   mapDispatchToProps
 )(withRouter(SeatSelection));
+

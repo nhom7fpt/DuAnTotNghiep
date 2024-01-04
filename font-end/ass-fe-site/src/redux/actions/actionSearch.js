@@ -43,20 +43,20 @@ export const listSearchOneWay = (start, end, ngayDi) => async (dispatch) => {
 
 };
 
-export const listSearchReturn = (start, end, ngayDi) => async (dispatch) => {
+export const listSearchReturn = (start, end, ngayDi,ngayVe) => async (dispatch) => {
   try {
-    const data = { diemDi: start, diemDen: end, ngayDi: ngayDi };
+    const data = { diemDi: start, diemDen: end, ngayDi: ngayDi , ngayVe: ngayVe};
     const res = await service.loadListChuyenReturn(data);
     console.log(res);
 
     if (res.status === 200) {
       dispatch({
         type: LISTCHUYEN1,
-        payload: res.data.chuyen1,
+        payload: res.data.ngayDi, // Dispatch dữ liệu ngày đi
       });
       dispatch({
         type: LISTCHUYEN2,
-        payload: res.data.chuyen2,
+        payload: res.data.ngayVe, // Dispatch dữ liệu ngày về
       });
     }
   } catch (error) {

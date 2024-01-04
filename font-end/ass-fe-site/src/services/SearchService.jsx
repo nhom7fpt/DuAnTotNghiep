@@ -17,7 +17,7 @@ export default class SearchService {
     return await axios.post(API_SEARCH+"/findbuses", data);
   };
 
-  loadListChuyenReturn = async (tc) => {
-    return await axios.post(API_SEARCH + "/return", tc);
+  loadListChuyenReturn = async (data) => {
+    return await axios.post(API_SEARCH + "/return", data);
   };
 }
