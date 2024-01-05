@@ -1,5 +1,13 @@
 import SearchService from "../../services/SearchService";
-import { FIELD_SET, LISTCHUYEN, LISTCHUYEN1, LISTCHUYEN2, LISTTUYEN_SET } from "./actionType";
+import {
+  FIELD_SET,
+  LISTCHUYEN,
+  LISTCHUYEN1,
+  LISTCHUYEN2,
+  LISTTUYEN_SET,
+  NGAY_DI_SET,
+  NGAY_VE_SET,
+} from "./actionType";
 
 const service = new SearchService();
 
@@ -17,32 +25,28 @@ export const loadDataField = () => async (dispatch) => {
   } catch (error) {
     console.log(error);
   }
-
-
 };
 
 export const listSearchOneWay = (start, end, ngayDi) => async (dispatch) => {
   try {
     const data = { diemDi: start, diemDen: end, ngayDi: ngayDi };
-    
+
     const res = await service.loadListChuyen(data);
     console.log(res);
- ;
-
     if (res.status === 200) {
       dispatch({
         type: LISTCHUYEN,
         payload: res.data,
       });
+      dispatch({
+        type: NGAY_DI_SET,
+        payload: ngayDi,
+      });
     }
   } catch (error) {
     console.log(error);
   }
- 
-
-
 };
-
 export const listSearchReturn = (start, end, ngayDi,ngayVe) => async (dispatch) => {
   try {
     const data = { diemDi: start, diemDen: end, ngayDi: ngayDi , ngayVe: ngayVe};
@@ -52,17 +56,19 @@ export const listSearchReturn = (start, end, ngayDi,ngayVe) => async (dispatch) 
     if (res.status === 200) {
       dispatch({
         type: LISTCHUYEN1,
-        payload: res.data.ngayDi, // Dispatch dữ liệu ngày đi
+        payload: res.data.ngayDi, 
       });
       dispatch({
         type: LISTCHUYEN2,
-        payload: res.data.ngayVe, // Dispatch dữ liệu ngày về
+        payload: res.data.ngayVe, 
       });
     }
   } catch (error) {
     console.log(error);
   };
 };
+
+
 
 export const loadDataTuyen = () => async (dispatch) => {
   try {
@@ -78,27 +84,21 @@ export const loadDataTuyen = () => async (dispatch) => {
   } catch (error) {
     console.log(error);
   }
- 
-
 };
 
-export const listSearchByTuyen = (diemDi,diemDen, navigate) => async (dispatch) => {
-  try {
-    const data = {diemDi: diemDi, diemDen: diemDen};
-    const res = await service.loadListChuyen(data);
-    console.log(res);
- ;
-
-    if (res.status === 200) {
-      dispatch({
-        type: LISTCHUYEN,
-        payload: res.data,
-      });
+export const listSearchByTuyen =
+  (diemDi, diemDen, navigate) => async (dispatch) => {
+    try {
+      const data = { diemDi: diemDi, diemDen: diemDen };
+      const res = await service.loadListChuyen(data);
+      console.log(res);
+      if (res.status === 200) {
+        dispatch({
+          type: LISTCHUYEN,
+          payload: res.data,
+        });
+      }
+    } catch (error) {
+      console.log(error);
     }
-  } catch (error) {
-    console.log(error);
-  }
-
-
-
-};
+  };

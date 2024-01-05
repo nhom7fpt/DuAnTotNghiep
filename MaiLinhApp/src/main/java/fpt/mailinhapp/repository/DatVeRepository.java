@@ -13,7 +13,9 @@ import java.util.Optional;
 public interface DatVeRepository extends JpaRepository<DatVe, Long> {
     List<DatVe> findByInfo_SoDTLike(String soDT);
 
-    List<DatVe> findByChuyenXe_MaChuyenAndNgayDiOrNgayVe(Long maChuyen, Date ngayDi, Date ngayVe);
+    List<DatVe> findByChuyenXe_MaChuyenAndNgayDi(Long maChuyen, Date ngayDi);
+
+
     Optional<DatVe> findByThanhToan_Id(String thanhToanId);
 
     @Query("select month(dv.ngayDatVe) as thang, sum(dv.tongTien) as tongTien from DatVe dv where year(dv.ngayDatVe) = :nam group by month(dv.ngayDatVe), year(dv.ngayDatVe) order by month(dv.ngayDatVe), year(dv.ngayDatVe)" )
@@ -21,5 +23,4 @@ public interface DatVeRepository extends JpaRepository<DatVe, Long> {
 
     @Query("select month(dv.ngayDatVe) as thang, sum(dv.soLuong) as tongTien from DatVe dv where year(dv.ngayDatVe) = :nam group by month(dv.ngayDatVe), year(dv.ngayDatVe) order by month(dv.ngayDatVe), year(dv.ngayDatVe)" )
     List<Object[]> thongKeVe(@Param("nam") int nam);
-
 }

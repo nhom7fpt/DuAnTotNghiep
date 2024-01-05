@@ -8,6 +8,7 @@ import fpt.mailinhapp.dto.XeDto;
 import fpt.mailinhapp.exception.CarsException;
 import fpt.mailinhapp.repository.AnhDaLuuRepository;
 import fpt.mailinhapp.repository.XeRepository;
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -98,7 +99,11 @@ public class CarService {
         var found = dao.findById(id).orElseThrow(()->new CarsException("Xe không tồn tại"));
         dao.delete(found);
     }
-
+    public XeDto findById(String id){
+        var found = dao.findById(id).orElseThrow(()-> new CarsException("Xe không tồn tại"));
+        ModelMapper mapper = new ModelMapper();
+        return mapper.map(found, XeDto.class);
+    }
     public List<Xe> findAll() {
         return dao.findAll();
     }

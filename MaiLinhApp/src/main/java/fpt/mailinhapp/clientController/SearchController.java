@@ -1,11 +1,10 @@
 package fpt.mailinhapp.clientController;
 
 import fpt.mailinhapp.dto.ChuyenXeDto;
-import fpt.mailinhapp.dto.TuyenXeDto;
 import fpt.mailinhapp.respondata.ChoDto;
 import fpt.mailinhapp.respondata.ChuyenTheoTuyen;
 import fpt.mailinhapp.respondata.ReqTimMotChieu;
-import fpt.mailinhapp.respondata.Return2List;
+import fpt.mailinhapp.service.CarService;
 import fpt.mailinhapp.service.ChuyenXeService;
 import fpt.mailinhapp.service.MapValidationErrorService;
 import fpt.mailinhapp.service.TuyenXeService;
@@ -29,7 +28,8 @@ public class SearchController {
     TuyenXeService tuyenXeService;
     @Autowired
     MapValidationErrorService errorService;
-
+    @Autowired
+    CarService carService;
     @PostMapping("one-way")
     public ResponseEntity findOneWayTicket(@Validated @RequestBody ReqTimMotChieu data, BindingResult result){
         ResponseEntity error = errorService.mapValidationField(result);
@@ -80,11 +80,22 @@ public class SearchController {
 
         return new ResponseEntity<>(list, HttpStatus.OK);
     }
-    @GetMapping("/cho")
+    @PostMapping("/cho")
     public ResponseEntity getListCho(@RequestBody ChoDto dto){
-        Date now = new Date();
-        var data = service.getCho(dto.getId(),dto.getNgayDi(),dto.getNgayVe());
+        System.out.println(dto.getId());
+        if(dto.getNgayDi() == null){
+            Date now = new Date();
+            dto.setNgayDi(now);
+        }
+        var data = service.getCho(dto.getId(),dto.getNgayDi());
 
         return new ResponseEntity<>(data, HttpStatus.OK);
     }
+
+    @GetMapping("/soghe/{id}")
+    public ResponseEntity getSoCho(@PathVariable String id){
+        var xe = carService.findById(id);
+        return new ResponseEntity(xe.getLoaiXe().getSoGhe(),HttpStatus.OK);
+    }
+
 }

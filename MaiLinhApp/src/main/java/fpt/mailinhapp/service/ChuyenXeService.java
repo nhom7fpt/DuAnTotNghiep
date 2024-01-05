@@ -189,9 +189,10 @@ public List<ChuyenXeDto> timChuyen(String diemDi, String diemDen, LocalDate ngay
         return listDto;
     }
 
-    public List<String> getCho(Long id, Date ngayDi, Date ngayVe){
 
-        var found = datVeDao.findByChuyenXe_MaChuyenAndNgayDiOrNgayVe(id,ngayDi,ngayVe);
+    public List<String> getCho(Long id, Date ngayDi){
+
+        var found = datVeDao.findByChuyenXe_MaChuyenAndNgayDi(id,ngayDi);
         List<String> data = found.stream().flatMap(i->i.getChoNgoi().stream()).collect(Collectors.toList());
         return data;
     }

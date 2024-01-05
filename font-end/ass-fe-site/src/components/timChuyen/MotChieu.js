@@ -20,6 +20,7 @@ const MotChieu = (props) => {
   };
 
   const onChange = (value) => {
+    setDefaultNgayDi(value);
     props.setNgayDi(value.format("YYYY-MM-DD"));
   };
 
@@ -46,6 +47,10 @@ const MotChieu = (props) => {
     if (diemDenValue) {
       setDiemDenValue(diemDenValue);
       props.setEnd(diemDenValue);
+    }
+    if(defaultNgayDi) {
+      setDefaultNgayDi(defaultNgayDi);
+      props.setNgayDi(defaultNgayDi.format("YYYY-MM-DD"));
     }
 
   }, []);

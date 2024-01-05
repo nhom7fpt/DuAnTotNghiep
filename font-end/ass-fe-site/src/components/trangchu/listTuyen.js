@@ -15,6 +15,8 @@ function SeatSelection(props) {
   const queryParams = new URLSearchParams(window.location.search);
   const diemDi = queryParams.get("startLocation")
   const diemDen = queryParams.get("endLocation")
+  const diemDi1 = queryParams.get("diemDi")
+  const diemDen1 = queryParams.get("diemDen")
   const [selectedChuyen, setSelectedChuyen] = useState()
   const [isSeatModalOpen, setIsSeatModalOpen] = useState(false);
   const [currentTrip, setCurrentTrip] = useState(null);
@@ -64,8 +66,12 @@ let isLocationDisplayed = false;
      <Boloc />
      <div className="hiddentext">
      <span>
-     {diemDi} - {diemDen} ({listChuyen.length})
-     </span>
+     {diemDi ? (
+       `${diemDi} - ${diemDen} (${listChuyen.length})`
+     ) : (
+       `${diemDi1} - ${diemDen1} (${listChuyen.length})`
+     )}
+   </span>
      </div>
      {listChuyen.length === 0 ? (
       <Result

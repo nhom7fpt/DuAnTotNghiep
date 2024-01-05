@@ -1,5 +1,6 @@
 package fpt.mailinhapp.dto;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import fpt.mailinhapp.domain.DatVe;
 import fpt.mailinhapp.dto.ChuyenXeDto;
 import fpt.mailinhapp.dto.InfoDto;
@@ -9,6 +10,7 @@ import lombok.NoArgsConstructor;
 import lombok.Value;
 
 import java.io.Serializable;
+import java.time.LocalDate;
 import java.util.Date;
 import java.util.List;
 
@@ -24,7 +26,9 @@ public class DatVeDto implements Serializable {
     ChuyenXeDto chuyenXe;
     InfoDto info;
     Date ngayDatVe;
+    @JsonFormat(pattern = "yyyy-MM-dd")
     Date ngayDi;
+
     Date ngayVe;
     ThanhToanDto thanhToan;
 

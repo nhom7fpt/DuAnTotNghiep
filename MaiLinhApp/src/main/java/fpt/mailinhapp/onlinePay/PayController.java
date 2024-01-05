@@ -48,8 +48,10 @@ public class PayController {
         Integer soLuong = (Integer) requestData.get("soLuong");
         List<String> choNgoi = (List<String>) requestData.get("choNgoi");
         Integer tongTienInteger = (Integer) requestData.get("tongTien");
-        Long tien = tongTienInteger != null ? Long.valueOf(tongTienInteger) : null;
 
+        Long tien = tongTienInteger != null ? Long.valueOf(tongTienInteger) : null;
+        Date ngayDi = mapper.map(requestData.get("ngayDi"), Date.class);
+        trungGian.setNgayDi(ngayDi);
 
 
         trungGian.setInfo(info);
@@ -58,15 +60,11 @@ public class PayController {
         trungGian.setNoiTra(nt);
         trungGian.setTongTien(tien);
         trungGian.setSoLuong(soLuong);
-
         datVeHolder.setTrunggian(trungGian);
-
-
         String vnp_Command = "pay";
         String orderType = "other";
         long amount = tien*100;
         String bankCode = "";
-
         String vnp_TxnRef = Config.getRandomNumber(8);
         String vnp_IpAddr = "127.0.0.1";
 
@@ -110,11 +108,11 @@ public class PayController {
             String fieldName = (String) itr.next();
             String fieldValue = (String) vnp_Params.get(fieldName);
             if ((fieldValue != null) && (fieldValue.length() > 0)) {
-                //Build hash data
+
                 hashData.append(fieldName);
                 hashData.append('=');
                 hashData.append(URLEncoder.encode(fieldValue, StandardCharsets.US_ASCII.toString()));
-                //Build query
+
                 query.append(URLEncoder.encode(fieldName, StandardCharsets.US_ASCII.toString()));
                 query.append('=');
                 query.append(URLEncoder.encode(fieldValue, StandardCharsets.US_ASCII.toString()));
@@ -145,10 +143,12 @@ public class PayController {
                           @RequestParam("vnp_TransactionStatus") String transactionStatus,
                           Model model) throws ParseException {
         DatVeDto trunggian = datVeHolder.getTrunggian();
+
         SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHHmmss");
         sdf.setTimeZone(TimeZone.getTimeZone("GMT+7"));
         Date datePay = sdf.parse(payDate);
         ThanhToanDto dto = new ThanhToanDto();
+
         dto.setId(transactionNo);
         dto.setPayDate(datePay);
         dto.setOrderInfo(orderInfo);
