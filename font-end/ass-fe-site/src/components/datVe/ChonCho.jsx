@@ -10,41 +10,37 @@ const ChonCho = (props) => {
   const [selectedSeatsLower, setSelectedSeatsLower] = useState([]);
   const [selectedSeatsUpper, setSelectedSeatsUpper] = useState([]);
   const { soGhe, disList } = props;
+  const [khoaGhe, setKhoaGhe] = useState({ lower: [], upper: [] });
+  const [disabledSeats, setDisabledSeats] = useState([]);
+  const [emptySeats, setEmptySeats] = useState([]);
+
   const onChange = (values, floor) => {
     if (floor === "lower") {
       setSelectedSeatsLower(values);
-      const updatedDataLower = dataLower.map((item) => {
-        if (values.includes(item.key) || disList.includes(item.key)) {
-          return { ...item, label: <IoClipboard /> };
-        } else {
-          return { ...item, label: <IoClipboardOutline /> };
-        }
+      const updatedDataLower = dataLower.map((item, index) => {
+        const isDisabled = values.includes(item.key) || disabledSeats.includes(item.key) || khoaGhe.lower[index];
+        return {
+          ...item,
+          label: isDisabled ? <IoClipboard /> : <IoClipboardOutline />,
+        };
       });
       setDataLower(updatedDataLower);
     } else if (floor === "upper") {
       setSelectedSeatsUpper(values);
-      const updatedDataUpper = dataUpper.map((item) => {
-        if (values.includes(item.key || disList.includes(item.key))) {
-          return { ...item, label: <IoClipboard /> };
-        } else {
-          return { ...item, label: <IoClipboardOutline /> };
-        }
+      const updatedDataUpper = dataUpper.map((item, index) => {
+        const isDisabled = values.includes(item.key) || disabledSeats.includes(item.key) || khoaGhe.upper[index];
+        return {
+          ...item,
+          label: isDisabled ? <IoClipboard /> : <IoClipboardOutline />,
+        };
       });
       setDataUpper(updatedDataUpper);
     }
-    // localStorage.setItem(
-    //   "selectedSeatsLower",
-    //   JSON.stringify(selectedSeatsLower)
-    // );
-    // localStorage.setItem(
-    //   "selectedSeatsUpper",
-    //   JSON.stringify(selectedSeatsUpper)
-    // );
   };
 
   const onNext = () => {
     const newData = selectedSeatsLower.concat(selectedSeatsUpper);
-
+    console.log("Ghế đã chọn:", newData); // In ra console
     props.onNext(newData);
   };
 
@@ -52,52 +48,65 @@ const ChonCho = (props) => {
     let numRows = soGhe / 2;
     const dataCreateLower = [];
     const dataCreateUpper = [];
+    const khoaGheLower = Array(numRows).fill(false);
+    const khoaGheUpper = Array(numRows).fill(false);
+    const disabledSeatsLower = [];
+  
     for (let i = 1; i <= numRows; i++) {
+      const seatKeyLower = `A${i}`;
+      const isDisabled = disList.includes(seatKeyLower) || khoaGheLower[i - 1];
       dataCreateLower.push({
-        label: <IoClipboardOutline />,
-        value: `A${i}`,
-        key: `A${i}`,
-        disabled: false,
+        label: isDisabled ? <IoClipboard /> : <IoClipboardOutline />,
+        value: seatKeyLower,
+        key: seatKeyLower,
+        disabled: isDisabled,
       });
+  
+      if (isDisabled) {
+        disabledSeatsLower.push(seatKeyLower);
+      } else {
+        // Ghế không bị disable, thì thêm vào danh sách ghế trống
+        setEmptySeats((prevEmptySeats) => [...prevEmptySeats, seatKeyLower]);
+      }
     }
+  
+    const disabledSeatsUpper = [];
     for (let i = 1; i <= numRows; i++) {
+      const seatKeyUpper = `B${i}`;
+      const isDisabled = disList.includes(seatKeyUpper) || khoaGheUpper[i - 1];
       dataCreateUpper.push({
-        label: <IoClipboardOutline />,
-        value: `B${i}`,
-        key: `B${i}`,
-        disabled: false,
+        label: isDisabled ? <IoClipboard /> : <IoClipboardOutline />,
+        value: seatKeyUpper,
+        key: seatKeyUpper,
+        disabled: isDisabled,
       });
+  
+      if (isDisabled) {
+        disabledSeatsUpper.push(seatKeyUpper);
+      } else {
+       
+        setEmptySeats((prevEmptySeats) => [...prevEmptySeats, seatKeyUpper]);
+      }
     }
-    const newDataLower = dataCreateLower.map((item) => {
-      if (disList.includes(item.key)) {
-        return { ...item, label: <IoClipboard />, disabled: true };
-      }
-      return item;
-    });
-    const newDataUpper = dataCreateUpper.map((item) => {
-      if (disList.includes(item.key)) {
-        return { ...item, label: <IoClipboard />, disabled: true };
-      }
-      return item;
-    });
-    setDataLower(newDataLower);
-    setDataUpper(newDataUpper);
+  
+    console.log("Ghế đã bị disable (tầng dưới):", disabledSeatsLower);
+    console.log("Ghế đã bị disable (tầng trên):", disabledSeatsUpper);
+    console.log("Ghế trống:", emptySeats);
+  
+    setDataLower(dataCreateLower);
+    setDataUpper(dataCreateUpper);
+    setKhoaGhe({ lower: khoaGheLower, upper: khoaGheUpper });
+    setDisabledSeats(disabledSeatsLower.concat(disabledSeatsUpper));
   };
-
+  
   useEffect(() => {
     createData(soGhe);
-    // const storedSelectedSeatsLower = JSON.parse(
-    //   localStorage.getItem("selectedSeatsLower") || "[]"
-    // );
-    // setSelectedSeatsLower(storedSelectedSeatsLower);
-
-    // const storedSelectedSeatsUpper = JSON.parse(
-    //   localStorage.getItem("selectedSeatsUpper") || "[]"
-    // );
-    // setSelectedSeatsUpper(storedSelectedSeatsUpper);
   }, [soGhe, disList]);
+
+
   return (
     <>
+    
       <Row>
         <Col md={6} style={{ marginTop: "0.4cm", marginRight: "1.2cm" }}>
           <div className="seat-status">

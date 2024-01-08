@@ -4,6 +4,7 @@ import React, { Component } from "react";
 import {
   Button,
   Col,
+  DatePicker,
   Divider,
   Form,
   Input,
@@ -15,8 +16,11 @@ import {
 import { createRef } from "react";
 import dayjs from "dayjs";
 import { toast } from "react-toastify";
+import moment from "moment";
 const format = "HH:mm";
 class FormTuyenXe extends Component {
+
+  
   form = createRef();
 
   goNext = () => {
@@ -35,6 +39,12 @@ class FormTuyenXe extends Component {
     const { tuyenXe } = this.props;
     const di = tuyenXe.tgDi ? dayjs(tuyenXe.tgDi, format) : "";
     const den = tuyenXe.tgDen ? dayjs(tuyenXe.tgDen, format) : "";
+    const di1 = tuyenXe.ngayDi ? dayjs(tuyenXe.ngayDi) : "";
+    const den1 = tuyenXe.ngayVe ? dayjs(tuyenXe.ngayVe) : "";
+    const disabledDate = (current) => {
+      return current.isBefore(moment().startOf("day"));
+    };
+    const dateFormat = "YYYY-MM-DD";
     return (
       <>
         <Form
@@ -84,8 +94,24 @@ class FormTuyenXe extends Component {
                 <TimePicker defaultValue={di} format={format} />
               </Form.Item>
               <Form.Item name="tgDen" label="Thời gian đến">
-                <TimePicker defaultValue={den} format={format} />
+                <TimePicker defaultValue={den}  format={format} />
               </Form.Item>
+              
+
+              <Form.Item name="ngayDi" label="Ngày đi">
+              <DatePicker 
+              defaultValue={di1}  
+              format="DD/MM/YYYY" 
+              disabledDate={disabledDate}
+
+              />
+            </Form.Item>
+            <Form.Item name="ngayVe" label="Ngày Về đến" >
+            <DatePicker defaultValue={den1}  
+            format="DD/MM/YYYY" 
+            disabledDate={disabledDate}
+/>
+            </Form.Item>
             </Col>
           </Row>
           <Row>

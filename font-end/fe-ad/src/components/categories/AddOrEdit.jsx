@@ -41,10 +41,8 @@ class AddOrEdit extends Component {
 
     if (id) {
       this.props.getloaiXe(id);
-      console.log("getloaiXe");
     } else {
       this.props.clearloaiXe();
-      console.log("clearloaiXe");
     }
   };
 

@@ -3,7 +3,7 @@ import HeaderContent from "../common/HeaderContent";
 import ListTuyen from "./ListTuyenXe";
 import withRouter from "../../helpers/withRouter";
 import { Button, Modal } from "antd";
-
+import moment from "moment";
 import { connect } from "react-redux";
 import {
   TuyenEditData,
@@ -56,6 +56,8 @@ class TuyenXe extends Component {
         noiDon: "",
         diemDen: "",
         diemDi: "",
+        ngayDi: "",
+        ngayVe: "",
       },
     });
   };
@@ -72,6 +74,8 @@ class TuyenXe extends Component {
         noiDon: "",
         diemDen: "",
         diemDi: "",
+        ngayDi: "",
+        ngayVe: "",
       },
     });
   };
