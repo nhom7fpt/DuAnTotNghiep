@@ -7,7 +7,11 @@ import { Col, Drawer, Row, Pagination, Result, Button } from "antd";
 import DatVeForm from "../datVe/DatVeForm";
 import { connect } from "react-redux";
 import withRouter from "../../helpers/withRouter";
-import { listSearchOneWay, listSearchReturn, loadDataField } from "../../redux/actions/actionSearch";
+import {
+  listSearchOneWay,
+  listSearchReturn,
+  loadDataField,
+} from "../../redux/actions/actionSearch";
 import Boloc from "./boloc";
 import SearchService from "../../services/SearchService";
 
@@ -18,6 +22,7 @@ function SeatSelection(props) {
   const diemDi1 = queryParams.get("diemDi");
   const diemDen1 = queryParams.get("diemDen");
   const [selectedChuyen, setSelectedChuyen] = useState();
+  const [newListChuyen, setNewListChuyen] = useState([]);
   const [isSeatModalOpen, setIsSeatModalOpen] = useState(false);
   const [currentTrip, setCurrentTrip] = useState(null);
   const [ghesTrongData, setGhesTrongData] = useState([]);
@@ -31,77 +36,72 @@ function SeatSelection(props) {
     setCurrentTrip();
     setIsSeatModalOpen(true);
     setSelectedChuyen(data);
-
-
   };
 
+  const { listChuyen, listTuyen, ngayDi } = props;
 
-  const { listChuyen, listTuyen } = props;
   const [currentPage, setCurrentPage] = useState(1);
   const pageSize = 3;
 
-
-
   const totalPages = Math.ceil(listChuyen.length / pageSize);
 
-
   function formatCurrency(value) {
-    return value ? value.toLocaleString('vi-VN', { style: 'currency', currency: 'VND' }) : '---';
+    return value
+      ? value.toLocaleString("vi-VN", { style: "currency", currency: "VND" })
+      : "---";
   }
 
-
-  const getCurrentPageData = () => {
+  const getCurrentPageData = async () => {
     const startIndex = (currentPage - 1) * pageSize;
     const endIndex = startIndex + pageSize;
-    const newList = listChuyen.map(i => {
-      const tuyen = listTuyen.find(t => i.tuyenXe === t.maTuyenXe);
-      return ({
-        ...i,
-        tuyenXe: tuyen
+    const newList = await Promise.all(
+      listChuyen.map(async (i) => {
+        const tuyen = listTuyen.find((t) => i.tuyenXe === t.maTuyenXe);
+        const soGheTrong = await loadGhe(i, ngayDi);
+
+        return {
+          ...i,
+          tuyenXe: tuyen,
+          soGheTrong: soGheTrong,
+        };
       })
-    })
-    console.log(listTuyen);
-    console.log(newList);
-    console.log(listChuyen);
+    );
     return newList.slice(startIndex, endIndex);
   };
 
+  const loadGhe = async (chuyen, ngay) => {
+    console.log(chuyen);
+    const data = { id: chuyen.maChuyen, ngayDi: ngay };
+    const service = new SearchService();
+    const res = await service.loadGhe(data);
+    const resXe = await service.loadSoGhe(chuyen.xe);
+
+    console.log(res, resXe);
+
+    const ghe = resXe.data;
+    const daDat = res.data;
+
+    const soGheTrong = ghe - daDat.length;
+    return soGheTrong;
+  };
+
   useEffect(() => {
-    const loadGhe = async () => {
-      const data = { id: selectedChuyen.maChuyen, ngayDi: selectedChuyen.ngayDi };
-      const service = new SearchService();
-      const res = await service.loadGhe(data);
-      const resXe = await service.loadSoGhe(selectedChuyen.xe);
-
-      if (res && res.data) {
-        setGhesTrongData(res.data);
-      }
-
-      if (resXe && resXe.data) {
-        setSoGhe(resXe.data);
-      }
+    const fetchData = async () => {
+      const data = await getCurrentPageData();
+      setNewListChuyen(data);
     };
 
-    if (selectedChuyen) {
-      loadGhe();
-    }
-  }, [selectedChuyen]);
+    fetchData();
+  }, [currentPage, listChuyen, listTuyen, ngayDi]);
 
-  const soGheConTrong = soGhe - ghesTrongData.length;
-
-  const soGheDaDat = ghesTrongData.length;
-
-
-
-  console.log("Tổng số ghế: ", soGhe);
-  console.log("Số ghế đã đặt: ", soGheDaDat);
-  console.log("Số ghế còn trống: ", soGheConTrong);
   return (
     <div className="grid-listtuyen-container-loc">
       <Boloc />
       <div className="hiddentext">
         <span>
-          {diemDi ? `${diemDi} - ${diemDen} (${listChuyen.length})` : `${diemDi1} - ${diemDen1} (${listChuyen.length})`}
+          {diemDi
+            ? `${diemDi} - ${diemDen} (${listChuyen.length})`
+            : `${diemDi1} - ${diemDen1} (${listChuyen.length})`}
         </span>
       </div>
       {listChuyen.length === 0 ? (
@@ -113,7 +113,7 @@ function SeatSelection(props) {
           className="listtuyen-404"
         />
       ) : (
-        getCurrentPageData().map((item, index) => (
+        newListChuyen.map((item, index) => (
           <Row className="custom-container-loc" key={item.maChuyen}>
             <Col>
               <div className="chuyenxe-loc">
@@ -121,13 +121,24 @@ function SeatSelection(props) {
                   <span className="departure-time">{item.tuyenXe.tgDi}</span>
                   <div className="location-details">
                     <img src={pickup} alt="pickup" />
-                    <span className="separator"> . . . . . . . . . . . . . . . . . . . . . . .</span>
-                    <span className="travel-duration" style={{ marginLeft: "-0.08cm" }}>
-                      <span style={{ marginLeft: "-0.3cm" }}>{item.tuyenXe.tgDi}</span>
+                    <span className="separator">
+                      {" "}
+                      . . . . . . . . . . . . . . . . . . . . . . .
+                    </span>
+                    <span
+                      className="travel-duration"
+                      style={{ marginLeft: "-0.08cm" }}
+                    >
+                      <span style={{ marginLeft: "-0.3cm" }}>
+                        {item.tuyenXe.tgDi}
+                      </span>
                       <br />
                       <span className="small-text">(Asian/Ho Chi Minh)</span>
                     </span>
-                    <span className="separator"> . . . . . . . . . . . . . . . . . . . . . . .</span>
+                    <span className="separator">
+                      {" "}
+                      . . . . . . . . . . . . . . . . . . . . . . .
+                    </span>
                     <img src={station} alt="station" />
                   </div>
                   <span className="arrival-time">{item.tuyenXe.tgDen}</span>
@@ -139,7 +150,9 @@ function SeatSelection(props) {
                     <span className="location-info-text text-gray"></span>
                   </div>
                   <div className="location text-right">
-                    <span className="location-name">{item.tuyenXe.diemDen}</span>
+                    <span className="location-name">
+                      {item.tuyenXe.diemDen}
+                    </span>
                     <br />
                     <span className="location-info-text text-gray"></span>
                   </div>
@@ -147,22 +160,31 @@ function SeatSelection(props) {
                 <hr className="divider my-3" />
                 <Col span={24} className="availability-info">
                   <div className="availability-details">
-                    <span className="ticket-price text-orange">{formatCurrency(item.tuyenXe.gia)}</span>
+                    <span className="ticket-price text-orange">
+                      {formatCurrency(item.tuyenXe.gia)}
+                    </span>
                     <div className="availability-dot"></div>
                     <span className="seat-type">Giường</span>
                     <div className="availability-dot"></div>
-                    <span className="available-seats text-orange" style={{ width: '120px' }}>
-                      {soGheConTrong > 0 ? `${soGheConTrong} chỗ trống` : "Hết ghế trống"}
+                    <span
+                      className="available-seats text-orange"
+                      style={{ width: "120px" }}
+                    >
+                      {item.soGheTrong > 0
+                        ? `${item.soGheTrong} chỗ trống`
+                        : "Hết ghế trống"}
                     </span>
                     <span
                       className="btn-gialisttuyen"
-                      style={{ color: 'blue', width: '120px' }}
+                      style={{ color: "blue", width: "120px" }}
                       onClick={() => handleSeatModal(item)}
                     >
                       chọn ghế
                     </span>
                     <button type="button" className="custom-button">
-                      <span onClick={() => handleSeatModal(item)}>Chọn chuyến</span>
+                      <span onClick={() => handleSeatModal(item)}>
+                        Chọn chuyến
+                      </span>
                     </button>
                   </div>
                 </Col>
@@ -201,6 +223,7 @@ function SeatSelection(props) {
 
 const mapStateToProps = (state) => ({
   listChuyen: state.SearchReducer.listChuyen,
+  ngayDi: state.SearchReducer.ngayDi,
   listChuyenReturn1: state.SearchReducer.listChuyenReturn1,
   listChuyenReturn2: state.SearchReducer.listChuyenReturn2,
   listTuyen: state.SearchReducer.listTuyen,
@@ -213,4 +236,7 @@ const mapDispatchToProps = {
   loadDataField,
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(withRouter(SeatSelection));
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(withRouter(SeatSelection));

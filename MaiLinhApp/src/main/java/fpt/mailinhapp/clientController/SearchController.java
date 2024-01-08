@@ -4,6 +4,7 @@ import fpt.mailinhapp.dto.ChuyenXeDto;
 import fpt.mailinhapp.respondata.ChoDto;
 import fpt.mailinhapp.respondata.ChuyenTheoTuyen;
 import fpt.mailinhapp.respondata.ReqTimMotChieu;
+import fpt.mailinhapp.respondata.Return2List;
 import fpt.mailinhapp.service.CarService;
 import fpt.mailinhapp.service.ChuyenXeService;
 import fpt.mailinhapp.service.MapValidationErrorService;
@@ -34,34 +35,26 @@ public class SearchController {
     public ResponseEntity findOneWayTicket(@Validated @RequestBody ReqTimMotChieu data, BindingResult result){
         ResponseEntity error = errorService.mapValidationField(result);
 
-        if(error != null){
+        if(error != null) {
             return error;
         }
-        LocalDate ngayDi = (data.getNgayDi() != null) ? data.getNgayDi() : LocalDate.now();
-        List<ChuyenXeDto> dto = service.timChuyen(data.getDiemDi(), data.getDiemDen(), ngayDi);
+        List<ChuyenXeDto> dto = service.timChuyen(data.getDiemDi(), data.getDiemDen());
         return new ResponseEntity<>(dto, HttpStatus.OK);
     }
 
     @PostMapping("return")
-    public ResponseEntity<Map<String, List<ChuyenXeDto>>> findReturnTicket(@Validated @RequestBody ReqTimMotChieu data, BindingResult result) {
+    public ResponseEntity findReturnTicket(@Validated @RequestBody ReqTimMotChieu data, BindingResult result) {
         ResponseEntity error = errorService.mapValidationField(result);
 
         if (error != null) {
             return error;
         }
+        var list1 = service.timChuyen(data.getDiemDi(),  data.getDiemDen());
+        var list2 = service.timChuyen(data.getDiemDen(), data.getDiemDi());
+        Return2List map = new Return2List(list1,list2);
 
-        LocalDate ngayDi = data.getNgayDi();
-        LocalDate ngayVe = data.getNgayVe();
+        return new ResponseEntity<>(map, HttpStatus.OK);
 
-        try {
-            Map<String, List<ChuyenXeDto>> resultDto = service.timChuyen2(data.getDiemDi(), data.getDiemDen(), ngayDi, ngayVe);
-
-            return new ResponseEntity<>(resultDto, HttpStatus.OK);
-        } catch (Exception e) {
-
-            e.printStackTrace();
-            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
-        }
     }
     @GetMapping
     public ResponseEntity loadLocation(){

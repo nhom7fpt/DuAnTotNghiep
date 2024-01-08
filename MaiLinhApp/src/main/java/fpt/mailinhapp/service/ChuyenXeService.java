@@ -99,58 +99,58 @@ public class ChuyenXeService {
         return dao.findAll();
     }
 
-//    public List<ChuyenXeDto> timChuyen(String diemDi, String diemDen) {
-//        List<ChuyenXe> listEntity = dao.findByTuyenXe_DiemDiLikeAndTuyenXe_DiemDenLike(diemDi, diemDen);
-//
-//
+    public List<ChuyenXeDto> timChuyen(String diemDi, String diemDen) {
+        List<ChuyenXe> listEntity = dao.findByTuyenXe_DiemDiLikeAndTuyenXe_DiemDenLike(diemDi, diemDen);
+
+
 //        LocalTime now = LocalTime.now();
 //
 //        List<ChuyenXe> listData = listEntity.stream()
 //                .filter(chuyenXe -> parseTime(chuyenXe.getTuyenXe().getTgDi()).isAfter(now))
 //                .collect(Collectors.toList());
-//
-//        List<ChuyenXeDto> listDto = listData.stream().map(item -> {
-//            ModelMapper mapper = new ModelMapper();
-//            return mapper.map(item, ChuyenXeDto.class);
-//        }).collect(Collectors.toList());
-//
-//        return listDto;
-//    }
-public List<ChuyenXeDto> timChuyen(String diemDi, String diemDen, LocalDate ngayDi) {
 
+        List<ChuyenXeDto> listDto = listEntity.stream().map(item -> {
+            ModelMapper mapper = new ModelMapper();
+            return mapper.map(item, ChuyenXeDto.class);
+        }).collect(Collectors.toList());
 
-    List<ChuyenXe> listEntity = dao.findByTuyenXe_DiemDiLikeAndTuyenXe_DiemDenLikeAndTuyenXe_NgayDi(diemDi, diemDen,ngayDi);
-
-    List<ChuyenXeDto> listDto = listEntity.stream().map((item)->{
-        ModelMapper mapper = new ModelMapper();
-        return mapper.map(item, ChuyenXeDto.class);
-    }).collect(Collectors.toList());
-
-    return listDto;
-}
-    public Map<String, List<ChuyenXeDto>> timChuyen2(String diemDi, String diemDen, LocalDate ngayDi, LocalDate ngayVe) {
-        Map<String, List<ChuyenXeDto>> resultDto = new HashMap<>();
-
-        if (ngayDi != null) {
-            List<ChuyenXe> listEntityNgayDi = dao.findByTuyenXe_DiemDiLikeAndTuyenXe_DiemDenLikeAndTuyenXe_NgayDi(diemDi, diemDen, ngayDi);
-            List<ChuyenXeDto> listDtoNgayDi = listEntityNgayDi.stream()
-                    .map(item -> new ModelMapper().map(item, ChuyenXeDto.class))
-                    .collect(Collectors.toList());
-
-            resultDto.put("ngayDi", listDtoNgayDi);
-        }
-
-        if (ngayVe != null) {
-            List<ChuyenXe> listEntityNgayVe = dao.findByTuyenXe_DiemDiLikeAndTuyenXe_DiemDenLikeAndTuyenXe_NgayVe(diemDi, diemDen, ngayVe);
-            List<ChuyenXeDto> listDtoNgayVe = listEntityNgayVe.stream()
-                    .map(item -> new ModelMapper().map(item, ChuyenXeDto.class))
-                    .collect(Collectors.toList());
-
-            resultDto.put("ngayVe", listDtoNgayVe);
-        }
-
-        return resultDto;
+        return listDto;
     }
+//public List<ChuyenXeDto> timChuyen(String diemDi, String diemDen, LocalDate ngayDi) {
+//
+//
+//    List<ChuyenXe> listEntity = dao.findByTuyenXe_DiemDiLikeAndTuyenXe_DiemDenLikeAndTuyenXe_NgayDi(diemDi, diemDen,ngayDi);
+//
+//    List<ChuyenXeDto> listDto = listEntity.stream().map((item)->{
+//        ModelMapper mapper = new ModelMapper();
+//        return mapper.map(item, ChuyenXeDto.class);
+//    }).collect(Collectors.toList());
+//
+//    return listDto;
+//}
+//    public Map<String, List<ChuyenXeDto>> timChuyen2(String diemDi, String diemDen, LocalDate ngayDi, LocalDate ngayVe) {
+//        Map<String, List<ChuyenXeDto>> resultDto = new HashMap<>();
+//
+//        if (ngayDi != null) {
+//            List<ChuyenXe> listEntityNgayDi = dao.findByTuyenXe_DiemDiLikeAndTuyenXe_DiemDenLikeAndTuyenXe_NgayDi(diemDi, diemDen, ngayDi);
+//            List<ChuyenXeDto> listDtoNgayDi = listEntityNgayDi.stream()
+//                    .map(item -> new ModelMapper().map(item, ChuyenXeDto.class))
+//                    .collect(Collectors.toList());
+//
+//            resultDto.put("ngayDi", listDtoNgayDi);
+//        }
+//
+//        if (ngayVe != null) {
+//            List<ChuyenXe> listEntityNgayVe = dao.findByTuyenXe_DiemDiLikeAndTuyenXe_DiemDenLikeAndTuyenXe_NgayVe(diemDi, diemDen, ngayVe);
+//            List<ChuyenXeDto> listDtoNgayVe = listEntityNgayVe.stream()
+//                    .map(item -> new ModelMapper().map(item, ChuyenXeDto.class))
+//                    .collect(Collectors.toList());
+//
+//            resultDto.put("ngayVe", listDtoNgayVe);
+//        }
+//
+//        return resultDto;
+//    }
 
 
 

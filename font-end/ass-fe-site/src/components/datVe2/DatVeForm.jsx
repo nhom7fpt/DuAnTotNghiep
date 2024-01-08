@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Row, Steps, Col, Divider, Button } from "antd";
 import ChonCho from "./ChonCho";
 import ChonDiemTra from "./ChonDiemTra";
@@ -11,13 +11,22 @@ import moment from "moment";
 import "moment/locale/vi";
 import withRouter from "../../helpers/withRouter";
 
-import { listSearchOneWay, listSearchReturn, loadDataField } from "../../redux/actions/actionSearch";
+import {
+  listSearchOneWay,
+  listSearchReturn,
+  loadDataField,
+} from "../../redux/actions/actionSearch";
 import PayService from "../../services/PayService";
 import Thongtinchuyendi from "../datvethanhcong/thongtinchuyendi";
+import SearchService from "../../services/SearchService";
 
 const DatVeForm = (props) => {
   const [steps, setSteps] = useState(0);
   const [choNgoi, setChoNgoi] = useState([]);
+  const [soGhe1, setSoGhe1] = useState(0);
+  const [soGhe2, setSoGhe2] = useState(0);
+  const [disCho1, setDisCho1] = useState([]);
+  const [disCho2, setDisCho2] = useState([]);
   const [noiTra, setNoiTra] = useState("");
   const [custom, setCustom] = useState(props.custom || "");
   const [chuyenTab1, setChuyenTab1] = useState(props.chuyenTab1);
@@ -25,6 +34,8 @@ const DatVeForm = (props) => {
   const user = localStorage.getItem("username");
   const { navigate } = props.router;
   const [tongTien, setTongTien] = useState(0);
+
+  const { ngayDi, ngayVe } = props;
 
   const onNext = (values) => {
     switch (steps) {
@@ -62,7 +73,11 @@ const DatVeForm = (props) => {
     const formattedDate = currentDate.format("YYYY-MM-DD");
 
     if (custom.anhDaLuu) {
-      const newCus = { hoTen: custom.hoTen, email: custom.email, soDT: custom.soDT };
+      const newCus = {
+        hoTen: custom.hoTen,
+        email: custom.email,
+        soDT: custom.soDT,
+      };
       setCustom(newCus);
     }
 
@@ -93,6 +108,24 @@ const DatVeForm = (props) => {
       console.error("Lỗi khi gọi loadDataPay:", error);
     }
   };
+
+  useEffect(() => {
+    const loadGhe = async () => {
+      const data = { id: chuyenTab1.maChuyen, ngayDi: ngayDi };
+      const data2 = { id: chuyenTab2.maChuyen, ngayDi: ngayVe };
+      const service = new SearchService();
+      const res = await service.loadGhe(data);
+      const res2 = await service.loadGhe(data2);
+      const resXe = await service.loadSoGhe(chuyenTab1.xe);
+      const resXe2 = await service.loadSoGhe(chuyenTab2.xe);
+      res && res.data && setDisCho1(res.data);
+      res2 && res2.data && setDisCho2(res2.data);
+      resXe && resXe.data && setSoGhe1(resXe.data);
+      resXe2 && resXe2.data && setSoGhe2(resXe2.data);
+    };
+
+    loadGhe();
+  }, [ngayDi, ngayVe, chuyenTab1.maChuyen, chuyenTab2.maChuyen]);
   return (
     <SeatSelectionProvider>
       {/* Hiển thị thông tin từ chuyenTab1 */}
@@ -100,9 +133,8 @@ const DatVeForm = (props) => {
         <span className="departure-time">{props.chuyenTab1.tuyenXe.tgDi}</span>
         <img src={pickup} alt="pickup" />
         <span className="separator">
-        {" "}
-          . . . . . . . . . . . . . . . . . . . . 
           {" "}
+          . . . . . . . . . . . . . . . . . . . .{" "}
         </span>
         <span className="travel-duration" style={{ marginLeft: "-0.08cm" }}>
           <span style={{ marginLeft: "0.8cm" }}>20 giờ </span>
@@ -110,9 +142,8 @@ const DatVeForm = (props) => {
           <span className="small-text">(Asian/Ho Chi Minh)</span>
         </span>
         <span className="separator">
-          . . . . . . . . . . . . . .
-          . . . . . . . . . . . . {" "}
-          </span>
+          . . . . . . . . . . . . . . . . . . . . . . . . . .{" "}
+        </span>
         <img src={station} alt="station" />
         <span className="arrival-time">{props.chuyenTab1.tuyenXe.tgDen}</span>
       </div>
@@ -123,70 +154,91 @@ const DatVeForm = (props) => {
         <img src={pickup} alt="pickup" />
         <span className="separator">
           {" "}
-          . . . . . . . . . . . . . . . . . . . . 
-          {" "}
-          </span>
-          <span className="travel-duration" style={{ marginLeft: "-0.08cm" }}>
+          . . . . . . . . . . . . . . . . . . . .{" "}
+        </span>
+        <span className="travel-duration" style={{ marginLeft: "-0.08cm" }}>
           <span style={{ marginLeft: "0.8cm" }}>20 giờ </span>
           <br />
           <span className="small-text">(Asian/Ho Chi Minh)</span>
-          </span>
-          <span className="separator">
-          . . . . . . . . . . . . . .
-          . . . . . . . . . . . . {" "}
-          </span>
-          <img src={station} alt="station" />
-          <span className="arrival-time">{props.chuyenTab2.tuyenXe.tgDen}</span>
-          </div>
-          <Row>
-          <Col md={24}>
-            <Steps
-              current={steps}
-              items={[
-                {
-                  title: "Chỗ mong muốn",
-                },
-                {
-                  title: "Điểm đón trả",
-                },
-                {
-                  title: "Nhập thông tin",
-                },
-              ]}
+        </span>
+        <span className="separator">
+          . . . . . . . . . . . . . . . . . . . . . . . . . .{" "}
+        </span>
+        <img src={station} alt="station" />
+        <span className="arrival-time">{props.chuyenTab2.tuyenXe.tgDen}</span>
+      </div>
+      <Row>
+        <Col md={24}>
+          <Steps
+            current={steps}
+            items={[
+              {
+                title: "Chỗ mong muốn",
+              },
+              {
+                title: "Điểm đón trả",
+              },
+              {
+                title: "Nhập thông tin",
+              },
+            ]}
+          />
+        </Col>
+      </Row>
+      <Row>
+        <Col md={24}>
+          {steps === 0 && (
+            <ChonCho
+              onClose={onClose}
+              onNext={onNext}
+              soGhe1={soGhe1}
+              soGhe2={soGhe2}
+              disCho1={disCho1}
+              disCho2={disCho2}
             />
-          </Col>
-        </Row>
-        <Row>
-          <Col md={24}>
-            {steps === 0 && <ChonCho onClose={onClose} onNext={onNext} />}
-            {steps === 1 && <ChonDiemTra chuyen={props.chuyenTab1 || props.chuyenTab2} onNext={onNext} onPrev={onPrev} />}
-            {steps === 2 && <ThongTinForm custom={custom} updateCustom={updateCustom} />}
-          </Col>
-        </Row>
-      
-        <Row style={{ float: "right" }}>
-          {steps === 2 && <Button type="primary" onClick={handlePayment}>Thanh toán</Button>}
-          {steps === 2 && (
-            <Button
-              type="primary"
-              style={{ margin: "0 8px" }}
-              onClick={() => onPrev()}
-            >
-              Trở lại
-            </Button>
+          )}
+          {steps === 1 && (
+            <ChonDiemTra
+              chuyen={props.chuyenTab1 || props.chuyenTab2}
+              onNext={onNext}
+              onPrev={onPrev}
+            />
           )}
           {steps === 2 && (
-            <Button type="primary" style={{ margin: "0 8px" }} onClick={onClose}>
-              Hủy
-            </Button>
+            <ThongTinForm custom={custom} updateCustom={updateCustom} />
           )}
-        </Row>
-      </SeatSelectionProvider>
-      );
-    };
-    
-    const mapStateToProps = (state) => ({
+        </Col>
+      </Row>
+
+      <Row style={{ float: "right" }}>
+        {steps === 2 && (
+          <Button type="primary" onClick={handlePayment}>
+            Thanh toán
+          </Button>
+        )}
+        {steps === 2 && (
+          <Button
+            type="primary"
+            style={{ margin: "0 8px" }}
+            onClick={() => onPrev()}
+          >
+            Trở lại
+          </Button>
+        )}
+        {steps === 2 && (
+          <Button type="primary" style={{ margin: "0 8px" }} onClick={onClose}>
+            Hủy
+          </Button>
+        )}
+      </Row>
+    </SeatSelectionProvider>
+  );
+};
+
+const mapStateToProps = (state) => ({
   listChuyen: state.SearchReducer.listChuyen,
+  ngayDi: state.SearchReducer.ngayDi,
+  ngayVe: state.SearchReducer.ngayVe,
   custom: state.CustomReducer.custom,
   listChuyenReturn1: state.SearchReducer.listChuyenReturn1,
   listChuyenReturn2: state.SearchReducer.listChuyenReturn2,

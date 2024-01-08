@@ -47,28 +47,37 @@ export const listSearchOneWay = (start, end, ngayDi) => async (dispatch) => {
     console.log(error);
   }
 };
-export const listSearchReturn = (start, end, ngayDi,ngayVe) => async (dispatch) => {
-  try {
-    const data = { diemDi: start, diemDen: end, ngayDi: ngayDi , ngayVe: ngayVe};
-    const res = await service.loadListChuyenReturn(data);
-    console.log(res);
-
-    if (res.status === 200) {
-      dispatch({
-        type: LISTCHUYEN1,
-        payload: res.data.ngayDi, 
-      });
-      dispatch({
-        type: LISTCHUYEN2,
-        payload: res.data.ngayVe, 
-      });
+export const listSearchReturn =
+  (start, end, ngayDi, ngayVe) => async (dispatch) => {
+    try {
+      const data = {
+        diemDi: start,
+        diemDen: end,
+      };
+      const res = await service.loadListChuyenReturn(data);
+      console.log(res);
+      if (res.status === 200) {
+        dispatch({
+          type: LISTCHUYEN1,
+          payload: res.data.chuyen1,
+        });
+        dispatch({
+          type: LISTCHUYEN2,
+          payload: res.data.chuyen2,
+        });
+        dispatch({
+          type: NGAY_DI_SET,
+          payload: ngayDi,
+        });
+        dispatch({
+          type: NGAY_VE_SET,
+          payload: ngayVe,
+        });
+      }
+    } catch (error) {
+      console.log(error);
     }
-  } catch (error) {
-    console.log(error);
   };
-};
-
-
 
 export const loadDataTuyen = () => async (dispatch) => {
   try {
