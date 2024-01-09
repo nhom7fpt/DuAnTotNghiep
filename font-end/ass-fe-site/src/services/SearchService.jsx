@@ -28,6 +28,10 @@ export default class SearchService {
     return await axios.post(API_SEARCH + "/cho", data);
   };
 
+  loadGhe2 = async (data) => {
+    return await axios.post(API_SEARCH + "/cho2", data);
+  };
+
   loadSoGhe = async (id) => {
     return await axios.get(API_SEARCH + "/soghe/" + id);
   };

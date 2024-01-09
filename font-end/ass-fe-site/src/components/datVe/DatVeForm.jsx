@@ -85,7 +85,7 @@ const DatVeForm = (props) => {
       tongTien: tongTien,
       choNgoi: choNgoi,
       soLuong: sl,
-      ngayDi: ngayDi, 
+      ngayDi: ngayDi,
     };
     console.log("Dữ liệu đi:", newData);
 
@@ -116,7 +116,6 @@ const DatVeForm = (props) => {
 
     loadGhe();
   }, [ngayDi, chuyen.maChuyen]);
-
 
   return (
     <SeatSelectionProvider>

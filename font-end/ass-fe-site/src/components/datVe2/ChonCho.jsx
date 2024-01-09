@@ -199,19 +199,21 @@ const ChonCho = (props) => {
           </div>
         </Col>
         <Col md={8}>
-          <label style={{ marginLeft: "1.5cm" }}>Tầng dưới - Ngày Đi</label>
+          <label style={{ marginLeft: "1.5cm", marginBottom: "-10cm" }}>
+            Tầng dưới - Ngày Đi
+          </label>
           <Checkbox.Group
-            options={dataLower.slice(0, 8)}
-            onChange={(values) => onChange(values, "lower", "ngayDi")}
-            value={selectedSeatsLowerNgayDi}
+            options={dataUpper}
+            onChange={(values) => onChange(values, "upper", "ngayDi")}
+            value={selectedSeatsUpperNgayDi}
           />
         </Col>
         <Col md={8}>
           <label style={{ marginLeft: "1.5cm" }}>Tầng trên - Ngày Đi</label>
           <Checkbox.Group
-            options={dataUpper.slice(8)}
-            onChange={(values) => onChange(values, "upper", "ngayDi")}
-            value={selectedSeatsUpperNgayDi}
+            options={dataLower}
+            onChange={(values) => onChange(values, "lower", "ngayDi")}
+            value={selectedSeatsLowerNgayDi}
           />
         </Col>
         <Col md={8}>
@@ -258,24 +260,24 @@ const ChonCho = (props) => {
         </Col>
       </Row>
 
-      <Row style={{ marginLeft: "3cm" }}>
+      <Row style={{ marginLeft: "3cm" }} className="chonchokhuhoi">
         <Col md={8} style={{ marginLeft: "2cm" }}>
           <label style={{ marginLeft: "2cm", width: "300px" }}>
             Tầng dưới - Ngày Về
           </label>
           <Checkbox.Group
-            options={dataLowerNgayVe.slice(0, 8)}
-            onChange={(values) => onChangeNgayVe(values, "lower")}
-            value={selectedSeatsLowerNgayVe}
+            options={dataUpperNgayVe}
+            onChange={(values) => onChangeNgayVe(values, "upper")}
+            value={selectedSeatsUpperNgayVe}
             style={{ marginRight: "-1cm", marginLeft: "0.5cm" }}
           />
         </Col>
         <Col md={8} style={{ marginLeft: "2.5cm" }}>
           <label style={{ width: "300px" }}>Tầng trên - Ngày Về</label>
           <Checkbox.Group
-            options={dataUpperNgayVe.slice(8)}
-            onChange={(values) => onChangeNgayVe(values, "upper")}
-            value={selectedSeatsUpperNgayVe}
+            options={dataLowerNgayVe}
+            onChange={(values) => onChangeNgayVe(values, "lower")}
+            value={selectedSeatsLowerNgayVe}
             style={{ marginRight: "-1cm" }}
           />
         </Col>

@@ -55,13 +55,22 @@ public class DatVe {
 
 
 
+
+
+
+    @Temporal(TemporalType.DATE)
+    @Column(name = "ngay_ve")
+    @JsonFormat(pattern = "DD-MM-YYYY")
+    private Date ngayVe;
+
     @OneToOne(orphanRemoval = true)
     @JoinColumn(name = "thanh_toan_id")
     private ThanhToan thanhToan;
 
-    @Temporal(TemporalType.DATE)
-    @Column(name = "ngay_ve")
-    private Date ngayVe;
+    @ElementCollection
+    @Column(name = "cho_ngoi_2")
+    @CollectionTable(name = "dat_ve_choNgoi2", joinColumns = @JoinColumn(name = "owner_id"))
+    private List<String> choNgoi2 = new ArrayList<>();
 
     @PrePersist
     public void prePersist() {

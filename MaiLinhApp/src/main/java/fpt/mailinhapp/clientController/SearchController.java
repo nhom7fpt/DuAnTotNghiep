@@ -81,8 +81,26 @@ public class SearchController {
             dto.setNgayDi(now);
         }
         var data = service.getCho(dto.getId(),dto.getNgayDi());
+        var data2 = service.getCho2(dto.getId(),dto.getNgayDi());
 
-        return new ResponseEntity<>(data, HttpStatus.OK);
+        var listData = data.addAll(data2);
+
+        return new ResponseEntity<>(listData, HttpStatus.OK);
+    }
+
+    @PostMapping("/cho2")
+    public ResponseEntity getListCho2(@RequestBody ChoDto dto){
+        System.out.println(dto.getId());
+        if(dto.getNgayDi() == null){
+            Date now = new Date();
+            dto.setNgayDi(now);
+        }
+        var data = service.getCho2(dto.getId(),dto.getNgayDi());
+        var data2 = service.getCho(dto.getId(),dto.getNgayDi());
+
+        var listData = data.addAll(data2);
+
+        return new ResponseEntity<>(listData, HttpStatus.OK);
     }
 
     @GetMapping("/soghe/{id}")

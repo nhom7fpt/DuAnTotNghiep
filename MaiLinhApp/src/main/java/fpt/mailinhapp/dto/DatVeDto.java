@@ -23,6 +23,7 @@ public class DatVeDto implements Serializable {
     Long tongTien;
     String noiTra;
     List<String> choNgoi;
+    List<String> choNgoi2;
     ChuyenXeDto chuyenXe;
     InfoDto info;
     Date ngayDatVe;

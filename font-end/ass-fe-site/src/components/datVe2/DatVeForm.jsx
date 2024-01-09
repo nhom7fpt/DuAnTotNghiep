@@ -23,6 +23,7 @@ import SearchService from "../../services/SearchService";
 const DatVeForm = (props) => {
   const [steps, setSteps] = useState(0);
   const [choNgoi, setChoNgoi] = useState([]);
+  const [choNgoi2, setChoNgoi2] = useState([]);
   const [soGhe1, setSoGhe1] = useState(0);
   const [soGhe2, setSoGhe2] = useState(0);
   const [disCho1, setDisCho1] = useState([]);
@@ -40,8 +41,8 @@ const DatVeForm = (props) => {
   const onNext = (values) => {
     switch (steps) {
       case 0:
-        setChoNgoi(values);
-        console.log(values);
+        setChoNgoi(values.ngayDi);
+        setChoNgoi2(values.ngayVe);
         break;
       case 1:
         setNoiTra(values);
@@ -66,7 +67,9 @@ const DatVeForm = (props) => {
   };
 
   const handlePayment = async () => {
-    const tongTien = chuyenTab1.tuyenXe.gia * choNgoi.length;
+    const tongTien =
+      chuyenTab1.tuyenXe.gia * choNgoi.length +
+      chuyenTab2.tuyenXe.gia * choNgoi2.length;
     setTongTien(tongTien);
 
     const currentDate = moment();
@@ -81,7 +84,7 @@ const DatVeForm = (props) => {
       setCustom(newCus);
     }
 
-    const sl = choNgoi && choNgoi.length;
+    const sl = choNgoi && choNgoi2 && choNgoi.length + choNgoi2.length;
 
     const newData = {
       chuyenXe: chuyenTab1,
@@ -90,7 +93,10 @@ const DatVeForm = (props) => {
       info: { ...custom, ngayDatVe: formattedDate },
       tongTien: tongTien,
       choNgoi: choNgoi,
+      choNgoi2: choNgoi2,
       soLuong: sl,
+      ngayDi: ngayDi,
+      ngayVe: ngayVe,
     };
 
     console.log("Dữ liệu đi:", newData);
@@ -115,7 +121,7 @@ const DatVeForm = (props) => {
       const data2 = { id: chuyenTab2.maChuyen, ngayDi: ngayVe };
       const service = new SearchService();
       const res = await service.loadGhe(data);
-      const res2 = await service.loadGhe(data2);
+      const res2 = await service.loadGhe2(data2);
       const resXe = await service.loadSoGhe(chuyenTab1.xe);
       const resXe2 = await service.loadSoGhe(chuyenTab2.xe);
       res && res.data && setDisCho1(res.data);

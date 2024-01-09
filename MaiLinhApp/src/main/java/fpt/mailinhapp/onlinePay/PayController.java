@@ -38,7 +38,7 @@ public class PayController {
 
 
     @PostMapping()
-    public ResponseEntity createPayment(@RequestBody Map<String, Object> requestData) throws UnsupportedEncodingException {
+    public ResponseEntity createPayment(@RequestBody Map<String, Object> requestData) throws UnsupportedEncodingException, ParseException {
         DatVeDto trungGian = new DatVeDto();
         ModelMapper mapper = new ModelMapper();
         ChuyenXeDto cx = mapper.map(requestData.get("chuyenXe"), ChuyenXeDto.class);
@@ -46,17 +46,25 @@ public class PayController {
         String nt = String.valueOf(requestData.get("noiTra"));
         InfoDto info = mapper.map(requestData.get("info"), InfoDto.class);
         Integer soLuong = (Integer) requestData.get("soLuong");
-        List<String> choNgoi = (List<String>) requestData.get("choNgoi");
         Integer tongTienInteger = (Integer) requestData.get("tongTien");
+        List<String> choNgoi = (List<String>) requestData.get("choNgoi");
+        List<String> choNgoi2 = (List<String>) requestData.get("choNgoi2");
 
         Long tien = tongTienInteger != null ? Long.valueOf(tongTienInteger) : null;
-        Date ngayDi = mapper.map(requestData.get("ngayDi"), Date.class);
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd"); // Specify the date format
+        Date ngayDi = dateFormat.parse((String) requestData.get("ngayDi"));
         trungGian.setNgayDi(ngayDi);
+        if(requestData.get("ngayVe") != null){
+            Date ngayVe = dateFormat.parse((String) requestData.get("ngayVe"));
+            trungGian.setNgayVe(ngayVe);
+        }
+
 
 
         trungGian.setInfo(info);
         trungGian.setChuyenXe(cx);
         trungGian.setChoNgoi(choNgoi);
+        trungGian.setChoNgoi2(choNgoi2);
         trungGian.setNoiTra(nt);
         trungGian.setTongTien(tien);
         trungGian.setSoLuong(soLuong);

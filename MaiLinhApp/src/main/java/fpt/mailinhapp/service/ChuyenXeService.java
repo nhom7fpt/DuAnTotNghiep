@@ -196,4 +196,11 @@ public class ChuyenXeService {
         List<String> data = found.stream().flatMap(i->i.getChoNgoi().stream()).collect(Collectors.toList());
         return data;
     }
+
+    public List<String> getCho2(Long id, Date ngayVe){
+
+        var found = datVeDao.findByChuyenXe_MaChuyenAndNgayVe(id, ngayVe);
+        List<String> data = found.stream().flatMap(i->i.getChoNgoi2().stream()).collect(Collectors.toList());
+        return data;
+    }
 }
