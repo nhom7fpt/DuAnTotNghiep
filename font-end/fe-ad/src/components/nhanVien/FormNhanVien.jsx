@@ -42,7 +42,7 @@ class FormProduct extends Component {
 
   componentDidUpdate(prevProps) {
     // Kiểm tra nếu dữ liệu product đã được cập nhật
-    if (this.props.Car !== prevProps.Car) {
+    if (this.props.nhanVien !== prevProps.nhanVien) {
       this.goNext();
     }
   }
@@ -69,7 +69,13 @@ class FormProduct extends Component {
     return e && e.fileList;
   };
   render() {
-    const { nhanVien } = this.props;
+    const { nhanVien, nhaXe } = this.props;
+    const listNhaXe = nhaXe.map((item) => {
+      const nha = { label: item.tenNhaXe, value: item.id };
+      return nha;
+    });
+
+    const nhaXeId = nhanVien.nhaXe ? nhanVien.nhaXe.id : "";
 
     return (
       <>
@@ -104,6 +110,9 @@ class FormProduct extends Component {
                 initialValue={nhanVien.diaChi}
               >
                 <Input></Input>
+              </Form.Item>
+              <Form.Item label="Nhà xe" name="nhaXe">
+                <Select options={listNhaXe} defaultValue={nhaXeId}></Select>
               </Form.Item>
 
               <Form.Item

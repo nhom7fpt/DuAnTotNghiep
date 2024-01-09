@@ -18,3 +18,5 @@ export const API_CHUYEN = "http://localhost:8080/api/v1/chuyen";
 export const API_THONGKE = "http://localhost:8080/api/v1/thongke";
 
 export const API_NOITRA = "http://localhost:8080/api/v1/noitra";
+
+export const API_NHAXE = "http://localhost:8080/api/v1/nhaxe";

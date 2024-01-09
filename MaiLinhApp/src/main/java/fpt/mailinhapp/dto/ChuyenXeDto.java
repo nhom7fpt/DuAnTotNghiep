@@ -19,7 +19,6 @@ import java.util.List;
 @NoArgsConstructor
 public class ChuyenXeDto implements Serializable {
     Long maChuyen;
-    String soKhach;
     private List<NhanVienDto> nhanViens = new ArrayList<>();
     Integer tuyenXe;
     String xe;

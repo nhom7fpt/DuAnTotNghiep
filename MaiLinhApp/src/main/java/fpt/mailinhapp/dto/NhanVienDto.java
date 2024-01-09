@@ -19,6 +19,7 @@ public class NhanVienDto implements Serializable {
     String sdt;
     String diaChi;
     AnhDaLuuDto anhDaLuu;
+    private NhaXeDto nhaXe;
 
 
 }

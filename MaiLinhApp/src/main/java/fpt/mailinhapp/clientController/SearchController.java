@@ -17,6 +17,8 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import java.time.LocalDate;
 import java.util.*;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 @RestController
 @CrossOrigin("*")
@@ -75,15 +77,15 @@ public class SearchController {
     }
     @PostMapping("/cho")
     public ResponseEntity getListCho(@RequestBody ChoDto dto){
-        System.out.println(dto.getId());
         if(dto.getNgayDi() == null){
             Date now = new Date();
             dto.setNgayDi(now);
         }
         var data = service.getCho(dto.getId(),dto.getNgayDi());
         var data2 = service.getCho2(dto.getId(),dto.getNgayDi());
+        var listData = Stream.concat(data.stream(), data2.stream()).collect(Collectors.toList());
 
-        var listData = data.addAll(data2);
+
 
         return new ResponseEntity<>(listData, HttpStatus.OK);
     }
@@ -97,8 +99,7 @@ public class SearchController {
         }
         var data = service.getCho2(dto.getId(),dto.getNgayDi());
         var data2 = service.getCho(dto.getId(),dto.getNgayDi());
-
-        var listData = data.addAll(data2);
+        var listData = Stream.concat(data.stream(), data2.stream()).collect(Collectors.toList());
 
         return new ResponseEntity<>(listData, HttpStatus.OK);
     }

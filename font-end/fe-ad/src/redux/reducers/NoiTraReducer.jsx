@@ -23,7 +23,7 @@ const NoiTraReducer = (state = initialState, { type, payload }) => {
       return { ...state, noiTras: payload };
 
     case NOITRAES_DELETE:
-      const newmanu = state.noiTras.filter((item) => item.id !== payload.id);
+      const newmanu = state.noiTras.filter((item) => item.id !== payload);
 
       return {
         ...state,
@@ -33,7 +33,7 @@ const NoiTraReducer = (state = initialState, { type, payload }) => {
     case NOITRA_UPDATE:
       return {
         ...state,
-        noiTraes: state.noiTras.filter((item) => item.id !== payload),
+        noiTras: state.noiTras.filter((item) => item.id !== payload),
       };
 
     case NOITRAES_STATE_CLEAR:

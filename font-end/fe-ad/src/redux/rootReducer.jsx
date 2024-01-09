@@ -9,6 +9,7 @@ import NhanVienReducer from "./reducers/NhanVienReduver";
 import TuyenXeReducer from "./reducers/TuyenXeReducer";
 import ChuyenReducer from "./reducers/ChuyenReducer";
 import NoiTraReducer from "./reducers/NoiTraReducer";
+import NhaXeReducer from "./reducers/NhaXeReducer";
 const rootReducer = combineReducers({
   LoaiXeReducer,
   commonReducer,
@@ -20,6 +21,7 @@ const rootReducer = combineReducers({
   TuyenXeReducer,
   ChuyenReducer,
   NoiTraReducer,
+  NhaXeReducer,
 });
 
 export default rootReducer;

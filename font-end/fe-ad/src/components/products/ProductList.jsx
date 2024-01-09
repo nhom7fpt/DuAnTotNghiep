@@ -86,6 +86,14 @@ class ProductList extends Component {
           ></Column>
 
           <Column
+            title="Nhà Xe"
+            key="nhaXe"
+            dataIndex="nhaXe"
+            align="center"
+            render={(text, record) => <label>{record.nhaXe.tenNhaXe}</label>}
+          ></Column>
+
+          <Column
             title="Action"
             key="action"
             align="center"

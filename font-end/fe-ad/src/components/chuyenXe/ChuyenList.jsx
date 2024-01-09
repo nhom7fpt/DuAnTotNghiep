@@ -24,9 +24,8 @@ class ChuyenList extends Component {
   };
 
   render() {
-   
     const { chuyens } = this.props;
-    const reversedChuyens = [...chuyens].reverse(); 
+    const reversedChuyens = [...chuyens].reverse();
     return (
       <>
         <Table dataSource={reversedChuyens} rowKey="maChuyen">
@@ -34,12 +33,6 @@ class ChuyenList extends Component {
             title="Mã chuyến xe"
             key="maChuyen"
             dataIndex="maChuyen"
-            align="center"
-          ></Column>
-          <Column
-            title="Số khách đã đi"
-            key="soKhach"
-            dataIndex="soKhach"
             align="center"
           ></Column>
 
@@ -61,6 +54,14 @@ class ChuyenList extends Component {
             dataIndex="xe"
             align="center"
             render={(text, record) => <label>{record.xe.bienSoXe}</label>}
+          ></Column>
+
+          <Column
+            title="Nhà xe"
+            key="nhaXe"
+            dataIndex="nhaXe"
+            align="center"
+            render={(text, record) => <label>{record.xe.nhaXe.tenNhaXe}</label>}
           ></Column>
 
           <Column

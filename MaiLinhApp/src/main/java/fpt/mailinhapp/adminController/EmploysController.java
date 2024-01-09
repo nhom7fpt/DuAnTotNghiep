@@ -56,4 +56,9 @@ public class EmploysController {
 
         return new ResponseEntity<>(HttpStatus.OK);
     }
+
+    @GetMapping("/nhaxe/{id}")
+    public ResponseEntity getListByNhaXe(@PathVariable String id){
+        return new ResponseEntity<>(service.findByNhaXe(id), HttpStatus.OK);
+    }
 }

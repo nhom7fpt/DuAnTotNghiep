@@ -6,7 +6,7 @@ import { createRef } from "react";
 
 import { toast } from "react-toastify";
 
-class FormNoiTra extends Component {
+class FormNhaXe extends Component {
   form = createRef();
 
   onSendData = (values) => {
@@ -19,19 +19,21 @@ class FormNoiTra extends Component {
 
   componentDidUpdate(prevProps) {
     // Kiểm tra xem prop manufacturer có thay đổi hay không
-    if (this.props.noiTra !== prevProps.noiTra) {
+    if (this.props.nhaXe !== prevProps.nhaXe) {
       // Cập nhật form với các giá trị ban đầu mới
       this.form.current.setFieldsValue({
-        id: this.props.noiTra.id,
-        noiTra: this.props.noiTra.noiTra,
+        id: this.props.nhaXe.id,
+        tenNhaXe: this.props.nhaXe.tenNhaXe,
+        diaChiNhaXe: this.props.nhaXe.diaChiNhaXe,
+        sdt: this.props.nhaXe.sdt,
       });
     }
   }
 
   render() {
     const { open, onCancel } = this.props;
-    const { noiTra } = this.props;
-    console.log(noiTra);
+    const { nhaXe } = this.props;
+    console.log(nhaXe);
     return (
       <Modal
         open={open}
@@ -59,12 +61,26 @@ class FormNoiTra extends Component {
           initialValues={{
             modifier: "public",
           }}
-          key={noiTra.id}
+          key={nhaXe.id}
         >
-          <Form.Item name="id" label="id" initialValue={noiTra.id}>
+          <Form.Item name="id" label="id" initialValue={nhaXe.id}>
             <Input readOnly />
           </Form.Item>
-          <Form.Item name="noiTra" label="Nơi trả" initialValue={noiTra.noiTra}>
+          <Form.Item
+            name="tenNhaXe"
+            label="Tên nhà xe"
+            initialValue={nhaXe.tenNhaXe}
+          >
+            <Input />
+          </Form.Item>
+          <Form.Item
+            name="diaChiNhaXe"
+            label="Địa chỉ"
+            initialValue={nhaXe.diaChiNhaXe}
+          >
+            <Input />
+          </Form.Item>
+          <Form.Item name="sdt" label="Số điện thoại" initialValue={nhaXe.sdt}>
             <Input />
           </Form.Item>
         </Form>
@@ -73,4 +89,4 @@ class FormNoiTra extends Component {
   }
 }
 
-export default FormNoiTra;
+export default FormNhaXe;

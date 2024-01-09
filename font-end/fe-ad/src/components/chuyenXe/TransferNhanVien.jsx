@@ -7,6 +7,7 @@ const TransferNhanVien = (props) => {
   const [selectedKeys, setSelectedKeys] = useState([]);
   const [listDisabled, setListDisabled] = useState([]);
   const { list, chuyen, handleTargetKeysChange } = props;
+  console.log(list);
   const handleChange = (newTargetKeys) => {
     setTargetKeys(newTargetKeys);
     handleTargetKeysChange(newTargetKeys);

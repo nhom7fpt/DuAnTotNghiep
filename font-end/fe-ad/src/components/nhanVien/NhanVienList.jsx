@@ -78,6 +78,13 @@ class NhanVienList extends Component {
             dataIndex="diaChi"
             align="center"
           />
+          <Column
+            title="Nhà Xe"
+            key="nhaXe"
+            dataIndex="nhaXe"
+            align="center"
+            render={(text, record) => <label>{record.nhaXe.tenNhaXe}</label>}
+          ></Column>
 
           <Column
             title="Action"

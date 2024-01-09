@@ -31,5 +31,8 @@ public class NhanVien {
     @JoinColumn(name = "anh_da_luu_id")
     private AnhDaLuu anhDaLuu;
 
+    @ManyToOne
+    @JoinColumn(name = "nha_xe_id")
+    private NhaXe nhaXe;
 
 }

@@ -7,6 +7,7 @@ import fpt.mailinhapp.domain.Xe;
 import fpt.mailinhapp.dto.ChuyenXeDto;
 import fpt.mailinhapp.dto.NhanVienDto;
 import fpt.mailinhapp.exception.BusesException;
+import fpt.mailinhapp.exception.CarsException;
 import fpt.mailinhapp.repository.*;
 import fpt.mailinhapp.respondata.ChuyenTheoTuyen;
 import org.modelmapper.ModelMapper;
@@ -203,4 +204,6 @@ public class ChuyenXeService {
         List<String> data = found.stream().flatMap(i->i.getChoNgoi2().stream()).collect(Collectors.toList());
         return data;
     }
+
+
 }

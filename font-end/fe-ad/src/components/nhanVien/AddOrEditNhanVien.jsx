@@ -12,22 +12,51 @@ import {
   updateNhanVien,
   clearNhanVien,
 } from "../../redux/actions/actionNhanVien";
+import NhaXeService from "../../services/NhaXeService";
 
 class AddOrEditNhanVien extends Component {
+  state = {
+    nhaXe: [],
+  };
   clearform = () => {
     const { navigate } = this.props.router;
     this.props.clearNhanVien();
     navigate("/nhanvien/them");
   };
+  componentDidMount = () => {
+    this.loadData();
+  };
+
+  loadData = async () => {
+    try {
+      const nhaXeService = new NhaXeService();
+
+      const nhaXeRes = await nhaXeService.getNhaXe();
+
+      this.setState({
+        ...this.state,
+
+        nhaXe: nhaXeRes.data,
+      });
+    } catch (error) {
+      console.log(error);
+      toast.error("Error: " + error);
+    }
+  };
 
   goNext = async (values) => {
     const { navigate } = this.props.router;
     const { insterNhanVien, updateNhanVien, nhanVien } = this.props;
+    const { nhaXe } = this.state;
+
+    const nx = nhaXe.find((item) => item.id === values.nhaXe);
+    let newNhanVien = { ...values, nhaXe: nx };
 
     if (nhanVien && nhanVien.soCCCD) {
-      await updateNhanVien(nhanVien.soCCCD, values, navigate);
+      await updateNhanVien(nhanVien.soCCCD, newNhanVien, navigate);
+      console.log(newNhanVien);
     } else {
-      await insterNhanVien(values, navigate);
+      await insterNhanVien(newNhanVien, navigate);
     }
   };
 
@@ -59,6 +88,7 @@ class AddOrEditNhanVien extends Component {
             <Divider></Divider>
             <FormNhanVien
               nhanVien={nhanVien}
+              nhaXe={this.state.nhaXe}
               goNext={this.goNext}
             ></FormNhanVien>
           </Col>

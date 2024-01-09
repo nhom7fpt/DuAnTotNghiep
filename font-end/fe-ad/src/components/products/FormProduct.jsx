@@ -68,7 +68,7 @@ class FormProduct extends Component {
     return e && e.fileList;
   };
   render() {
-    const { Car, loaiXe, thuongHieu } = this.props;
+    const { Car, loaiXe, thuongHieu, nhaXe } = this.props;
 
     const listLoai = loaiXe.map((item) => {
       const loai = {
@@ -81,9 +81,14 @@ class FormProduct extends Component {
       const data = { label: item.tenThuongHieu, value: item.id };
       return data;
     });
+    const listNhaXe = nhaXe.map((item) => {
+      const nha = { label: item.tenNhaXe, value: item.id };
+      return nha;
+    });
 
     const loaiXeId = Car.loaiXe ? Car.loaiXe.id : "";
     const thuongHieuId = Car.thuongHieu ? Car.thuongHieu.id : "";
+    const nhaXeId = Car.nhaXe ? Car.nhaXe.id : "";
 
     return (
       <>
@@ -102,9 +107,9 @@ class FormProduct extends Component {
                 <Select options={listLoai} defaultValue={loaiXeId}></Select>
               </Form.Item>
 
-              {/* <Form.Item label="Nha xe" name="nhaXe">
-                <Select options={listLoai} defaultValue={loaiXeId}></Select>
-              </Form.Item> */}
+              <Form.Item label="Nhà xe" name="nhaXe">
+                <Select options={listNhaXe} defaultValue={nhaXeId}></Select>
+              </Form.Item>
               <Form.Item label="Thương Hiệu" name="thuongHieu">
                 <Select
                   options={listThuongHieu}

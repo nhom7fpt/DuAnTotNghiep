@@ -1,11 +1,14 @@
 package fpt.mailinhapp.service;
 
 import fpt.mailinhapp.domain.AnhDaLuu;
+import fpt.mailinhapp.domain.NhaXe;
 import fpt.mailinhapp.domain.NhanVien;
 import fpt.mailinhapp.dto.NhanVienDto;
+import fpt.mailinhapp.exception.CarsException;
 import fpt.mailinhapp.exception.EmployeeException;
 import fpt.mailinhapp.repository.AnhDaLuuRepository;
 import fpt.mailinhapp.repository.NhanVienRepository;
+import fpt.mailinhapp.repository.XeRepository;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -17,6 +20,9 @@ import java.util.List;
 public class NhanVienService {
     @Autowired
     NhanVienRepository dao;
+
+    @Autowired
+    XeRepository xeDao;
 
     @Autowired
     FileStorageService imgService;
@@ -33,7 +39,11 @@ public class NhanVienService {
         }
 
         NhanVien entity = new NhanVien();
-        BeanUtils.copyProperties(dto, entity);
+        BeanUtils.copyProperties(dto, entity,"nhaXe");
+
+        NhaXe nhaXe = new NhaXe();
+        BeanUtils.copyProperties(dto.getNhaXe(), nhaXe);
+        entity.setNhaXe(nhaXe);
 
         if(dto.getAnhDaLuu() != null){
             AnhDaLuu img = new AnhDaLuu();
@@ -53,7 +63,15 @@ public class NhanVienService {
         var found = dao.findById(id).orElseThrow(()->new EmployeeException("Nhân viên không tồn tại"));
 
 
-        BeanUtils.copyProperties(dto, found, "anhDaLuu");
+        BeanUtils.copyProperties(dto, found, "anhDaLuu", "nhaXe");
+
+        if (dto.getNhaXe() != null){
+            NhaXe nhaXe = new NhaXe();
+            BeanUtils.copyProperties(dto.getNhaXe(), nhaXe);
+            found.setNhaXe(nhaXe);
+        }
+
+        dto.getAnhDaLuu().getTenTep();
 
         if(dto.getAnhDaLuu() != null){
 
@@ -66,7 +84,7 @@ public class NhanVienService {
             }
 
             if (dto.getAnhDaLuu().getId() != found.getAnhDaLuu().getId()){
-                imgService.deleteImage(found.getAnhDaLuu().getTenTep());
+
                 AnhDaLuu img = new AnhDaLuu();
                 BeanUtils.copyProperties(dto.getAnhDaLuu(), img);
                 var imgSave = imgDao.save(img);
@@ -90,5 +108,10 @@ public class NhanVienService {
 
     public List<NhanVien> findAll() {
         return (List<NhanVien>) dao.findAll();
+    }
+
+    public List<NhanVien> findByNhaXe(String id){
+        var xe = xeDao.findById(id).orElseThrow(()-> new CarsException("Xe không tồn tại"));
+        return dao.findByNhaXe_Id(xe.getNhaXe().getId());
     }
 }

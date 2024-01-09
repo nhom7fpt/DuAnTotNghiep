@@ -11,6 +11,7 @@ import ManufuactureService from "../../services/ManufacturerService";
 import { toast } from "react-toastify";
 import { connect } from "react-redux";
 import { insterCar, updateCar, clearCars } from "../../redux/actions/actionCar";
+import NhaXeService from "../../services/NhaXeService";
 
 class AddOrEditProduct extends Component {
   constructor(props) {
@@ -20,6 +21,7 @@ class AddOrEditProduct extends Component {
       Car: {},
       thuongHieu: [],
       loaiXe: [],
+      nhaXe: [],
     };
   }
 
@@ -36,17 +38,19 @@ class AddOrEditProduct extends Component {
   goNext = async (values) => {
     const { navigate } = this.props.router;
     const { insterCar, updateCar, Car } = this.props;
-    const { loaiXe, thuongHieu } = this.state;
+    const { loaiXe, thuongHieu, nhaXe } = this.state;
 
     const lx = loaiXe.find((item) => item.id === values.loaiXe);
     const th = thuongHieu.find((item) => item.id === values.thuongHieu);
+    const nx = nhaXe.find((item) => item.id === values.nhaXe);
 
-    let newCar = { ...values, loaiXe: lx, thuongHieu: th };
+    let newCar = { ...values, loaiXe: lx, thuongHieu: th, nhaXe: nx };
 
     if (Car && Car.bienSoXe) {
       await updateCar(newCar.bienSoXe, newCar, navigate);
     } else {
       await insterCar(newCar, navigate);
+      console.log(newCar);
     }
   };
 
@@ -54,14 +58,17 @@ class AddOrEditProduct extends Component {
     try {
       const loaiXeServer = new LoaiXeServer();
       const thuongHieuService = new ManufuactureService();
-      const loaiXeRes = await loaiXeServer.getLoaiXe();
+      const nhaXeService = new NhaXeService();
 
+      const loaiXeRes = await loaiXeServer.getLoaiXe();
+      const nhaXeRes = await nhaXeService.getNhaXe();
       const dataRes = await thuongHieuService.getManufacturer();
 
       this.setState({
         ...this.state,
         thuongHieu: dataRes.data,
         loaiXe: loaiXeRes.data,
+        nhaXe: nhaXeRes.data,
       });
     } catch (error) {
       console.log(error);
@@ -71,7 +78,7 @@ class AddOrEditProduct extends Component {
 
   render() {
     const { navigate } = this.props.router;
-    const { loaiXe, thuongHieu } = this.state;
+    const { loaiXe, thuongHieu, nhaXe } = this.state;
     const { Car } = this.props;
     return (
       <>
@@ -97,6 +104,7 @@ class AddOrEditProduct extends Component {
               goNext={this.goNext}
               loaiXe={loaiXe}
               thuongHieu={thuongHieu}
+              nhaXe={nhaXe}
             ></FormProduct>
           </Col>
         </Row>

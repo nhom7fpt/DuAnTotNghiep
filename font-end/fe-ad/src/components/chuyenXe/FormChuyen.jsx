@@ -42,6 +42,10 @@ class FormChuyen extends Component {
       });
   };
 
+  handleChange = (value) => {
+    this.props.loadListNhanVien(value);
+  };
+
   componentDidUpdate(prevProps) {
     // Kiểm tra nếu dữ liệu product đã được cập nhật
     if (this.props.Car !== prevProps.Car) {
@@ -74,7 +78,7 @@ class FormChuyen extends Component {
 
     const listXe = xe.map((item) => {
       const loai = {
-        label: item.bienSoXe,
+        label: `${item.bienSoXe} - ${item.nhaXe.tenNhaXe}`,
         value: item.bienSoXe,
       };
       return loai;
@@ -105,7 +109,11 @@ class FormChuyen extends Component {
               </Form.Item>
 
               <Form.Item label="Xe" name="xe">
-                <Select options={listXe} defaultValue={xeId}></Select>
+                <Select
+                  options={listXe}
+                  defaultValue={xeId}
+                  onChange={this.handleChange}
+                ></Select>
               </Form.Item>
               <Form.Item label="Tuyến xe chạy" name="tuyenXe">
                 <Select options={listTuyen} defaultValue={tuyenId}></Select>

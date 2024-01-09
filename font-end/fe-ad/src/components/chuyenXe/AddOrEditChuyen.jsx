@@ -38,6 +38,12 @@ class AddOrEditChuyen extends Component {
 
   componentDidMount = () => {
     this.loadData();
+    const { chuyen } = this.props;
+    console.log(chuyen);
+    chuyen &&
+      chuyen.xe &&
+      chuyen.xe.bienSoXe &&
+      this.loadListNhanVien(this.props.chuyen.xe.bienSoXe);
   };
 
   handleTargetKeysChange = (targetKeys) => {
@@ -66,18 +72,25 @@ class AddOrEditChuyen extends Component {
     this.props.updateChuyen(newChuyen.maChuyen, newChuyen, navigate);
   };
 
+  loadListNhanVien = async (value) => {
+    const nhanVienService = new NhanVienService();
+    const nhanVienRes = await nhanVienService.getNhanVien(value);
+    console.log(nhanVienRes);
+    nhanVienRes &&
+      nhanVienRes.data &&
+      this.setState({ ...this.state, listNhanVien: nhanVienRes.data });
+  };
+
   loadData = async () => {
     try {
       const carServer = new CarService();
       const tuyenService = new TuyenXeService();
-      const nhanVienService = new NhanVienService();
+
       const XeRes = await carServer.getCar();
       const tuyenRes = await tuyenService.getTuyen();
-      const nhanVienRes = await nhanVienService.getNhanVien();
-      console.log(XeRes);
+
       this.setState({
         ...this.state,
-        listNhanVien: nhanVienRes.data,
         xe: XeRes.data,
         tuyen: tuyenRes.data,
       });
@@ -126,7 +139,11 @@ class AddOrEditChuyen extends Component {
             {step === 0 && (
               <>
                 <Divider></Divider>
-                <FormChuyen chuyen={chuyen} goNext={this.goNext}></FormChuyen>
+                <FormChuyen
+                  chuyen={chuyen}
+                  goNext={this.goNext}
+                  loadListNhanVien={this.loadListNhanVien}
+                ></FormChuyen>
               </>
             )}
             {step === 1 && (

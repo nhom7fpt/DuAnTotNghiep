@@ -67,19 +67,7 @@ class ListManufacturer extends Component {
             dataIndex="tgDen"
             align="center"
           ></Column>
-          <Column
-          title="Ngày Đi"
-          key="ngayDi"
-          dataIndex="ngayDi"
-          align="center"
-        ></Column>
 
-        <Column
-          title="Ngày Về"
-          key="ngayVe"
-          dataIndex="ngayVe"
-          align="center"
-        ></Column>
           <Column
             title="Action"
             key="action"

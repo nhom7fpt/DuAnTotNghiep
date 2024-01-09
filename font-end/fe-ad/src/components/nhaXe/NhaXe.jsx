@@ -7,63 +7,57 @@ import { Button, Modal } from "antd";
 import { connect } from "react-redux";
 
 import { ExclamationCircleOutlined } from "@ant-design/icons";
-import FormNoiTra from "./FormNoiTra";
-import ListNoiTra from "./ListNoiTra";
+import FormNhaXe from "./FormNhaXe";
+import ListNhaXe from "./ListNhaXe";
 import {
-  insterNoiTra,
-  getListNoiTra,
+  insterNhaXe,
+  getListNhaXe,
   clearList,
-  updateNoiTra,
-  deleteNoiTra,
-} from "../../redux/actions/actionNoiTra";
+  updateNhaXe,
+  deleteNhaXe,
+} from "../../redux/actions/actionNhaXe";
 
-class NoiTra extends Component {
+class NhaXe extends Component {
   constructor(props) {
     super(props);
 
     this.state = {
       open: false,
-      noiTra: {
-        id: "",
-        noiTra: "",
-      },
+      nhaXe: { id: "", tenNhaXe: "", diaChiNhaXe: "", sdt: "" },
     };
   }
   componentDidMount = () => {
-    this.props.getListNoiTra();
+    this.props.getListNhaXe();
   };
 
   onCreate = (value) => {
-    this.props.insterNoiTra(value);
+    this.props.insterNhaXe(value);
   };
   onEdit = (value) => {
     const { navigate } = this.props.router;
-    this.props.updateNoiTra(value.id, value, navigate);
+    this.props.updateNhaXe(value.id, value, navigate);
   };
   editManu = (data) => {
-    this.setState({ open: true, noiTra: data });
+    this.setState({ open: true, nhaXe: data });
   };
   onCancel = () => {
     this.setState({
       open: false,
-      noiTra: {
-        id: "",
-        noiTra: "",
-      },
+      nhaXe: { id: "", tenNhaXe: "", diaChiNhaXe: "", sdt: "" },
     });
   };
   handleDeleteManu = (data) => {
-    this.props.deleteNoiTra(data.id);
+    this.props.deleteNhaXe(data.id);
     this.setState({
       ...this.state,
-      noiTra: { id: "", noiTra: "" },
+      nhaXe: { id: "", tenNhaXe: "", diaChiNhaXe: "", sdt: "" },
     });
   };
 
   openDeleteModal = (data) => {
-    this.setState({ ...this.state, noiTra: data });
+    this.setState({ ...this.state, nhaXe: data });
 
-    const message = "Bạn muốn xóa nơi trả " + data.noiTra;
+    const message = "Bạn muốn xóa nơi trả " + data.tenNhaXe;
 
     Modal.confirm({
       title: "Confirm",
@@ -78,7 +72,7 @@ class NoiTra extends Component {
   render() {
     const { navigate } = this.props.router;
     const { open } = this.state;
-    const { noiTras } = this.props;
+    const { nhaXes } = this.props;
     return (
       <>
         <HeaderContent title="List ManuFacturer" navigate={navigate} />
@@ -92,15 +86,15 @@ class NoiTra extends Component {
           Thêm mới
         </Button>
 
-        <FormNoiTra
-          noiTra={this.state.noiTra}
+        <FormNhaXe
+          nhaXe={this.state.nhaXe}
           open={open}
           onCreate={this.onCreate}
           onEdit={this.onEdit}
           onCancel={this.onCancel}
         />
-        <ListNoiTra
-          dataSource={noiTras}
+        <ListNhaXe
+          dataSource={nhaXes}
           openDeleteModal={this.openDeleteModal}
           editManu={this.editManu}
         />
@@ -110,15 +104,15 @@ class NoiTra extends Component {
 }
 
 const mapStateToProps = (state) => ({
-  noiTras: state.NoiTraReducer.noiTras,
+  nhaXes: state.NhaXeReducer.nhaXes,
 });
 
 const mapDispatchToProps = {
-  insterNoiTra,
-  getListNoiTra,
+  insterNhaXe,
+  getListNhaXe,
   clearList,
-  updateNoiTra,
-  deleteNoiTra,
+  updateNhaXe,
+  deleteNhaXe,
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(withRouter(NoiTra));
+export default connect(mapStateToProps, mapDispatchToProps)(withRouter(NhaXe));

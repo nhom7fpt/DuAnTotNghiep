@@ -41,6 +41,8 @@ import TuyenXe from "../components/tuyenXe/TuyenXe";
 import AddOrEditTuyen from "../components/tuyenXe/AddOrEditTuyen";
 import ThongKe from "../components/thongKe/doanhThu/ThongKe";
 import SoVe from "../components/thongKe/ve/SoVe";
+import NoiTra from "../components/noiTra/NoiTra";
+import NhaXe from "../components/nhaXe/NhaXe";
 
 const { Header, Sider, Content } = Layout;
 
@@ -90,6 +92,12 @@ const DashboardPage = () => {
                   icon: <MdFormatListBulleted />,
                   label: "Danh sách",
                   onClick: () => navigate("/tuyen"),
+                },
+                {
+                  key: "83",
+                  icon: <MdFormatListBulleted />,
+                  label: "Nơi Trả",
+                  onClick: () => navigate("tuyen/noitra"),
                 },
               ],
             },
@@ -153,6 +161,12 @@ const DashboardPage = () => {
                   icon: <MdFormatListBulleted />,
                   label: "Danh sách",
                   onClick: () => navigate("/xe/danhsach"),
+                },
+                {
+                  key: "73",
+                  icon: <MdFormatListBulleted />,
+                  label: "Nhà xe",
+                  onClick: () => navigate("/xe/nhaxe"),
                 },
               ],
             },
@@ -274,6 +288,7 @@ const DashboardPage = () => {
 
               <Route path="/xe/danhsach" element={<ListProduct />} />
               <Route path="/xe/them" element={<AddOrEditProduct key="p" />} />
+              <Route path="/xe/nhaxe" element={<NhaXe />} />
               <Route
                 path="/xe/capnhat/:id"
                 element={<AddOrEditProduct key="o" />}
@@ -297,6 +312,7 @@ const DashboardPage = () => {
               <Route path="/thuonghieu" element={<Manufacturer />} />
               <Route path="/tuyen" element={<TuyenXe />} />
               <Route path="/tuyen/them" element={<AddOrEditTuyen />} />
+              <Route path="/tuyen/noitra" element={<NoiTra />} />
               <Route path="/thongke/doanhthu" element={<ThongKe />} />
               <Route path="/thongke/ve" element={<SoVe />} />
 

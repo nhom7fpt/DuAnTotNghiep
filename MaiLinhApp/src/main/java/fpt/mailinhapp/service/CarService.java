@@ -1,9 +1,6 @@
 package fpt.mailinhapp.service;
 
-import fpt.mailinhapp.domain.AnhDaLuu;
-import fpt.mailinhapp.domain.LoaiXe;
-import fpt.mailinhapp.domain.ThuongHieu;
-import fpt.mailinhapp.domain.Xe;
+import fpt.mailinhapp.domain.*;
 import fpt.mailinhapp.dto.XeDto;
 import fpt.mailinhapp.exception.CarsException;
 import fpt.mailinhapp.repository.AnhDaLuuRepository;
@@ -35,20 +32,23 @@ public class CarService {
             throw new CarsException("Biển số xe đã tồn tại");
         }
 
-        String[] listIgone = {"anhDaluu", "thuonghieu", "loaiXe"};
+        String[] listIgone = {"anhDaluu", "thuonghieu", "loaiXe", "nhaXe"};
 
 
 
         Xe entity = new Xe();
         LoaiXe loai = new LoaiXe();
         ThuongHieu hieu = new ThuongHieu();
+        NhaXe nx = new NhaXe();
 
         BeanUtils.copyProperties(dto, entity,listIgone);
         BeanUtils.copyProperties(dto.getLoaiXe(),loai);
         BeanUtils.copyProperties(dto.getThuongHieu(),hieu);
+        BeanUtils.copyProperties(dto.getNhaXe(), nx);
 
         entity.setThuongHieu(hieu);
         entity.setLoaiXe(loai);
+        entity.setNhaXe(nx);
 
         if(dto.getAnhDaLuu() != null){
             AnhDaLuu img = new AnhDaLuu();
@@ -70,26 +70,38 @@ public class CarService {
     public XeDto updateCar(String id, XeDto dto){
         var found =  dao.findById(id).orElseThrow(()-> new CarsException("Xe không tồn tại"));
 
+        String[] listIgone = {"anhDaluu", "thuonghieu", "loaiXe", "nhaXe"};
+        BeanUtils.copyProperties(dto, found,listIgone);
 
-
-        BeanUtils.copyProperties(dto, found, "anhDaLuu");
+        if(dto.getNhaXe() != null){
+            NhaXe nx = new NhaXe();
+            BeanUtils.copyProperties(dto.getNhaXe(), nx);
+            found.setNhaXe(nx);
+        }
+        if(dto.getThuongHieu() != null){
+            ThuongHieu th = new ThuongHieu();
+            BeanUtils.copyProperties(dto.getThuongHieu(), th);
+            found.setThuongHieu(th);
+        }
+        if(dto.getLoaiXe() != null){
+            LoaiXe nx = new LoaiXe();
+            BeanUtils.copyProperties(dto.getLoaiXe(), nx);
+            found.setLoaiXe(nx);
+        }
 
         if(dto.getAnhDaLuu() != null){
-
-            if(dto.getAnhDaLuu().getId() != found.getAnhDaLuu().getId()) {
-                imgService.deleteImage(found.getAnhDaLuu().getTenTep());
-                imgDao.delete(found.getAnhDaLuu());
-            }
-            AnhDaLuu img =  new AnhDaLuu();
+            AnhDaLuu img = new AnhDaLuu();
             BeanUtils.copyProperties(dto.getAnhDaLuu(), img);
-            found.setAnhDaLuu(img);
+            var imgSave = imgDao.save(img);
+            found.setAnhDaLuu(imgSave);
+
         }
 
 
 
-         var saveEntity =dao.save(found);
+        dao.save(found);
 
-        BeanUtils.copyProperties(saveEntity, dto);
+
 
         return dto;
     }
