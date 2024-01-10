@@ -23,6 +23,7 @@ import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 @Service
@@ -52,6 +53,15 @@ public class TuyenXeService {
 
         entity.setTgDi(tgDi);
         entity.setTgDen(tgDen);
+
+        if(dto.getNoiTras() != null){
+            var listNoiTra = dto.getNoiTras().stream().map(i->{
+                ModelMapper mapper = new ModelMapper();
+                return mapper.map(i, NoiTra.class);
+            }).collect(Collectors.toList());
+
+            entity.setNoiTras( listNoiTra);
+        }
 
         var saveEntity = dao.save(entity);
 
@@ -86,6 +96,15 @@ public class TuyenXeService {
 
 
             found.setTgDen(tgDen);
+        }
+
+        if(dto.getNoiTras() != null){
+            var listNoiTra = dto.getNoiTras().stream().map(i->{
+                ModelMapper mapper = new ModelMapper();
+                return mapper.map(i, NoiTra.class);
+            }).collect(Collectors.toList());
+
+            found.setNoiTras( listNoiTra);
         }
 
         dao.save(found);

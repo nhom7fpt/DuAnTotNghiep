@@ -43,5 +43,5 @@ public class TuyenXe {
     @JoinTable(name = "tuyen_xe_noiTras",
             joinColumns = @JoinColumn(name = "tuyenXe_ma_Tuyen_xe"),
             inverseJoinColumns = @JoinColumn(name = "noiTras_id"))
-    private Set<NoiTra> noiTras = new LinkedHashSet<>();
+    private List<NoiTra> noiTras = new ArrayList<>();
 }

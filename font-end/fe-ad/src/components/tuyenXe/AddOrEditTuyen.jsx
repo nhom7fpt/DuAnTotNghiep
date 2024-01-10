@@ -41,9 +41,11 @@ class AddOrEditTuyen extends Component {
   };
   saveProduct = () => {
     const { tuyenXe, noiTra, listNoiTra } = this.state;
+    const { navigate } = this.props.router;
     const nhanVienChon = listNoiTra.filter((item) => noiTra.includes(item.id));
     const newdata = { ...tuyenXe, noiTras: nhanVienChon };
-    this.props.insterTuyen(newdata);
+
+    this.props.insterTuyen(newdata, navigate);
   };
 
   updateProduct = () => {

@@ -6,6 +6,7 @@ import lombok.NoArgsConstructor;
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.LinkedHashSet;
+import java.util.List;
 import java.util.Set;
 @Data
 @AllArgsConstructor
@@ -15,7 +16,7 @@ public class TuyenXeDto implements Serializable {
     String diemDi;
     String diemDen;
     String noiDon;
-    private Set<NoiTraDto> noiTras = new LinkedHashSet<>();
+    private List<NoiTraDto> noiTras;
     String  tgDi;
     String tgDen;
     private LocalDate ngayDi;
