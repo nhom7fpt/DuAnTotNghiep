@@ -74,7 +74,7 @@ public class TuyenXeService {
     public TuyenXeDto updateBuses(Integer id,TuyenXeDto dto){
         var found = dao.findById(id).orElseThrow(()-> new BusesException("Tuyến xe không tồn tại"));
 
-        BeanUtils.copyProperties(dto, found, new String[]{"tgDi","tgDen"});
+        BeanUtils.copyProperties(dto, found, new String[]{"tgDi","tgDen", "noiTras"});
 
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSSX");
 
@@ -97,8 +97,8 @@ public class TuyenXeService {
 
             found.setTgDen(tgDen);
         }
-
-        if(dto.getNoiTras() != null){
+        System.out.println(dto.getNoiTras());
+        if(dto.getNoiTras().size() != 0){
             var listNoiTra = dto.getNoiTras().stream().map(i->{
                 ModelMapper mapper = new ModelMapper();
                 return mapper.map(i, NoiTra.class);

@@ -9,16 +9,19 @@ import ThongKeService from "../../../services/ThongKeService";
 const ThongKe = () => {
   const [data, setData] = useState([]);
   const [quy, setQuy] = useState([]);
+  const [tong, setTong] = useState(0);
   useEffect(() => {
     const loadData = async () => {
       const service = new ThongKeService();
       const res = await service.getDoanhThu();
+      console.log(res);
       const resQuy = await service.getDoanhThuQuy();
       if (res && res.data) {
         const list = res.data.map((i) => ({
           type: `Tháng ${i[0]}`,
           sales: i[1],
         }));
+
         setData(list);
       }
 

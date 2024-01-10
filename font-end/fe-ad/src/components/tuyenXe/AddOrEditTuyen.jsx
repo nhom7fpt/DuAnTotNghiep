@@ -53,6 +53,7 @@ class AddOrEditTuyen extends Component {
     const { tuyenXe, noiTra, listNoiTra } = this.state;
     const nhanVienChon = listNoiTra.filter((item) => noiTra.includes(item.id));
     const newdata = { ...tuyenXe, noiTras: nhanVienChon };
+    console.log(newdata);
     this.props.updateTuyen(tuyenXe.maTuyenXe, newdata, navigate);
   };
 
@@ -94,6 +95,14 @@ class AddOrEditTuyen extends Component {
           <Col md={24}>
             {step === 0 && (
               <>
+                <Button
+                  type="primary"
+                  onClick={() => {
+                    this.props.clearTuyen();
+                  }}
+                >
+                  Mới
+                </Button>
                 <Divider></Divider>
                 <FormTuyenXe
                   tuyenXe={tuyenXe}

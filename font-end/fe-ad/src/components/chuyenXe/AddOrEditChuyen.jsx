@@ -74,7 +74,7 @@ class AddOrEditChuyen extends Component {
 
   loadListNhanVien = async (value) => {
     const nhanVienService = new NhanVienService();
-    const nhanVienRes = await nhanVienService.getNhanVien(value);
+    const nhanVienRes = await nhanVienService.getNhanVienNhaXe(value);
     console.log(nhanVienRes);
     nhanVienRes &&
       nhanVienRes.data &&
@@ -138,6 +138,15 @@ class AddOrEditChuyen extends Component {
           <Col md={24}>
             {step === 0 && (
               <>
+                <Button
+                  type="primary"
+                  onClick={() => {
+                    this.props.clearChuyen();
+                    navigate("/chuyen/them");
+                  }}
+                >
+                  Mới
+                </Button>
                 <Divider></Divider>
                 <FormChuyen
                   chuyen={chuyen}

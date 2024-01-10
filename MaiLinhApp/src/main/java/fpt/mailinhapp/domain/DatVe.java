@@ -39,6 +39,10 @@ public class DatVe {
     @JoinColumn(name = "chuyen_xe_ma_chuyen")
     private ChuyenXe chuyenXe;
 
+    @ManyToOne
+    @JoinColumn(name = "chuyen_xe_ma_chuyen2")
+    private ChuyenXe chuyenXe2;
+
     @OneToOne(orphanRemoval = true)
     @JoinColumn(name = "info_id")
     private Info info;

@@ -183,6 +183,6 @@ export const ChuyenEditData = (chuyen, navigate) => (dispatch) => {
 export const clearChuyen = () => async (dispatch) => {
   dispatch({
     type: CHUYEN_SET,
-    payload: { maChuyen: "", soKhach: "", nhanVien: [], tuyenXe: "", xe: "" },
+    payload: {},
   });
 };

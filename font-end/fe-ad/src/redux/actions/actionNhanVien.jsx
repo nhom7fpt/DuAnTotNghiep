@@ -127,6 +127,40 @@ export const getListNhanVien = () => async (dispatch) => {
   });
 };
 
+export const getListNhanVienNhaXe = (id) => async (dispatch) => {
+  try {
+    dispatch({
+      type: COMMON_LOADING_SET,
+      payload: true,
+    });
+    const res = await service.getNhanVien(id);
+
+    if (res && res.status === 200) {
+      dispatch({
+        type: NHANVIENS_SET,
+        payload: res.data,
+      });
+      dispatch({
+        type: COMMON_LOADING_SET,
+        payload: false,
+      });
+    }
+  } catch (error) {
+    dispatch({
+      type: COMMON_LOADING_SET,
+      payload: false,
+    });
+    console.log(error.message);
+    toast.error(
+      error.response.data ? error.response.data.message : error.message
+    );
+  }
+  dispatch({
+    type: COMMON_LOADING_SET,
+    payload: true,
+  });
+};
+
 export const nhanVienEditData = (nhanVien, navigate) => (dispatch) => {
   dispatch({
     type: NHANVIEN_SET,

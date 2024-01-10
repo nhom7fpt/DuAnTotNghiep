@@ -97,7 +97,6 @@ class TuyenXe extends Component {
 
   render() {
     const { navigate } = this.props.router;
-    const { open } = this.state;
     const { tuyenXes } = this.props;
     return (
       <>
@@ -106,7 +105,7 @@ class TuyenXe extends Component {
         <Button
           type="primary"
           onClick={() => {
-            this.setState({ ...this.state, open: true });
+            navigate("/tuyen/them");
           }}
         >
           Thêm tuyến

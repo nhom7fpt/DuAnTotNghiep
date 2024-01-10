@@ -6,8 +6,12 @@ export default class NhanVienService {
     return await axios.post(API_EMP, nhanVien);
   };
 
-  getNhanVien = async (id) => {
+  getNhanVienNhaXe = async (id) => {
     return await axios.get(API_EMP + "/nhaxe/" + id);
+  };
+
+  getNhanVien = async (id) => {
+    return await axios.get(API_EMP);
   };
 
   deleteNhanVien = async (id) => {
