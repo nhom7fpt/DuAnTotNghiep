@@ -20,6 +20,8 @@ import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.*;
 
 
@@ -49,6 +51,8 @@ public class PayController {
         List<String> choNgoi = (List<String>) requestData.get("choNgoi");
         List<String> choNgoi2 = (List<String>) requestData.get("choNgoi2");
 
+
+
         Long tien = tongTienInteger != null ? Long.valueOf(tongTienInteger) : null;
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd"); // Specify the date format
         Date ngayDi = dateFormat.parse((String) requestData.get("ngayDi"));
@@ -59,7 +63,7 @@ public class PayController {
         }
 
         if(requestData.get("chuyenXeVe") != null){
-            ChuyenXeDto cxv = mapper.map(requestData.get("chuyenXe"), ChuyenXeDto.class);
+            ChuyenXeDto cxv = mapper.map(requestData.get("chuyenXeVe"), ChuyenXeDto.class);
             trungGian.setChuyenXeVe(cxv);
         }
 
@@ -156,9 +160,9 @@ public class PayController {
                           Model model) throws ParseException {
         DatVeDto trunggian = datVeHolder.getTrunggian();
 
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHHmmss");
-        sdf.setTimeZone(TimeZone.getTimeZone("GMT+7"));
-        Date datePay = sdf.parse(payDate);
+        DateTimeFormatter sdf = DateTimeFormatter.ofPattern("yyyyMMddHHmmss");
+
+        LocalDateTime datePay = LocalDateTime.parse(payDate, sdf);
         ThanhToanDto dto = new ThanhToanDto();
 
         dto.setId(transactionNo);

@@ -37,7 +37,7 @@ public class DatVe {
 
     @ElementCollection
     @Column(name = "cho_ngoi", length = 5)
-    @CollectionTable(name = "dat_ve_choNgoi", joinColumns = @JoinColumn(name = "owner_id"))
+    @CollectionTable(name = "dat_ve_choNgoi2", joinColumns = @JoinColumn(name = "owner_id"))
     private List<String> choNgoi2 = new ArrayList<>();
 
     @ManyToOne

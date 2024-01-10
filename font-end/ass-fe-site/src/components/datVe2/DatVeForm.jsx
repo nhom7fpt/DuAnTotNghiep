@@ -32,6 +32,8 @@ const DatVeForm = (props) => {
   const [custom, setCustom] = useState(props.custom || "");
   const [chuyenTab1, setChuyenTab1] = useState(props.chuyenTab1);
   const [chuyenTab2, setChuyenTab2] = useState(props.chuyenTab2);
+  console.log(chuyenTab1, props.chuyenTab1);
+  console.log(chuyenTab2, props.chuyenTab2);
   const user = localStorage.getItem("username");
   const { navigate } = props.router;
   const [tongTien, setTongTien] = useState(0);

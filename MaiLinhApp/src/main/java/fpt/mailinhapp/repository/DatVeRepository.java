@@ -18,9 +18,11 @@ public interface DatVeRepository extends JpaRepository<DatVe, Long> {
 
     List<DatVe> findByChuyenXeVe_MaChuyenAndNgayVe(Long maChuyen, Date ngayVe);
 
+    DatVe findByThanhToan_Id(String id);
 
 
-    Optional<DatVe> findByThanhToan_Id(String thanhToanId);
+
+
 
     @Query("select month(dv.ngayDatVe) as thang, sum(dv.tongTien) as tongTien from DatVe dv where year(dv.ngayDatVe) = :nam group by month(dv.ngayDatVe), year(dv.ngayDatVe) order by month(dv.ngayDatVe), year(dv.ngayDatVe)" )
     List<Object[]> thongKeTheoThang(@Param("nam") int nam);

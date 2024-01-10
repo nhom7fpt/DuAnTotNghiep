@@ -61,4 +61,10 @@ public class LichsudatveController {
             return new ResponseEntity<>("Đã xảy ra lỗi không mong muốn", HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity deleteVe(@PathVariable Long id){
+        veXeService.deleteVe(id);
+        return new ResponseEntity<>("Hủy vé thành công", HttpStatus.OK);
+    }
 }

@@ -34,6 +34,8 @@ function SeatSelection2(props) {
   const diemDen = queryParams.get("endLocation2");
   const onClose = () => {
     setIsSeatModalOpen(false);
+    setSelectedChuyenTab1(null);
+    setSelectedChuyenTab2(null);
   };
 
   const areBothChuyensSelected = () => {

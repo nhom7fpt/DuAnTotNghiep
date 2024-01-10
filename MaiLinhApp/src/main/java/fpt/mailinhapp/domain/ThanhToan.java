@@ -5,6 +5,7 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.time.LocalDateTime;
 import java.util.Date;
 
 @Getter
@@ -25,14 +26,13 @@ public class ThanhToan {
     @Column(name = "order_info")
     private String orderInfo;
 
-    @Temporal(TemporalType.DATE)
-    @JsonFormat(pattern = "DD-MM-YYYYY")
-    @Column(name = "pay_date")
-    private Date payDate;
+
 
     @Column(name = "trang_thai")
     private Boolean status;
 
-
+    @JsonFormat(pattern = "DD-MM-YYYYY")
+    @Column(name = "pay_date")
+    private LocalDateTime payDate;
 
 }

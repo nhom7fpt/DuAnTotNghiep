@@ -6,6 +6,7 @@ import lombok.NoArgsConstructor;
 import lombok.Value;
 
 import java.io.Serializable;
+import java.time.LocalDateTime;
 import java.util.Date;
 
 /**
@@ -19,7 +20,7 @@ public class ThanhToanDto implements Serializable {
     private Long amount;
     private String bank;
     private String orderInfo;
-    private Date payDate;
+    private LocalDateTime payDate;
     private Boolean status;
 
 }

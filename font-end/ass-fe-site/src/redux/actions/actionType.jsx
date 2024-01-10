@@ -13,6 +13,7 @@ export const LISTCHUYEN2 = "LISTCHUYEN2";
 export const PAY_SET = "PAY_SET";
 
 export const ORDER_SET = "ORDER_SET";
+export const ORDER_DEL = "ORDER_DEL";
 
 export const LISTTUYEN_SET = "LISTTUYEN";
 

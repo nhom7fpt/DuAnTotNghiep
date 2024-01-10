@@ -10,10 +10,15 @@ import fpt.mailinhapp.repository.ThanhToanRepository;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.Duration;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -37,6 +42,10 @@ public class VeXeService {
         BeanUtils.copyProperties(dto.getInfo(), info);
         BeanUtils.copyProperties(dto.getThanhToan(),pay);
         ChuyenXe cx = mapper.map(dto.getChuyenXe(), ChuyenXe.class);
+        if(dto.getChuyenXeVe() != null){
+            ChuyenXe cxv = mapper.map(dto.getChuyenXeVe(), ChuyenXe.class);
+            entity.setChuyenXeVe(cxv);
+        }
 
         entity.setChuyenXe(cx);
         entity.setThanhToan(pay);
@@ -150,11 +159,11 @@ public class VeXeService {
     }
     @Transactional(rollbackFor = Exception.class)
     public DatVeDto getDatVeByThanhToanId(String thanhToanId) {
-        Optional<DatVe> datVeOptional = dao.findByThanhToan_Id(thanhToanId);
+        DatVe datVeOptional = dao.findByThanhToan_Id(thanhToanId);
 
-        if (datVeOptional.isPresent()) {
-            DatVe datVe = datVeOptional.get();
-            return convertToDto(datVe);
+        if (datVeOptional != null) {
+            ModelMapper mapper = new ModelMapper();
+          return mapper.map(datVeOptional, DatVeDto.class);
         } else {
             throw new TicketsException("Không tìm thấy vé liên quan đến thanh toán với mã: " + thanhToanId);
         }
@@ -164,6 +173,21 @@ public class VeXeService {
         var found = dao.findById(id).orElseThrow(()-> new TicketsException("Mã vé không tồn tại"));
         ModelMapper mapper = new ModelMapper();
         return mapper.map(found,DatVeDto.class);
+    }
+
+    public void deleteVe(Long id) {
+        var found = dao.findById(id).orElseThrow(() -> new TicketsException("Mã vé không tồn tại"));
+        var time = found.getThanhToan().getPayDate();
+        LocalDateTime now = LocalDateTime.now();
+
+
+        Duration duration = Duration.between(time, now);
+
+        if (duration.toMinutes() <= 60) {
+            dao.delete(found);
+        }else{
+              throw new TicketsException("Đã quá thời gian hủy vé");
+        }
     }
 
 }
