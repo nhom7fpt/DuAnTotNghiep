@@ -35,10 +35,12 @@ class NoiTra extends Component {
 
   onCreate = (value) => {
     this.props.insterNoiTra(value);
+    this.setState({ ...this.state, open: false });
   };
   onEdit = (value) => {
     const { navigate } = this.props.router;
     this.props.updateNoiTra(value.id, value, navigate);
+    this.setState({ ...this.state, open: false });
   };
   editManu = (data) => {
     this.setState({ open: true, noiTra: data });

@@ -101,18 +101,18 @@ const DatVeForm = (props) => {
 
     console.log("Dữ liệu đi:", newData);
 
-    const service = new PayService();
-    const res = await service.creatpay(newData);
+    // const service = new PayService();
+    // const res = await service.creatpay(newData);
 
-    try {
-      if (res && res.data) {
-        window.location.href = res.data;
-      } else {
-        console.error("URL thanh toán không khả dụng!");
-      }
-    } catch (error) {
-      console.error("Lỗi khi gọi loadDataPay:", error);
-    }
+    // try {
+    //   if (res && res.data) {
+    //     window.location.href = res.data;
+    //   } else {
+    //     console.error("URL thanh toán không khả dụng!");
+    //   }
+    // } catch (error) {
+    //   console.error("Lỗi khi gọi loadDataPay:", error);
+    // }
   };
 
   useEffect(() => {

@@ -25,6 +25,7 @@ public class DatVeDto implements Serializable {
     List<String> choNgoi;
     List<String> choNgoi2;
     ChuyenXeDto chuyenXe;
+    ChuyenXeDto chuyenXeVe;
     InfoDto info;
     Date ngayDatVe;
     @JsonFormat(pattern = "yyyy-MM-dd")

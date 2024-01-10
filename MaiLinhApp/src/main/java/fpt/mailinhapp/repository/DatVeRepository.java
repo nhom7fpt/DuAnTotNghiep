@@ -15,7 +15,8 @@ public interface DatVeRepository extends JpaRepository<DatVe, Long> {
 
     List<DatVe> findByChuyenXe_MaChuyenAndNgayDi(Long maChuyen, Date ngayDi);
 
-    List<DatVe> findByChuyenXe_MaChuyenAndNgayVe(Long maChuyen, Date ngayVe);
+
+    List<DatVe> findByChuyenXeVe_MaChuyenAndNgayVe(Long maChuyen, Date ngayVe);
 
 
 

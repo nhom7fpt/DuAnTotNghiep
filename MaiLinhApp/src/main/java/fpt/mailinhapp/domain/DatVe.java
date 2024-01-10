@@ -35,13 +35,18 @@ public class DatVe {
     @CollectionTable(name = "dat_ve_choNgoi", joinColumns = @JoinColumn(name = "owner_id"))
     private List<String> choNgoi = new ArrayList<>();
 
+    @ElementCollection
+    @Column(name = "cho_ngoi", length = 5)
+    @CollectionTable(name = "dat_ve_choNgoi", joinColumns = @JoinColumn(name = "owner_id"))
+    private List<String> choNgoi2 = new ArrayList<>();
+
     @ManyToOne
     @JoinColumn(name = "chuyen_xe_ma_chuyen")
     private ChuyenXe chuyenXe;
 
     @ManyToOne
     @JoinColumn(name = "chuyen_xe_ma_chuyen2")
-    private ChuyenXe chuyenXe2;
+    private ChuyenXe chuyenXeVe;
 
     @OneToOne(orphanRemoval = true)
     @JoinColumn(name = "info_id")
@@ -71,10 +76,7 @@ public class DatVe {
     @JoinColumn(name = "thanh_toan_id")
     private ThanhToan thanhToan;
 
-    @ElementCollection
-    @Column(name = "cho_ngoi_2")
-    @CollectionTable(name = "dat_ve_choNgoi2", joinColumns = @JoinColumn(name = "owner_id"))
-    private List<String> choNgoi2 = new ArrayList<>();
+
 
     @PrePersist
     public void prePersist() {

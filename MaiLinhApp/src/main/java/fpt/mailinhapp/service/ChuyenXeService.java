@@ -191,19 +191,21 @@ public class ChuyenXeService {
     }
 
 
-    public List<String> getCho(Long id, Date ngayDi){
+    public List<String> getCho(Long idChuyen, Date ngayDi){
 
-        var found = datVeDao.findByChuyenXe_MaChuyenAndNgayDi(id,ngayDi);
+        var found = datVeDao.findByChuyenXe_MaChuyenAndNgayDi(idChuyen,ngayDi);
         List<String> data = found.stream().flatMap(i->i.getChoNgoi().stream()).collect(Collectors.toList());
         return data;
     }
 
-    public List<String> getCho2(Long id, Date ngayVe){
+    public List<String> getCho2(Long idChuyen, Date ngayVe){
 
-        var found = datVeDao.findByChuyenXe_MaChuyenAndNgayVe(id, ngayVe);
+        var found = datVeDao.findByChuyenXeVe_MaChuyenAndNgayVe(idChuyen, ngayVe);
         List<String> data = found.stream().flatMap(i->i.getChoNgoi2().stream()).collect(Collectors.toList());
         return data;
     }
+
+
 
 
 }

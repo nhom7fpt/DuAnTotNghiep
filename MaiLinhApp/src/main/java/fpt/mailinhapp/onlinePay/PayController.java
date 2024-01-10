@@ -42,7 +42,6 @@ public class PayController {
         DatVeDto trungGian = new DatVeDto();
         ModelMapper mapper = new ModelMapper();
         ChuyenXeDto cx = mapper.map(requestData.get("chuyenXe"), ChuyenXeDto.class);
-
         String nt = String.valueOf(requestData.get("noiTra"));
         InfoDto info = mapper.map(requestData.get("info"), InfoDto.class);
         Integer soLuong = (Integer) requestData.get("soLuong");
@@ -57,6 +56,11 @@ public class PayController {
         if(requestData.get("ngayVe") != null){
             Date ngayVe = dateFormat.parse((String) requestData.get("ngayVe"));
             trungGian.setNgayVe(ngayVe);
+        }
+
+        if(requestData.get("chuyenXeVe") != null){
+            ChuyenXeDto cxv = mapper.map(requestData.get("chuyenXe"), ChuyenXeDto.class);
+            trungGian.setChuyenXeVe(cxv);
         }
 
 

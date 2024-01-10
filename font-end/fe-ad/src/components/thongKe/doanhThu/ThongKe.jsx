@@ -21,8 +21,11 @@ const ThongKe = () => {
           type: `Tháng ${i[0]}`,
           sales: i[1],
         }));
+        const listTong = res.data.map((i) => i[1]);
+        const tongTien = listTong.reduce((acc, current) => acc + current, 0);
 
         setData(list);
+        setTong(tongTien);
       }
 
       resQuy && resQuy.data && setQuy(resQuy.data);
@@ -35,7 +38,7 @@ const ThongKe = () => {
     <>
       <Row>
         <Col md={24}>
-          <CarTong />
+          <CarTong tong={tong} />
         </Col>
       </Row>
       <Row>
