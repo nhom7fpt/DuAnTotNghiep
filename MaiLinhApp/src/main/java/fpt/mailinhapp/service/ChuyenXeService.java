@@ -105,7 +105,7 @@ public class ChuyenXeService {
         List<ChuyenXe> listEntity = dao.findByTuyenXe_DiemDiLikeAndTuyenXe_DiemDenLike(diemDi, diemDen);
         System.out.println(check);
         if(check){
-        LocalTime now = LocalTime.now().plusMinutes(60).truncatedTo(ChronoUnit.SECONDS);
+        LocalTime now = LocalTime.now().plusMinutes(30).truncatedTo(ChronoUnit.SECONDS);
         System.out.println(now);
         List<ChuyenXe> listData = listEntity.stream()
                 .filter(chuyenXe -> parseTime(chuyenXe.getTuyenXe().getTgDi())

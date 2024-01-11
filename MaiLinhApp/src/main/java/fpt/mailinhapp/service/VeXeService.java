@@ -194,31 +194,14 @@ public class VeXeService {
         Duration duration = Duration.between(time, now);
         Duration duration1 = Duration.between(tgDi, now);
 
-        if (duration.toMinutes() <= 60 && duration1.toMinutes() <15) {
+        if (duration.toMinutes() <= 60 && duration1.toMinutes() < 15) {
             dao.delete(found);
             sendDeleteSuccessEmail(found);
         }else{
             throw new TicketsException("Đã quá thời gian hủy vé");
         }
     }
-    public void deleteVe(Long id) {
-        var found = dao.findById(id).orElseThrow(() -> new TicketsException("Mã vé không tồn tại"));
-        var time = found.getThanhToan().getPayDate();
-        LocalDateTime now = LocalDateTime.now();
 
-        var tgDi = found.getChuyenXe().getTuyenXe().getTgDi();
-
-
-        Duration duration = Duration.between(time, now);
-        Duration duration1 = Duration.between(tgDi, now);
-
-        if (duration.toMinutes() <= 60 && duration1.toMinutes() >15) {
-            dao.delete(found);
-            sendDeleteSuccessEmail(found);
-        }else{
-            throw new TicketsException("Đã quá thời gian hủy vé");
-        }
-    }
     private void sendDeleteSuccessEmail(DatVe datVe) {
         try {
             ThanhToan thanhToan = datVe.getThanhToan();

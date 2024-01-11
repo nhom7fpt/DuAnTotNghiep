@@ -5,28 +5,32 @@ import Diamdiem from './diadiem.js';
 import Huongdan from './huongdandvtc.js';
 import Titledvtc from './titledvtc.js';
 import { useParams } from 'react-router-dom';
-import { gethistory } from '../../redux/actions/actionOrderhistory';
 import { connect } from 'react-redux';
 import withRouter from '../../helpers/withRouter.js';
 import OrderhistoryService from '../../services/OrderhistoryService.jsx';
 import SearchService from '../../services/SearchService.jsx';
 import { toast } from "react-toastify";
-import { Modal, Button, message } from 'antd';
+import { Modal, Button, message, Checkbox, Radio } from 'antd';
+
 function Datvethanhcong(props) {
   const { id } = useParams();
   const { listData } = props;
   const [data2, setData2] = useState(null);
   const [tuyenXeInfo, setTuyenXeInfo] = useState('');
   const [huyVeStatus, setHuyVeStatus] = useState(false);
+  const [isChecked, setIsChecked] = useState(false);
+  const [modalVisible, setModalVisible] = useState(false);
+
+  
   const { navigate } = props.router;
+  
   useEffect(() => {
     const fetchData = async () => {
-
       try {
         const service = new OrderhistoryService();
         const res = await service.ByMaThanhToan(id);
-       
         res && res.data && setData2(res.data);
+
         const service1 = new SearchService();
         const tuyenRes = await service1.loadDataTuyen();
         const listTuyen = tuyenRes.data;
@@ -53,7 +57,6 @@ function Datvethanhcong(props) {
   };
 
   const handleHuyVe = async () => {
-   
     try {
       const service = new OrderhistoryService();
       await service.HuyVe(id);
@@ -69,9 +72,8 @@ function Datvethanhcong(props) {
         progress: undefined,
         theme: "colored",
       });
-    
+
       navigate("/");
-     
     } catch (error) {
       if (error.response && error.response.status === 400) {
         const errorMessage = error.response.data || "";
@@ -86,33 +88,32 @@ function Datvethanhcong(props) {
           theme: "colored",
           backgroundColor: "#ff0000",
         });
-      } 
-    
+      }
     }
-    
   };
 
   const showConfirm = () => {
-    Modal.confirm({
-      title: 'Chính sách hủy vé',
-      content: (
-        <div>
-          <p>Quý khách vui lòng lưu ý chính sách hủy vé của chúng tôi:</p>
-          <p>- Thời gian hủy vé: Trước 15 phút trước thời điểm khởi hành và sau khi 60 phút lúc đặt vé.</p>
-          <p>- Phí hủy vé: 10% giá vé.</p>
-          <p>Bạn có chắc chắn muốn hủy vé?</p>
-        </div>
-      ),
-      okText: 'Hủy vé',
-      cancelText: 'Hủy',
-      onOk: () => handleHuyVe(),
-    });
+    setModalVisible(true);  // Mở modal khi checkbox được chọn
   };
 
+  const handleModalOk = () => {
+    if (isChecked) {
+      handleHuyVe();
+      setModalVisible(false);
+    } else {
+      message.warning('Bạn phải đồng ý với điều khoản chính sách hủy vé.');
+    }
+  };
   
-
-  console.log("dataa222" ,data2);
-
+  const handleModalCancel = () => {
+    setModalVisible(false);
+  };
+  
+ 
+  const isOkButtonDisabled = () => {
+  
+    return !isChecked;
+  };
   return (
     <div className='pagedatvethanhcong'>
       <Titledvtc />
@@ -227,13 +228,36 @@ function Datvethanhcong(props) {
             </section>
             <section className="info-row-dvtc">
             <div>Hủy Vé</div>
-            <Button type="danger" onClick={showConfirm}>
+            <Button type="danger" style={{marginTop:'20px'}} onClick={showConfirm}>
             Hủy vé
           </Button>
+          
           </section>
+          
           </div>
         </article>
       </div>
+      <Modal
+      title="Chính sách hủy vé"
+      visible={modalVisible}
+      onOk={handleModalOk}
+      onCancel={handleModalCancel}
+      okButtonProps={{ disabled: isOkButtonDisabled() }} 
+    >
+      <div>
+        <p>Quý khách vui lòng lưu ý chính sách hủy vé của chúng tôi:</p>
+        <p>- Thời gian hủy vé: Trước 15 phút trước thời điểm khởi hành và sau khi 60 phút lúc đặt vé.</p>
+        <p>- Phí hủy vé: 10% giá vé.</p>
+        <p>Bạn có chắc chắn muốn hủy vé?</p>
+        <Radio
+          onClick={() => setIsChecked(!isChecked)}
+          checked={isChecked}
+        >
+          Tôi đã đọc và đồng ý với điều khoản chính sách hủy vé
+        </Radio>
+      </div>
+    </Modal>
+  
     </div>
 
   );
@@ -241,5 +265,4 @@ function Datvethanhcong(props) {
 
 
 export default (withRouter(Datvethanhcong));
-
 
