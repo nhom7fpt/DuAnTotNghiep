@@ -3,6 +3,7 @@ package fpt.mailinhapp.onlinePay;
 import fpt.mailinhapp.config.DatVeHolder;
 import fpt.mailinhapp.dto.*;
 
+import fpt.mailinhapp.service.ChuyenXeService;
 import fpt.mailinhapp.service.EmailService;
 import org.springframework.ui.Model;
 import fpt.mailinhapp.service.PayMentService;
@@ -23,6 +24,8 @@ import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 
 @Controller
@@ -35,6 +38,8 @@ public class PayController {
     PayMentService service;
     @Autowired
     VeXeService veXeService;
+    @Autowired
+    ChuyenXeService chuyenXeService;
     @Autowired
     private DatVeHolder datVeHolder;
 
@@ -53,8 +58,9 @@ public class PayController {
 
 
 
+
         Long tien = tongTienInteger != null ? Long.valueOf(tongTienInteger) : null;
-        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd"); // Specify the date format
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
         Date ngayDi = dateFormat.parse((String) requestData.get("ngayDi"));
         trungGian.setNgayDi(ngayDi);
         if(requestData.get("ngayVe") != null){
@@ -138,6 +144,24 @@ public class PayController {
                 }
             }
         }
+
+        var list1 = chuyenXeService.getCho(cx.getMaChuyen(), ngayDi);
+        var list2 = chuyenXeService.getCho2(cx.getMaChuyen(), ngayDi);
+        var listTest = Stream.concat(list1.stream(), list2.stream()).collect(Collectors.toList());
+        boolean check = choNgoi.stream().anyMatch(listTest::contains);
+        if(check){
+            return new ResponseEntity<>("http://localhost:3000/datvethatbai", HttpStatus.OK);
+        }
+        if(trungGian.getChuyenXeVe() != null){
+            var list3 = chuyenXeService.getCho(trungGian.getChuyenXeVe().getMaChuyen(), trungGian.getNgayVe());
+            var list4 = chuyenXeService.getCho2(trungGian.getChuyenXeVe().getMaChuyen(), trungGian.getNgayVe());
+            var listCheck = Stream.concat(list3.stream(), list4.stream()).collect(Collectors.toList());
+            boolean check2 = choNgoi2.stream().anyMatch(listCheck::contains);
+            if(check){
+                return new ResponseEntity<>("http://localhost:3000/datvethatbai", HttpStatus.OK);
+            }
+        }
+
         String queryUrl = query.toString();
         String vnp_SecureHash = Config.hmacSHA512(Config.secretKey, hashData.toString());
         queryUrl += "&vnp_SecureHash=" + vnp_SecureHash;

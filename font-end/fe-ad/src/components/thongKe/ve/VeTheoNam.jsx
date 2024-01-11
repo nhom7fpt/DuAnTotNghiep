@@ -27,7 +27,7 @@ const VeTheoNam = (props) => {
         alias: "Số tiền",
       },
       sales: {
-        alias: "Doanh thu",
+        alias: "Số Vé",
       },
     },
   };

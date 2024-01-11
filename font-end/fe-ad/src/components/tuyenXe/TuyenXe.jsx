@@ -28,6 +28,7 @@ class TuyenXe extends Component {
         noiDon: "",
         diemDen: "",
         diemDi: "",
+      
       },
     };
   }
@@ -56,8 +57,7 @@ class TuyenXe extends Component {
         noiDon: "",
         diemDen: "",
         diemDi: "",
-        ngayDi: "",
-        ngayVe: "",
+     
       },
     });
   };
@@ -74,8 +74,6 @@ class TuyenXe extends Component {
         noiDon: "",
         diemDen: "",
         diemDi: "",
-        ngayDi: "",
-        ngayVe: "",
       },
     });
   };

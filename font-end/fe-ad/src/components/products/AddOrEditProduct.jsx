@@ -19,7 +19,7 @@ class AddOrEditProduct extends Component {
 
     this.state = {
       Car: {},
-      thuongHieu: [],
+   
       loaiXe: [],
       nhaXe: [],
     };
@@ -38,13 +38,13 @@ class AddOrEditProduct extends Component {
   goNext = async (values) => {
     const { navigate } = this.props.router;
     const { insterCar, updateCar, Car } = this.props;
-    const { loaiXe, thuongHieu, nhaXe } = this.state;
+    const { loaiXe, nhaXe } = this.state;
 
     const lx = loaiXe.find((item) => item.id === values.loaiXe);
-    const th = thuongHieu.find((item) => item.id === values.thuongHieu);
+ 
     const nx = nhaXe.find((item) => item.id === values.nhaXe);
 
-    let newCar = { ...values, loaiXe: lx, thuongHieu: th, nhaXe: nx };
+    let newCar = { ...values, loaiXe: lx,  nhaXe: nx };
 
     if (Car && Car.bienSoXe) {
       await updateCar(newCar.bienSoXe, newCar, navigate);
@@ -57,16 +57,14 @@ class AddOrEditProduct extends Component {
   loadData = async () => {
     try {
       const loaiXeServer = new LoaiXeServer();
-      const thuongHieuService = new ManufuactureService();
       const nhaXeService = new NhaXeService();
 
       const loaiXeRes = await loaiXeServer.getLoaiXe();
       const nhaXeRes = await nhaXeService.getNhaXe();
-      const dataRes = await thuongHieuService.getManufacturer();
-
+     
       this.setState({
         ...this.state,
-        thuongHieu: dataRes.data,
+       
         loaiXe: loaiXeRes.data,
         nhaXe: nhaXeRes.data,
       });
@@ -78,7 +76,7 @@ class AddOrEditProduct extends Component {
 
   render() {
     const { navigate } = this.props.router;
-    const { loaiXe, thuongHieu, nhaXe } = this.state;
+    const { loaiXe, nhaXe } = this.state;
     const { Car } = this.props;
     return (
       <>
@@ -103,7 +101,6 @@ class AddOrEditProduct extends Component {
               Car={Car}
               goNext={this.goNext}
               loaiXe={loaiXe}
-              thuongHieu={thuongHieu}
               nhaXe={nhaXe}
             ></FormProduct>
           </Col>

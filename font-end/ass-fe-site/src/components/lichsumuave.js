@@ -10,6 +10,7 @@ import { orderhistory, deleteOrder } from "../redux/actions/actionOrderhistory";
 import withRouter from "../helpers/withRouter";
 import Column from "antd/lib/table/Column";
 import { BiEdit, BiSolidTrash } from "react-icons/bi";
+import { toast } from "react-toastify";
 
 function Lichsimuave(props) {
   const [loading, setLoading] = useState(true);
@@ -18,13 +19,79 @@ function Lichsimuave(props) {
   const [currentPage, setCurrentPage] = useState(1);
   const [pageSize, setPageSize] = useState(5);
   const user = localStorage.getItem("username");
+  const { navigate } = props.router;
   const handleDateChange = (date) => {
     setSelectedDate(date);
   };
 
-  const onConfirm = (dataXoa) => {
-    props.deleteOrder(dataXoa.maVe);
+  const onConfirm = async (dataXoa) => {
+    try {
+      const service = new OrderhistoryService();
+      await service.HuyVe(dataXoa.thanhToan);
+  
+      toast.success('Vé đã được hủy thành công!', {
+        position: "top-right",
+        autoClose: 2000,
+        hideProgressBar: true,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "colored",
+      });
+  
+    
+      const service1 = new OrderhistoryService();
+      const res = await service1.ListByAccount(user);
+      const service2 = new SearchService();
+      const tuyenRes = await service2.loadDataTuyen();
+      const listTuyen = tuyenRes.data;
+
+      const layThongTinTuyenXe = (chuyenXe) => {
+        if (chuyenXe && chuyenXe.tuyenXe) {
+          const maTuyenXe = chuyenXe.tuyenXe;
+          const tuyenXe = listTuyen.find((t) => t.maTuyenXe === maTuyenXe);
+
+
+          if (tuyenXe) {
+            return `${tuyenXe.diemDi} - ${tuyenXe.diemDen} (${tuyenXe.tgDi})`;
+          }
+        }
+
+        return "";
+      };
+      if (res.status === 200) {
+        const newListData = res.data.map((i) => ({
+          thanhToan: i.thanhToan.id,
+          soLuong: i.soLuong,
+          tongTien: i.tongTien,
+          trangThai: i.thanhToan && i.thanhToan.status ? "Thành công" : "Không thành công",
+          noiDung: layThongTinTuyenXe(i.chuyenXe),
+          ngayDatVe: i.ngayDatVe,
+        }));
+  
+        newListData.sort((a, b) => b.thanhToan - a.thanhToan);
+  
+        setData(newListData);
+      }
+    } catch (error) {
+      if (error.response && error.response.status === 400) {
+        const errorMessage = error.response.data || "";
+        toast.error(errorMessage, {
+          position: "top-right",
+          autoClose: 2000,
+          hideProgressBar: true,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "colored",
+          backgroundColor: "#ff0000",
+        });
+      }
+    }
   };
+  
 
   const loadNewData = async () => {
     setLoading(true);
@@ -39,8 +106,6 @@ function Lichsimuave(props) {
           const maTuyenXe = chuyenXe.tuyenXe;
           const tuyenXe = listTuyen.find((t) => t.maTuyenXe === maTuyenXe);
 
-          ///Sử dụng hàm find để tìm kiếm tuyến xe trong danh sách listTuyen dựa trên điều kiện t.maTuyenXe === maTuyenXe.
-          //Nếu tìm thấy, tuyenXe sẽ chứa thông tin về tuyến xe.
 
           if (tuyenXe) {
             return `${tuyenXe.diemDi} - ${tuyenXe.diemDen} (${tuyenXe.tgDi})`;
@@ -168,15 +233,15 @@ function Lichsimuave(props) {
                     loading={loading}
                   /> */}
                   <Table
-                    dataSource={listData}
+                    dataSource={data}
                     pagination={paginationConfig}
                     loading={loading}
                     onChange={handleTableChange}
                   >
                     <Column
                       title="Mã vé"
-                      dataIndex="maVe"
-                      key="maVe"
+                      dataIndex="thanhToan"
+                      key="thanhToan"
                       align="center"
                     ></Column>
                     <Column
@@ -224,7 +289,7 @@ function Lichsimuave(props) {
                               okText="Đúng"
                               cancelText="Không"
                             >
-                              <Button type="link" danger>
+                              <Button type="link" danger style={{marginLeft:'1.5cm'}}>
                                 <BiSolidTrash size={24}></BiSolidTrash>
                               </Button>
                             </Popconfirm>

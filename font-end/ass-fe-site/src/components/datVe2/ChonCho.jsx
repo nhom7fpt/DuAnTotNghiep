@@ -216,50 +216,9 @@ const ChonCho = (props) => {
             value={selectedSeatsLowerNgayDi}
           />
         </Col>
-        <Col md={8}>
-          {selectedSeatsLowerNgayDi.length > 0 && (
-            <div className="selected-seats">
-              <p>
-                Đã chọn ghế tầng dưới - Ngày Đi:{" "}
-                <span style={{ color: "blue" }}>
-                  {selectedSeatsLowerNgayDi.join(", ")}
-                </span>
-              </p>
-            </div>
-          )}
-          {selectedSeatsUpperNgayDi.length > 0 && (
-            <div className="selected-seats">
-              <p>
-                Đã chọn ghế tầng trên - Ngày Đi:{" "}
-                <span style={{ color: "blue" }}>
-                  {selectedSeatsUpperNgayDi.join(", ")}
-                </span>
-              </p>
-            </div>
-          )}
-          {selectedSeatsLowerNgayVe.length > 0 && (
-            <div className="selected-seats">
-              <p>
-                Đã chọn ghế tầng dưới - Ngày Về:{" "}
-                <span style={{ color: "blue" }}>
-                  {selectedSeatsLowerNgayVe.join(", ")}
-                </span>
-              </p>
-            </div>
-          )}
-          {selectedSeatsUpperNgayVe.length > 0 && (
-            <div className="selected-seats">
-              <p>
-                Đã chọn ghế tầng trên - Ngày Về:{" "}
-                <span style={{ color: "blue" }}>
-                  {selectedSeatsUpperNgayVe.join(", ")}
-                </span>
-              </p>
-            </div>
-          )}
-        </Col>
+      
       </Row>
-
+    
       <Row style={{ marginLeft: "3cm" }} className="chonchokhuhoi">
         <Col md={8} style={{ marginLeft: "2cm" }}>
           <label style={{ marginLeft: "2cm", width: "300px" }}>
@@ -272,7 +231,7 @@ const ChonCho = (props) => {
             style={{ marginRight: "-1cm", marginLeft: "0.5cm" }}
           />
         </Col>
-        <Col md={8} style={{ marginLeft: "2.5cm" }}>
+        <Col md={8} style={{ marginLeft: "1.8cm" }}>
           <label style={{ width: "300px" }}>Tầng trên - Ngày Về</label>
           <Checkbox.Group
             options={dataLowerNgayVe}
@@ -282,7 +241,48 @@ const ChonCho = (props) => {
           />
         </Col>
       </Row>
-
+      <Col md={8} className="thongbaoghedachon">
+      {selectedSeatsLowerNgayDi.length > 0 && (
+        <div className="selected-seats">
+          <p>
+            Đã chọn ghế tầng trên - Ngày Đi:{" "}
+            <span style={{ color: "blue" }}>
+              {selectedSeatsLowerNgayDi.join(", ")}
+            </span>
+          </p>
+        </div>
+      )}
+      {selectedSeatsUpperNgayDi.length > 0 && (
+        <div className="selected-seats">
+          <p>
+            Đã chọn ghế tầng dưới - Ngày Đi:{" "}
+            <span style={{ color: "blue" }}>
+              {selectedSeatsUpperNgayDi.join(", ")}
+            </span>
+          </p>
+        </div>
+      )}
+      {selectedSeatsLowerNgayVe.length > 0 && (
+        <div className="selected-seats">
+          <p>
+            Đã chọn ghế tầng trên - Ngày Về:{" "}
+            <span style={{ color: "blue" }}>
+              {selectedSeatsLowerNgayVe.join(", ")}
+            </span>
+          </p>
+        </div>
+      )}
+      {selectedSeatsUpperNgayVe.length > 0 && (
+        <div className="selected-seats">
+          <p>
+            Đã chọn ghế tầng dưới - Ngày Về:{" "}
+            <span style={{ color: "blue" }}>
+              {selectedSeatsUpperNgayVe.join(", ")}
+            </span>
+          </p>
+        </div>
+      )}
+    </Col>
       <Row style={{ float: "right" }}>
         <Button type="primary" onClick={() => onNext()}>
           Tiếp tục

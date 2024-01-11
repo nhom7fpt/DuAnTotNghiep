@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import "../../css/loc.css";
 import pickup from "../../image/pickup.svg";
 import station from "../../image/station.svg";
-import { Tabs, Col, Drawer, Row, Pagination, Result, Button } from "antd"; // Import Tabs from Ant Design
+import { Tabs, Col, Drawer, Row, Pagination, Result, Button, message } from "antd"; // Import Tabs from Ant Design
 import DatVeForm from "../datVe2/DatVeForm";
 import { connect } from "react-redux";
 import withRouter from "../../helpers/withRouter";
@@ -55,9 +55,10 @@ function SeatSelection2(props) {
 
   const { listChuyenReturn1, listChuyenReturn2, listTuyen } = props;
   const [currentPageTab1, setCurrentPageTab1] = useState(1);
+const [currentPageTab2, setCurrentPageTab2] = useState(1);
+
   const [pageSizeTab1, setPageSizeTab1] = useState(3);
 
-  const [currentPageTab2, setCurrentPageTab2] = useState(1);
   const [pageSizeTab2, setPageSizeTab2] = useState(3);
 
   const getCurrentPageDataNgayDi = async () => {
@@ -153,8 +154,8 @@ function SeatSelection2(props) {
 
     fetchData();
     fetchData2();
-  }, [ngayDi, ngayVe, listChuyenReturn1, listChuyenReturn2, listTuyen]);
-
+  }, [ngayDi, ngayVe, listChuyenReturn1, listChuyenReturn2, listTuyen,currentPageTab1,currentPageTab2]);
+console.log("dữ liệu chuyến đi 1" , currentPageTab1 )
   return (
     <div className="grid-listtuyen-container-loc">
       <Boloc />
@@ -249,12 +250,24 @@ function SeatSelection2(props) {
                       <span
                         className="btn-gialisttuyen"
                         style={{ color: "blue", width: "120px" }}
-                        onClick={() => handleSeatModal(item)}
+                        onClick={() => {
+                          if (item.soGheTrong > 0) {
+                            handleSeatModal(item);
+                          } else {
+                            message.error("Vui lòng chọn chuyến khác chuyến này đã hết ghế.");
+                          }
+                        }}
                       >
                         chọn ghế
                       </span>
                       <button type="button" className="custom-button">
-                        <span onClick={() => handleSeatModal(item)}>
+                        <span  onClick={() => {
+                          if (item.soGheTrong > 0) {
+                            handleSeatModal(item);
+                          } else {
+                            message.error("Vui lòng chọn chuyến khác chuyến này đã hết ghế.");
+                          }
+                        }}>
                           Chọn chuyến
                         </span>
                       </button>
@@ -270,7 +283,9 @@ function SeatSelection2(props) {
                 current={currentPageTab1}
                 total={listChuyenReturn1.length}
                 pageSize={pageSizeTab1}
-                onChange={(page) => setCurrentPageTab1(page)}
+                onChange={(page) =>
+
+                setCurrentPageTab1(page)}
               />
             </div>
           ) : null}
@@ -282,7 +297,7 @@ function SeatSelection2(props) {
         >
           <div className="hiddentext4">
             <span>
-              {diemDi} - {diemDen} ({listChuyenReturn2.length})
+            {diemDen} - {diemDi} ({listChuyenReturn2.length})
             </span>
           </div>
 
@@ -327,14 +342,16 @@ function SeatSelection2(props) {
                   <div className="location-info">
                     <div className="location">
                       <span className="location-name">
-                        {item.tuyenXe.diemDi}
+                      {item.tuyenXe.diemDi}
+
+
                       </span>
                       <br />
                       <span className="location-info-text text-gray"></span>
                     </div>
                     <div className="location text-right">
                       <span className="location-name">
-                        {item.tuyenXe.diemDen}
+                      {item.tuyenXe.diemDen}
                       </span>
                       <br />
                       <span className="location-info-text text-gray"></span>
@@ -360,12 +377,24 @@ function SeatSelection2(props) {
                       <span
                         className="btn-gialisttuyen"
                         style={{ color: "blue", width: "120px" }}
-                        onClick={() => handleSeatModal(item)}
+                        onClick={() => {
+                          if (item.soGheTrong > 0) {
+                            handleSeatModal(item);
+                          } else {
+                            message.error("Vui lòng chọn chuyến khác chuyến này đã hết ghế.");
+                          }
+                        }}
                       >
                         chọn ghế
                       </span>
                       <button type="button" className="custom-button">
-                        <span onClick={() => handleSeatModal(item)}>
+                        <span     onClick={() => {
+                          if (item.soGheTrong > 0) {
+                            handleSeatModal(item);
+                          } else {
+                            message.error("Vui lòng chọn chuyến khác chuyến này đã hết ghế.");
+                          }
+                        }}>
                           Chọn chuyến
                         </span>
                       </button>

@@ -70,6 +70,7 @@ class AddOrEditTuyen extends Component {
 
     return (
       <>
+      <div>
         <HeaderContent
           title={
             tuyenXe && tuyenXe.maTuyenXe ? "Cập nhật tuyến" : "Thêm tuyến mới"
@@ -143,6 +144,7 @@ class AddOrEditTuyen extends Component {
             )}
           </Col>
         </Row>
+        </div>
       </>
     );
   }

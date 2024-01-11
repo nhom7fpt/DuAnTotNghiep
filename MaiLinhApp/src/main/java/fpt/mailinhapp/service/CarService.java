@@ -38,15 +38,15 @@ public class CarService {
 
         Xe entity = new Xe();
         LoaiXe loai = new LoaiXe();
-        ThuongHieu hieu = new ThuongHieu();
+
         NhaXe nx = new NhaXe();
 
         BeanUtils.copyProperties(dto, entity,listIgone);
         BeanUtils.copyProperties(dto.getLoaiXe(),loai);
-        BeanUtils.copyProperties(dto.getThuongHieu(),hieu);
+
         BeanUtils.copyProperties(dto.getNhaXe(), nx);
 
-        entity.setThuongHieu(hieu);
+
         entity.setLoaiXe(loai);
         entity.setNhaXe(nx);
 
@@ -78,11 +78,7 @@ public class CarService {
             BeanUtils.copyProperties(dto.getNhaXe(), nx);
             found.setNhaXe(nx);
         }
-        if(dto.getThuongHieu() != null){
-            ThuongHieu th = new ThuongHieu();
-            BeanUtils.copyProperties(dto.getThuongHieu(), th);
-            found.setThuongHieu(th);
-        }
+
         if(dto.getLoaiXe() != null){
             LoaiXe nx = new LoaiXe();
             BeanUtils.copyProperties(dto.getLoaiXe(), nx);

@@ -39,17 +39,6 @@ public class LichsudatveController {
         }
     }
 
-//    @GetMapping("/getByMaVe/{maVe}")
-//    public ResponseEntity<?> getDatVeByMaVe(@PathVariable Long maVe) {
-//        try {
-//            DatVeDto datVeDto = veXeService.getDatVeByMaVe(maVe);
-//            return ResponseEntity.ok(datVeDto);
-//        } catch (TicketsException e) {
-//            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
-//        } catch (Exception e) {
-//            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Đã xảy ra lỗi");
-//        }
-//    }
     @GetMapping("/getByMaThanhToan/{thanhToanId}")
     public ResponseEntity<?> getDatVeByThanhToanId(@PathVariable String thanhToanId) {
         try {
@@ -62,9 +51,9 @@ public class LichsudatveController {
         }
     }
 
-    @DeleteMapping("/{id}")
-    public ResponseEntity deleteVe(@PathVariable Long id){
-        veXeService.deleteVe(id);
+    @DeleteMapping("/{thanhToanId}")
+    public ResponseEntity deleteVe(@PathVariable String thanhToanId){
+        veXeService.deleteVe(thanhToanId);
         return new ResponseEntity<>("Hủy vé thành công", HttpStatus.OK);
     }
 }

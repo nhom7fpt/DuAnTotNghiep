@@ -15,6 +15,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+
+import java.time.Instant;
 import java.time.LocalDate;
 import java.util.*;
 import java.util.stream.Collectors;
@@ -40,9 +42,13 @@ public class SearchController {
         if(error != null) {
             return error;
         }
-        List<ChuyenXeDto> dto = service.timChuyen(data.getDiemDi(), data.getDiemDen());
+         LocalDate now = LocalDate.now();
+
+        List<ChuyenXeDto> dto = service.timChuyen(data.getDiemDi(), data.getDiemDen(), now.equals(data.getNgayDi()));
         return new ResponseEntity<>(dto, HttpStatus.OK);
     }
+
+
 
     @PostMapping("return")
     public ResponseEntity findReturnTicket(@Validated @RequestBody ReqTimMotChieu data, BindingResult result) {
@@ -51,8 +57,9 @@ public class SearchController {
         if (error != null) {
             return error;
         }
-        var list1 = service.timChuyen(data.getDiemDi(),  data.getDiemDen());
-        var list2 = service.timChuyen(data.getDiemDen(), data.getDiemDi());
+        LocalDate now = LocalDate.now();
+        var list1 = service.timChuyen(data.getDiemDi(),  data.getDiemDen(),now.equals(data.getNgayDi()));
+        var list2 = service.timChuyen(data.getDiemDen(), data.getDiemDi(),now.equals(data.getNgayVe()));
         Return2List map = new Return2List(list1,list2);
 
         return new ResponseEntity<>(map, HttpStatus.OK);

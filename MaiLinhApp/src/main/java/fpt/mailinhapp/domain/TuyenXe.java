@@ -35,6 +35,13 @@ public class TuyenXe {
     @Column(name = "tgian_den")
     private LocalTime tgDen;
 
+    @JsonFormat(pattern = "yyyy-MM-dd")
+    @Column(name = "ngay_di")
+    private LocalDate ngayDi;
+
+    @JsonFormat(pattern = "yyyy-MM-dd")
+    @Column(name = "ngay_ve")
+    private LocalDate ngayVe;
 
     @Column(name = "gia")
     private Long gia;

@@ -19,6 +19,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
+import java.time.temporal.ChronoUnit;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -100,61 +101,32 @@ public class ChuyenXeService {
         return dao.findAll();
     }
 
-    public List<ChuyenXeDto> timChuyen(String diemDi, String diemDen) {
+    public List<ChuyenXeDto> timChuyen(String diemDi, String diemDen, boolean check) {
         List<ChuyenXe> listEntity = dao.findByTuyenXe_DiemDiLikeAndTuyenXe_DiemDenLike(diemDi, diemDen);
-
-
-//        LocalTime now = LocalTime.now();
-//
-//        List<ChuyenXe> listData = listEntity.stream()
-//                .filter(chuyenXe -> parseTime(chuyenXe.getTuyenXe().getTgDi()).isAfter(now))
-//                .collect(Collectors.toList());
-
-        List<ChuyenXeDto> listDto = listEntity.stream().map(item -> {
+        System.out.println(check);
+        if(check){
+        LocalTime now = LocalTime.now().plusMinutes(60).truncatedTo(ChronoUnit.SECONDS);
+        System.out.println(now);
+        List<ChuyenXe> listData = listEntity.stream()
+                .filter(chuyenXe -> parseTime(chuyenXe.getTuyenXe().getTgDi())
+                        .isAfter(now))
+                .collect(Collectors.toMap(
+                        chuyenXe -> chuyenXe.getMaChuyen(),
+                        chuyenXe -> chuyenXe,
+                        (existing, replacement) -> existing)
+                ).values().stream()
+                .collect(Collectors.toList());
+        return listData.stream().map(item -> {
             ModelMapper mapper = new ModelMapper();
             return mapper.map(item, ChuyenXeDto.class);
         }).collect(Collectors.toList());
-
-        return listDto;
+        }else{
+            return listEntity.stream().map(item -> {
+                ModelMapper mapper = new ModelMapper();
+                return mapper.map(item, ChuyenXeDto.class);
+            }).collect(Collectors.toList());
+        }
     }
-//public List<ChuyenXeDto> timChuyen(String diemDi, String diemDen, LocalDate ngayDi) {
-//
-//
-//    List<ChuyenXe> listEntity = dao.findByTuyenXe_DiemDiLikeAndTuyenXe_DiemDenLikeAndTuyenXe_NgayDi(diemDi, diemDen,ngayDi);
-//
-//    List<ChuyenXeDto> listDto = listEntity.stream().map((item)->{
-//        ModelMapper mapper = new ModelMapper();
-//        return mapper.map(item, ChuyenXeDto.class);
-//    }).collect(Collectors.toList());
-//
-//    return listDto;
-//}
-//    public Map<String, List<ChuyenXeDto>> timChuyen2(String diemDi, String diemDen, LocalDate ngayDi, LocalDate ngayVe) {
-//        Map<String, List<ChuyenXeDto>> resultDto = new HashMap<>();
-//
-//        if (ngayDi != null) {
-//            List<ChuyenXe> listEntityNgayDi = dao.findByTuyenXe_DiemDiLikeAndTuyenXe_DiemDenLikeAndTuyenXe_NgayDi(diemDi, diemDen, ngayDi);
-//            List<ChuyenXeDto> listDtoNgayDi = listEntityNgayDi.stream()
-//                    .map(item -> new ModelMapper().map(item, ChuyenXeDto.class))
-//                    .collect(Collectors.toList());
-//
-//            resultDto.put("ngayDi", listDtoNgayDi);
-//        }
-//
-//        if (ngayVe != null) {
-//            List<ChuyenXe> listEntityNgayVe = dao.findByTuyenXe_DiemDiLikeAndTuyenXe_DiemDenLikeAndTuyenXe_NgayVe(diemDi, diemDen, ngayVe);
-//            List<ChuyenXeDto> listDtoNgayVe = listEntityNgayVe.stream()
-//                    .map(item -> new ModelMapper().map(item, ChuyenXeDto.class))
-//                    .collect(Collectors.toList());
-//
-//            resultDto.put("ngayVe", listDtoNgayVe);
-//        }
-//
-//        return resultDto;
-//    }
-
-
-
 
     private LocalTime parseTime(LocalTime time) {
         return time;

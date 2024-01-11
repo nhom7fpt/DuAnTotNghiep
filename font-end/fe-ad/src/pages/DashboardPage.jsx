@@ -4,7 +4,6 @@ import {
   MdAllInbox,
   MdCategory,
   MdFormatListBulleted,
-  MdHome,
   MdLogout,
   MdManageAccounts,
   MdRequestPage,
@@ -34,7 +33,8 @@ import ListAccount from "../components/Account/ListAccount";
 import ListOrder from "../components/Order/ListOrder";
 import Login from "../components/auth/Login";
 import OrderDetail from "../components/Order/OrderDetail";
-import Manufacturer from "../components/manufacturer/Manufacturer";
+
+
 import ListNhanVien from "../components/nhanVien/ListNhanVien";
 import AddOrEditNhanVien from "../components/nhanVien/AddOrEditNhanVien";
 import TuyenXe from "../components/tuyenXe/TuyenXe";
@@ -70,12 +70,6 @@ const DashboardPage = () => {
           defaultSelectedKeys={["1"]}
           style={iconSize}
           items={[
-            {
-              key: "1",
-              icon: <MdHome />,
-              label: "Home",
-              onClick: () => navigate("/"),
-            },
             {
               key: "2",
               icon: <MdSupervisorAccount />,
@@ -139,12 +133,7 @@ const DashboardPage = () => {
                 },
               ],
             },
-            {
-              key: "6",
-              icon: <MdSupervisorAccount />,
-              label: "Thương hiệu",
-              onClick: () => navigate("/thuonghieu"),
-            },
+           
             {
               key: "7",
               icon: <MdAllInbox />,
@@ -221,12 +210,7 @@ const DashboardPage = () => {
               onClick: () => navigate("/taikhoan"),
             },
 
-            {
-              key: "12",
-              icon: <MdSupervisorAccount />,
-              label: "Thông tin tài khoản",
-              onClick: () => navigate("/tuyen"),
-            },
+    
             {
               key: "13",
               icon: <MdLogout />,
@@ -309,7 +293,7 @@ const DashboardPage = () => {
               <Route path="/datve" element={<ListOrder />} />
               <Route path="/datve/vechitiet/:id" element={<OrderDetail />} />
               <Route path="/dangnhap" element={<Login />} />
-              <Route path="/thuonghieu" element={<Manufacturer />} />
+           
               <Route path="/tuyen" element={<TuyenXe />} />
               <Route path="/tuyen/them" element={<AddOrEditTuyen />} />
               <Route path="/tuyen/noitra" element={<NoiTra />} />

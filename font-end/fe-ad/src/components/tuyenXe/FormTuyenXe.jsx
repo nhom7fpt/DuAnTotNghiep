@@ -1,6 +1,6 @@
-// FormManufacturer.js
 
-import React, { Component } from "react";
+
+import React,{ useEffect,useState,Component } from 'react';
 import {
   Button,
   Col,
@@ -19,30 +19,44 @@ import { toast } from "react-toastify";
 import moment from "moment";
 const format = "HH:mm";
 class FormTuyenXe extends Component {
+  
   form = createRef();
+ 
+  goNext = (values) => {
+    const { tuyenXe } = this.props;
+  
+    const di1 = tuyenXe.ngayDi ? dayjs(tuyenXe.ngayDi).format("YYYY-MM-DD") : "";
+  const den1 = tuyenXe.ngayVe ? dayjs(tuyenXe.ngayVe).format("YYYY-MM-DD") : "";
 
-  goNext = () => {
+    
+   
+    values.ngayDi = di1;
+    values.ngayVe = den1;
+    console.log("dữ liệu ngày đi" , di1);
     this.form.current
-      .validateFields()
-      .then((values) => {
-        this.props.goNext(values);
-      })
-      .catch((errorInfo) => {
-        console.log("Validation failed:", errorInfo);
-        // Xử lý khi validation không thành công nếu cần
-      });
-  };
+        .validateFields()
+        .then((validatedValues) => {
+            this.props.goNext(validatedValues);
+        })
+        .catch((errorInfo) => {
+            console.log("Validation failed:", errorInfo);
+        });
+};
 
   render() {
+    
     const { tuyenXe } = this.props;
     const di = tuyenXe.tgDi ? dayjs(tuyenXe.tgDi, format) : "";
     const den = tuyenXe.tgDen ? dayjs(tuyenXe.tgDen, format) : "";
     const di1 = tuyenXe.ngayDi ? dayjs(tuyenXe.ngayDi) : "";
     const den1 = tuyenXe.ngayVe ? dayjs(tuyenXe.ngayVe) : "";
-    const disabledDate = (current) => {
-      return current.isBefore(moment().startOf("day"));
-    };
+    // const disabledDate = (current) => {
+    //   return current.isBefore(moment().startOf("day"));
+    // };
+   
     const dateFormat = "YYYY-MM-DD";
+
+
     return (
       <>
         <Form
@@ -51,7 +65,9 @@ class FormTuyenXe extends Component {
           name="form_in_modal"
           initialValues={{
             modifier: "public",
+  
           }}
+       
           key={tuyenXe.maTuyenXe}
         >
           <Row>
@@ -93,7 +109,9 @@ class FormTuyenXe extends Component {
               </Form.Item>
               <Form.Item name="tgDen" label="Thời gian đến">
                 <TimePicker defaultValue={den} format={format} />
+              
               </Form.Item>
+    
             </Col>
           </Row>
           <Row>

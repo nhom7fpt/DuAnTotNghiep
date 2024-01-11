@@ -14,7 +14,7 @@ import {
 import React, { Component } from "react";
 import dayjs from "dayjs";
 import customParseFormat from "dayjs/plugin/customParseFormat";
-import { DatePicker, Space } from "antd";
+import { DatePicker, Space, message } from "antd";
 
 import ImagesService from "../../services/ImagesService";
 dayjs.extend(customParseFormat);
@@ -25,12 +25,22 @@ class FormProduct extends Component {
     this.form.current
       .validateFields()
       .then((values) => {
+        const { bienSoXe } = values;
+  
+        // Kiểm tra biển số xe theo quy chuẩn
+        const bienSoXeRegex = /^\d{2}-[A-Z]\d{1}-\d{5}$/;
+        if (!bienSoXeRegex.test(bienSoXe)) {
+          // Biển số xe không đúng quy chuẩn
+          message.error("Biển số xe không đúng định dạng. Vui lòng kiểm tra lại.");
+          return;
+        }
+  
+        // Tiếp tục xử lý khi biển số xe đúng quy chuẩn
         const newValues = {
           ...values,
-
           anhDaLuu: values.anhDaLuu[0].response,
         };
-
+  
         this.props.goNext(newValues);
       })
       .catch((errorInfo) => {
@@ -38,7 +48,7 @@ class FormProduct extends Component {
         // Xử lý khi validation không thành công nếu cần
       });
   };
-
+  
   componentDidUpdate(prevProps) {
     // Kiểm tra nếu dữ liệu product đã được cập nhật
     if (this.props.Car !== prevProps.Car) {
@@ -68,7 +78,7 @@ class FormProduct extends Component {
     return e && e.fileList;
   };
   render() {
-    const { Car, loaiXe, thuongHieu, nhaXe } = this.props;
+    const { Car, loaiXe, nhaXe } = this.props;
 
     const listLoai = loaiXe.map((item) => {
       const loai = {
@@ -77,17 +87,14 @@ class FormProduct extends Component {
       };
       return loai;
     });
-    const listThuongHieu = thuongHieu.map((item) => {
-      const data = { label: item.tenThuongHieu, value: item.id };
-      return data;
-    });
+   
     const listNhaXe = nhaXe.map((item) => {
       const nha = { label: item.tenNhaXe, value: item.id };
       return nha;
     });
 
     const loaiXeId = Car.loaiXe ? Car.loaiXe.id : "";
-    const thuongHieuId = Car.thuongHieu ? Car.thuongHieu.id : "";
+
     const nhaXeId = Car.nhaXe ? Car.nhaXe.id : "";
 
     return (
@@ -110,12 +117,7 @@ class FormProduct extends Component {
               <Form.Item label="Nhà xe" name="nhaXe">
                 <Select options={listNhaXe} defaultValue={nhaXeId}></Select>
               </Form.Item>
-              <Form.Item label="Thương Hiệu" name="thuongHieu">
-                <Select
-                  options={listThuongHieu}
-                  defaultValue={thuongHieuId}
-                ></Select>
-              </Form.Item>
+             
 
               <Form.Item
                 label="Main Image"

@@ -17,7 +17,6 @@ import {
   loadDataField,
 } from "../../redux/actions/actionSearch";
 import PayService from "../../services/PayService";
-import Thongtinchuyendi from "../datvethanhcong/thongtinchuyendi";
 import SearchService from "../../services/SearchService";
 const DatVeForm = (props) => {
   const [steps, setSteps] = useState(0);

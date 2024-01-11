@@ -59,23 +59,8 @@ class ProductList extends Component {
             align="center"
           ></Column>
 
-          <Column
-            title="Nhà xe"
-            key="nhaXe"
-            dataIndex="nhaXe"
-            align="center"
-            render={(text, record) => <label>test</label>}
-          ></Column>
-
-          <Column
-            title="Thương Hiệu"
-            key="thuongHieu"
-            dataIndex="thuongHieu"
-            align="center"
-            render={(text, record) => (
-              <label>{record.thuongHieu.tenThuongHieu}</label>
-            )}
-          ></Column>
+         
+          
 
           <Column
             title="Loại Xe"

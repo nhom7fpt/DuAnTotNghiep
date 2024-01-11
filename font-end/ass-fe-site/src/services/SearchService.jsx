@@ -13,14 +13,16 @@ export default class SearchService {
   };
   loadListChuyen = async (data) => {
     console.log(data);
-    return await axios.post(API_SEARCH_MOTCHIEU, data);
+    return await axios.post(API_SEARCH+"/one-way", data);
   };
+
 
   loadListChuyenByTuyen = async (data) => {
     return await axios.post(API_SEARCH + "/findbuses", data);
   };
 
   loadListChuyenReturn = async (tc) => {
+    console.log("data đasadsadsa" , tc);
     return await axios.post(API_SEARCH + "/return", tc);
   };
 

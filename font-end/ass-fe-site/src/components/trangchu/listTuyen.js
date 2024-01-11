@@ -3,7 +3,7 @@ import "../../css/loc.css";
 import pickup from "../../image/pickup.svg";
 import station from "../../image/station.svg";
 import deleteicon from "../../image/trangchu/delete.svg";
-import { Col, Drawer, Row, Pagination, Result, Button } from "antd";
+import { Col, Drawer, Row, Pagination, Result, Button, message } from "antd";
 import DatVeForm from "../datVe/DatVeForm";
 import { connect } from "react-redux";
 import withRouter from "../../helpers/withRouter";
@@ -66,6 +66,7 @@ function SeatSelection(props) {
         };
       })
     );
+    
     return newList.slice(startIndex, endIndex);
   };
 
@@ -175,14 +176,26 @@ function SeatSelection(props) {
                         : "Hết ghế trống"}
                     </span>
                     <span
-                      className="btn-gialisttuyen"
-                      style={{ color: "blue", width: "120px" }}
-                      onClick={() => handleSeatModal(item)}
-                    >
-                      chọn ghế
-                    </span>
+                    className="btn-gialisttuyen"
+                    style={{ color: "blue", width: "120px" }}
+                    onClick={() => {
+                      if (item.soGheTrong > 0) {
+                        handleSeatModal(item);
+                      } else {
+                        message.error("Vui lòng chọn chuyến khác chuyến này đã hết ghế.");
+                      }
+                    }}
+                  >
+                    chọn ghế
+                  </span>
                     <button type="button" className="custom-button">
-                      <span onClick={() => handleSeatModal(item)}>
+                      <span onClick={() => {
+                        if (item.soGheTrong > 0) {
+                          handleSeatModal(item);
+                        } else {
+                          message.error("Vui lòng chọn chuyến khác chuyến này đã hết ghế.");
+                        }
+                      }}>
                         Chọn chuyến
                       </span>
                     </button>

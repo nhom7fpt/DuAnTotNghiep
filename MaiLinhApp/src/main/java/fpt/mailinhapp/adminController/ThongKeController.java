@@ -17,25 +17,25 @@ public class ThongKeController {
     ThongKeService service;
     @GetMapping("doanhthu/nam")
     public ResponseEntity getDoanhThu(){
-        Integer nam = 2023;
+        Integer nam = 2024;
         var data = service.thongKeDoanhThuNam(nam);
         return new ResponseEntity<>(data, HttpStatus.OK);
     }
     @GetMapping("doanhthu/quy")
     public ResponseEntity getDoanhThuQuy(){
-        Integer nam = 2023;
+        Integer nam = 2024;
         var data = service.thongKeDoanhThuQuy(nam);
         return  new ResponseEntity<>(data, HttpStatus.OK);
     }
     @GetMapping("ve/nam")
     public ResponseEntity getVeNam(){
-        Integer nam = 2023;
+        Integer nam = 2024;
         var data = service.thongKeVeNam(nam);
         return  new ResponseEntity<>(data, HttpStatus.OK);
     }
     @GetMapping("ve/quy")
     public ResponseEntity getVeQuy(){
-        Integer nam = 2023;
+        Integer nam = 2024;
         var data = service.thongKeVeQuy(nam);
         return  new ResponseEntity<>(data, HttpStatus.OK);
     }

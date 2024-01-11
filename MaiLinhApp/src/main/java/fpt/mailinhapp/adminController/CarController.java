@@ -17,8 +17,7 @@ public class CarController {
     CarService service;
     @Autowired
     LoaiXeService loaiXeService;
-    @Autowired
-    ThuongHieuService thuongHieuService;
+
     @Autowired
     MapValidationErrorService errorService;
 

@@ -1,11 +1,17 @@
 import { Col, DatePicker, Row, Select, Space } from "antd";
-import React, { useState } from "react";
+import React, { useEffect ,useState } from "react";
 import moment from "moment";
 import muiten from "../../image/switch_location.svg";
 import '../../css/routes.scss';
 const { RangePicker } = DatePicker;
 
 const KhuHoi = (props) => {
+  const queryParams = new URLSearchParams(window.location.search);
+  const diemDiFromUrl = queryParams.get("diemDi");
+  const diemDenFromUrl = queryParams.get("diemDen");
+  const [diemDiValue, setDiemDiValue] = useState(diemDiFromUrl);
+  const [diemDenValue, setDiemDenValue] = useState(diemDenFromUrl);
+
   const [startDate, setStartDate] = useState(moment());
   const [returnDate, setReturnDate] = useState(null);
   const [ngayDi, setNgayDi] = useState(moment());
@@ -17,6 +23,7 @@ const KhuHoi = (props) => {
   };
 
   const onChange1 = (value) => {
+    setDefaultNgayDi(value);
     props.setNgayDi(value.format("YYYY-MM-DD"));
   };
 
@@ -26,9 +33,12 @@ const KhuHoi = (props) => {
 
   const onLocationChange = (value, type) => {
     if (type === "start") {
+      setDiemDiValue(value);
       props.setStart(value);
     } else {
+      setDiemDenValue(value);
       props.setEnd(value);
+      
     }
   };
 
@@ -36,7 +46,23 @@ const KhuHoi = (props) => {
     (option?.label ?? "").toLowerCase().includes(input.toLowerCase());
 
   const data = props.data;
- 
+  useEffect(() => {
+    if (diemDiValue) {
+      setDiemDiValue(diemDiValue);
+      props.setStart(diemDiValue);
+    }
+  
+    if (diemDenValue) {
+      setDiemDenValue(diemDenValue);
+      props.setEnd(diemDenValue);
+    }
+    if(defaultNgayDi) {
+      setDefaultNgayDi(defaultNgayDi);
+      props.setNgayDi(defaultNgayDi.format("YYYY-MM-DD"));
+    }
+
+  }, []);
+  
   return (
     <Row>
       <Col md={5}>
@@ -46,6 +72,7 @@ const KhuHoi = (props) => {
           onChange={(value) => onLocationChange(value, "start")}
           filterOption={filterOption}
           options={data}
+          defaultValue={diemDiValue}
           className="khuhoiinput"
            style={{
             width:'258px'
@@ -64,6 +91,7 @@ const KhuHoi = (props) => {
           onChange={(value) => onLocationChange(value, "end")}
           filterOption={filterOption}
           options={data}
+          defaultValue={diemDenValue}
           className="khuhoiinput"
           style={{ marginLeft: '-0.6cm' }}
         />
@@ -77,6 +105,7 @@ const KhuHoi = (props) => {
             onChange={onChange1}
             id="datepickerStart" // Đổi ID để tránh trùng lặp
             disabledDate={disabledDate}
+            defaultValue={defaultNgayDi}
             picker="date"
             placeholder="Chọn thời gian đi"
             className="khuhoiinput"

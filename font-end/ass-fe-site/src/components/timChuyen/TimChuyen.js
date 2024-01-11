@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Button, Col, Radio, Tabs } from "antd";
+import { Button, Col, Radio, Tabs, message } from "antd";
 import "antd/dist/antd.css";
 import MotChieu from "./MotChieu";
 import KhuHoi from "./KhuHoi";
@@ -21,11 +21,23 @@ function TimChuyen(props) {
 
   const onClick = () => {
     if (selectedTab === "1") {
+      if (!startLocation || !endLocation || !ngayDi) {
+       
+        message.error("Vui lòng chọn đủ thông tin một chiều trước khi tìm chuyến.");
+        return;
+      }
+
       props.listSearchOneWay(startLocation, endLocation, ngayDi, navigate);
       const query = `?ngayDi=${ngayDi}&startLocation=${startLocation}&endLocation=${endLocation}`;
       navigate(`/timchuyen/${query}`);
     }
     if (selectedTab === "2") {
+      if (!startLocation2 || !endLocation2 || !ngayDi || !ngayVe) {
+        // Hiển thị thông báo khi chưa chọn đủ thông tin
+        message.error("Vui lòng chọn đủ thông tin khứ hồi trước khi tìm chuyến.");
+        return;
+      }
+
       props.listSearchReturn(startLocation2, endLocation2, ngayDi, ngayVe, navigate);
       const query = `?ngayDi=${ngayDi}&ngayVe=${ngayVe}&startLocation2=${startLocation2}&endLocation2=${endLocation2}`;
       navigate(`/timchuyen2/${query}`);

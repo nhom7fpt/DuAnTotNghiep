@@ -4,10 +4,12 @@ import muiten from '../image/switch_location.svg';
 import arrow from "../image/trangchu/ic_double_arrow.svg";
 import withRouter from '../helpers/withRouter';
 import { connect } from 'react-redux';
-
-import { listSearchByTuyen, loadDataTuyen } from "../redux/actions/actionSearch";
+import moment from "moment";
+import { listSearchByTuyen, loadDataTuyen,listSearchOneWay } from "../redux/actions/actionSearch";
 
 function Lichtrinhpage(props) {
+  const [defaultNgayDi, setDefaultNgayDi] = useState(moment().format("YYYY-MM-DD"));
+
   const {listTuyen} = props;
   const uniqueListTuyen = [];
   const diemDenSet = new Set();
@@ -15,9 +17,9 @@ function Lichtrinhpage(props) {
   const { navigate } = props.router;
   const { listChuyen } = props;
   const onClick = (data) => {
-    props.listSearchByTuyen(data.diemDi, data.diemDen, data.gia, navigate);
+    props.listSearchOneWay(data.diemDi, data.diemDen,defaultNgayDi);
   
-    const query = `?diemDi=${data.diemDi}&diemDen=${data.diemDen}`;
+    const query = `?diemDi=${data.diemDi}&diemDen=${data.diemDen}&ngayDi=${defaultNgayDi}`;
     navigate(`/timchuyen/${query}`);
   };
 
@@ -100,7 +102,8 @@ const mapStateToProps = (state) => ({
 
 const mapDispatchToProps = {
   loadDataTuyen,
-  listSearchByTuyen
+  listSearchByTuyen,
+  listSearchOneWay
 };
 
 export default connect(

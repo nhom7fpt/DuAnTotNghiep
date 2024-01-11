@@ -16,15 +16,9 @@ public class ChuyenXe {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "ma_chuyen", nullable = false)
     private Long maChuyen;
-
-
-
-
     @ManyToOne
     @JoinColumn(name = "tuyen_xe")
     private TuyenXe tuyenXe;
-
-
     @ManyToOne
     @JoinColumn(name = "xe")
     private Xe xe;

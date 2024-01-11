@@ -89,9 +89,10 @@ console.log(data2);
          </div>
          <br />
          <div className="subtitle" style={{ width: '637px', fontSize: '14px', fontWeight:'500',lineHeight:'21px',textAlign: 'justify'}}>
-           <b>Lưu ý:</b> Mọi thông tin về chuyến đi (bao gồm biển số xe, số điện thoại tài xế,...) sẽ được Vexere thông báo đến quý khách qua
-           email ngay sau khi nhà xe cập nhật thông tin. Thông thường nhà xe sẽ cập nhật thông tin này trễ nhất 15-30 phút trước giờ khởi hành tùy thuộc vào kế hoạch của nhà xe.
+         <b>Lưu ý:</b> Mọi thông tin về chuyến đi (bao gồm biển số xe, số điện thoại tài xế,...) sẽ được Vexere thông báo đến quý khách qua
+         email ngay sau khi nhà xe cập nhật thông tin. Thông thường nhà xe sẽ cập nhật thông tin này trễ nhất 15-30 phút trước giờ khởi hành tùy thuộc vào kế hoạch của nhà xe.
          </div>
+        
           <div className="subtitle" style={{  width: '637px', fontSize: '14px', fontWeight:'500',lineHeight:'21px',textAlign: 'justify' }}>Nếu gặp vấn đề khi ra xe, quý khách vui lòng liên hệ theo số Hotline nhà xe.</div>
        </div>
      </div>

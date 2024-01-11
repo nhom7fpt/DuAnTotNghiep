@@ -70,11 +70,12 @@ export const gethistory = (id, navigate) => async (dispatch) => {
     }
   }
 };
-export const deleteOrder = (id) => async (dispatch) => {
+export const deleteOrder = (id, navigate) => async (dispatch) => {
   try {
     const res = await service.HuyVe(id);
     console.log(res);
     if (res.status === 200) {
+      
       dispatch({
         type: ORDER_DEL,
         payload: id,
@@ -91,8 +92,22 @@ export const deleteOrder = (id) => async (dispatch) => {
         progress: undefined,
         theme: "colored",
       });
+     
     }
   } catch (error) {
-    console.log(error);
+    if (error.response && error.response.status === 400) {
+      const errorMessage = error.response.data || "";
+      toast.error(errorMessage, {
+        position: "top-right",
+        autoClose: 2000,
+        hideProgressBar: true,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "colored",
+        backgroundColor: "#ff0000",
+      });
+    }
   }
 };

@@ -1,24 +1,8 @@
 import { UploadOutlined } from "@ant-design/icons";
-import {
-  Button,
-  Checkbox,
-  Col,
-  Divider,
-  Form,
-  Input,
-  InputNumber,
-  Row,
-  Select,
-  Upload,
-} from "antd";
+import { Button, Col, Divider, Form, Input, Row, Select, Upload } from "antd";
 import React, { Component } from "react";
-import dayjs from "dayjs";
-import customParseFormat from "dayjs/plugin/customParseFormat";
-import { DatePicker, Space } from "antd";
-
 import ImagesService from "../../services/ImagesService";
-dayjs.extend(customParseFormat);
-const dateFormat = "dd-MM-YYYY";
+
 class FormProduct extends Component {
   form = React.createRef();
 
@@ -28,10 +12,8 @@ class FormProduct extends Component {
       .then((values) => {
         const newValues = {
           ...values,
-
           anhDaLuu: values.anhDaLuu[0].response,
         };
-
         this.props.goNext(newValues);
       })
       .catch((errorInfo) => {
@@ -68,12 +50,13 @@ class FormProduct extends Component {
 
     return e && e.fileList;
   };
+
   render() {
     const { nhanVien, nhaXe } = this.props;
-    const listNhaXe = nhaXe.map((item) => {
-      const nha = { label: item.tenNhaXe, value: item.id };
-      return nha;
-    });
+    const listNhaXe = nhaXe.map((item) => ({
+      label: item.tenNhaXe,
+      value: item.id,
+    }));
 
     const nhaXeId = nhanVien.nhaXe ? nhanVien.nhaXe.id : "";
 
@@ -86,8 +69,22 @@ class FormProduct extends Component {
                 label="Số CCCD"
                 name="soCCCD"
                 initialValue={nhanVien.soCCCD}
+                rules={[
+                  {
+                    required: true,
+                    message: "Vui lòng nhập số CCCD!",
+                  },
+                  {
+                    pattern: /^[0-9]+$/,
+                    message: "Chỉ được phép nhập số!",
+                  },
+                  {
+                    max: 12,
+                    message: "Độ dài tối đa là 12 ký tự!",
+                  },
+                ]}
               >
-                <Input disabled={nhanVien.soCCCD ? true : false}></Input>
+                <Input disabled={nhanVien.soCCCD ? true : false} />
               </Form.Item>
 
               <Form.Item
@@ -95,24 +92,24 @@ class FormProduct extends Component {
                 name="hoTen"
                 initialValue={nhanVien.hoTen}
               >
-                <Input></Input>
+                <Input />
               </Form.Item>
               <Form.Item
                 label="Số điện thoại"
                 name="sdt"
                 initialValue={nhanVien.sdt}
               >
-                <Input></Input>
+                <Input />
               </Form.Item>
               <Form.Item
                 label="Địa chỉ"
                 name="diaChi"
                 initialValue={nhanVien.diaChi}
               >
-                <Input></Input>
+                <Input />
               </Form.Item>
               <Form.Item label="Nhà xe" name="nhaXe">
-                <Select options={listNhaXe} defaultValue={nhaXeId}></Select>
+                <Select options={listNhaXe} defaultValue={nhaXeId} />
               </Form.Item>
 
               <Form.Item
@@ -151,7 +148,6 @@ class FormProduct extends Component {
           <Row>
             <Divider></Divider>
             <Col md={24}>
-              {" "}
               <Button
                 type="primary"
                 onClick={this.goNext}

@@ -25,49 +25,42 @@ class ListManufacturer extends Component {
             dataIndex="maTuyenXe"
             align="center"
           ></Column>
-
           <Column
             title="Giá vé"
             key="gia"
             dataIndex="gia"
             align="center"
           ></Column>
-
           <Column
             title="Điểm đi"
             key="diemDi"
             dataIndex="diemDi"
             align="center"
           ></Column>
-
           <Column
             title="Điểm đến"
             key="diemDen"
             dataIndex="diemDen"
             align="center"
           ></Column>
-
           <Column
             title="Nơi đón"
             key="noiDon"
             dataIndex="noiDon"
             align="center"
           ></Column>
-
           <Column
             title="Thời gia đi"
             key="tgDi"
             dataIndex="tgDi"
             align="center"
           ></Column>
-
           <Column
             title="Thời gian đến"
             key="tgDen"
             dataIndex="tgDen"
             align="center"
           ></Column>
-
           <Column
             title="Action"
             key="action"

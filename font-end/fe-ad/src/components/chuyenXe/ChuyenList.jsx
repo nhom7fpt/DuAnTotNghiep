@@ -43,7 +43,7 @@ class ChuyenList extends Component {
             align="center"
             render={(text, record) => (
               <label>
-                {record.tuyenXe.diemDi} - {record.tuyenXe.diemDen}
+                {record.tuyenXe.diemDi} - {record.tuyenXe.diemDen} ({record.tuyenXe.tgDi})
               </label>
             )}
           ></Column>

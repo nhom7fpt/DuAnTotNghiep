@@ -17,7 +17,7 @@ import {
   loadDataField,
 } from "../../redux/actions/actionSearch";
 import PayService from "../../services/PayService";
-import Thongtinchuyendi from "../datvethanhcong/thongtinchuyendi";
+
 import SearchService from "../../services/SearchService";
 
 const DatVeForm = (props) => {
@@ -103,18 +103,18 @@ const DatVeForm = (props) => {
 
     console.log("Dữ liệu đi:", newData);
 
-    // const service = new PayService();
-    // const res = await service.creatpay(newData);
+    const service = new PayService();
+    const res = await service.creatpay(newData);
 
-    // try {
-    //   if (res && res.data) {
-    //     window.location.href = res.data;
-    //   } else {
-    //     console.error("URL thanh toán không khả dụng!");
-    //   }
-    // } catch (error) {
-    //   console.error("Lỗi khi gọi loadDataPay:", error);
-    // }
+    try {
+      if (res && res.data) {
+        window.location.href = res.data;
+      } else {
+        console.error("URL thanh toán không khả dụng!");
+      }
+    } catch (error) {
+      console.error("Lỗi khi gọi loadDataPay:", error);
+    }
   };
 
   useEffect(() => {
@@ -136,7 +136,7 @@ const DatVeForm = (props) => {
   }, [ngayDi, ngayVe, chuyenTab1.maChuyen, chuyenTab2.maChuyen]);
   return (
     <SeatSelectionProvider>
-      {/* Hiển thị thông tin từ chuyenTab1 */}
+   
       <div className="info-container-loc" key={props.chuyenTab1.maChuyen}>
         <span className="departure-time">{props.chuyenTab1.tuyenXe.tgDi}</span>
         <img src={pickup} alt="pickup" />
@@ -155,8 +155,8 @@ const DatVeForm = (props) => {
         <img src={station} alt="station" />
         <span className="arrival-time">{props.chuyenTab1.tuyenXe.tgDen}</span>
       </div>
-
-      {/* Hiển thị thông tin từ chuyenTab2 */}
+    
+     
       <div className="info-container-loc" key={props.chuyenTab2.maChuyen}>
         <span className="departure-time">{props.chuyenTab2.tuyenXe.tgDi}</span>
         <img src={pickup} alt="pickup" />
@@ -175,6 +175,7 @@ const DatVeForm = (props) => {
         <img src={station} alt="station" />
         <span className="arrival-time">{props.chuyenTab2.tuyenXe.tgDen}</span>
       </div>
+    
       <Row>
         <Col md={24}>
           <Steps

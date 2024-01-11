@@ -34,10 +34,6 @@ public class Xe {
     private Set<ChuyenXe> chuyenXes = new LinkedHashSet<>();
 
     @ManyToOne
-    @JoinColumn(name = "thuong_hieu_id")
-    private ThuongHieu thuongHieu;
-
-    @ManyToOne
     @JoinColumn(name = "loai_xe_id")
     private LoaiXe loaiXe;
 

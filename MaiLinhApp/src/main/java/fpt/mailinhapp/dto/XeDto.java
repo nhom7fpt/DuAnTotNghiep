@@ -19,8 +19,8 @@ import java.util.Set;
 public class XeDto implements Serializable {
     String bienSoXe;
     AnhDaLuuDto anhDaLuu;
-    private ThuongHieuDto thuongHieu;
+
     private LoaiXeDto loaiXe;
-    private NhaXeDto nhaXe;
+    NhaXeDto nhaXe;
 
 }

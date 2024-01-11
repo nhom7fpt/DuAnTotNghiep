@@ -20,7 +20,7 @@ function Menudangnap(props) {
         <div className="sidebar-dat-lai-mat-khau" style={{ marginTop: '1cm' }}>
             <ul>
                 <li>
-                    <NavLink exact to="/Mailinhpay">
+                    <NavLink exact to="">
                         <img src={futa} alt="MAILINHPay" /> MAILINHPay
                     </NavLink>
                 </li>
