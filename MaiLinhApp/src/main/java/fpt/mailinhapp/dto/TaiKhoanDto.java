@@ -16,6 +16,6 @@ public class TaiKhoanDto implements Serializable {
     String matKhau;
     VaiTro vaiTro;
     String newPassword;
-
+    String email;
 
 }

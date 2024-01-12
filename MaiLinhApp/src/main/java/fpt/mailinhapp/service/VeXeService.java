@@ -89,9 +89,6 @@ public class VeXeService {
 
         ThanhToanDto thanhToanDto = convertThanhToanToDto(datVe.getThanhToan());
         datVeDto.setThanhToan(thanhToanDto);
-        // Các trường khác
-
-
 
         return datVeDto;
     }
@@ -194,7 +191,7 @@ public class VeXeService {
         Duration duration = Duration.between(time, now);
         Duration duration1 = Duration.between(tgDi, now);
 
-        if (duration.toMinutes() <= 60 && duration1.toMinutes() < 15) {
+        if (duration.toMinutes() <= 30 ) {
             dao.delete(found);
             sendDeleteSuccessEmail(found);
         }else{

@@ -12,4 +12,6 @@ public class AccountReg {
     private String matKhau;
     private String hoTen;
     private String newPassword;
+    private  String email;
+
 }

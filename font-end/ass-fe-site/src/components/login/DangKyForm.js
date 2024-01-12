@@ -9,15 +9,25 @@ import { MdAttachEmail } from "react-icons/md";
 const DangKyForm = (props) => {
 
   const [hoTenValue, setHoTenValue] = useState('');
+
   const onFinish = (values) => {
-    // Kiểm tra chiều dài của hoTen trước khi submit
-    if (hoTenValue.length > 25) {
-      // Thông báo hoặc xử lý theo nhu cầu của bạn
+    const phoneNumber = values.tenTaiKhoan;
+    const password = values.matKhau;
+
+    const phoneNumberRegex = /^[0-9]{10,11}$/;
+    const passwordMinLength = 6;
+
+    if (!phoneNumberRegex.test(phoneNumber)) {
+      toast.error('Số điện thoại không hợp lệ. Vui lòng nhập từ 10 đến 11 số.');
+    } else if (hoTenValue.length > 25) {
       toast.error('Họ tên không được vượt quá 25 ký tự.');
+    } else if (password.length < passwordMinLength) {
+      toast.error(`Mật khẩu phải có ít nhất ${passwordMinLength} ký tự.`);
     } else {
       props.onFinish(values);
     }
   };
+
   const onFinishFailed = (errorInfo) => {
     toast.error(errorInfo);
   };
@@ -41,41 +51,46 @@ const DangKyForm = (props) => {
       onFinishFailed={onFinishFailed}
       autoComplete="off"
     >
-      <Form.Item
-        name="tenTaiKhoan"
-        rules={[
-          {
-            required: true,
-            message: "Nhập số điện thoại",
-          },
-        ]}
-      >
-        <Input
-          placeholder="Nhập số điện thoại"
-          prefix={<BsTelephoneFill />}
-         style={{height:'35px'}}
-         className="dangki-tenTaiKhoan"
-           
-        />
-      </Form.Item>
-
-      <Form.Item
-        name="matKhau"
-        rules={[
-          {
-            required: true,
-            message: "Nhập mật khẩu",
-          },
-        ]}
-      >
-        <Input.Password
-          placeholder="Nhập mật khẩu"
-          prefix={<PiPasswordFill />}
-       
-          style={{height:'35px'}}
-          className="dangki-tenTaiKhoan"
-        />
-      </Form.Item>
+    <Form.Item
+    name="tenTaiKhoan"
+    rules={[
+      {
+        required: true,
+        message: "Nhập số điện thoại",
+      },
+      {
+        pattern: /^[0-9]{10,11}$/,
+        message: 'Số điện thoại không hợp lệ. Vui lòng nhập từ 10 đến 11 số.',
+      },
+    ]}
+  >
+    <Input
+      placeholder="Nhập số điện thoại"
+      prefix={<BsTelephoneFill />}
+      style={{ height: '35px' }}
+      className="dangki-tenTaiKhoan"
+    />
+  </Form.Item>
+  <Form.Item
+  name="matKhau"
+  rules={[
+    {
+      required: true,
+      message: "Nhập mật khẩu",
+    },
+    {
+      min: 6,
+      message: 'Mật khẩu phải có ít nhất 6 ký tự.',
+    },
+  ]}
+>
+  <Input.Password
+    placeholder="Nhập mật khẩu"
+    prefix={<PiPasswordFill />}
+    style={{ height: '35px' }}
+    className="dangki-tenTaiKhoan"
+  />
+</Form.Item>
       <Form.Item
                 name="email"
                 rules={[

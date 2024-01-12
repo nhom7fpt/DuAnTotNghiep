@@ -21,7 +21,7 @@ function Lichsimuave(props) {
   const [selectedRecord, setSelectedRecord] = useState(null);
   const [isChecked, setIsChecked] = useState(false);
   const user = localStorage.getItem("username");
-
+  const [isDeleting, setIsDeleting] = useState(false);
   const showModal = (record) => {
     setSelectedRecord(record);
     setIsModalVisible(true);
@@ -31,8 +31,9 @@ function Lichsimuave(props) {
     setIsModalVisible(false);
 
     if (isChecked) {
-      // Hủy vé ở đây nếu Radio được chọn
+      setLoading(true);
       await onConfirm(selectedRecord);
+      setLoading(false);
     } else {
       toast.error('Vui lòng đồng ý chính sách hủy vé!', {
         position: "top-right",
@@ -374,6 +375,7 @@ function Lichsimuave(props) {
                       <Radio
                       onClick={() => setIsChecked(!isChecked)}
                       checked={isChecked}
+                      
                     >
                         Tôi đã đọc và đồng ý với điều khoản chính sách hủy vé
                       </Radio>

@@ -35,7 +35,7 @@ public class AccountCLController {
         if(error != null){
             return error;
         }
-        TaiKhoanDto tkDto = new TaiKhoanDto(dto.getTenTaiKhoan(), dto.getMatKhau(), VaiTro.ThanhVien, dto.getNewPassword());
+        TaiKhoanDto tkDto = new TaiKhoanDto(dto.getTenTaiKhoan(), dto.getMatKhau(), VaiTro.ThanhVien, dto.getNewPassword(), dto.getEmail());
 
         var newDto = service.insertAccount(tkDto);
 
@@ -44,6 +44,7 @@ public class AccountCLController {
         tv.setTaiKhoan(tkDto);
         tv.setSoDT(dto.getTenTaiKhoan());
         tv.setTaiKhoan(newDto);
+        tv.setEmail(dto.getEmail());
         tv.setHoTen(dto.getHoTen());
 
 

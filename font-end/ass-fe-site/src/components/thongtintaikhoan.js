@@ -83,7 +83,7 @@ function Thongtintaikhoan(props) {
                                     <Form.Item label="Số điện thoại:" name="id" initialValue={user} >
                                         <Input placeholder="0123456789" disabled style={{ width: '340px',  height: '45px'}}/>
                                     </Form.Item>
-                                    <Form.Item label="Email:" name="email" initialValue={custom?.email || ''}>
+                                    <Form.Item label="Email:" name="email" initialValue={email}>
                                         <Input placeholder="kiuoanh@gmail.com" style={{ width: '340px',  marginLeft:'45px', height: '45px'}}/>
                                     </Form.Item>
                                     
