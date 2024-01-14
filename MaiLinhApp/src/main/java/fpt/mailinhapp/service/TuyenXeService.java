@@ -122,10 +122,6 @@ public class TuyenXeService {
     public List<TuyenXe> findAll() {
         List<TuyenXe> allTuyenXe = dao.findAll();
 
-        // Kiểm tra và xử lý ngày giờ trước khi trả về
-//        for (TuyenXe tuyenXe : allTuyenXe) {
-//            validateAndFixDateTimeFields(tuyenXe);
-//        }
 
         return allTuyenXe;
     }

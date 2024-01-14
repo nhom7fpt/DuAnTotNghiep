@@ -56,7 +56,9 @@ const DatVeForm = (props) => {
   };
 
   const onClose = () => {
+    
     props.onClose();
+   
   };
   const handlePayment = async () => {
     const { chuyen } = props;

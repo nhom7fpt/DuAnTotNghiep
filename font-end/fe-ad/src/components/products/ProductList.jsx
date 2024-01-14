@@ -26,10 +26,10 @@ class ProductList extends Component {
   render() {
     const { Cars } = this.props;
     console.log(Cars);
-
+    const reversedDataCars = Cars.slice().reverse();
     return (
       <>
-        <Table dataSource={Cars} rowKey="bienSoXe">
+        <Table dataSource={reversedDataCars} rowKey="bienSoXe">
           <Column
             title="Ảnh Đã Lưu"
             key="anhDaLuu"

@@ -62,8 +62,9 @@ const DashboardPage = () => {
     <Layout style={siteLayoutStyle}>
       <Sider trigger={null} collapsible collapsed={collapsed}>
         <div className="logo">
-          <h2>{collapsed ? "ss" : "Spring Shop"}</h2>
+          <h2>{collapsed ? "ML" : "Mai LInh TOUR"}</h2>
         </div>
+        
         <Menu
           theme="dark"
           mode="inline"
@@ -262,7 +263,7 @@ const DashboardPage = () => {
         >
           <div className="content-panel">
             <Routes>
-              <Route path="/" element={<Home />} />
+              <Route path="/" element={<TuyenXe />} />
               <Route path="/loaixe/them" element={<AddOrEdit key="a" />} />
               <Route
                 path="/loaixe/capnhat/:id"

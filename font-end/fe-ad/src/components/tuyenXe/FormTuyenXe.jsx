@@ -25,14 +25,8 @@ class FormTuyenXe extends Component {
   goNext = (values) => {
     const { tuyenXe } = this.props;
   
-    const di1 = tuyenXe.ngayDi ? dayjs(tuyenXe.ngayDi).format("YYYY-MM-DD") : "";
-  const den1 = tuyenXe.ngayVe ? dayjs(tuyenXe.ngayVe).format("YYYY-MM-DD") : "";
-
-    
    
-    values.ngayDi = di1;
-    values.ngayVe = den1;
-    console.log("dữ liệu ngày đi" , di1);
+  
     this.form.current
         .validateFields()
         .then((validatedValues) => {
@@ -48,12 +42,8 @@ class FormTuyenXe extends Component {
     const { tuyenXe } = this.props;
     const di = tuyenXe.tgDi ? dayjs(tuyenXe.tgDi, format) : "";
     const den = tuyenXe.tgDen ? dayjs(tuyenXe.tgDen, format) : "";
-    const di1 = tuyenXe.ngayDi ? dayjs(tuyenXe.ngayDi) : "";
-    const den1 = tuyenXe.ngayVe ? dayjs(tuyenXe.ngayVe) : "";
-    // const disabledDate = (current) => {
-    //   return current.isBefore(moment().startOf("day"));
-    // };
    
+ 
     const dateFormat = "YYYY-MM-DD";
 
 

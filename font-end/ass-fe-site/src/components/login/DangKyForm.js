@@ -1,5 +1,5 @@
 
-import React, { useState,useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Button, Form, Input } from "antd";
 import { BsTelephoneFill } from "react-icons/bs";
 import { PiPasswordFill } from "react-icons/pi";
@@ -51,83 +51,83 @@ const DangKyForm = (props) => {
       onFinishFailed={onFinishFailed}
       autoComplete="off"
     >
-    <Form.Item
-    name="tenTaiKhoan"
-    rules={[
-      {
-        required: true,
-        message: "Nhập số điện thoại",
-      },
-      {
-        pattern: /^[0-9]{10,11}$/,
-        message: 'Số điện thoại không hợp lệ. Vui lòng nhập từ 10 đến 11 số.',
-      },
-    ]}
-  >
-    <Input
-      placeholder="Nhập số điện thoại"
-      prefix={<BsTelephoneFill />}
-      style={{ height: '35px' }}
-      className="dangki-tenTaiKhoan"
-    />
-  </Form.Item>
-  <Form.Item
-  name="matKhau"
-  rules={[
-    {
-      required: true,
-      message: "Nhập mật khẩu",
-    },
-    {
-      min: 6,
-      message: 'Mật khẩu phải có ít nhất 6 ký tự.',
-    },
-  ]}
->
-  <Input.Password
-    placeholder="Nhập mật khẩu"
-    prefix={<PiPasswordFill />}
-    style={{ height: '35px' }}
-    className="dangki-tenTaiKhoan"
-  />
-</Form.Item>
       <Form.Item
-                name="email"
-                rules={[
-                  {
-                    type: "email",
-                    message: "Email không hợp lệ",
-                  },
-                  {
-                    required: true,
-                    message: "Nhập địa chỉ email",
-                  },
-                ]}
-              >
-                <Input placeholder="Nhập địa chỉ email" 
-                style={{width:'444px', height:'35px'}}
-                prefix={<MdAttachEmail />}
-           
-                />
-              </Form.Item>
-      
-              <Form.Item
-              name="hoTen"
-              rules={[
-                {
-                  required: true,
-                  message: "Nhập họ tên",
-                },
-                {
-                  max: 25,
-                  message: 'Họ tên không được vượt quá 25 ký tự!',
-                },
-              ]}
-            >
-        <Input placeholder="Nhập họ tên" 
-        prefix={<BiSolidUserPin />}
-        style={{height:'35px'}}
-        className="dangki-tenTaiKhoan"
+        name="tenTaiKhoan"
+        rules={[
+          {
+            required: true,
+            message: "Nhập số điện thoại",
+          },
+          {
+            pattern: /^[0-9]{10,11}$/,
+            message: 'Số điện thoại không hợp lệ. Vui lòng nhập từ 10 đến 11 số.',
+          },
+        ]}
+      >
+        <Input
+          placeholder="Nhập số điện thoại"
+          prefix={<BsTelephoneFill />}
+          style={{ height: '35px' }}
+          className="dangki-tenTaiKhoan"
+        />
+      </Form.Item>
+      <Form.Item
+        name="matKhau"
+        rules={[
+          {
+            required: true,
+            message: "Nhập mật khẩu",
+          },
+          {
+            min: 6,
+            message: 'Mật khẩu phải có ít nhất 6 ký tự.',
+          },
+        ]}
+      >
+        <Input.Password
+          placeholder="Nhập mật khẩu"
+          prefix={<PiPasswordFill />}
+          style={{ height: '35px' }}
+          className="dangki-tenTaiKhoan"
+        />
+      </Form.Item>
+      <Form.Item
+        name="email"
+        rules={[
+          {
+            type: "email",
+            message: "Email không hợp lệ",
+          },
+          {
+            required: true,
+            message: "Nhập địa chỉ email",
+          },
+        ]}
+      >
+        <Input placeholder="Nhập địa chỉ email"
+          style={{ width: '444px', height: '35px' }}
+          prefix={<MdAttachEmail />}
+
+        />
+      </Form.Item>
+
+      <Form.Item
+        name="hoTen"
+        rules={[
+          {
+            required: true,
+            message: "Nhập họ tên",
+          },
+          {
+            max: 25,
+            message: 'Họ tên không được vượt quá 25 ký tự!',
+          },
+        ]}
+      >
+        <Input placeholder="Nhập họ tên"
+          prefix={<BiSolidUserPin />}
+          style={{ height: '35px' }}
+          className="dangki-tenTaiKhoan"
         />
       </Form.Item>
 

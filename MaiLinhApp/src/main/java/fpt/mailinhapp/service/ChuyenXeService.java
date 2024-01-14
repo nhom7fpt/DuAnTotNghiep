@@ -1,11 +1,7 @@
 package fpt.mailinhapp.service;
 
-import fpt.mailinhapp.domain.ChuyenXe;
-import fpt.mailinhapp.domain.NhanVien;
-import fpt.mailinhapp.domain.TuyenXe;
-import fpt.mailinhapp.domain.Xe;
-import fpt.mailinhapp.dto.ChuyenXeDto;
-import fpt.mailinhapp.dto.NhanVienDto;
+import fpt.mailinhapp.domain.*;
+import fpt.mailinhapp.dto.*;
 import fpt.mailinhapp.exception.BusesException;
 import fpt.mailinhapp.exception.CarsException;
 import fpt.mailinhapp.repository.*;
@@ -118,12 +114,25 @@ public class ChuyenXeService {
                 .collect(Collectors.toList());
         return listData.stream().map(item -> {
             ModelMapper mapper = new ModelMapper();
-            return mapper.map(item, ChuyenXeDto.class);
+            ChuyenXeDto chuyenXeDto = mapper.map(item, ChuyenXeDto.class);
+
+
+            chuyenXeDto.setXedto(convertXeToDto(item.getXe()));
+
+
+            return chuyenXeDto;
+
         }).collect(Collectors.toList());
         }else{
             return listEntity.stream().map(item -> {
                 ModelMapper mapper = new ModelMapper();
-                return mapper.map(item, ChuyenXeDto.class);
+                ChuyenXeDto chuyenXeDto = mapper.map(item, ChuyenXeDto.class);
+
+
+                chuyenXeDto.setXedto(convertXeToDto(item.getXe()));
+
+
+                return chuyenXeDto;
             }).collect(Collectors.toList());
         }
     }
@@ -135,15 +144,15 @@ public class ChuyenXeService {
     public List<ChuyenXeDto> findByTuyen(ChuyenTheoTuyen dto) {
         List<ChuyenXe> listEntity = dao.findByTuyenXe_DiemDiLikeAndTuyenXe_DiemDenLike(dto.getDiemDi(), dto.getDiemDen());
 
-        LocalTime now = LocalTime.now();
-
-        List<ChuyenXe> listData = listEntity.stream()
-                .filter(chuyenXe -> parseTime(chuyenXe.getTuyenXe().getTgDi()).isAfter(now))
-                .collect(Collectors.toList());
-
-        List<ChuyenXeDto> listDto = listData.stream().map(item -> {
+        List<ChuyenXeDto> listDto = listEntity.stream().map(item -> {
             ModelMapper mapper = new ModelMapper();
-            return mapper.map(item, ChuyenXeDto.class);
+            ChuyenXeDto chuyenXeDto = mapper.map(item, ChuyenXeDto.class);
+
+
+            chuyenXeDto.setXedto(convertXeToDto(item.getXe()));
+
+
+            return chuyenXeDto;
         }).collect(Collectors.toList());
 
         return listDto;
@@ -177,7 +186,27 @@ public class ChuyenXeService {
         return data;
     }
 
+    private XeDto convertXeToDto(Xe xe) {
+        XeDto xeDto = new XeDto();
+        BeanUtils.copyProperties(xe, xeDto);
+        LoaiXeDto loaiXeDto = convertLoaiXeToDto(xe.getLoaiXe());
+        xeDto.setLoaiXe(loaiXeDto);
+        NhaXeDto nhaXeDto = convertNhaXeToDto(xe.getNhaXe());
+        xeDto.setNhaXe(nhaXeDto);
 
+        return xeDto;
+    }
+    private LoaiXeDto convertLoaiXeToDto(LoaiXe loaiXe) {
+        LoaiXeDto loaiXeDto = new LoaiXeDto();
+        BeanUtils.copyProperties(loaiXe, loaiXeDto);
 
+        return loaiXeDto;
+    }
+    private NhaXeDto convertNhaXeToDto(NhaXe nhaXe) {
+        NhaXeDto nhaXeDto = new NhaXeDto();
+        BeanUtils.copyProperties(nhaXe, nhaXeDto);
+
+        return nhaXeDto;
+    }
 
 }

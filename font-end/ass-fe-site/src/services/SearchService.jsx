@@ -22,7 +22,7 @@ export default class SearchService {
   };
 
   loadListChuyenReturn = async (tc) => {
-    console.log("data đasadsadsa" , tc);
+   
     return await axios.post(API_SEARCH + "/return", tc);
   };
 

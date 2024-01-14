@@ -12,6 +12,8 @@ import SearchService from '../../services/SearchService.jsx';
 import { toast } from "react-toastify";
 import { Modal, Button, message, Checkbox, Radio } from 'antd';
 
+import { LoadingOutlined } from '@ant-design/icons';
+
 function Datvethanhcong(props) {
   const { id } = useParams();
   const { listData } = props;
@@ -20,7 +22,7 @@ function Datvethanhcong(props) {
   const [huyVeStatus, setHuyVeStatus] = useState(false);
   const [isChecked, setIsChecked] = useState(false);
   const [modalVisible, setModalVisible] = useState(false);
-
+  const [spinning, setSpinning] = useState(false);
   
   const { navigate } = props.router;
   
@@ -59,9 +61,11 @@ function Datvethanhcong(props) {
   const handleHuyVe = async () => {
     try {
       const service = new OrderhistoryService();
+      setSpinning(true); 
+  
       await service.HuyVe(id);
       setHuyVeStatus(true);
-
+  
       toast.success('Vé đã được hủy thành công!', {
         position: "top-right",
         autoClose: 2000,
@@ -72,7 +76,7 @@ function Datvethanhcong(props) {
         progress: undefined,
         theme: "colored",
       });
-
+  
       navigate("/");
     } catch (error) {
       if (error.response && error.response.status === 400) {
@@ -89,9 +93,11 @@ function Datvethanhcong(props) {
           backgroundColor: "#ff0000",
         });
       }
+    } finally {
+      setSpinning(false); // Tắt hiệu ứng loading sau khi hoàn thành hành động
     }
   };
-
+  
   const showConfirm = () => {
     setModalVisible(true);  // Mở modal khi checkbox được chọn
   };
@@ -228,7 +234,8 @@ function Datvethanhcong(props) {
             </section>
             <section className="info-row-dvtc">
             <div>Hủy Vé</div>
-            <Button type="danger" style={{marginTop:'20px'}} onClick={showConfirm}>
+            <Button type="danger" style={{marginTop:'20px'}} onClick={showConfirm} loading={spinning}
+            icon={spinning ? <LoadingOutlined /> : null}>
             Hủy vé
           </Button>
           

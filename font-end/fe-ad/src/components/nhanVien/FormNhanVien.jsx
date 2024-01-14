@@ -18,12 +18,11 @@ class FormProduct extends Component {
       })
       .catch((errorInfo) => {
         console.log("Validation failed:", errorInfo);
-        // Xử lý khi validation không thành công nếu cần
+      
       });
   };
 
   componentDidUpdate(prevProps) {
-    // Kiểm tra nếu dữ liệu product đã được cập nhật
     if (this.props.nhanVien !== prevProps.nhanVien) {
       this.goNext();
     }

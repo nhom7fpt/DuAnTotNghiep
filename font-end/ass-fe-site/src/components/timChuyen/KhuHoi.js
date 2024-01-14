@@ -12,10 +12,7 @@ const KhuHoi = (props) => {
   const [diemDiValue, setDiemDiValue] = useState(diemDiFromUrl);
   const [diemDenValue, setDiemDenValue] = useState(diemDenFromUrl);
 
-  const [startDate, setStartDate] = useState(moment());
-  const [returnDate, setReturnDate] = useState(null);
-  const [ngayDi, setNgayDi] = useState(moment());
-  const [ngayVe, setNgayVe] = useState(moment());
+
   const [defaultNgayDi, setDefaultNgayDi] = useState(moment());
 
   const disabledDate = (current) => {
@@ -103,7 +100,7 @@ const KhuHoi = (props) => {
           <DatePicker
             format="DD/MM/YYYY"
             onChange={onChange1}
-            id="datepickerStart" // Đổi ID để tránh trùng lặp
+            id="datepickerStart" 
             disabledDate={disabledDate}
             defaultValue={defaultNgayDi}
             picker="date"
@@ -122,7 +119,7 @@ const KhuHoi = (props) => {
             onChange={onChange2}
             showTimeSelect
           
-            id="datepickerEnd" // Đổi ID để tránh trùng lặp
+            id="datepickerEnd" 
             disabledDate={disabledDate}
             picker="date"
             placeholder="Chọn thời gian về"

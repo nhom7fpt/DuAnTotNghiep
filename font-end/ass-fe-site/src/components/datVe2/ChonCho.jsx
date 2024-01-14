@@ -169,17 +169,6 @@ const ChonCho = (props) => {
   useEffect(() => {
     createData();
     createDataNgayVe();
-    // const storedSelectedSeatsLowerNgayDi = JSON.parse(localStorage.getItem("selectedSeatsLowerNgayDi") || "[]");
-    // setSelectedSeatsLowerNgayDi(storedSelectedSeatsLowerNgayDi);
-
-    // const storedSelectedSeatsUpperNgayDi = JSON.parse(localStorage.getItem("selectedSeatsUpperNgayDi") || "[]");
-    // setSelectedSeatsUpperNgayDi(storedSelectedSeatsUpperNgayDi);
-
-    // const storedSelectedSeatsLowerNgayVe = JSON.parse(localStorage.getItem("selectedSeatsLowerNgayVe") || "[]");
-    // setSelectedSeatsLowerNgayVe(storedSelectedSeatsLowerNgayVe);
-
-    // const storedSelectedSeatsUpperNgayVe = JSON.parse(localStorage.getItem("selectedSeatsUpperNgayVe") || "[]");
-    // setSelectedSeatsUpperNgayVe(storedSelectedSeatsUpperNgayVe);
   }, [soGhe1, soGhe2, disCho1, disCho2]);
   console.log(dataUpper);
 

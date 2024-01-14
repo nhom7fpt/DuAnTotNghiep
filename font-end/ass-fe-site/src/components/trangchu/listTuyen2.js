@@ -16,8 +16,7 @@ import { format, parseISO } from "date-fns";
 import viLocale from "date-fns/locale/vi";
 import SearchService from "../../services/SearchService";
 
-const { TabPane } = Tabs; // Extract TabPane from Ant Design Tabs
-
+const { TabPane } = Tabs; 
 function SeatSelection2(props) {
   const [selectedChuyenTab1, setSelectedChuyenTab1] = useState(null);
   const [selectedChuyenTab2, setSelectedChuyenTab2] = useState(null);
@@ -121,7 +120,6 @@ const [currentPageTab2, setCurrentPageTab2] = useState(1);
     if (areBothChuyensSelected()) {
       setIsSeatModalOpen(true);
     } else {
-      // Nếu chỉ có một trong hai được chọn, tự động chuyển sang tab còn lại
       const targetTab = selectedTab === "ngayDi" ? "ngayVe" : "ngayDi";
       setSelectedTab(targetTab);
     }
@@ -164,6 +162,7 @@ console.log("dữ liệu chuyến đi 1" , currentPageTab1 )
         activeKey={selectedTab}
         onChange={(tab) => setSelectedTab(tab)}
         className="TabKhuhoi"
+        defaultActiveKey="ngayDi"
       >
         <TabPane
           tab={`Chuyến Đi - ${dayOfWeek}, ${formattedNgayDi}`}
@@ -237,16 +236,16 @@ console.log("dữ liệu chuyến đi 1" , currentPageTab1 )
                         {formatCurrency(item.tuyenXe.gia)}
                       </span>
                       <div className="availability-dot"></div>
-                      <span className="seat-type">Giường</span>
+                      <span className="seat-type" style={{width:'100px', textAlign:"justify"}}>{item.xedto.loaiXe.loaiGhe}</span>
                       <div className="availability-dot"></div>
                       <span
-                        className="available-seats text-orange"
-                        style={{ width: "120px" }}
-                      >
-                        {item.soGheTrong > 0
-                          ? `${item.soGheTrong} chỗ trống`
-                          : "Hết ghế trống"}
-                      </span>
+                      className="available-seats text-orange"
+                      style={{ width: "200px" , textAlign:'justify' }}
+                    >
+                      {item.soGheTrong > 0
+                        ? `${item.soGheTrong} chỗ trống`
+                        : "Hết ghế trống"}
+                    </span>
                       <span
                         className="btn-gialisttuyen"
                         style={{ color: "blue", width: "120px" }}
@@ -364,16 +363,17 @@ console.log("dữ liệu chuyến đi 1" , currentPageTab1 )
                         {formatCurrency(item.tuyenXe.gia)}
                       </span>
                       <div className="availability-dot"></div>
-                      <span className="seat-type">Giường</span>
+                      <span className="seat-type" style={{width:'100px', textAlign:"justify"}}>{item.xedto.loaiXe.loaiGhe}</span>
+                     
                       <div className="availability-dot"></div>
                       <span
-                        className="available-seats text-orange"
-                        style={{ width: "120px" }}
-                      >
-                        {item.soGheTrong > 0
-                          ? `${item.soGheTrong} chỗ trống`
-                          : "Hết ghế trống"}
-                      </span>
+                      className="available-seats text-orange"
+                      style={{ width: "200px" , textAlign:'justify' }}
+                    >
+                      {item.soGheTrong > 0
+                        ? `${item.soGheTrong} chỗ trống`
+                        : "Hết ghế trống"}
+                    </span>
                       <span
                         className="btn-gialisttuyen"
                         style={{ color: "blue", width: "120px" }}

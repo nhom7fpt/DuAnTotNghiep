@@ -40,7 +40,7 @@ const ChonCho = (props) => {
 
   const onNext = () => {
     const newData = selectedSeatsLower.concat(selectedSeatsUpper);
-    console.log("Ghế đã chọn:", newData); // In ra console
+    console.log("Ghế đã chọn:", newData);
     props.onNext(newData);
   };
 
@@ -65,7 +65,6 @@ const ChonCho = (props) => {
       if (isDisabled) {
         disabledSeatsLower.push(seatKeyLower);
       } else {
-        // Ghế không bị disable, thì thêm vào danh sách ghế trống
         setEmptySeats((prevEmptySeats) => [...prevEmptySeats, seatKeyLower]);
       }
     }

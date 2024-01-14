@@ -191,7 +191,7 @@ public class VeXeService {
         Duration duration = Duration.between(time, now);
         Duration duration1 = Duration.between(tgDi, now);
 
-        if (duration.toMinutes() <= 30 ) {
+        if (duration.toMinutes() <= 30  ) {
             dao.delete(found);
             sendDeleteSuccessEmail(found);
         }else{

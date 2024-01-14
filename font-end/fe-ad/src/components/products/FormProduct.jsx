@@ -26,16 +26,12 @@ class FormProduct extends Component {
       .validateFields()
       .then((values) => {
         const { bienSoXe } = values;
-  
-        // Kiểm tra biển số xe theo quy chuẩn
         const bienSoXeRegex = /^\d{2}-[A-Z]\d{1}-\d{5}$/;
         if (!bienSoXeRegex.test(bienSoXe)) {
-          // Biển số xe không đúng quy chuẩn
-          message.error("Biển số xe không đúng định dạng. Vui lòng kiểm tra lại.");
+          message.error("Biển số xe không đúng định dạng. Vui lòng kiểm tra lại." + bienSoXeRegex);
           return;
         }
   
-        // Tiếp tục xử lý khi biển số xe đúng quy chuẩn
         const newValues = {
           ...values,
           anhDaLuu: values.anhDaLuu[0].response,
@@ -45,12 +41,10 @@ class FormProduct extends Component {
       })
       .catch((errorInfo) => {
         console.log("Validation failed:", errorInfo);
-        // Xử lý khi validation không thành công nếu cần
       });
   };
   
   componentDidUpdate(prevProps) {
-    // Kiểm tra nếu dữ liệu product đã được cập nhật
     if (this.props.Car !== prevProps.Car) {
       this.goNext();
     }

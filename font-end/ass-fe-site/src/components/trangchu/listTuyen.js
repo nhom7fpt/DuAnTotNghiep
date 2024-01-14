@@ -25,11 +25,11 @@ function SeatSelection(props) {
   const [newListChuyen, setNewListChuyen] = useState([]);
   const [isSeatModalOpen, setIsSeatModalOpen] = useState(false);
   const [currentTrip, setCurrentTrip] = useState(null);
-  const [ghesTrongData, setGhesTrongData] = useState([]);
-  const [soGhe, setSoGhe] = useState(0);
+
 
   const onClose = () => {
     setIsSeatModalOpen(false);
+ 
   };
 
   const handleSeatModal = (data) => {
@@ -50,7 +50,7 @@ function SeatSelection(props) {
       ? value.toLocaleString("vi-VN", { style: "currency", currency: "VND" })
       : "---";
   }
-
+console.log("đaaaaaaa", listChuyen);
   const getCurrentPageData = async () => {
     const startIndex = (currentPage - 1) * pageSize;
     const endIndex = startIndex + pageSize;
@@ -93,7 +93,7 @@ function SeatSelection(props) {
     };
 
     fetchData();
-  }, [currentPage, listChuyen, listTuyen, ngayDi]);
+  }, [currentPage, listChuyen, listTuyen, ngayDi,]);
 
   return (
     <div className="grid-listtuyen-container-loc">
@@ -165,11 +165,11 @@ function SeatSelection(props) {
                       {formatCurrency(item.tuyenXe.gia)}
                     </span>
                     <div className="availability-dot"></div>
-                    <span className="seat-type">Giường</span>
+                    <span className="seat-type" style={{width:'100px', textAlign:"justify"}}>{item.xedto.loaiXe.loaiGhe}</span>
                     <div className="availability-dot"></div>
                     <span
                       className="available-seats text-orange"
-                      style={{ width: "120px" }}
+                      style={{ width: "200px" , textAlign:'justify' }}
                     >
                       {item.soGheTrong > 0
                         ? `${item.soGheTrong} chỗ trống`
