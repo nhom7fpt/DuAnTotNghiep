@@ -127,20 +127,7 @@ export class AccountList extends Component {
                     <BiEdit color="blue" size={24} />
                   </Button>
                 </Tooltip>
-                <Tooltip placement="top" title="Xóa" color="red">
-                  <Popconfirm
-                    key={record.key}
-                    title="Thông báo"
-                    description="Bạn thực sự muốn xóa"
-                    onConfirm={() => this.props.onConfirm(record)}
-                    okText="Đúng"
-                    cancelText="Không"
-                  >
-                    <Button type="link" danger>
-                      <BiSolidTrash size={24}></BiSolidTrash>
-                    </Button>
-                  </Popconfirm>
-                </Tooltip>
+             
               </Space>
             )}
           ></Column>

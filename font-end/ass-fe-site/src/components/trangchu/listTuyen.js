@@ -157,6 +157,7 @@ console.log("đaaaaaaa", listChuyen);
                     <br />
                     <span className="location-info-text text-gray"></span>
                   </div>
+                 
                 </div>
                 <hr className="divider my-3" />
                 <Col span={24} className="availability-info">
@@ -167,17 +168,20 @@ console.log("đaaaaaaa", listChuyen);
                     <div className="availability-dot"></div>
                     <span className="seat-type" style={{width:'100px', textAlign:"justify"}}>{item.xedto.loaiXe.loaiGhe}</span>
                     <div className="availability-dot"></div>
+                    <span className="seat-type" style={{textAlign:"justify",width:'100px', marginRight:'10px', marginLeft:'10px'}}>{item.xedto.loaiXe.tenLoai}</span>
+                    <div className="availability-dot"></div>
                     <span
                       className="available-seats text-orange"
-                      style={{ width: "200px" , textAlign:'justify' }}
+                      style={{ width: "200px", height:'30px' , textAlign:'justify', marginRight:'10px', marginLeft:'10px'}}
                     >
                       {item.soGheTrong > 0
                         ? `${item.soGheTrong} chỗ trống`
                         : "Hết ghế trống"}
                     </span>
+                  
                     <span
                     className="btn-gialisttuyen"
-                    style={{ color: "blue", width: "120px" }}
+                    style={{ color: "blue" , marginRight:"-4cm", textAlign:'justify'}}
                     onClick={() => {
                       if (item.soGheTrong > 0) {
                         handleSeatModal(item);
@@ -188,6 +192,9 @@ console.log("đaaaaaaa", listChuyen);
                   >
                     chọn ghế
                   </span>
+                
+                 
+              
                     <button type="button" className="custom-button">
                       <span onClick={() => {
                         if (item.soGheTrong > 0) {

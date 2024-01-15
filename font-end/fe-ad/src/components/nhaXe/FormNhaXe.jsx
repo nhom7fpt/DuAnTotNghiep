@@ -80,9 +80,19 @@ class FormNhaXe extends Component {
           >
             <Input />
           </Form.Item>
-          <Form.Item name="sdt" label="Số điện thoại" initialValue={nhaXe.sdt}>
-            <Input />
-          </Form.Item>
+          <Form.Item
+          name="sdt"
+          label="Số điện thoại"
+          initialValue={nhaXe.sdt}
+          rules={[
+            {
+              pattern: /^[0-9]{10,11}$/, 
+              message: "Số điện thoại phải là số và có độ dài từ 10-11 ký tự!",
+            },
+          ]}
+        >
+          <Input maxLength={11} />
+        </Form.Item>
         </Form>
       </Modal>
     );

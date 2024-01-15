@@ -80,7 +80,7 @@ public class TuyenXeService {
 
         if(dto.getTgDi() != null){
             OffsetDateTime offsetDateTimeStart = OffsetDateTime.parse(dto.getTgDi(), formatter);
-            offsetDateTimeStart.withNano(0);
+            offsetDateTimeStart = offsetDateTimeStart.withNano(0);
             OffsetDateTime timeZoneStart = offsetDateTimeStart.withOffsetSameInstant(ZoneOffset.ofHours(7));
             LocalTime tgDi = timeZoneStart.toLocalTime();
             found.setTgDi(tgDi);
@@ -88,7 +88,7 @@ public class TuyenXeService {
 
         if(dto.getTgDen() != null) {
             OffsetDateTime offsetDateTimeEnd = OffsetDateTime.parse(dto.getTgDen(), formatter);
-            offsetDateTimeEnd.withNano(0);
+            offsetDateTimeEnd = offsetDateTimeEnd.withNano(0);
             OffsetDateTime timeZoneEnd = offsetDateTimeEnd.withOffsetSameInstant(ZoneOffset.ofHours(7));
 
 

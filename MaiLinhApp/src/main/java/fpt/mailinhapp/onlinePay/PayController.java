@@ -210,8 +210,11 @@ public class PayController {
                     "<br>" +
                     "ID: " + dto.getId() + "<br>" +
                     "Tên Khách hàng:" + trunggian.getInfo().getHoTen()+ "<br>" +
-                    "Số ghế:" + trunggian.getChoNgoi()+ "<br>" +
-                    "Tổng tiền: " + trunggian.getTongTien() + " VND<br>" +
+                    "Số ghế:" + trunggian.getChoNgoi()+ "<br>";
+            if (trunggian.getChoNgoi2() != null && !trunggian.getChoNgoi2().isEmpty()) {
+                text += "Số ghế 2: " + trunggian.getChoNgoi2() + "<br>";
+            }
+            text +=  "Tổng tiền: " + trunggian.getTongTien() + " VND<br>" +
                     "Ngày đặt: " + dto.getPayDate()+ "<br>" +
                     "Tình trạng: " + statusMessage + "<br>" +
                     "Thông tin chi tiết xin vui lòng check trong lịch sử giao dịch cửa website:" + redirectUrl + "<br>" ;

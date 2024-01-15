@@ -418,3 +418,6 @@ button:focus {
   background-color: transparent;
   transition: background-color 0.3s ease, color 0.3s ease;
 }
+.btn-gialisttuyen {
+  width: 200px !important;
+}

@@ -260,9 +260,8 @@ function Lichsimuave(props) {
     const options = { year: "numeric", month: "2-digit", day: "2-digit" };
     return new Date(dateString).toLocaleDateString("en-GB", options);
   };
-
+  // Sử dụng useEffect để gọi action orderhistory khi component được render
   useEffect(() => {
-    // Gọi action orderhistory để cập nhật dữ liệu trong Redux state
     props.orderhistory(user);
 
     // Load dữ liệu mới dựa trên selectedDate

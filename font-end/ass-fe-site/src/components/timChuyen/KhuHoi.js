@@ -20,7 +20,7 @@ const KhuHoi = (props) => {
   };
 
   const onChange1 = (value) => {
-    setDefaultNgayDi(value);
+  
     props.setNgayDi(value.format("YYYY-MM-DD"));
   };
 
@@ -54,7 +54,7 @@ const KhuHoi = (props) => {
       props.setEnd(diemDenValue);
     }
     if(defaultNgayDi) {
-      setDefaultNgayDi(defaultNgayDi);
+   
       props.setNgayDi(defaultNgayDi.format("YYYY-MM-DD"));
     }
 
@@ -102,7 +102,7 @@ const KhuHoi = (props) => {
             onChange={onChange1}
             id="datepickerStart" 
             disabledDate={disabledDate}
-            defaultValue={defaultNgayDi}
+         
             picker="date"
             placeholder="Chọn thời gian đi"
             className="khuhoiinput"

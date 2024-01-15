@@ -50,7 +50,7 @@ class ListManufacturer extends Component {
             align="center"
           ></Column>
           <Column
-            title="Thời gia đi"
+            title="Thời gian đi"
             key="tgDi"
             dataIndex="tgDi"
             align="center"

@@ -36,6 +36,7 @@ class NhaXe extends Component {
   onEdit = (value) => {
     const { navigate } = this.props.router;
     this.props.updateNhaXe(value.id, value, navigate);
+    this.setState({...this.state, open: false})
   };
   editManu = (data) => {
     this.setState({ open: true, nhaXe: data });

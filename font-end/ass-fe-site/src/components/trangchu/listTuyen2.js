@@ -238,9 +238,11 @@ console.log("dữ liệu chuyến đi 1" , currentPageTab1 )
                       <div className="availability-dot"></div>
                       <span className="seat-type" style={{width:'100px', textAlign:"justify"}}>{item.xedto.loaiXe.loaiGhe}</span>
                       <div className="availability-dot"></div>
+                      <span className="seat-type" style={{textAlign:"justify",width:'100px', marginRight:'10px', marginLeft:'10px'}}>{item.xedto.loaiXe.tenLoai}</span>
+                      <div className="availability-dot"></div>
                       <span
                       className="available-seats text-orange"
-                      style={{ width: "200px" , textAlign:'justify' }}
+                      style={{ width: "200px", height:'30px' , textAlign:'justify', marginRight:'10px', marginLeft:'10px'}}
                     >
                       {item.soGheTrong > 0
                         ? `${item.soGheTrong} chỗ trống`
@@ -248,7 +250,7 @@ console.log("dữ liệu chuyến đi 1" , currentPageTab1 )
                     </span>
                       <span
                         className="btn-gialisttuyen"
-                        style={{ color: "blue", width: "120px" }}
+                        style={{ color: "blue" , marginRight:"-4cm", textAlign:'justify'}}
                         onClick={() => {
                           if (item.soGheTrong > 0) {
                             handleSeatModal(item);
@@ -364,11 +366,14 @@ console.log("dữ liệu chuyến đi 1" , currentPageTab1 )
                       </span>
                       <div className="availability-dot"></div>
                       <span className="seat-type" style={{width:'100px', textAlign:"justify"}}>{item.xedto.loaiXe.loaiGhe}</span>
+                      <div className="availability-dot"></div>
+                      <span className="seat-type" style={{textAlign:"justify",width:'100px', marginRight:'10px', marginLeft:'10px'}}>{item.xedto.loaiXe.tenLoai}</span>
                      
                       <div className="availability-dot"></div>
+
                       <span
                       className="available-seats text-orange"
-                      style={{ width: "200px" , textAlign:'justify' }}
+                      style={{ width: "200px", height:'30px' , textAlign:'justify', marginRight:'10px', marginLeft:'10px'}}
                     >
                       {item.soGheTrong > 0
                         ? `${item.soGheTrong} chỗ trống`
@@ -376,7 +381,7 @@ console.log("dữ liệu chuyến đi 1" , currentPageTab1 )
                     </span>
                       <span
                         className="btn-gialisttuyen"
-                        style={{ color: "blue", width: "120px" }}
+                        style={{ color: "blue" , marginRight:"-4cm", textAlign:'justify'}}
                         onClick={() => {
                           if (item.soGheTrong > 0) {
                             handleSeatModal(item);
