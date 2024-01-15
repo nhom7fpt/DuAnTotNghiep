@@ -38,6 +38,8 @@ function Lichtrinhpage(props) {
   useEffect(() => {
     props.loadDataTuyen();
   }, []);
+
+  console.log(" load data linhtrinh", uniqueListTuyen);
   return (
     <div className="schedule-container-lt">
       <div className="info-header-search-lt">

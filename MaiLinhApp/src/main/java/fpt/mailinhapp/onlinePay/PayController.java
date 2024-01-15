@@ -29,7 +29,7 @@ import java.util.stream.Stream;
 
 
 @Controller
-@CrossOrigin
+@CrossOrigin("*")
 @RequestMapping("api/v1/payment")
 public class PayController {
     @Autowired

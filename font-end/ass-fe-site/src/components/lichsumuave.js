@@ -369,7 +369,7 @@ function Lichsimuave(props) {
                   >
                     <div>
                       <p>Quý khách vui lòng lưu ý chính sách hủy vé của chúng tôi:</p>
-                      <p>- Thời gian hủy vé: Trước 15 phút trước thời điểm khởi hành và sau khi 60 phút lúc đặt vé.</p>
+                      <p>- Thời gian hủy vé: Từ 30 phút trở lại từ lúc đặt vé.</p>
                       <p>- Phí hủy vé: 10% giá vé.</p>
                       <p>Bạn có chắc chắn muốn hủy vé?</p>
                       <Radio

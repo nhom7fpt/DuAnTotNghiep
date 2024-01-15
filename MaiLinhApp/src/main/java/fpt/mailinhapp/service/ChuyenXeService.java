@@ -101,6 +101,7 @@ public class ChuyenXeService {
         List<ChuyenXe> listEntity = dao.findByTuyenXe_DiemDiLikeAndTuyenXe_DiemDenLike(diemDi, diemDen);
         System.out.println(check);
         if(check){
+            // Lọc danh sách chuyến xe, chỉ giữ lại những chuyến đi sau thời điểm hiện tại + 30 phút.
         LocalTime now = LocalTime.now().plusMinutes(30).truncatedTo(ChronoUnit.SECONDS);
         System.out.println(now);
         List<ChuyenXe> listData = listEntity.stream()
@@ -124,6 +125,7 @@ public class ChuyenXeService {
 
         }).collect(Collectors.toList());
         }else{
+            // Nếu điều kiện kiểm tra là false, trả về danh sách chuyến xe không lọc.
             return listEntity.stream().map(item -> {
                 ModelMapper mapper = new ModelMapper();
                 ChuyenXeDto chuyenXeDto = mapper.map(item, ChuyenXeDto.class);

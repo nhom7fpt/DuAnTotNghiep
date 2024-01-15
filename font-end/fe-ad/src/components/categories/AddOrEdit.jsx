@@ -130,10 +130,10 @@ class AddOrEdit extends Component {
               <Form.Item
                 label="Loại Ghế"
                 name="loaiGhe"
-                initialValue={loaiXe.loaiGhe === "Nằm" ? "Nằm" : "Ngồi"}
+                initialValue={loaiXe.loaiGhe === "Giường" ? "Giường" : "Ngồi"}
               >
                 <Select>
-                  <Select.Option value="Nằm">Nằm</Select.Option>
+                  <Select.Option value="Giường">Giường</Select.Option>
                   <Select.Option value="Ngồi">Ngồi</Select.Option>
                 </Select>
               </Form.Item>

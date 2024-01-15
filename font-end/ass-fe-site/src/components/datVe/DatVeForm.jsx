@@ -79,6 +79,7 @@ const DatVeForm = (props) => {
 
     const sl = choNgoi && choNgoi.length;
 
+    // Tạo đối tượng chứa thông tin đặt vé
     const newData = {
       chuyenXe: chuyen,
       noiTra: noiTra,
@@ -89,12 +90,13 @@ const DatVeForm = (props) => {
       ngayDi: ngayDi,
     };
     console.log("Dữ liệu đi:", newData);
-
+    // Gọi API thanh toán
     const service = new PayService();
     const res = await service.creatpay(newData);
 
     try {
       if (res && res.data) {
+          // Nếu có dữ liệu trả về từ API thanh toán, chuyển đến trang thanh toán
         window.location.href = res.data;
       } else {
         console.error("URL thanh toán không khả dụng!");
@@ -106,6 +108,7 @@ const DatVeForm = (props) => {
 
   useEffect(() => {
     const loadGhe = async () => {
+       // Tạo đối tượng data chứa thông tin cần gửi lên server để load danh sách ghế
       const data = { id: chuyen.maChuyen, ngayDi: ngayDi };
       console.log(data);
       const service = new SearchService();

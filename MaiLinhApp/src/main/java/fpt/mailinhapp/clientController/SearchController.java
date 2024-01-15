@@ -42,9 +42,10 @@ public class SearchController {
         if(error != null) {
             return error;
         }
-         LocalDate now = LocalDate.now();
+        LocalDate now = LocalDate.now();
 
         List<ChuyenXeDto> dto = service.timChuyen(data.getDiemDi(), data.getDiemDen(), now.equals(data.getNgayDi()));
+        //kiểm tra xem ngày hiện tại có bằng với ngày đi từ yêu cầu hay không. Nếu bằng nhau, điều kiện sẽ trả về true; ngược lại, sẽ trả về false.
         return new ResponseEntity<>(dto, HttpStatus.OK);
     }
 
@@ -60,6 +61,8 @@ public class SearchController {
         LocalDate now = LocalDate.now();
         var list1 = service.timChuyen(data.getDiemDi(),  data.getDiemDen(),now.equals(data.getNgayDi()));
         var list2 = service.timChuyen(data.getDiemDen(), data.getDiemDi(),now.equals(data.getNgayVe()));
+
+        //kiểm tra xem ngày hiện tại có bằng với ngày đi từ yêu cầu hay không. Nếu bằng nhau, điều kiện sẽ trả về true; ngược lại, sẽ trả về false.
         Return2List map = new Return2List(list1,list2);
 
         return new ResponseEntity<>(map, HttpStatus.OK);

@@ -98,7 +98,7 @@ public class TuyenXeService {
             found.setTgDen(tgDen);
         }
 
-        if(dto.getNoiTras() != null){
+        if(dto.getNoiTras().size() != 0){
             var listNoiTra = dto.getNoiTras().stream().map(i->{
                 ModelMapper mapper = new ModelMapper();
                 return mapper.map(i, NoiTra.class);
@@ -126,31 +126,7 @@ public class TuyenXeService {
         return allTuyenXe;
     }
 
-//    private void validateAndFixDateTimeFields(TuyenXe tuyenXe) {
-//        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm:ss.SSSSSSS");
-//
-//        try {
-//
-//            OffsetDateTime offsetDateTimeStart = OffsetDateTime.parse(tuyenXe.getTgDi().toString(), formatter);
-//            OffsetDateTime offsetDateTimeEnd = OffsetDateTime.parse(tuyenXe.getTgDen().toString(), formatter);
-//
-//
-//            if (offsetDateTimeStart.getNano() < 0 || offsetDateTimeStart.getNano() >= 1_000_000_000) {
-//                offsetDateTimeStart = offsetDateTimeStart.withNano(0);
-//            }
-//
-//            if (offsetDateTimeEnd.getNano() < 0 || offsetDateTimeEnd.getNano() >= 1_000_000_000) {
-//                offsetDateTimeEnd = offsetDateTimeEnd.withNano(0);
-//            }
-//            tuyenXe.setTgDi(offsetDateTimeStart.toLocalTime());
-//            tuyenXe.setTgDen(offsetDateTimeEnd.toLocalTime());
-//        } catch (DateTimeParseException e) {
-//
-//            e.printStackTrace();
-//        }
-//    }
-//
-//
+
     public List<String> loadLocation(){
         var list = dao.findAll();
 

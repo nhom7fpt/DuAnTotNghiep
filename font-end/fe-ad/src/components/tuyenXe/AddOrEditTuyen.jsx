@@ -86,7 +86,7 @@ class AddOrEditTuyen extends Component {
                 {
                   title: "Thông tin chuyến",
                 },
-                { title: "Nhân viên", description: "Chọn nhân viên chuyến xe" },
+                { title: "Nơi Trả", description: "Chọn Nơi trả cho tuyến xe" },
               ]}
             ></Steps>
           </Col>

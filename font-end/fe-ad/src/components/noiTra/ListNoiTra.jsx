@@ -8,7 +8,7 @@ import { BiEdit, BiSolidTrash } from "react-icons/bi";
 class ListNoiTra extends Component {
   render() {
     const { dataSource, isLoading } = this.props;
-
+    const reversedDataSource = dataSource.slice().reverse();
     if (isLoading) {
       return (
         <>
@@ -18,7 +18,7 @@ class ListNoiTra extends Component {
     }
     return (
       <div>
-        <Table dataSource={dataSource} rowKey="id">
+        <Table dataSource={reversedDataSource} rowKey="id">
           <Column
             title="ID"
             key="id"

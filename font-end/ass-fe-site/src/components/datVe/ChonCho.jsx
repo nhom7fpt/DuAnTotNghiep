@@ -16,9 +16,15 @@ const ChonCho = (props) => {
 
   const onChange = (values, floor) => {
     if (floor === "lower") {
+    // Cập nhật danh sách ghế đã chọn trên tầng dưới
+
       setSelectedSeatsLower(values);
       const updatedDataLower = dataLower.map((item, index) => {
+        // Kiểm tra xem ghế có được chọn, đã bị khóa, hoặc có trạng thái khóa không
         const isDisabled = values.includes(item.key) || disabledSeats.includes(item.key) || khoaGhe.lower[index];
+
+      // Cập nhật trạng thái label cho ghế dựa vào trạng thái đã kiểm tra
+
         return {
           ...item,
           label: isDisabled ? <IoClipboard /> : <IoClipboardOutline />,
@@ -26,6 +32,8 @@ const ChonCho = (props) => {
       });
       setDataLower(updatedDataLower);
     } else if (floor === "upper") {
+    // Cập nhật danh sách ghế đã chọn trên tầng trên
+
       setSelectedSeatsUpper(values);
       const updatedDataUpper = dataUpper.map((item, index) => {
         const isDisabled = values.includes(item.key) || disabledSeats.includes(item.key) || khoaGhe.upper[index];
@@ -38,6 +46,7 @@ const ChonCho = (props) => {
     }
   };
 
+
   const onNext = () => {
     const newData = selectedSeatsLower.concat(selectedSeatsUpper);
     console.log("Ghế đã chọn:", newData);
@@ -48,12 +57,17 @@ const ChonCho = (props) => {
     let numRows = soGhe / 2;
     const dataCreateLower = [];
     const dataCreateUpper = [];
+
+
+  // Trạng thái khóa ghế cho mỗi tầng
     const khoaGheLower = Array(numRows).fill(false);
     const khoaGheUpper = Array(numRows).fill(false);
     const disabledSeatsLower = [];
   
     for (let i = 1; i <= numRows; i++) {
+
       const seatKeyLower = `A${i}`;
+       // Kiểm tra xem ghế có bị khóa không
       const isDisabled = disList.includes(seatKeyLower) || khoaGheLower[i - 1];
       dataCreateLower.push({
         label: isDisabled ? <IoClipboard /> : <IoClipboardOutline />,
@@ -61,14 +75,14 @@ const ChonCho = (props) => {
         key: seatKeyLower,
         disabled: isDisabled,
       });
-  
+    // Nếu ghế đã bị khóa, thêm vào danh sách ghế đã bị khóa. Ngược lại, thêm vào danh sách ghế trống.
       if (isDisabled) {
         disabledSeatsLower.push(seatKeyLower);
       } else {
         setEmptySeats((prevEmptySeats) => [...prevEmptySeats, seatKeyLower]);
       }
     }
-  
+   // Tạo dữ liệu cho tầng trên
     const disabledSeatsUpper = [];
     for (let i = 1; i <= numRows; i++) {
       const seatKeyUpper = `B${i}`;
