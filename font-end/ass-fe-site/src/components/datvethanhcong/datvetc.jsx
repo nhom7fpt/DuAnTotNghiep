@@ -29,10 +29,14 @@ function Datvethanhcong(props) {
   useEffect(() => {
     const fetchData = async () => {
       try {
+        // Gọi service để lấy thông tin đơn hàng dựa trên id
         const service = new OrderhistoryService();
         const res = await service.ByMaThanhToan(id);
-        res && res.data && setData2(res.data);
 
+        // Nếu có dữ liệu, cập nhật state setData2 với dữ liệu mới
+
+        res && res.data && setData2(res.data);
+        // Lấy danh sách tuyến xe từ service1
         const service1 = new SearchService();
         const tuyenRes = await service1.loadDataTuyen();
         const listTuyen = tuyenRes.data;
@@ -49,8 +53,10 @@ function Datvethanhcong(props) {
   }, [id]);
 
   const layThongTinTuyenXe = (maTuyenXe, listTuyen) => {
-    const tuyenXe = listTuyen.find((t) => t.maTuyenXe === maTuyenXe);
 
+    // Tìm kiếm tuyến xe trong danh sách dựa vào mã tuyến xe
+    const tuyenXe = listTuyen.find((t) => t.maTuyenXe === maTuyenXe);
+    // trả về chuỗi thông tin địa điểm và thời gian đi
     if (tuyenXe) {
       return `${tuyenXe.diemDi} - ${tuyenXe.diemDen} (${tuyenXe.tgDi})`;
     }
